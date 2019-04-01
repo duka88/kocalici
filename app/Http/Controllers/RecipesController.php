@@ -5,6 +5,8 @@ use Session;
 use App\Recipe;
 use Illuminate\Http\Request;
 use App\Http\Requests\Recipe\CreateRecipeRequest;
+use App\Http\Requests\Recipe\UpdateRecipeRequest;
+
 class RecipesController extends Controller
 {
     /**
@@ -14,7 +16,7 @@ class RecipesController extends Controller
      */
     public function index()
     {
-        return view('recipes.index');
+        return view('recipes.index')->with('recipes', Recipe::all());
     }
 
     /**
@@ -41,7 +43,8 @@ class RecipesController extends Controller
           'title' =>$request->title,
           'description' => $request->description,
           'content' =>$request->content,
-          'image' => $image
+          'image' => $image,
+          'published_at' => $request->published_at
         ]);
 
         session()->flash('success', 'Recipe created');
@@ -66,9 +69,9 @@ class RecipesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Recipe $recipe)
     {
-        //
+        return view('recipes.create')->with('recipe', $recipe);
     }
 
     /**
@@ -78,9 +81,23 @@ class RecipesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRecipeRequest $request, Recipe $recipe)
     {
-        //
+        $data = $request->only(['title', 'description', 'published_at', 'content']);
+
+        if($request->hasFile('image')){
+          $image = $request->image->store('recipe');
+
+          $recipe->deleteImage();
+          $data['image'] = $image;
+        }
+
+        $recipe->update($data);
+
+        session()->flash('success', 'Recipe updated');
+
+        return redirect(route('recipe.index'));
+
     }
 
     /**
@@ -91,6 +108,39 @@ class RecipesController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+      $recipe = Recipe::withTrashed()->where('id', $id)->firstOrFail();
+
+      if($recipe->trashed()){
+        $recipe->deleteImage();
+        $recipe->forceDelete();
+        session()->flash('success', 'Recipe is trashed');
+      } else{ 
+        $recipe->delete();
+        session()->flash('success', 'Recipe is trashed');
+       }
+
+        
+
+        return redirect(route('recipe.index'));
+
+    }
+
+    public function trashed(){
+
+        $trashed = Recipe::onlyTrashed()->get();
+
+        return view('recipes.index')->withRecipes($trashed); ///ja isto kao >with('recipes',$trashed)
+    }
+
+    public function restore($id){
+
+        $recipe = Recipe::withTrashed()->where('id' , $id)->firstOrFail();  
+
+        $recipe->restore();
+
+        session()->flash('success', 'Post restored');
+
+        return redirect()->back();
     }
 }

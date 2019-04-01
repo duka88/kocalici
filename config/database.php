@@ -43,7 +43,7 @@ return [
         'mysql' => array(
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'kolacici',
+            'database'  => 'recipes',
             'username'  => 'root',
             'password'  => '',
             'unix_socket'   => '/opt/local/var/run/mysql5/mysqld.sock', //Your sock got from above

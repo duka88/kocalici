@@ -20,3 +20,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/category', 'CategoriesController');
 Route::resource('/recipe', 'RecipesController');
+Route::get('trashed-recipe', 'RecipesController@trashed')->name('trashed-recipe.index');
+Route::put('restore-recipe/{post}', 'RecipesController@restore')->name('restore-recipe');

@@ -3,7 +3,7 @@
 @section('content')
   <div class="card card-default">  
         <div class="card-header">
-           Recipes
+          {{isset($recipe) ? 'Edit Recipe' : 'Creat Recipe'}}
         </div>
         <div class="card-body">
           @if($errors->any())
@@ -16,32 +16,60 @@
              </div>  
              @endif
             <form 
-                action="{{route('recipe.store')}}" 
+                action="{{isset($recipe) ?  route('recipe.update', $recipe->id) : route('recipe.store')}}" 
                 method="post" enctype="multipart/form-data">
-                @csrf              
+                @csrf
+                @if(isset($recipe))
+                 @method('PUT')
+                @endif 
+
               <div class="form-group">
                   <label for="title">title</label>
-                  <input id="title" class="form-control" type="text" name="title">                  
+                  <input id="title" class="form-control" type="text" name="title" value="{{isset($recipe) ? $recipe->title : ''}} ">                  
               </div>
               <div class="form-group">
                   <label for="description">Description</label>
-                  <textarea id="description" class="form-control" type="text" cols="5" rows="5" name="description" > </textarea>                 
+                  <textarea id="description" class="form-control" type="text" cols="5" rows="5" name="description">{{isset($recipe) ? $recipe->description : ''}} </textarea>                 
               </div>
                <div class="form-group">
                   <label for="content">Content</label>
-                  <textarea id="content" class="form-control" type="text" cols="5" rows="5" name="content" > </textarea>                 
+                  <input id="content" value="{{isset($recipe) ? $recipe->content : ''}}" type="hidden" name="content" >
+                  <trix-editor input="content"></trix-editor>               
               </div>
+               <div class="form-group">
+                  <label for="published_at">Published at</label>
+                  <input id="published_at" class="form-control" type="text" name="published_at" value="{{isset($recipe) ? $recipe->published_at : ''}}">                  
+              </div>
+              @if(isset($recipe))
+                <div class="form-group">
+                  <img src="{{asset('/storage/' . $recipe->image)}}" style="width: 100%">
+                </div>
+              @endif
                <div class="form-group">
                   <label for="image">Image</label>
                   <input id="image" class="form-control" type="file" name="image" >                  
               </div>
               <div class="form-group">
                  <button type="submit"  class="btn btn-success">
-                   Create Recipe                  
+                   {{(isset($recipe)) ? 'Edit Recipe' : 'Create Recipe'}}
+                                   
                  </button>  
                </div>    
             </form>            
         </div>
     </div>
   </div>                           
+@endsection
+
+@section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.1.0/trix.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script> flatpickr('#published_at',{
+  enableTime: true
+})</script>
+
+@endsection
+@section('css')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.1.0/trix.css">
 @endsection
