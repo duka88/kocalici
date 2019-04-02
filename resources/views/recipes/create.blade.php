@@ -40,6 +40,23 @@
                   <label for="published_at">Published at</label>
                   <input id="published_at" class="form-control" type="text" name="published_at" value="{{isset($recipe) ? $recipe->published_at : ''}}">                  
               </div>
+               <div class="form-group">
+                  <label for="category">Category</label>
+                  <select name="category" id="category" class="form-control">
+                    @foreach($categories as $category)
+                    <option value="{{$category->id}}"
+                     @if(isset($recipe)) 
+                      @if($category->id == $recipe->category_id)
+                      selected
+                      @endif
+                      @endif>
+                      {{$category->name}}
+                    </option>
+                    @endforeach    
+                  </select>
+                                    
+              </div>
+
               @if(isset($recipe))
                 <div class="form-group">
                   <img src="{{asset('/storage/' . $recipe->image)}}" style="width: 100%">

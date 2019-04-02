@@ -13,6 +13,7 @@
          <thead>
            <th>Image</th>
            <th>Title</th>
+           <th>Category</th>
            <th></th>
            <th></th>
          </thead> 
@@ -21,6 +22,9 @@
            <tr>
             <td><img src="{{asset('/storage/'.$recipe->image)}}" width="60px" height="50"></td>
             <td>{{$recipe->title}}</td>
+            <td><a href="{{route('category.edit', $recipe->category->id)}}">
+              {{$recipe->category->name}}
+            </a></td>
             @if(!$recipe->trashed())
              <td><a href="{{route('recipe.edit', $recipe->id)}}" class="btn btn-info btn-sm">Edit</a></td>
             @else 
