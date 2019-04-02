@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Session;
 use App\Recipe;
+use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\Recipe\CreateRecipeRequest;
 use App\Http\Requests\Recipe\UpdateRecipeRequest;
@@ -14,6 +15,11 @@ class RecipesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+
+        $this->middleware('verifyCategoryCount')->only(['create', 'store']);
+    }
+
     public function index()
     {
         return view('recipes.index')->with('recipes', Recipe::all());
@@ -26,7 +32,7 @@ class RecipesController extends Controller
      */
     public function create()
     {
-        return view('recipes.create');
+        return view('recipes.create')->with('categories', Category::all());
     }
 
     /**
@@ -44,7 +50,8 @@ class RecipesController extends Controller
           'description' => $request->description,
           'content' =>$request->content,
           'image' => $image,
-          'published_at' => $request->published_at
+          'published_at' => $request->published_at,
+          'category_id' =>  $request->category
         ]);
 
         session()->flash('success', 'Recipe created');
@@ -71,7 +78,7 @@ class RecipesController extends Controller
      */
     public function edit(Recipe $recipe)
     {
-        return view('recipes.create')->with('recipe', $recipe);
+        return view('recipes.create')->with('recipe', $recipe)->with('categories', Category::all());
     }
 
     /**
@@ -83,7 +90,7 @@ class RecipesController extends Controller
      */
     public function update(UpdateRecipeRequest $request, Recipe $recipe)
     {
-        $data = $request->only(['title', 'description', 'published_at', 'content']);
+        $data = $request->only(['title', 'description', 'published_at', 'content','category_id']);
 
         if($request->hasFile('image')){
           $image = $request->image->store('recipe');

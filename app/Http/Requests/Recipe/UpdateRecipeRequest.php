@@ -26,7 +26,8 @@ class UpdateRecipeRequest extends FormRequest
         return [
             'title' => 'required|unique:recipes',
             'description' => 'required',            
-            'content' => 'required'
+            'content' => 'required',
+            'category' => 'required'
         ];
     }
 }

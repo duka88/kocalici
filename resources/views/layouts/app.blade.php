@@ -78,7 +78,11 @@
               @if(session()->has('success'))
                <div class="alert alert-success">
                 {{session()->get('success')}}
-               </div> 
+               </div>
+               @elseif(session()->has('error'))
+               <div class="alert alert-danger">
+                {{session()->get('error')}}
+               </div>
                @endif
            <div class="row">
               <div class="col-md-4">
@@ -90,7 +94,10 @@
                     <a href="{{route('trashed-recipe.index')}}">Trashed Recipe</a>
                  </li>
                  <li class="list-group-item">
-                    <a href="/category">Kategorije</a>
+                    <a href="/category">Categoties</a>
+                 </li>
+                 <li class="list-group-item">
+                    <a href="/tags">Tags</a>
                  </li>
                </ul>
               </div>
