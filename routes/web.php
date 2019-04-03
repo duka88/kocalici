@@ -25,3 +25,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('trashed-recipe', 'RecipesController@trashed')->name('trashed-recipe.index');
     Route::put('restore-recipe/{post}', 'RecipesController@restore')->name('restore-recipe');
 });
+
+Route::get('users', 'UsersController@index')->name('users.index');
+ 

@@ -3,7 +3,7 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-use \App\Http\Middleware\VerifyCategoryCount;
+use App\Http\Middleware\VerifyCategoryCount;
 class Kernel extends HttpKernel
 {
     /**

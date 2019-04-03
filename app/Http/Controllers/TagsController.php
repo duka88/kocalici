@@ -7,6 +7,8 @@ use App\Http\Requests\Tags\CreateTagRequest;
 use Illuminate\Http\Request;
 use App\Tag;
 use Session;
+use App\Recipe;
+
 class tagsController extends Controller
 {
     /**
@@ -96,6 +98,12 @@ class tagsController extends Controller
      */
     public function destroy(Tag $tag)
     {
+        if($tag->recipes->count() > 0){
+            session()->flush('error','Category have recipes');
+
+            return redirect()->back();
+        }
+
         $tag->delete();
 
         session()->flush('success', 'tags deleted');

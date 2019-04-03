@@ -6,15 +6,7 @@
           {{isset($recipe) ? 'Edit Recipe' : 'Creat Recipe'}}
         </div>
         <div class="card-body">
-          @if($errors->any())
-          <div class="alert alert-danger">
-             <ul class="list-group">
-               @foreach(@$errors->all() as $error)
-                <li class="list-group-item text-danger">{{$error}}</li>
-                @endforeach
-              </ul>
-             </div>  
-             @endif
+           @include('partials.error')
             <form 
                 action="{{isset($recipe) ?  route('recipe.update', $recipe->id) : route('recipe.store')}}" 
                 method="post" enctype="multipart/form-data">
@@ -56,7 +48,22 @@
                   </select>
                                     
               </div>
-
+            @if($tags->count() > 0)
+              <div class="form-group">
+                <label for="tag">Tags</label>
+                 <select name="tags[]" id="tags"  class="form-control" multiple>
+                @foreach($tags as $tag)
+                 <option value="{{$tag->id}}"
+                  @if(in_array($tag->id, $recipe->tags->pluck('id')->all()))
+                    selected
+                  @endif  
+                  >
+                  {{$tag->name}}
+                  </option>
+                @endforeach
+              </select>
+              </div>
+            @endif
               @if(isset($recipe))
                 <div class="form-group">
                   <img src="{{asset('/storage/' . $recipe->image)}}" style="width: 100%">
@@ -75,7 +82,8 @@
             </form>            
         </div>
     </div>
-  </div>                           
+  </div>   
+
 @endsection
 
 @section('scripts')

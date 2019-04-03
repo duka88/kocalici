@@ -96,6 +96,12 @@ class CategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
+        if($category->recipes->count() > 0){
+            session()->flush('error','Category have recipes');
+
+            return redirect()->back();
+        }
+
         $category->delete();
 
         session()->flush('success', 'Category deleted');

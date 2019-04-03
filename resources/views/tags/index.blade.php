@@ -23,7 +23,7 @@
                  {{$tag->name}}
                </td>
                <td>
-                 0
+                 {{$tag->recipes->count()}}
                </td>
                <td>
                  <a href="{{route('tags.edit', $tag->id)}}" class="btn btn-info btn-sm">Edit</a>      
@@ -37,7 +37,7 @@
          </tbody> 
         </table>
         @else
-          <h2 class="text-center my-3">No Recipes Yet</h2>
+          <h2 class="text-center my-3">No Tags Yet</h2>
         @endif
           <!-- Modal -->
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">

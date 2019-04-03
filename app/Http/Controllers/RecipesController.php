@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 use Session;
+use App\Tag;
 use App\Recipe;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\Recipe\CreateRecipeRequest;
 use App\Http\Requests\Recipe\UpdateRecipeRequest;
+
 
 class RecipesController extends Controller
 {
@@ -22,7 +24,7 @@ class RecipesController extends Controller
 
     public function index()
     {
-        return view('recipes.index')->with('recipes', Recipe::all());
+        return view('recipes.index')->with('recipes', Recipe::all())->with('tags', Tag::all());
     }
 
     /**
@@ -32,7 +34,7 @@ class RecipesController extends Controller
      */
     public function create()
     {
-        return view('recipes.create')->with('categories', Category::all());
+        return view('recipes.create')->with('categories', Category::all())->with('tags', Tag::all());
     }
 
     /**
@@ -45,7 +47,7 @@ class RecipesController extends Controller
     {
         $image = $request->image->store('recipes');
 
-        Recipe::create([
+        $recipe = Recipe::create([
           'title' =>$request->title,
           'description' => $request->description,
           'content' =>$request->content,
@@ -53,6 +55,8 @@ class RecipesController extends Controller
           'published_at' => $request->published_at,
           'category_id' =>  $request->category
         ]);
+
+        $recipe->tags()->attach($request->tags);
 
         session()->flash('success', 'Recipe created');
 
@@ -78,7 +82,7 @@ class RecipesController extends Controller
      */
     public function edit(Recipe $recipe)
     {
-        return view('recipes.create')->with('recipe', $recipe)->with('categories', Category::all());
+        return view('recipes.create')->with('recipe', $recipe)->with('categories', Category::all())->with('tags', Tag::all());
     }
 
     /**
@@ -97,6 +101,10 @@ class RecipesController extends Controller
 
           $recipe->deleteImage();
           $data['image'] = $image;
+        }
+
+        if($request->tags){
+            $recipe->tags()->sync($request->tags);
         }
 
         $recipe->update($data);
