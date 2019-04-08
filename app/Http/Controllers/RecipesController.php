@@ -52,6 +52,7 @@ class RecipesController extends Controller
           'description' => $request->description,
           'content' =>$request->content,
           'image' => $image,
+          'user_id' => auth()->user()->id,
           'published_at' => $request->published_at,
           'category_id' =>  $request->category
         ]);
