@@ -55,4 +55,8 @@ class Recipe extends Model
 
         return $query->where('published_at','<=', now());
     }
+
+     public function scores(){
+        return $this->hasMany(Score::class);
+    }
 }

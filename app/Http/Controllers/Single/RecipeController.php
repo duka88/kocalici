@@ -7,12 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Recipe;
 use App\Category;
 use App\Tag;
+use App\User;
+use App\Score;
 
 class RecipeController extends Controller
 {
     public function show(Recipe $recipe){
 
-    	return view('recipes.show')->with('recipe',$recipe);
+    	return view('recipes.show')->with('recipe',$recipe)->with('user', auth()->user())->with('score',Score::where('recipe_id', $recipe->id));
     }
 
     public function category(Category $category){

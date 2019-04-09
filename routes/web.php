@@ -16,6 +16,8 @@ Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::get('/recipes/{recipe}',[RecipeController::class,'show'])->name('recipes.show');    
 Route::get('recipes/categories/{category}',[RecipeController::class, 'category'])->name('recipe.category');
 Route::get('recipes/tags/{tag}',[RecipeController::class, 'tag'])->name('recipe.tag');
+Route::post('score/recipe/', 'ScoreController@create')->name('score.create');
+Route::get('fridge', 'FridgeController@index')->name('fridge');
 
 
 

@@ -60,8 +60,41 @@
 
         </div>
       </div>
-       <div class="row">
-             <div class="col-lg-8 mx-auto">
+      @if($score->value('user_id') == $user->id)
+          {{$score->avg('score')}}
+       @else
+
+          <div class="container">
+              @if(session()->has('success'))
+               <div class="alert alert-success">
+                {{session()->get('success')}}
+               </div>
+               @elseif(session()->has('error'))
+               <div class="alert alert-danger">
+                {{session()->get('error')}}
+               </div>
+               @endif
+             </div>
+    
+      
+             <div class="container mb-5">
+              <div class="row justify-content-center">
+              <form action="{{route('score.create')}}" method="POST" class="form-control">
+                @csrf 
+                       
+                  <input type="range" name ="score" min="1" max="10" value="5" class="form-control" id="score">
+                  <input type="hidden" name ="recipe_id" value="{{$recipe->id}}" id="recipe_id">
+                  <input type="hidden" name ="user_id" value="{{$user->id}}"  id="user_id">
+  
+                                            
+                 <button class="btn btn-success" type="submit" name="submit" value="submit" />Rate </button>
+            
+              </form>
+            </div>
+          </div>
+    @endif
+     <div class="row mt-5 pt-5">
+      <div class="col-lg-8 mx-auto">
        <div id="disqus_thread"></div>
         <script>
 

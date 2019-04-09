@@ -45,4 +45,8 @@ class User extends Authenticatable
     public function recipes(){
         return $this->hasMany(Recipe::class);
     }
+
+     public function scores(){
+        return $this->hasMany(Score::class);
+    }
 }

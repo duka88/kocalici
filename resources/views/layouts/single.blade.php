@@ -49,7 +49,7 @@
 
    @yield('header')
 
-
+  
     <!-- Main Content -->
      @yield('content')
 
