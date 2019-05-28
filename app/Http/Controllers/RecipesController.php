@@ -8,6 +8,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\Recipe\CreateRecipeRequest;
 use App\Http\Requests\Recipe\UpdateRecipeRequest;
+use Intervention\Image\Facades\Image;
 
 
 class RecipesController extends Controller
@@ -34,7 +35,7 @@ class RecipesController extends Controller
      */
     public function create()
     {
-        return view('recipes.create')->with('categories', Category::all())->with('tags', Tag::all());
+        return view('recipes.create')->with('categories', Category::all())->with('tags', Tag::all())->with('recipes', Recipe::all());
     }
 
     /**
@@ -45,13 +46,15 @@ class RecipesController extends Controller
      */
     public function store(CreateRecipeRequest $request)
     {
-        $image = $request->image->store('recipes');
+         $recipeImg = new Recipe;
+        $imageName = $recipeImg->uploadImageSize($request->image);
+
 
         $recipe = Recipe::create([
           'title' =>$request->title,
           'description' => $request->description,
           'content' =>$request->content,
-          'image' => $image,
+          'image' => $imageName,
           'user_id' => auth()->user()->id,
           'published_at' => $request->published_at,
           'category_id' =>  $request->category
@@ -98,10 +101,14 @@ class RecipesController extends Controller
         $data = $request->only(['title', 'description', 'published_at', 'content','category_id']);
 
         if($request->hasFile('image')){
-          $image = $request->image->store('recipe');
+           
+        
+           $imageName = $recipe->uploadImageSize($request->image);
+
+         
 
           $recipe->deleteImage();
-          $data['image'] = $image;
+          $data['image'] =  $imageName;
         }
 
         if($request->tags){

@@ -38,6 +38,10 @@
      <button type="submit" name="submit" value="submit" class="btn btn-success">Search</button>
     </form>
   </div>
+
+  @foreach( $results-reecipes as $test)
+   {{$test->recipe}}
+   @endforeach
  </div>
 </div>
 @endsection

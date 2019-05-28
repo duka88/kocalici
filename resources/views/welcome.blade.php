@@ -35,7 +35,7 @@
              @forelse($recipes as $recipe)
                 <div class="col-md-6">
                   <div class="card border hover-shadow-6 mb-6 d-block">
-                    <a href="{{route('recipes.show',$recipe->id)}}"><img class="card-img-top" src="{{asset('/storage/' . $recipe->image)}}" alt="Card image cap"></a>
+                    <a href="{{route('recipes.show',$recipe->id)}}"><img class="card-img-top" src="{{asset('/img/MD/' . $recipe->image)}}" alt="Card image cap"></a>
                     <div class="p-6 text-center">
                       <p><a class="small-5 text-lighter text-uppercase ls-2 fw-400" href="">{{$recipe->category->name}}</a></p>
                       <h5 class="mb-0"><a class="text-dark" href="{{route('recipes.show',$recipe->id)}}">{{$recipe->title}}</a></h5>

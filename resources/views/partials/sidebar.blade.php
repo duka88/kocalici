@@ -9,8 +9,9 @@
                   </div>
                 </form>
 
-                <hr>
-
+              
+                <h6 class="sidebar-title mt-4"><a href=" {{route('fridge')}}">Fridge</a></h6>
+                 
                 <h6 class="sidebar-title">Categories</h6>
                 <div class="row link-color-default fs-14 lh-24">
                  @foreach($categories as $category)    

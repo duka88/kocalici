@@ -20,7 +20,7 @@
          <tbody>
            @foreach($recipes as $recipe)
            <tr>
-            <td><img src="{{asset('/storage/'.$recipe->image)}}" width="60px" height="50"></td>
+            <td><img src="{{asset('/img/XS/'.$recipe->image)}}" width="60px" height="50"></td>
             <td>{{$recipe->title}}</td>
             <td><a href="{{route('category.edit', $recipe->category->id)}}">
               {{$recipe->category->name}}

@@ -54,7 +54,7 @@
                  <select name="tags[]" id="tags"  class="form-control" multiple>
                 @foreach($tags as $tag)
                  <option value="{{$tag->id}}"
-                  @if(in_array($tag->id, $recipe->tags->pluck('id')->all()))
+                  @if(isset($recipe) && in_array($tag->id, $recipe->tags->pluck('id')->all()))
                     selected
                   @endif  
                   >
