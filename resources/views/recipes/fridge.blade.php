@@ -38,10 +38,12 @@
      <button type="submit" name="submit" value="submit" class="btn btn-success">Search</button>
     </form>
   </div>
-
-  @foreach( $results-reecipes as $test)
-   {{$test->recipe}}
-   @endforeach
+   @if(isset($recipes))
+      @foreach($recipes as $test)
+       {{$test->title}}
+      
+       @endforeach
+   @endif    
  </div>
 </div>
 @endsection

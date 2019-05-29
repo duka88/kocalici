@@ -9,16 +9,22 @@ use App\Recipe;
 class FridgeController extends Controller
 {
     public function index(Request $request){
-    /*
+   
     if(isset($request->submit)){
-    	$recipe = Recipe::whereIn('tag_id', [$request->tag])->get();
-    		 dd($recipe->id);
-    	}     
-   // $recipe = $tags->recipe->where('tag_id', [$request->tag[0]]);
-     */
-        $results = Tag::whereIn('id', $request->tag)->get();
+    	    
+  
+     
+        $results = $request->tag;
+       $recipeId = Recipe::whereHas('tags', function($q) use ( $results)
+					{
+				    $q->whereIn('tag_id', $results);
+				}, '=',2)->get();
        
+		return view('recipes.fridge')->with('tags', Tag::all())->with('recipes', $recipeId);
+      
+}
 
-    	return view('recipes.fridge')->with('tags', Tag::all())->with('results', $results);
-    }
+    	return view('recipes.fridge')->with('tags', Tag::all());
+    
+}
 }
