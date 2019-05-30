@@ -8,7 +8,22 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import VueRouter from 'vue-router';
+import {store} from 'store';
 
+Vue.use(VueRouter);
+
+const routes = [
+  { path: '/cake', component:  require('./components/recipes/Cake.vue').default},
+  { path: '/cookie', component:  require('./components/recipes/Cookie.vue').default},
+  { path: '/recipes', component: require('./components/Recipes.vue').default},
+  { path: '/score', component:  require('./components/Score.vue').default}
+]
+
+const router = new VueRouter({
+   mode: 'history',
+  routes // short for `routes: routes`
+});
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -29,5 +44,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    store,
+    router
 });

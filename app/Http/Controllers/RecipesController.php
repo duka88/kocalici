@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Recipe\CreateRecipeRequest;
 use App\Http\Requests\Recipe\UpdateRecipeRequest;
 use Intervention\Image\Facades\Image;
-
+use App\Http\Resources\RecipeResources;
 
 class RecipesController extends Controller
 {
@@ -98,8 +98,8 @@ class RecipesController extends Controller
      */
     public function update(UpdateRecipeRequest $request, Recipe $recipe)
     {
-        $data = $request->only(['title', 'description', 'published_at', 'content','category_id']);
-
+        $data = $request->only(['title', 'description', 'published_at', 'content','category']);
+      
         if($request->hasFile('image')){
            
         
@@ -165,5 +165,12 @@ class RecipesController extends Controller
         session()->flash('success', 'Post restored');
 
         return redirect()->back();
+    }
+
+    public function category($id){
+
+        $recipes = Recipe::where('category_id', $id)->latest()->paginate(1);
+
+        return RecipeResources::collection($recipes);
     }
 }

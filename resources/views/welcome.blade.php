@@ -26,41 +26,25 @@
    <main class="main-content">
       <div class="section bg-gray">
         <div class="container">
-          <div class="row">
-
-
-            <div class="col-md-8 col-xl-9">
+          <div class="row" id="app">
+   
+            <div class="col-md-8 col-xl-8">
               <div class="row gap-y">
-              
-             @forelse($recipes as $recipe)
-                <div class="col-md-6">
-                  <div class="card border hover-shadow-6 mb-6 d-block">
-                    <a href="{{route('recipes.show',$recipe->id)}}"><img class="card-img-top" src="{{asset('/img/MD/' . $recipe->image)}}" alt="Card image cap"></a>
-                    <div class="p-6 text-center">
-                      <p><a class="small-5 text-lighter text-uppercase ls-2 fw-400" href="">{{$recipe->category->name}}</a></p>
-                      <h5 class="mb-0"><a class="text-dark" href="{{route('recipes.show',$recipe->id)}}">{{$recipe->title}}</a></h5>
-                    </div>
-                  </div>
-                </div>
-              @empty
-              
-              <p class="text-center">
-                No results for query <strong>{{request()->query('search')}}</strong>
-              </p>  
-
-              @endforelse
-
-              </div>
-                   {{$recipes->appends(['search'=> request()->query('search')])->links()}}
-
+              <router-link to="/cookie">Cookies</router-link>
+               <router-link to="/cake">Cake</router-link>
+        
+                <router-view></router-view>
            
-            </div>
 
 
-          @include('partials.sidebar')
+
+       
             
           </div>
         </div>
+        <div class="col-md-4 col-xl-4 w-100">
+           @include('partials.sidebar')
+        </div>   
       </div>
     </main>
 

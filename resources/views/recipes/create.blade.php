@@ -66,7 +66,7 @@
             @endif
               @if(isset($recipe))
                 <div class="form-group">
-                  <img src="{{asset('/storage/' . $recipe->image)}}" style="width: 100%">
+                  <img src="{{asset('/img/MD/' . $recipe->image)}}" style="width: 100%">
                 </div>
               @endif
                <div class="form-group">

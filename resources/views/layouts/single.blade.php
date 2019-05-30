@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="keywords" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title')</title>
 
     <!-- Styles -->
     <link href="{{asset('css/page.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    <link href="{{asset('css/app.css')}}" rel="stylesheet">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="{{asset('img/apple-touch-icon.png')}}">
@@ -82,6 +84,8 @@
     <!-- Scripts -->
     <script src="{{asset('js/page.min.js')}}"></script>
     <script src="{{asset('js/script.js')}}"></script>
+    <script src="{{asset('js/app.js')}}"></script>
+
     <!-- Go to www.addthis.com/dashboard to customize your tools -->
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5cab6d9dd7c20eb6"></script>
 
