@@ -30,10 +30,8 @@
    
             <div class="col-md-8 col-xl-8">
               <div class="row gap-y">
-              <router-link to="/cookie">Cookies</router-link>
-               <router-link to="/cake">Cake</router-link>
-        
-                <router-view></router-view>
+              <recipes-component></recipes-component> 
+              
            
 
 

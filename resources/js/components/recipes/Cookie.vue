@@ -48,6 +48,7 @@
     export default {
        data(){
        	return {
+          category: 0,
        		recipes: {},
        		recipe_id: '',
           pagination: {},
@@ -56,7 +57,7 @@
        methods: {
          loadRecipes(page_url){
           let vm = this;
-          page_url = page_url || 'api/recipes/2'
+          page_url = page_url || 'api/recipes/0'
          	axios.get(page_url)
          	     .then(({data}) => {
          	     	this.recipes = data;
