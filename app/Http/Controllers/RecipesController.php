@@ -57,7 +57,7 @@ class RecipesController extends Controller
           'image' => $imageName,
           'user_id' => auth()->user()->id,
           'published_at' => $request->published_at,
-          'category_id' =>  $request->category
+          'category_id' =>  $request->category_id
         ]);
 
         $recipe->tags()->attach($request->tags);
@@ -98,7 +98,7 @@ class RecipesController extends Controller
      */
     public function update(UpdateRecipeRequest $request, Recipe $recipe)
     {
-        $data = $request->only(['title', 'description', 'published_at', 'content','category']);
+        $data = $request->only(['title', 'description', 'published_at', 'content','category_id']);
       
         if($request->hasFile('image')){
            

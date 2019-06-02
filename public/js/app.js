@@ -1931,6 +1931,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1940,14 +1950,33 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    loadRecipes: function loadRecipes() {
+    loadRecipes: function loadRecipes(page_url) {
       var _this = this;
 
-      axios.get('api/recipes/2').then(function (_ref) {
+      var vm = this;
+      page_url = page_url || 'api/recipes/2';
+      axios.get(page_url).then(function (_ref) {
         var data = _ref.data;
-        _this.recipes = data, ve.makePagination(meta);
+        _this.recipes = data;
+        _this.pagination = {
+          current_page: data.meta.current_page,
+          last_page: data.meta.last_page,
+          next_page_url: data.links.next,
+          prev_page_url: data.links.prev
+        };
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
+  },
+  makePagination: function makePagination() {
+    var pagination = {
+      current_page: this.recipes.meta.current_page,
+      last_page: this.recipes.meta.last_page,
+      next_page_url: this.recipes.links.next,
+      prev_page_url: this.recipes.links.prev
+    };
+    this.pagination = pagination;
   },
   created: function created() {
     this.loadRecipes();
@@ -38837,7 +38866,58 @@ var render = function() {
         ])
       }),
       0
-    )
+    ),
+    _vm._v(" "),
+    _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+      _c("ul", { staticClass: "pagination" }, [
+        _c("li", { staticClass: "page-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "page-link",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.loadRecipes(_vm.pagination.prev_page_url)
+                }
+              }
+            },
+            [_vm._v("Previous")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "page-item disabled" }, [
+          _c(
+            "a",
+            { staticClass: "page-link text-dark", attrs: { href: "#" } },
+            [
+              _vm._v(
+                "Page " +
+                  _vm._s(_vm.pagination.current_page) +
+                  " of " +
+                  _vm._s(_vm.pagination.last_page)
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "page-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "page-link",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.loadRecipes(_vm.pagination.next_page_url)
+                }
+              }
+            },
+            [_vm._v("Next")]
+          )
+        ])
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -54205,8 +54285,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\kocalici\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\kocalici\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\kocalici\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\kocalici\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

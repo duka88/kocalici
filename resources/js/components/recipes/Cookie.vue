@@ -30,7 +30,17 @@
       
  
            </div>
+
         </div>
+         <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li  class="page-item"><a class="page-link" href="#" @click="loadRecipes(pagination.prev_page_url)">Previous</a></li>
+
+          <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
+      
+          <li class="page-item"><a class="page-link" href="#" @click="loadRecipes(pagination.next_page_url)">Next</a></li>
+        </ul>
+      </nav>
     </div>
 </template>
 
@@ -40,18 +50,39 @@
        	return {
        		recipes: {},
        		recipe_id: '',
-            pagination: {},
+          pagination: {},
        	}
        },
        methods: {
-         loadRecipes(){
-         	axios.get('api/recipes/2')
+         loadRecipes(page_url){
+          let vm = this;
+          page_url = page_url || 'api/recipes/2'
+         	axios.get(page_url)
          	     .then(({data}) => {
-         	     	this.recipes = data,
-         	     	ve.makePagination(meta)
-         	     });
+         	     	this.recipes = data;
+                this.pagination = {
+                current_page: data.meta.current_page,
+                last_page: data.meta.last_page,
+                next_page_url: data.links.next,
+                prev_page_url: data.links.prev
+              }
+         	                   
+         	     })
+               .catch(error => {
+              console.log(error)
+            });
          }
-       },
+       },   
+       makePagination() {
+      let pagination = {
+        current_page: this.recipes.meta.current_page,
+        last_page: this.recipes.meta.last_page,
+        next_page_url: this.recipes.links.next,
+        prev_page_url: this.recipes.links.prev
+      };
+
+      this.pagination = pagination;
+    },
 
         created() {
             this.loadRecipes();
