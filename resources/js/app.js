@@ -26,6 +26,7 @@ const router = new VueRouter({
   routes // short for `routes: routes`
 });
 
+Vue.component('recipes-component', require('./components/Recipes.vue').default);
 
 
 /**
