@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <ul>
-            <li><button  @click="selectCategory(1)">All</button></li>
+            <li><button  @click="selectCategory(0)">All</button></li>
             <li><button  @click="selectCategory(1)">Cake</button></li>
             <li><button  @click="selectCategory(2)">Cookie</button></li>
             
