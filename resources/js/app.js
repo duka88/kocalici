@@ -27,6 +27,8 @@ const router = new VueRouter({
 });
 
 Vue.component('recipes-component', require('./components/Recipes.vue').default);
+Vue.component('fridge-component', require('./components/Fridge.vue').default);
+
 
 
 /**
