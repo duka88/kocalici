@@ -24,26 +24,12 @@
 @section('content')
 
  
- <div class="container">
+ <div class="container" id="app">
    <div class="row justify-content-center">
      <div class="col-8">
- 
-   
-  <form action="{{route('fridge')}}" method="GET">
-    @foreach($tags as $tag)
+      <fridge-component></fridge-component>
 
-      <input type="checkbox" name="tag[]" value="{{$tag->id}}">{{$tag->name}}<br>
-      
-   @endforeach
-     <button type="submit" name="submit" value="submit" class="btn btn-success">Search</button>
-    </form>
-  </div>
-   @if(isset($recipes))
-      @foreach($recipes as $test)
-       {{$test->title}}
-      
-       @endforeach
-   @endif    
  </div>
+</div>
 </div>
 @endsection

@@ -113,7 +113,6 @@ var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "./node_modules/
 var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/axios/lib/helpers/parseHeaders.js");
 var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "./node_modules/axios/lib/helpers/isURLSameOrigin.js");
 var createError = __webpack_require__(/*! ../core/createError */ "./node_modules/axios/lib/core/createError.js");
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ "./node_modules/axios/lib/helpers/btoa.js");
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -125,22 +124,6 @@ module.exports = function xhrAdapter(config) {
     }
 
     var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if ( true &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
 
     // HTTP basic authentication
     if (config.auth) {
@@ -155,8 +138,8 @@ module.exports = function xhrAdapter(config) {
     request.timeout = config.timeout;
 
     // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
+    request.onreadystatechange = function handleLoad() {
+      if (!request || request.readyState !== 4) {
         return;
       }
 
@@ -173,9 +156,8 @@ module.exports = function xhrAdapter(config) {
       var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
       var response = {
         data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        status: request.status,
+        statusText: request.statusText,
         headers: responseHeaders,
         config: config,
         request: request
@@ -988,54 +970,6 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/helpers/btoa.js":
-/*!************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/btoa.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
-
-var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-
-function E() {
-  this.message = 'String contains an invalid character';
-}
-E.prototype = new Error;
-E.prototype.code = 5;
-E.prototype.name = 'InvalidCharacterError';
-
-function btoa(input) {
-  var str = String(input);
-  var output = '';
-  for (
-    // initialize result and counter
-    var block, charCode, idx = 0, map = chars;
-    // if the next str index does not exist:
-    //   change the mapping table to "="
-    //   check if d has no fractional digits
-    str.charAt(idx | 0) || (map = '=', idx % 1);
-    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
-    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
-  ) {
-    charCode = str.charCodeAt(idx += 3 / 4);
-    if (charCode > 0xFF) {
-      throw new E();
-    }
-    block = block << 8 | charCode;
-  }
-  return output;
-}
-
-module.exports = btoa;
-
-
-/***/ }),
-
 /***/ "./node_modules/axios/lib/helpers/buildURL.js":
 /*!****************************************************!*\
   !*** ./node_modules/axios/lib/helpers/buildURL.js ***!
@@ -1787,6 +1721,123 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Fridge.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Fridge.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      tags: {},
+      recipes: {},
+      searchRecipes: [],
+      pagination: {}
+    };
+  },
+  methods: {
+    loadTags: function loadTags() {
+      var _this = this;
+
+      axios.get('api/fridge').then(function (_ref) {
+        var data = _ref.data;
+        _this.tags = data.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    searchedRecipes: function searchedRecipes(page_url) {
+      var _this2 = this;
+
+      var vm = this;
+      axios({
+        method: 'post',
+        url: '/api/fridge/',
+        data: {
+          tag: this.searchRecipes
+        }
+      }).then(function (_ref2) {
+        var data = _ref2.data;
+        _this2.recipes = data.data;
+        console.log(data.meta, data.links);
+        vm.makePagination(data.meta, data.links);
+      });
+    },
+    makePagination: function makePagination(meta, links) {
+      var pagination = {
+        current_page: meta.current_page,
+        last_page: meta.last_page,
+        next_page_url: links.next,
+        prev_page_url: links.prev
+      };
+      this.pagination = pagination;
+    }
+  },
+  created: function created() {
+    this.loadTags();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Recipes.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Recipes.vue?vue&type=script&lang=js& ***!
@@ -1866,17 +1917,18 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(page_url).then(function (_ref) {
         var data = _ref.data;
         _this.recipes = data;
+        console.log(data.meta, data.links);
         vm.makePagination(data.meta, data.links);
       })["catch"](function (error) {
         console.log(error);
       });
     },
-    makePagination: function makePagination() {
+    makePagination: function makePagination(meta, links) {
       var pagination = {
-        current_page: this.recipes.meta.current_page,
-        last_page: this.recipes.meta.last_page,
-        next_page_url: this.recipes.links.next,
-        prev_page_url: this.recipes.links.prev
+        current_page: meta.current_page,
+        last_page: meta.last_page,
+        next_page_url: links.next,
+        prev_page_url: links.prev
       };
       this.pagination = pagination;
     },
@@ -38750,6 +38802,258 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Fridge.vue?vue&type=template&id=5dfdaca0&":
+/*!*********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Fridge.vue?vue&type=template&id=5dfdaca0& ***!
+  \*********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "div",
+      { staticClass: "row justify-content-center" },
+      [
+        _vm._l(_vm.recipes, function(recipe) {
+          return _c("div", { key: recipe.id, staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "card my-card" }, [
+              _c("img", {
+                attrs: {
+                  src: "/img/MD/" + recipe.image,
+                  width: "480px",
+                  height: "300"
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c(
+                  "div",
+                  { staticClass: "card-title d-flex justify-content-center" },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "text-capitalize btn card-link  ",
+                        attrs: { href: "<?php the_permalink(); ?>" }
+                      },
+                      [_vm._v(_vm._s(recipe.title))]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(0, true)
+              ]),
+              _vm._v(" "),
+              _vm._m(1, true)
+            ])
+          ])
+        }),
+        _vm._v(" "),
+        _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+          _c("ul", { staticClass: "pagination" }, [
+            _c(
+              "li",
+              {
+                staticClass: "page-item",
+                class: [{ disabled: !_vm.pagination.prev_page_url }]
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "page-link",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.loadRecipes(_vm.pagination.prev_page_url)
+                      }
+                    }
+                  },
+                  [_vm._v("Previous")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("li", { staticClass: "page-item disabled" }, [
+              _c(
+                "a",
+                { staticClass: "page-link text-dark", attrs: { href: "#" } },
+                [
+                  _vm._v(
+                    "Page " +
+                      _vm._s(_vm.pagination.current_page) +
+                      " of " +
+                      _vm._s(_vm.pagination.last_page)
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "page-item",
+                class: [{ disabled: !_vm.pagination.next_page_url }]
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "page-link",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.loadRecipes(_vm.pagination.next_page_url)
+                      }
+                    }
+                  },
+                  [_vm._v("Next")]
+                )
+              ]
+            )
+          ])
+        ])
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.searchedRecipes($event)
+            }
+          }
+        },
+        [
+          _vm._l(_vm.tags, function(tag) {
+            return _c("div", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.searchRecipes,
+                    expression: "searchRecipes"
+                  }
+                ],
+                attrs: { type: "checkbox" },
+                domProps: {
+                  value: tag.id,
+                  checked: Array.isArray(_vm.searchRecipes)
+                    ? _vm._i(_vm.searchRecipes, tag.id) > -1
+                    : _vm.searchRecipes
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.searchRecipes,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = tag.id,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.searchRecipes = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.searchRecipes = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.searchRecipes = $$c
+                    }
+                  }
+                }
+              }),
+              _vm._v(_vm._s(tag.name) + "\n            "),
+              _c("br")
+            ])
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-success btn-block",
+              attrs: { type: "submit" }
+            },
+            [_vm._v("Save")]
+          )
+        ],
+        2
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-lg-6 " }, [
+        _c(
+          "h4",
+          { staticClass: "primary-color d-flex justify-content-center" },
+          [_c("i", { staticClass: "fas fa-dollar-sign " }), _vm._v(" 45")]
+        ),
+        _vm._v(" "),
+        _c(
+          "h4",
+          { staticClass: "primary-color d-flex justify-content-center" },
+          [_c("i", { staticClass: "far fa-clock" }), _vm._v("60 min")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-6  d-flex justify-content-center " }, [
+        _c("h2", { staticClass: "prosek " }, [
+          _c("i", { staticClass: "fas fa-utensils" }),
+          _vm._v(" 50")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "card-footer  team-icons d-flex justify-content-between" },
+      [
+        _c("a", { attrs: { href: "#" } }, [
+          _c("i", { staticClass: "fab fa-facebook social-link" })
+        ]),
+        _c("a", { attrs: { href: "#" } }, [
+          _c("i", { staticClass: "fab fa-instagram social-link" })
+        ]),
+        _c("a", { attrs: { href: "#" } }, [
+          _c("i", { staticClass: "fab fa-twitter social-link" })
+        ]),
+        _c("a", { attrs: { href: "#" } }, [
+          _c("i", { staticClass: "fab fa-yelp social-link" })
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Recipes.vue?vue&type=template&id=4fb0ab8a&":
 /*!**********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Recipes.vue?vue&type=template&id=4fb0ab8a& ***!
@@ -54092,6 +54396,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
 
 });
 Vue.component('recipes-component', __webpack_require__(/*! ./components/Recipes.vue */ "./resources/js/components/Recipes.vue")["default"]);
+Vue.component('fridge-component', __webpack_require__(/*! ./components/Fridge.vue */ "./resources/js/components/Fridge.vue")["default"]);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -54239,6 +54544,76 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Fridge.vue":
+/*!********************************************!*\
+  !*** ./resources/js/components/Fridge.vue ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Fridge_vue_vue_type_template_id_5dfdaca0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Fridge.vue?vue&type=template&id=5dfdaca0& */ "./resources/js/components/Fridge.vue?vue&type=template&id=5dfdaca0&");
+/* harmony import */ var _Fridge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Fridge.vue?vue&type=script&lang=js& */ "./resources/js/components/Fridge.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Fridge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Fridge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Fridge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Fridge_vue_vue_type_template_id_5dfdaca0___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Fridge_vue_vue_type_template_id_5dfdaca0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Fridge.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Fridge.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/Fridge.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Fridge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Fridge.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Fridge.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Fridge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Fridge.vue?vue&type=template&id=5dfdaca0&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/Fridge.vue?vue&type=template&id=5dfdaca0& ***!
+  \***************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Fridge_vue_vue_type_template_id_5dfdaca0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Fridge.vue?vue&type=template&id=5dfdaca0& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Fridge.vue?vue&type=template&id=5dfdaca0&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Fridge_vue_vue_type_template_id_5dfdaca0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Fridge_vue_vue_type_template_id_5dfdaca0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
