@@ -67,8 +67,7 @@
             axios.get(page_url)
                  .then(({data}) => {
                     this.recipes = data;
-                                        console.log(data.meta, data.links);
-
+                                       
                     vm.makePagination(data.meta, data.links);
                                
                  })
