@@ -1384,7 +1384,7 @@ module.exports = function spread(callback) {
 
 
 var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
-var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
+var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/axios/node_modules/is-buffer/index.js");
 
 /*global toString:true*/
 
@@ -1688,6 +1688,28 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/axios/node_modules/is-buffer/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/axios/node_modules/is-buffer/index.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
@@ -1776,21 +1798,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       tags: {},
       recipes: {},
-      searchRecipes: [],
-      pagination: {}
+      searchRecipes: []
     };
   },
   methods: {
@@ -1807,28 +1820,11 @@ __webpack_require__.r(__webpack_exports__);
     searchedRecipes: function searchedRecipes(page_url) {
       var _this2 = this;
 
-      var vm = this;
-      axios({
-        method: 'post',
-        url: '/api/fridge/',
-        data: {
-          tag: this.searchRecipes
-        }
-      }).then(function (_ref2) {
+      var result = JSON.stringify(this.searchRecipes);
+      axios.get("api/fridged/?tag=".concat(result)).then(function (_ref2) {
         var data = _ref2.data;
         _this2.recipes = data.data;
-        console.log(data.meta, data.links);
-        vm.makePagination(data.meta, data.links);
       });
-    },
-    makePagination: function makePagination(meta, links) {
-      var pagination = {
-        current_page: meta.current_page,
-        last_page: meta.last_page,
-        next_page_url: links.next,
-        prev_page_url: links.prev
-      };
-      this.pagination = pagination;
     }
   },
   created: function created() {
@@ -1917,7 +1913,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(page_url).then(function (_ref) {
         var data = _ref.data;
         _this.recipes = data;
-        console.log(data.meta, data.links);
         vm.makePagination(data.meta, data.links);
       })["catch"](function (error) {
         console.log(error);
@@ -6551,38 +6546,6 @@ __webpack_require__.r(__webpack_exports__);
 
 }));
 //# sourceMappingURL=bootstrap.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/is-buffer/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/is-buffer/index.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-// The _isBuffer check is for Safari 5-7 support, because it's missing
-// Object.prototype.constructor. Remove this eventually
-module.exports = function (obj) {
-  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-}
-
-function isBuffer (obj) {
-  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-// For Node v0.10 support. Remove this eventually.
-function isSlowBuffer (obj) {
-  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
-}
 
 
 /***/ }),
@@ -38821,108 +38784,41 @@ var render = function() {
     _c(
       "div",
       { staticClass: "row justify-content-center" },
-      [
-        _vm._l(_vm.recipes, function(recipe) {
-          return _c("div", { key: recipe.id, staticClass: "col-md-4" }, [
-            _c("div", { staticClass: "card my-card" }, [
-              _c("img", {
-                attrs: {
-                  src: "/img/MD/" + recipe.image,
-                  width: "480px",
-                  height: "300"
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c(
-                  "div",
-                  { staticClass: "card-title d-flex justify-content-center" },
-                  [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "text-capitalize btn card-link  ",
-                        attrs: { href: "<?php the_permalink(); ?>" }
-                      },
-                      [_vm._v(_vm._s(recipe.title))]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _vm._m(0, true)
-              ]),
-              _vm._v(" "),
-              _vm._m(1, true)
-            ])
-          ])
-        }),
-        _vm._v(" "),
-        _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
-          _c("ul", { staticClass: "pagination" }, [
-            _c(
-              "li",
-              {
-                staticClass: "page-item",
-                class: [{ disabled: !_vm.pagination.prev_page_url }]
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "page-link",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        return _vm.loadRecipes(_vm.pagination.prev_page_url)
-                      }
-                    }
-                  },
-                  [_vm._v("Previous")]
-                )
-              ]
-            ),
+      _vm._l(_vm.recipes, function(recipe) {
+        return _c("div", { key: recipe.id, staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card my-card" }, [
+            _c("img", {
+              attrs: {
+                src: "/img/MD/" + recipe.image,
+                width: "480px",
+                height: "300"
+              }
+            }),
             _vm._v(" "),
-            _c("li", { staticClass: "page-item disabled" }, [
+            _c("div", { staticClass: "card-body" }, [
               _c(
-                "a",
-                { staticClass: "page-link text-dark", attrs: { href: "#" } },
+                "div",
+                { staticClass: "card-title d-flex justify-content-center" },
                 [
-                  _vm._v(
-                    "Page " +
-                      _vm._s(_vm.pagination.current_page) +
-                      " of " +
-                      _vm._s(_vm.pagination.last_page)
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-capitalize btn card-link  ",
+                      attrs: { href: "<?php the_permalink(); ?>" }
+                    },
+                    [_vm._v(_vm._s(recipe.title))]
                   )
                 ]
-              )
+              ),
+              _vm._v(" "),
+              _vm._m(0, true)
             ]),
             _vm._v(" "),
-            _c(
-              "li",
-              {
-                staticClass: "page-item",
-                class: [{ disabled: !_vm.pagination.next_page_url }]
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "page-link",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        return _vm.loadRecipes(_vm.pagination.next_page_url)
-                      }
-                    }
-                  },
-                  [_vm._v("Next")]
-                )
-              ]
-            )
+            _vm._m(1, true)
           ])
         ])
-      ],
-      2
+      }),
+      0
     ),
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
@@ -54553,15 +54449,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************!*\
   !*** ./resources/js/components/Fridge.vue ***!
   \********************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Fridge_vue_vue_type_template_id_5dfdaca0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Fridge.vue?vue&type=template&id=5dfdaca0& */ "./resources/js/components/Fridge.vue?vue&type=template&id=5dfdaca0&");
 /* harmony import */ var _Fridge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Fridge.vue?vue&type=script&lang=js& */ "./resources/js/components/Fridge.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Fridge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Fridge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -54591,7 +54486,7 @@ component.options.__file = "resources/js/components/Fridge.vue"
 /*!*********************************************************************!*\
   !*** ./resources/js/components/Fridge.vue?vue&type=script&lang=js& ***!
   \*********************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54902,7 +54797,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/lib/loader.js):\n\r\n@import '~@fortawesome/fontawesome-free/scss/brands';\r\n       ^\r\n      Can't find stylesheet to import.\n   ╷\n12 │ @import '~@fortawesome/fontawesome-free/scss/brands';\r\n   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n   ╵\n  stdin 12:9  root stylesheet\r\n      in C:\\wamp64\\www\\kocalici\\resources\\sass\\app.scss (line 12, column 9)\n    at runLoaders (C:\\wamp64\\www\\kocalici\\node_modules\\webpack\\lib\\NormalModule.js:302:20)\n    at C:\\wamp64\\www\\kocalici\\node_modules\\loader-runner\\lib\\LoaderRunner.js:367:11\n    at C:\\wamp64\\www\\kocalici\\node_modules\\loader-runner\\lib\\LoaderRunner.js:233:18\n    at context.callback (C:\\wamp64\\www\\kocalici\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at render (C:\\wamp64\\www\\kocalici\\node_modules\\sass-loader\\lib\\loader.js:52:13)\n    at Function.$2 (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:24443:48)\n    at wP.$2 (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:15367:15)\n    at uU.vt (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:9079:42)\n    at uU.vs (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:9081:32)\n    at iB.uF (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:8429:46)\n    at us.$0 (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:8571:7)\n    at Object.eH (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:1512:80)\n    at ad.ba (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:8492:3)\n    at iO.ba (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:8422:25)\n    at iO.cv (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:8409:6)\n    at py.cv (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:8199:35)\n    at Object.m (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:1383:19)\n    at C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:5078:51\n    at xf.a (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:1394:71)\n    at xf.$2 (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:8214:23)\n    at vS.$2 (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:8209:25)\n    at uU.vt (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:9079:42)\n    at uU.vs (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:9081:32)\n    at iB.uF (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:8429:46)\n    at us.$0 (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:8571:7)\n    at Object.eH (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:1512:80)\n    at ad.ba (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:8492:3)\n    at iO.ba (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:8422:25)\n    at iO.cv (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:8409:6)\n    at Object.eval (eval at CM (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:648:15), <anonymous>:3:37)\n    at uU.vt (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:9079:42)\n    at uU.vs (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:9081:32)\n    at iB.uF (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:8429:46)\n    at us.$0 (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:8571:7)\n    at Object.eH (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:1512:80)\n    at ad.ba (C:\\wamp64\\www\\kocalici\\node_modules\\sass\\sass.dart.js:8492:3)");
 
 /***/ }),
 

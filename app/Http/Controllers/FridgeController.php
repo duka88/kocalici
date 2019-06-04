@@ -11,13 +11,11 @@ use App\Http\Resources\RecipeResources;
 
 class FridgeController extends Controller
 {
-    public function search(Request $request){
+    public function search(){
    
    
-    	    
-  
-     
-        $results = $request->tag;
+    	         
+        $results = explode(',',\Request::get('tag'));
        $recipes = Recipe::whereHas('tags', function($q) use ( $results)
 					{
 				    $q->whereIn('tag_id', $results);

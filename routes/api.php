@@ -20,4 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('recipes/{category_id}', 'RecipesController@category');
 
 Route::get('fridge/', 'FridgeController@apitags');
-Route::post('fridge/', 'FridgeController@search');
+Route::get('fridged/', 'FridgeController@search');
+
