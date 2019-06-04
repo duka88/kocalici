@@ -56,7 +56,10 @@
 
             </div>
           </div>
-
+          <!--------Vue Score ------>
+         <div id="app">
+           <score-component :user_id="{{auth()->user()->id}}" :post_id="{{$recipe->id}}"></score-component>
+         </div>
 
         </div>
       </div>

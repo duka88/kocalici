@@ -1384,7 +1384,7 @@ module.exports = function spread(callback) {
 
 
 var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
-var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
+var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/axios/node_modules/is-buffer/index.js");
 
 /*global toString:true*/
 
@@ -1688,6 +1688,28 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/axios/node_modules/is-buffer/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/axios/node_modules/is-buffer/index.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
@@ -1776,21 +1798,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       tags: {},
       recipes: {},
-      searchRecipes: [],
-      pagination: {}
+      searchRecipes: []
     };
   },
   methods: {
@@ -1807,28 +1820,11 @@ __webpack_require__.r(__webpack_exports__);
     searchedRecipes: function searchedRecipes(page_url) {
       var _this2 = this;
 
-      var vm = this;
-      axios({
-        method: 'post',
-        url: '/api/fridge/',
-        data: {
-          tag: this.searchRecipes
-        }
-      }).then(function (_ref2) {
+      var result = JSON.stringify(this.searchRecipes);
+      axios.get("api/fridged/?tag=".concat(result)).then(function (_ref2) {
         var data = _ref2.data;
         _this2.recipes = data.data;
-        console.log(data.meta, data.links);
-        vm.makePagination(data.meta, data.links);
       });
-    },
-    makePagination: function makePagination(meta, links) {
-      var pagination = {
-        current_page: meta.current_page,
-        last_page: meta.last_page,
-        next_page_url: links.next,
-        prev_page_url: links.prev
-      };
-      this.pagination = pagination;
     }
   },
   created: function created() {
@@ -1917,7 +1913,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(page_url).then(function (_ref) {
         var data = _ref.data;
         _this.recipes = data;
-        console.log(data.meta, data.links);
         vm.makePagination(data.meta, data.links);
       })["catch"](function (error) {
         console.log(error);
@@ -1969,9 +1964,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  props: ['post_id', 'user_id'],
+  data: function data() {
+    return {
+      avg: '',
+      score: '5'
+    };
+  },
+  methods: {
+    rateRecipe: function rateRecipe() {
+      var vm = this;
+      axios.post('/api/rating', {
+        recipe_id: this.post_id,
+        user_id: this.user_id,
+        score: this.score
+      }).then(function (_ref) {
+        var data = _ref.data;
+        vm.loadScores();
+      });
+    },
+    loadScores: function loadScores() {
+      var _this = this;
+
+      axios.get("/api/rating/".concat(this.user_id, "/").concat(this.post_id)).then(function (_ref2) {
+        var data = _ref2.data;
+        _this.avg = data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  },
+  created: function created() {
+    this.loadScores();
   }
 });
 
@@ -6551,38 +6579,6 @@ __webpack_require__.r(__webpack_exports__);
 
 }));
 //# sourceMappingURL=bootstrap.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/is-buffer/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/is-buffer/index.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-// The _isBuffer check is for Safari 5-7 support, because it's missing
-// Object.prototype.constructor. Remove this eventually
-module.exports = function (obj) {
-  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-}
-
-function isBuffer (obj) {
-  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-// For Node v0.10 support. Remove this eventually.
-function isSlowBuffer (obj) {
-  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
-}
 
 
 /***/ }),
@@ -38821,108 +38817,41 @@ var render = function() {
     _c(
       "div",
       { staticClass: "row justify-content-center" },
-      [
-        _vm._l(_vm.recipes, function(recipe) {
-          return _c("div", { key: recipe.id, staticClass: "col-md-4" }, [
-            _c("div", { staticClass: "card my-card" }, [
-              _c("img", {
-                attrs: {
-                  src: "/img/MD/" + recipe.image,
-                  width: "480px",
-                  height: "300"
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c(
-                  "div",
-                  { staticClass: "card-title d-flex justify-content-center" },
-                  [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "text-capitalize btn card-link  ",
-                        attrs: { href: "<?php the_permalink(); ?>" }
-                      },
-                      [_vm._v(_vm._s(recipe.title))]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _vm._m(0, true)
-              ]),
-              _vm._v(" "),
-              _vm._m(1, true)
-            ])
-          ])
-        }),
-        _vm._v(" "),
-        _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
-          _c("ul", { staticClass: "pagination" }, [
-            _c(
-              "li",
-              {
-                staticClass: "page-item",
-                class: [{ disabled: !_vm.pagination.prev_page_url }]
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "page-link",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        return _vm.loadRecipes(_vm.pagination.prev_page_url)
-                      }
-                    }
-                  },
-                  [_vm._v("Previous")]
-                )
-              ]
-            ),
+      _vm._l(_vm.recipes, function(recipe) {
+        return _c("div", { key: recipe.id, staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card my-card" }, [
+            _c("img", {
+              attrs: {
+                src: "/img/MD/" + recipe.image,
+                width: "480px",
+                height: "300"
+              }
+            }),
             _vm._v(" "),
-            _c("li", { staticClass: "page-item disabled" }, [
+            _c("div", { staticClass: "card-body" }, [
               _c(
-                "a",
-                { staticClass: "page-link text-dark", attrs: { href: "#" } },
+                "div",
+                { staticClass: "card-title d-flex justify-content-center" },
                 [
-                  _vm._v(
-                    "Page " +
-                      _vm._s(_vm.pagination.current_page) +
-                      " of " +
-                      _vm._s(_vm.pagination.last_page)
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-capitalize btn card-link  ",
+                      attrs: { href: "<?php the_permalink(); ?>" }
+                    },
+                    [_vm._v(_vm._s(recipe.title))]
                   )
                 ]
-              )
+              ),
+              _vm._v(" "),
+              _vm._m(0, true)
             ]),
             _vm._v(" "),
-            _c(
-              "li",
-              {
-                staticClass: "page-item",
-                class: [{ disabled: !_vm.pagination.next_page_url }]
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "page-link",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        return _vm.loadRecipes(_vm.pagination.next_page_url)
-                      }
-                    }
-                  },
-                  [_vm._v("Next")]
-                )
-              ]
-            )
+            _vm._m(1, true)
           ])
         ])
-      ],
-      2
+      }),
+      0
     ),
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
@@ -39293,30 +39222,61 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "container mb-5" }, [
       _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [_vm._v("Score")]),
+        _c(
+          "form",
+          {
+            staticClass: "form-control",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.rateRecipe($event)
+              }
+            }
+          },
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.score,
+                  expression: "score"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "range",
+                name: "score",
+                min: "1",
+                max: "10",
+                value: "5",
+                id: "score"
+              },
+              domProps: { value: _vm.score },
+              on: {
+                __r: function($event) {
+                  _vm.score = $event.target.value
+                }
+              }
+            }),
             _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
+            _c("span", [_vm._v(_vm._s(_vm.score) + _vm._s(_vm.avg))]),
+            _vm._v(" "),
+            _c("button", {
+              staticClass: "btn btn-success",
+              attrs: { type: "submit", name: "submit", value: "submit" }
+            }),
+            _vm._v("Rate ")
+          ]
+        )
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -54397,6 +54357,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
 });
 Vue.component('recipes-component', __webpack_require__(/*! ./components/Recipes.vue */ "./resources/js/components/Recipes.vue")["default"]);
 Vue.component('fridge-component', __webpack_require__(/*! ./components/Fridge.vue */ "./resources/js/components/Fridge.vue")["default"]);
+Vue.component('score-component', __webpack_require__(/*! ./components/Score.vue */ "./resources/js/components/Score.vue")["default"]);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -54553,15 +54514,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************!*\
   !*** ./resources/js/components/Fridge.vue ***!
   \********************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Fridge_vue_vue_type_template_id_5dfdaca0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Fridge.vue?vue&type=template&id=5dfdaca0& */ "./resources/js/components/Fridge.vue?vue&type=template&id=5dfdaca0&");
 /* harmony import */ var _Fridge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Fridge.vue?vue&type=script&lang=js& */ "./resources/js/components/Fridge.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Fridge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Fridge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -54591,7 +54551,7 @@ component.options.__file = "resources/js/components/Fridge.vue"
 /*!*********************************************************************!*\
   !*** ./resources/js/components/Fridge.vue?vue&type=script&lang=js& ***!
   \*********************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
