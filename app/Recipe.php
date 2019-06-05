@@ -36,6 +36,11 @@ class Recipe extends Model
         return $this->belongsToMany(Tag::class);
     }
 
+      public function galleries(){
+
+        return $this->hasMany(Gallery::class);
+    }
+
     public function user(){
 
         return $this->belongsTo(User::class);
@@ -61,7 +66,7 @@ class Recipe extends Model
         return $this->hasMany(Score::class);
     }
 
-    public function uploadImageSize($uploadedImage){
+    /*public function uploadImageSize($uploadedImage){
 
         $imagePathXS = public_path('img/XS/');
            $imagePathMD = public_path('img/MD/');
@@ -79,5 +84,5 @@ class Recipe extends Model
                     ->fit(480, 300)->save($savePathMD);
 
          return $imageName;           
-    }
+    }*/
 }

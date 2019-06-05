@@ -22,6 +22,6 @@ Route::get('recipes/{category_id}', 'RecipesController@category');
 Route::get('fridge', 'FridgeController@apitags');
 Route::get('fridged', 'FridgeController@search');
 Route::post('rating', 'ScoreController@create');
-Route::get('rating/{user}/{recipe}', 'ScoreController@show');
+Route::get('rating/{recipe}', 'ScoreController@show');
 
 

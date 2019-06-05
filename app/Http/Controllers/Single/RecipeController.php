@@ -14,7 +14,15 @@ class RecipeController extends Controller
 {
     public function show(Recipe $recipe){
 
-    	return view('recipes.show')->with('recipe',$recipe)->with('user', auth()->user())->with('score',Score::where('recipe_id', $recipe->id));
+        $score_chack = Score::where([['user_id', auth()->user()->id],['recipe_id', $recipe->id]])->get();
+
+        if(count($score_chack) !== 0){
+           $score = false;
+        }else{
+            $score = true;
+        }
+
+    	return view('recipes.show')->with('recipe',$recipe)->with('user', auth()->user())->with('score', $score);
     }
 
     public function category(Category $category){
@@ -27,4 +35,6 @@ class RecipeController extends Controller
     	return view('recipes.tag')->with('tag', $tag)
     	->with('recipes', $tag->recipes()->searched()->simplePaginate(2))->with('tags',Tag::all())->with('categories',Category::all());
     }
+
+  
 }

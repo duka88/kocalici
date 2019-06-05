@@ -19,10 +19,11 @@ class ScoreController extends Controller
      
    }
 
-   public function show($user, $recipe){
-        
-        if(isset($user) && isset($recipe)){
-        	$score = Score::where([['user_id', $user],['recipe_id', $recipe]])->avg('score');
+   public function show($recipe){
+       
+
+        if(isset($recipe)){
+        	$score = Score::where('recipe_id', $recipe)->avg('score');
 
          return Response($score);
 

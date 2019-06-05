@@ -13,10 +13,8 @@ use  App\Http\Controllers\Single\RecipeController;
 */
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
-Route::get('/recipes/{recipe}',[RecipeController::class,'show'])->name('recipes.show');    
-Route::get('recipes/categories/{category}',[RecipeController::class, 'category'])->name('recipe.category');
-Route::get('recipes/tags/{tag}',[RecipeController::class, 'tag'])->name('recipe.tag');
-Route::post('score/recipe/', 'ScoreController@create')->name('score.create');
+Route::get('/recipes/{recipe}','RecipeController@show')->name('recipes.show');    
+
 Route::get('fridge', 'FridgeController@index')->name('fridge');
 
 
@@ -40,5 +38,8 @@ Route::middleware(['auth', 'admin'])->group(function(){
 	Route::post('users/{user}/make-admin', 'UsersController@makeAdmin')->name('users.make-admin');
 
 });
+
+Route::get('recipe-vue', 'RecipesController@recipevue');
+
  
- Route::get('{path}','HomeController@index')->where( 'path', '([A-z\d-/_.]+)?' );
+// Route::get('{path}','HomeController@index')->where( 'path', '([A-z\d-/_.]+)?' );

@@ -175,7 +175,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        App\Providers\HelperServicesProvider::class,
+       
     ],
 
     /*
@@ -228,6 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Gravatar' => Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Helper' => App\Http\Helper::class,
 
 
 

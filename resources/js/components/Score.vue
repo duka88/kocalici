@@ -44,7 +44,7 @@
 
           },
           loadScores(){
-              axios.get(`/api/rating/${this.user_id}/${this.post_id}`)
+              axios.get(`/api/rating/${this.post_id}`)
                    .then(({data}) =>{
 
                         this.avg = data
