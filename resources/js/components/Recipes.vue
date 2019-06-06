@@ -20,7 +20,7 @@
                      <h4 class="primary-color d-flex justify-content-center"><i class="far fa-clock"></i>60 min</h4>
                       </div>
                       <div class="col-lg-6  d-flex justify-content-center ">
-                          <h2 class="prosek "><i class="fas fa-utensils"></i> 50</h2>
+                          <h2 class="prosek "><i class="fas fa-utensils"></i>{{recipe.avg |  numberFormat}}</h2>
                       </div>
                   </div>
                  
@@ -93,7 +93,19 @@
     },
     created() {
             this.loadRecipes();
+        },
+    filters: {
+        numberFormat: function(value){
+          
+          if(value != null){
+           value = (Math.round(value * 10) / 10).toFixed(1);
+
+           return value;
+         }else{
+          return value;
+         }
         }
+    },    
     }
 </script>
 

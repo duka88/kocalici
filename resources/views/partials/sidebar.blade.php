@@ -12,12 +12,7 @@
               
                 <h6 class="sidebar-title mt-4"><a href=" {{route('fridge')}}">Fridge</a></h6>
                  
-                <h6 class="sidebar-title">Categories</h6>
-                <div class="row link-color-default fs-14 lh-24">
-                 @foreach($categories as $category)    
-                  <div class="col-6"><a href="{{route('recipe.category', $category->id)}}">{{$category->name}}</a></div>  
-                 @endforeach                 
-                </div>
+              
 
                 <hr>
 
@@ -41,20 +36,7 @@
                   <img class="rounded w-65px mr-4" src="../assets/img/thumb/2.jpg">
                   <p class="media-body small-2 lh-4 mb-0">Top 5 brilliant content marketing strategies</p>
                 </a>
-
-                <hr>
-
-                <h6 class="sidebar-title">Tags</h6>
-                <div class="gap-multiline-items-1">
-                 @foreach($tags as $tag)   
-                  <a class="badge badge-secondary" href="{{route('recipe.tag', $tag->id)}}">{{$tag->name}}</a>
-                 @endforeach 
-                </div>
-
-                <hr>
-
-               
-
+            
 
               </div>
             </div>

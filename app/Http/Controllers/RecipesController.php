@@ -8,8 +8,8 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\Recipe\CreateRecipeRequest;
 use App\Http\Requests\Recipe\UpdateRecipeRequest;
-use Intervention\Image\Facades\Image;
 use App\Http\Resources\RecipeResources;
+use Helper;
 
 class RecipesController extends Controller
 {
@@ -47,7 +47,7 @@ class RecipesController extends Controller
     public function store(CreateRecipeRequest $request)
     {
          $recipeImg = new Recipe;
-        $imageName = $recipeImg->uploadImageSize($request->image);
+        $imageName = Helper::uploadImageSize($request->image);
 
 
         $recipe = Recipe::create([
@@ -103,7 +103,7 @@ class RecipesController extends Controller
         if($request->hasFile('image')){
            
         
-           $imageName = $recipe->uploadImageSize($request->image);
+           $imageName = Helper::uploadImageSize($request->image);
 
          
 
@@ -178,4 +178,10 @@ class RecipesController extends Controller
 
         return RecipeResources::collection($recipes);
     }
+
+      public function recipevue(){
+
+         return view('recipe_create');
+    }
+   
 }
