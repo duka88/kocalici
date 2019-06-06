@@ -5,9 +5,12 @@ use Session;
 use App\Tag;
 use App\Recipe;
 use App\Category;
+use App\Gallery;
 use Illuminate\Http\Request;
 use App\Http\Requests\Recipe\CreateRecipeRequest;
 use App\Http\Requests\Recipe\UpdateRecipeRequest;
+use App\Http\Requests\Recipe\GalleryRequest;
+use App\Http\Resources\GalleryResources;
 use App\Http\Resources\RecipeResources;
 use Helper;
 
@@ -183,5 +186,7 @@ class RecipesController extends Controller
 
          return view('recipe_create');
     }
+
+   
    
 }

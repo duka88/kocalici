@@ -50,7 +50,7 @@
               <div class="gap-xy-2 mt-6">
              @foreach($recipe->tags as $tag)
 
-                <a class="badge badge-pill badge-secondary" href="{{route('recipe.tag', $tag->id)}}">{{$tag->name}}</a>
+                <a class="badge badge-pill badge-secondary">{{$tag->name}}</a>
                @endforeach
               </div>
 
