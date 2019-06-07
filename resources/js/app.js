@@ -8,10 +8,11 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import VueRouter from 'vue-router';
+import VueRouter from 'vue-router'; 
 import {store} from 'store';
+import CKEditor from '@ckeditor/ckeditor5-vue';
 
-
+Vue.use(CKEditor);
 Vue.use(VueRouter);
 
 const routes = [
@@ -55,5 +56,5 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
     store,
-    router
+    router,  
 });
