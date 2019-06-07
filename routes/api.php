@@ -23,5 +23,8 @@ Route::get('fridge', 'FridgeController@apitags');
 Route::get('fridged', 'FridgeController@search');
 Route::post('rating', 'ScoreController@create');
 Route::get('rating/{recipe}', 'ScoreController@show');
+Route::post('gallery', 'GalleryController@store');
+Route::get('gallery', 'GalleryController@index');
+Route::put('gallery', 'GalleryController@edit');
 
 

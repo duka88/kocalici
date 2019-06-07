@@ -1731,10 +1731,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      photo: ''
+      photos: {},
+      photo: '',
+      name: '',
+      show: '',
+      number: 0
     };
   },
   methods: {
@@ -1742,20 +1761,45 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var file = e.target.files[0];
+      this.name = e.target.files[0].name;
       var reader = new FileReader();
+      console.log(e.target);
 
       if (file['size'] < 2097152) {
         reader.onloadend = function (file) {
           _this.photo = reader.result;
+
+          _this.uploadRecipes(reader.result, e.target.files[0].name);
         };
 
         reader.readAsDataURL(file);
       }
     },
-    uploadRecipes: function uploadRecipes() {}
+    uploadRecipes: function uploadRecipes(photo, name, id) {
+      axios.post('/api/gallery', {
+        image: photo,
+        name: name,
+        id: id
+      });
+    },
+    loadGallery: function loadGallery() {
+      var _this2 = this;
+
+      axios.get('api/gallery').then(function (_ref) {
+        var data = _ref.data;
+        _this2.photos = data.data;
+        _this2.show = data.data[0].image;
+      });
+    },
+    editGallery: function editGallery(photo, name) {
+      axios.put('api/gallery', {
+        image: photo,
+        name: name
+      });
+    }
   },
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  created: function created() {
+    this.loadGallery();
   }
 });
 
@@ -38827,36 +38871,71 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.uploadRecipes($event)
-          }
-        }
-      },
-      [
-        _c("input", {
-          attrs: { type: "file" },
-          on: { change: _vm.uploadPicture }
-        }),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-success btn-block btn-sm col-1",
-            attrs: { type: "submit" }
-          },
-          [_vm._v("Save")]
-        )
-      ]
-    )
-  ])
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("img", {
+        attrs: { src: "/img/MD/" + _vm.show, width: "480px", height: "300" }
+      }),
+      _vm._v(" "),
+      _vm._l(_vm.photos, function(phots, index) {
+        return _c("div", { key: _vm.photos.id }, [
+          _c("img", {
+            attrs: {
+              src: "/img/XS/" + phots.image,
+              type: "button",
+              width: "60px",
+              height: "50px"
+            },
+            on: {
+              click: function($event) {
+                _vm.show = phots.image
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("form", { on: { change: _vm.uploadPicture } }, [
+            _c("input", {
+              attrs: { type: "hidden" },
+              domProps: { value: phots.id }
+            }),
+            _vm._v(" "),
+            _vm._m(0, true)
+          ])
+        ])
+      }),
+      _vm._v(" "),
+      _vm.photos.length <= 16
+        ? _c("div", [
+            _c("label", { staticClass: "custom-file-upload" }, [
+              _c("input", {
+                staticStyle: { display: "none" },
+                attrs: { type: "file" },
+                on: { change: _vm.uploadPicture }
+              }),
+              _vm._v("\n                Custom Upload\n            ")
+            ])
+          ])
+        : _vm._e()
+    ],
+    2
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "custom-file-upload" }, [
+      _c("input", {
+        staticStyle: { display: "none" },
+        attrs: { type: "file" }
+      }),
+      _vm._v("\n                Custom Upload\n            ")
+    ])
+  }
+]
 render._withStripped = true
 
 
