@@ -1792,6 +1792,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1799,9 +1810,29 @@ __webpack_require__.r(__webpack_exports__);
       editor: _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0___default.a,
       editorConfig: {// The configuration of the rich-text editor.
       },
+      tags: {},
+      newtags: {},
       categories: {},
+      items: [{
+        image: false,
+        name: ''
+      }, {
+        image: false,
+        name: ''
+      }, {
+        image: false,
+        name: ''
+      }, {
+        image: false,
+        name: ''
+      }, {
+        image: false,
+        name: ''
+      }, {
+        image: false,
+        name: ''
+      }],
       photos: {},
-      photo: '',
       name: '',
       show: '',
       number: 0,
@@ -1810,40 +1841,32 @@ __webpack_require__.r(__webpack_exports__);
         content: '',
         title: '',
         category_id: '',
-        description: ''
+        description: '',
+        tags: []
       }
     };
   },
   props: ['user_id'],
   methods: {
-    uploadPicture: function uploadPicture(e) {
-      var _this = this;
-
-      console.log(e.target.files);
-      var file = e.target.files[0];
-      this.name = e.target.files[0].name;
+    onFileChange: function onFileChange(item, e) {
+      var files = e.target.files || e.dataTransfer.files;
+      var name = e.target.files[0].name;
+      if (!files.length) return;
+      this.createImage(item, files[0], name);
+    },
+    createImage: function createImage(item, file, name) {
+      var image = new Image();
       var reader = new FileReader();
-      console.log(e.target);
 
-      if (file['size'] < 2097152) {
-        reader.onloadend = function (file) {
-          _this.photo = reader.result;
+      reader.onload = function (e) {
+        item.image = e.target.result;
+        item.name = name;
+      };
 
-          if (_this.id != 'a') {
-            if (_this.id == '') {
-              _this.uploadGallery();
-
-              _this.loadGallery();
-            } else {
-              _this.editGallery();
-
-              _this.loadGallery();
-            }
-          }
-        };
-
-        reader.readAsDataURL(file);
-      }
+      reader.readAsDataURL(file);
+    },
+    removeImage: function removeImage(item) {
+      item.image = false;
     },
     uploadGallery: function uploadGallery() {
       axios.post('/api/gallery', {
@@ -1852,20 +1875,29 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     loadGallery: function loadGallery() {
-      var _this2 = this;
+      var _this = this;
 
       axios.get('api/gallery').then(function (_ref) {
         var data = _ref.data;
-        _this2.photos = data.data;
-        _this2.show = data.data[0].image;
+        _this.photos = data.data;
+        _this.show = data.data[0].image;
       });
-      console.log(this.photos);
+    },
+    loadTags: function loadTags() {
+      var _this2 = this;
+
+      axios.get('api/fridge').then(function (_ref2) {
+        var data = _ref2.data;
+        _this2.tags = data.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
     },
     loadCategories: function loadCategories() {
       var _this3 = this;
 
-      axios.get('api/category').then(function (_ref2) {
-        var data = _ref2.data;
+      axios.get('api/category').then(function (_ref3) {
+        var data = _ref3.data;
         _this3.categories = data.data;
       });
     },
@@ -1878,16 +1910,18 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     uploadRecipe: function uploadRecipe() {
+      var image = this.items[0];
       axios.post('api/recipe', {
         title: this.recipe.title,
         description: this.recipe.description,
         content: this.recipe.content,
-        image: this.photo,
-        name: this.name,
+        image: image.image,
+        name: image.name,
         user_id: this.user_id,
-        category_id: this.recipe.category_id
-      }).then(function (_ref3) {
-        var data = _ref3.data;
+        category_id: this.recipe.category_id,
+        gallery: this.items
+      }).then(function (_ref4) {
+        var data = _ref4.data;
         var recipe_id = data.id;
       });
     }
@@ -1895,6 +1929,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.loadGallery();
     this.loadCategories();
+    this.loadTags();
   }
 });
 
@@ -2201,6 +2236,276 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.loadScores();
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Tag.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Tag.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var _methods;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['unique'],
+
+  /*
+    Defines the data used by the component.
+  */
+  data: function data() {
+    return {
+      currentTag: '',
+      tagsArray: [],
+      tagSearchResults: [],
+      duplicateFlag: false,
+      searchSelectedIndex: -1,
+      pauseSearch: false
+    };
+  },
+
+  /*
+  Clear tags
+  */
+  mounted: function mounted() {
+    EventBus.$on('clear-tags', function (unique) {
+      this.currentTag = '';
+      this.tagsArray = [];
+      this.tagSearchResults = [];
+      this.duplicateFlag = false;
+      this.searchSelectedIndex = -1;
+      this.pauseSearch = false;
+    }.bind(this));
+  },
+
+  /*
+    Defines the computed data.
+  */
+  computed: {
+    /*
+      Determines if we should show the autocomplete or not.
+    */
+    showAutocomplete: function showAutocomplete() {
+      return this.tagSearchResults.length == 0 ? false : true;
+    }
+  },
+
+  /*
+    Defines the methods used by the component.
+  */
+  methods: (_methods = {
+    /*
+      Handles the selection of a tag from the autocomplete.
+    */
+    selectTag: function selectTag(tag) {
+      /*
+        Check if there are duplicates in the array.
+      */
+      if (!this.checkDuplicates(tag)) {
+        /*
+          Clean the tag name and add it to the array.
+        */
+        tag = this.cleanTagName(tag);
+        this.tagsArray.push(tag);
+        /*
+          Emit the tags array and reset the inputs.
+        */
+
+        EventBus.$emit('tags-edited', {
+          unique: this.unique,
+          tags: this.tagsArray
+        });
+        this.resetInputs();
+      } else {
+        /*
+          Flag as duplicate
+        */
+        this.duplicateFlag = true;
+      }
+    },
+
+    /*
+      Adds a new tag from the input
+    */
+    addNewTag: function addNewTag() {
+      /*
+        If the tag is not a duplicate, continue.
+      */
+      if (!this.checkDuplicates(this.currentTag)) {
+        var newTagName = this.cleanTagName(this.currentTag);
+        this.tagsArray.push(newTagName);
+        /*
+          Emit the tags have been edited.
+        */
+
+        EventBus.$emit('tags-edited', {
+          unique: this.unique,
+          tags: this.tagsArray
+        });
+        /*
+          Reset the inputs
+        */
+
+        this.resetInputs();
+      } else {
+        this.duplicateFlag = true;
+      }
+    },
+
+    /*
+      Remove the tag from the tags array.
+    */
+    removeTag: function removeTag(tagIndex) {
+      this.tagsArray.splice(tagIndex, 1);
+      /*
+        Emit that the tags have been edited.
+      */
+
+      EventBus.$emit('tags-edited', {
+        unique: this.unique,
+        tags: this.tagsArray
+      });
+    },
+
+    /*
+      Allows the user to select a tag going up or down on the
+      autocomplete.
+    */
+    changeIndex: function changeIndex(direction) {
+      /*
+        Flags to pause the search since we don't want to search on arrows up
+        or down.
+      */
+      this.pauseSearch = true;
+      /*
+        If the direction is up and we are not at the beginning of the tags array,
+        we move the index up and set the current tag to that in the autocomplete.
+      */
+
+      if (direction == 'up' && this.searchSelectedIndex - 1 > -1) {
+        this.searchSelectedIndex = this.searchSelectedIndex - 1;
+        this.currentTag = this.tagSearchResults[this.searchSelectedIndex].tag;
+      }
+      /*
+        If the direction is down and we are not at the end of the tags array, we
+        move the index down and set the current tag to that of the autocomplete.
+      */
+
+
+      if (direction == 'down' && this.searchSelectedIndex + 1 <= this.tagSearchResults.length - 1) {
+        this.searchSelectedIndex = this.searchSelectedIndex + 1;
+        this.currentTag = this.tagSearchResults[this.searchSelectedIndex].tag;
+      }
+    },
+
+    /*
+      Searches the API route for tags with the autocomplete.
+    */
+    searchTags: function searchTags() {
+      if (this.currentTag.length > 2 && !this.pauseSearch) {
+        this.searchSelectedIndex = -1;
+        axios.get(ROAST_CONFIG.API_URL + '/tags', {
+          params: {
+            search: this.currentTag
+          }
+        }).then(function (response) {
+          this.tagSearchResults = response.data;
+        }.bind(this));
+      }
+    },
+
+    /*
+      Check for tag duplicates.
+    */
+    checkDuplicates: function checkDuplicates(tagName) {
+      tagName = this.cleanTagName(tagName);
+      return this.tagsArray.indexOf(tagName) > -1;
+    },
+
+    /*
+      Cleans the tag to remove any unnecessary whitespace or
+      symbols.
+    */
+    cleanTagName: function cleanTagName(tagName) {
+      /*
+        Convert to lower case
+      */
+      var cleanTag = tagName.toLowerCase();
+      /*
+        Trim whitespace from beginning and end of tag and
+        convert anything not a letter or number to a dash.
+      */
+
+      cleanTag = cleanTag.trim().replace(/[^a-zA-Z0-9]/g, '-');
+      /*
+        Remove multiple instance of '-' and group to one.
+      */
+
+      cleanTag = cleanTag.replace(/-{2,}/, '-');
+      /*
+        Get rid of leading and trailing '-'
+      */
+
+      cleanTag = this.trimCharacter(cleanTag, '-');
+      /*
+        Return the clean tag
+      */
+
+      return cleanTag;
+    }
+  }, _defineProperty(_methods, "removeTag", function removeTag(tagIndex) {
+    this.tagsArray.splice(tagIndex, 1);
+  }), _defineProperty(_methods, "trimCharacter", function trimCharacter(string, character) {
+    if (character === "]") c = "\\]";
+    if (character === "\\") c = "\\\\";
+    return string.replace(new RegExp("^[" + character + "]+|[" + character + "]+$", "g"), "");
+  }), _defineProperty(_methods, "resetInputs", function resetInputs() {
+    this.currentTag = '';
+    this.tagSearchResults = [];
+    this.duplicateFlag = false;
+    this.searchSelectedIndex = -1;
+    this.pauseSearch = false;
+  }), _defineProperty(_methods, "focusTagInput", function focusTagInput() {
+    document.getElementById(this.unique).focus();
+  }), _defineProperty(_methods, "handleDelete", function handleDelete() {
+    this.duplicateFlag = false;
+    this.pauseSearch = false;
+    this.searchSelectedIndex = -1;
+    /*
+      If the current tag has no data, we remove the last tag.
+    */
+
+    if (this.currentTag.length == 0) {
+      this.tagsArray.splice(this.tagsArray.length - 1, 1);
+      /*
+        Emit that the tags have been edited.
+      */
+
+      EventBus.$emit('tags-edited', {
+        unique: this.unique,
+        tags: this.tagsArray
+      });
+    }
+  }), _methods)
 });
 
 /***/ }),
@@ -38970,190 +39275,243 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.recipe.description,
-            expression: "recipe.description"
-          }
-        ],
-        attrs: { type: "text" },
-        domProps: { value: _vm.recipe.description },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.recipe, "description", $event.target.value)
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        {
-          staticClass: "custom-file-upload",
-          on: {
-            click: function($event) {
-              _vm.id = "a"
-            }
-          },
-          model: {
-            value: _vm.recipe.image,
-            callback: function($$v) {
-              _vm.$set(_vm.recipe, "image", $$v)
-            },
-            expression: "recipe.image"
-          }
-        },
-        [
-          _c("input", {
-            staticStyle: { display: "none" },
-            attrs: { type: "file" },
-            on: { change: _vm.uploadPicture }
-          }),
-          _vm._v("\n                    Custom Upload\n                ")
-        ]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.recipe.title,
-            expression: "recipe.title"
-          }
-        ],
-        attrs: { type: "text" },
-        domProps: { value: _vm.recipe.title },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.recipe, "title", $event.target.value)
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
+        _vm._v(" "),
+        _c("input", {
           directives: [
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.recipe.category_id,
-              expression: "recipe.category_id"
+              value: _vm.recipe.title,
+              expression: "recipe.title"
             }
           ],
+          staticClass: "form-control",
+          attrs: { name: "title", type: "text" },
+          domProps: { value: _vm.recipe.title },
           on: {
-            change: function($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function(o) {
-                  return o.selected
-                })
-                .map(function(o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.$set(
-                _vm.recipe,
-                "category_id",
-                $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-              )
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.recipe, "title", $event.target.value)
             }
           }
-        },
-        _vm._l(_vm.categories, function(category) {
-          return _c("option", { domProps: { value: category.id } }, [
-            _vm._v(_vm._s(category.name))
-          ])
-        }),
-        0
-      ),
+        })
+      ]),
       _vm._v(" "),
-      _c("ckeditor", {
-        attrs: { editor: _vm.editor, config: _vm.editorConfig },
-        model: {
-          value: _vm.recipe.content,
-          callback: function($$v) {
-            _vm.$set(_vm.recipe, "content", $$v)
+      _c("div", { staticClass: "form-gropup" }, [
+        _c("label", { attrs: { for: "title" } }, [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.recipe.description,
+              expression: "recipe.description"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { name: "description", type: "text" },
+          domProps: { value: _vm.recipe.description },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.recipe, "description", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-gropup mb-4" }, [
+        _c("label", { attrs: { for: "title" } }, [_vm._v("Category")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.recipe.category_id,
+                expression: "recipe.category_id"
+              }
+            ],
+            staticClass: "form-control",
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.recipe,
+                  "category_id",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              }
+            }
           },
-          expression: "recipe.content"
-        }
-      }),
+          _vm._l(_vm.categories, function(category) {
+            return _c("option", { domProps: { value: category.id } }, [
+              _vm._v(_vm._s(category.name))
+            ])
+          }),
+          0
+        )
+      ]),
       _vm._v(" "),
-      _c("button", { on: { click: _vm.uploadRecipe } }, [_vm._v("test")]),
-      _vm._v(" "),
-      _c("img", {
-        attrs: { src: "/img/MD/" + _vm.show, width: "480px", height: "300" }
-      }),
-      _vm._v(" "),
-      _vm._l(_vm.photos, function(phots, index) {
-        return _c("div", { key: _vm.photos.id }, [
-          _c("img", {
-            attrs: {
-              src: "/img/XS/" + phots.image,
-              type: "button",
-              width: "60px",
-              height: "50px"
+      _vm._l(_vm.tags, function(tag) {
+        return _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.recipe.tags,
+                expression: "recipe.tags"
+              }
+            ],
+            staticClass: "form-check-input",
+            attrs: { type: "checkbox", name: "tags" },
+            domProps: {
+              value: tag.id,
+              checked: Array.isArray(_vm.recipe.tags)
+                ? _vm._i(_vm.recipe.tags, tag.id) > -1
+                : _vm.recipe.tags
             },
             on: {
-              click: function($event) {
-                _vm.show = phots.image
+              change: function($event) {
+                var $$a = _vm.recipe.tags,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = tag.id,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && _vm.$set(_vm.recipe, "tags", $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.recipe,
+                        "tags",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.recipe, "tags", $$c)
+                }
               }
             }
           }),
           _vm._v(" "),
-          _c("form", { on: { change: _vm.uploadPicture } }, [
-            _c("input", {
-              attrs: { type: "hidden" },
-              domProps: { value: phots.id }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-file-upload",
-                on: {
-                  click: function($event) {
-                    _vm.id = phots.id
-                  }
-                }
-              },
-              [
-                _c("input", {
-                  staticStyle: { display: "none" },
-                  attrs: { type: "file" },
-                  on: {
-                    click: function($event) {
-                      _vm.id = phots.id
-                    }
-                  }
-                }),
-                _vm._v("\n                    Custom Upload\n                ")
-              ]
-            )
-          ])
+          _c(
+            "label",
+            { staticClass: "form-check-label", attrs: { for: "tags" } },
+            [_vm._v(_vm._s(tag.name))]
+          )
         ])
       }),
       _vm._v(" "),
-      _vm.photos.length <= 6
-        ? _c("div", [
-            _c("label", { staticClass: "custom-file-upload" }, [
-              _c("input", {
-                staticStyle: { display: "none" },
-                attrs: { type: "file" },
-                on: { change: _vm.uploadPicture }
-              }),
-              _vm._v("\n                Custom Upload\n            ")
-            ])
-          ])
-        : _vm._e()
+      _c("div", { staticClass: "form-gropup" }, [
+        _c("label", { attrs: { for: "title" } }, [_vm._v("Add Tags")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.tags,
+              expression: "tags"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { name: "tag", type: "text" },
+          domProps: { value: _vm.tags },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.tags = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "form-gropup mb-4" },
+        [
+          _c("ckeditor", {
+            attrs: { editor: _vm.editor, config: _vm.editorConfig },
+            model: {
+              value: _vm.recipe.content,
+              callback: function($$v) {
+                _vm.$set(_vm.recipe, "content", $$v)
+              },
+              expression: "recipe.content"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary mb-4",
+          on: { click: _vm.uploadRecipe }
+        },
+        [_vm._v("Save")]
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.items, function(item, index) {
+        return _c("div", { staticClass: "form-gropup" }, [
+          !item.image
+            ? _c("div", [
+                index === 0 ? _c("h3", [_vm._v("Main Image")]) : _vm._e(),
+                _vm._v(" "),
+                _c("label", { staticClass: "custom-file-upload" }, [
+                  _c("input", {
+                    staticStyle: { display: "none" },
+                    attrs: { type: "file" },
+                    on: {
+                      change: function($event) {
+                        return _vm.onFileChange(item, $event)
+                      }
+                    }
+                  }),
+                  _vm._v("Custom Upload\n                     ")
+                ])
+              ])
+            : _c("div", [
+                _c("img", {
+                  attrs: { src: item.image, height: "300", width: "480" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.removeImage(item)
+                      }
+                    }
+                  },
+                  [_vm._v("Remove image")]
+                )
+              ])
+        ])
+      })
     ],
     2
   )
@@ -39690,6 +40048,169 @@ var render = function() {
         )
       ])
     ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Tag.vue?vue&type=template&id=8d320b02&":
+/*!******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Tag.vue?vue&type=template&id=8d320b02& ***!
+  \******************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "tags-input-container" }, [
+    _c("label", [_vm._v("Tags")]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "tags-input",
+        on: {
+          click: function($event) {
+            return _vm.focusTagInput()
+          }
+        }
+      },
+      [
+        _vm._l(_vm.tagsArray, function(selectedTag, key) {
+          return _c("div", { staticClass: "selected-tag" }, [
+            _vm._v(_vm._s(selectedTag) + " "),
+            _c(
+              "span",
+              {
+                staticClass: "remove-tag",
+                on: {
+                  click: function($event) {
+                    return _vm.removeTag(key)
+                  }
+                }
+              },
+              [_vm._v("×")]
+            )
+          ])
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.currentTag,
+              expression: "currentTag"
+            }
+          ],
+          staticClass: "new-tag-input",
+          class: { "duplicate-warning": _vm.duplicateFlag },
+          attrs: { type: "text", id: _vm.unique, placeholder: "Add a tag" },
+          domProps: { value: _vm.currentTag },
+          on: {
+            keyup: [
+              _vm.searchTags,
+              function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                return _vm.addNewTag($event)
+              }
+            ],
+            keydown: [
+              function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "up", 38, $event.key, [
+                    "Up",
+                    "ArrowUp"
+                  ])
+                ) {
+                  return null
+                }
+                return _vm.changeIndex("up")
+              },
+              function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "delete", [8, 46], $event.key, [
+                    "Backspace",
+                    "Delete",
+                    "Del"
+                  ])
+                ) {
+                  return null
+                }
+                return _vm.handleDelete($event)
+              },
+              function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "down", 40, $event.key, [
+                    "Down",
+                    "ArrowDown"
+                  ])
+                ) {
+                  return null
+                }
+                return _vm.changeIndex("down")
+              }
+            ],
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.currentTag = $event.target.value
+            }
+          }
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.showAutocomplete,
+            expression: "showAutocomplete"
+          }
+        ],
+        staticClass: "tag-autocomplete"
+      },
+      _vm._l(_vm.tagSearchResults, function(tag, key) {
+        return _c(
+          "div",
+          {
+            staticClass: "tag-search-result",
+            class: { "selected-search-index": _vm.searchSelectedIndex == key },
+            on: {
+              click: function($event) {
+                return _vm.selectTag(tag.tag)
+              }
+            }
+          },
+          [_vm._v(_vm._s(tag.tag))]
+        )
+      }),
+      0
+    )
   ])
 }
 var staticRenderFns = []
@@ -54779,6 +55300,7 @@ Vue.component('recipes-component', __webpack_require__(/*! ./components/Recipes.
 Vue.component('fridge-component', __webpack_require__(/*! ./components/Fridge.vue */ "./resources/js/components/Fridge.vue")["default"]);
 Vue.component('score-component', __webpack_require__(/*! ./components/Score.vue */ "./resources/js/components/Score.vue")["default"]);
 Vue.component('create-recipe-component', __webpack_require__(/*! ./components/CreateRecipe.vue */ "./resources/js/components/CreateRecipe.vue")["default"]);
+Vue.component('tag-component', __webpack_require__(/*! ./components/Tag.vue */ "./resources/js/components/Tag.vue")["default"]);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -54917,7 +55439,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************************************!*\
   !*** ./resources/js/components/CreateRecipe.vue?vue&type=template&id=7ab076d6& ***!
   \*********************************************************************************/
-/*! no static exports found */
+/*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -55202,6 +55724,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Score_vue_vue_type_template_id_513c1e37___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Score_vue_vue_type_template_id_513c1e37___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Tag.vue":
+/*!*****************************************!*\
+  !*** ./resources/js/components/Tag.vue ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Tag_vue_vue_type_template_id_8d320b02___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Tag.vue?vue&type=template&id=8d320b02& */ "./resources/js/components/Tag.vue?vue&type=template&id=8d320b02&");
+/* harmony import */ var _Tag_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Tag.vue?vue&type=script&lang=js& */ "./resources/js/components/Tag.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Tag_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Tag_vue_vue_type_template_id_8d320b02___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Tag_vue_vue_type_template_id_8d320b02___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Tag.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Tag.vue?vue&type=script&lang=js&":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/Tag.vue?vue&type=script&lang=js& ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tag_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Tag.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Tag.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tag_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Tag.vue?vue&type=template&id=8d320b02&":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/Tag.vue?vue&type=template&id=8d320b02& ***!
+  \************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tag_vue_vue_type_template_id_8d320b02___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Tag.vue?vue&type=template&id=8d320b02& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Tag.vue?vue&type=template&id=8d320b02&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tag_vue_vue_type_template_id_8d320b02___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tag_vue_vue_type_template_id_8d320b02___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

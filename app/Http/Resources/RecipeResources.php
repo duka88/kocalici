@@ -26,7 +26,8 @@ class RecipeResources extends JsonResource
           'category_id' => $this->category_id,
           'user_id' => $this->user_id,
           'avg' => $score,
-          'count' => $count
+          'count' => $count,
+          'gallery' => $this->gallery
         ];
     }
 }

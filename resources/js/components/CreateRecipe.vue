@@ -1,39 +1,50 @@
 <template>
-    <div class="container">
-         <input type="text" v-model="recipe.description">
+     <div class="container">
+       <div class="form-group"> 
+             <label for="title">Title</label>
+             <input name="title" v-model="recipe.title" type="text" class="form-control">
+             
+        </div>     
+        <div class="form-gropup">
+            <label for="title">Description</label>
+            <input name="description"  type="text" v-model="recipe.description" class="form-control">
+        </div>    
+        <div class="form-gropup mb-4">
+            <label for="title">Category</label>
+            <select v-model="recipe.category_id" class="form-control">
+                <option v-for="category in categories" :value="category.id">{{category.name}}</option>
+            </select>
+        </div>
+         <div v-for="tag in tags" class="form-check">
+            <input type="checkbox" class="form-check-input"  v-model="recipe.tags" :value="tag.id" name="tags">
+            <label class="form-check-label" for="tags">{{tag.name}}</label>
+        </div>
+         <div class="form-gropup">
+            <label for="title">Add Tags</label>
+            <input name="tag"  type="text" v-model="tags" class="form-control">
+        </div>  
+        <div class="form-gropup mb-4">    
+            <ckeditor :editor="editor" v-model="recipe.content" :config="editorConfig"></ckeditor>
+        </div>
+           <button class="btn btn-primary mb-4" @click="uploadRecipe">Save</button>
+          <!-------------Gallery ------------------->
 
-         <label class="custom-file-upload" v-model="recipe.image"
-                 @click="id = 'a'">
-                 <input style="display: none" type="file" @change="uploadPicture">
-                        Custom Upload
-                    </label>
-        <input v-model="recipe.title" type="text">
-        <select v-model="recipe.category_id" >
-            <option v-for="category in categories" :value="category.id">{{category.name}}</option>
-        </select>
-        <ckeditor :editor="editor" v-model="recipe.content" :config="editorConfig"></ckeditor>
-     <button @click="uploadRecipe">test</button>
-        <img :src="`/img/MD/${show}`" width="480px" height="300">
-               <div v-for="(phots, index) in photos" :key="photos.id">
-                     <img :src="`/img/XS/${phots.image}`"     
-                      type='button'
-                      @click="show = phots.image"
-                      width="60px" height="50px"> 
-                    <form  @change="uploadPicture" >
-                    <input  type="hidden"  :value="phots.id">
-                    <label class="custom-file-upload" @click="id = phots.id">
-                        <input style="display: none" type="file"  @click="id = phots.id" >
-                        Custom Upload
-                    </label>
-                   </form>
-             </div>
-             <div v-if="photos.length <= 6"> 
-                <label class="custom-file-upload">
-                    <input style="display: none"  @change="uploadPicture" type="file">
-                    Custom Upload
-                </label>
-             </div>   
-         
+                    <div v-for="(item, index) in items"  class="form-gropup">
+                        <div v-if="!item.image">
+                         <h3 v-if="index === 0">Main Image</h3>                     
+                         <label class="custom-file-upload"> 
+                          <input  style="display: none" type="file" @change="onFileChange(item, $event)">Custom Upload
+                         </label> 
+                        </div>
+                        <div v-else>
+                          <img :src="item.image"  height="300" width="480">
+                          <button @click="removeImage(item)">Remove image</button>
+                        </div>
+                      </div>                   
+                 </div>
+         <!-------------End Gallery ------------------->     
+              
+                
     </div>
 </template>
 
@@ -47,9 +58,36 @@
                 editorConfig: {
                     // The configuration of the rich-text editor.
                 },
-               categories: {}, 
-               photos: {}, 
-               photo: '',
+               tags:{},
+               newtags: {},               
+               categories: {},
+               items: [
+                   {
+                     image: false,
+                     name: ''
+                   },
+                   {
+                     image: false,
+                     name: ''
+                   },
+                   {
+                     image: false,
+                     name: ''
+                   },
+                   {
+                     image: false,
+                     name: ''
+                   },
+                   {
+                     image: false,
+                     name: ''
+                   },
+                   {
+                     image: false,
+                     name: ''
+                   },
+                ],
+               photos: {},
                name: '',
                show: '',
                number: 0,
@@ -58,38 +96,38 @@
                  content: '',
                  title: '',                 
                  category_id: '',
-                 description: ''
+                 description: '',
+                 tags:[]
                },
-              
+            
             }
 
         },
         props: ['user_id'],
         methods: {
-            uploadPicture(e){
-                console.log(e.target.files);
-                let file = e.target.files[0];
-                this.name = e.target.files[0].name; 
-                let reader = new FileReader();
-               console.log(e.target);
-                if(file['size'] < 2097152){
-                    reader.onloadend = (file) => {
-                       this.photo =  reader.result;
-                  if(this.id != 'a'){      
-                    if(this.id == ''){ 
-                       this.uploadGallery();
-                       this.loadGallery();
-                      }else{
-                        this.editGallery();
-                        this.loadGallery();
-                      }
-                     }
-                    } 
-                    reader.readAsDataURL(file);
-                }
-                
-
+           onFileChange(item, e) {
+              let files = e.target.files || e.dataTransfer.files;
+              let name = e.target.files[0].name
+              if (!files.length)
+                return;
+              this.createImage(item, files[0], name);
+           
             },
+            createImage(item, file, name) {
+              let image = new Image();
+              let reader = new FileReader();
+
+              reader.onload = (e) => {
+                item.image = e.target.result; 
+                item.name = name; 
+
+              };
+              reader.readAsDataURL(file);
+            },
+            removeImage: function (item) {
+              item.image = false; 
+                    }, 
+
             uploadGallery(){
                 axios.post('/api/gallery',{
                     image: this.photo,
@@ -102,7 +140,17 @@
                         this.photos = data.data;
                         this.show = data.data[0].image;
                      })
-                     console.log(this.photos)
+                     
+
+            },
+            loadTags(){
+                axios.get('api/fridge')
+                      .then(({data}) =>{
+                        this.tags = data.data
+                      })
+                      .catch(error => {
+                        console.log(error);
+                      })
             },
             loadCategories(){
                 axios.get('api/category')
@@ -121,17 +169,21 @@
             },
 
             uploadRecipe(){
-                axios.post('api/recipe',{
+                let image = this.items[0];
+
+                axios.post('api/recipe',{    
                       title: this.recipe.title,
                       description: this.recipe.description,
                       content: this.recipe.content,
-                      image: this.photo,
-                      name: this.name,
+                      image: image.image,
+                      name: image.name,
                       user_id: this.user_id,                      
-                      category_id: this.recipe.category_id  
+                      category_id: this.recipe.category_id,
+                      gallery: this.items  
                 })
-                .then(({data}) => {
+                .then(({data}) => {                     
                      let recipe_id = data.id;
+
                 });
             }       
 
@@ -140,6 +192,7 @@
        created() {
             this.loadGallery();
             this.loadCategories();
+            this.loadTags();
           
           
         }
