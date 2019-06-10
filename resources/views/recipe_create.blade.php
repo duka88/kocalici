@@ -4,6 +4,7 @@
 
  <div id='app'>
 dsfsdfs
-   <create-recipe-component></create-recipe-component> 
+
+   <create-recipe-component :user_id="{{auth()->user()->id}}"></create-recipe-component> 
 </div>
 @endsection

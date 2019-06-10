@@ -66,9 +66,22 @@ class GalleryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(GalleryRequest $request)
     {
-        //
+        $gallery = Gallery::findOrFail($request->id);
+      
+      if(isset($request->image)) {
+           $imageName = Helper::uploadImageSize($request->image, $request->name);
+           $gallery->image = $imageName;
+        }
+      if(isset($reguest->recipe_id)){
+           $gallery->recipe_id = $reguest->recipe_id;
+      }  
+
+         
+
+        $gallery->save();
+
     }
 
     /**

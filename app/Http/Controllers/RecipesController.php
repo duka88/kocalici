@@ -187,6 +187,21 @@ class RecipesController extends Controller
          return view('recipe_create');
     }
 
-   
-   
+    public function stored(CreateRecipeRequest $request){
+
+        $imageName = Helper::uploadImageSize($request->image, $request->name);
+
+           $recipe = Recipe::create([
+              'title' =>$request->title,
+              'description' => $request->description,
+              'content' => $request->content,
+              'image' => $imageName,
+              'user_id' => $request->user_id,
+              
+              'category_id' =>  $request->category_id
+
+           ]);
+         return new RecipeResources($recipe);
+       }
+       
 }

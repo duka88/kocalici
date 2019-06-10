@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Categories\CreateCategoryRequest;
 use App\Http\Requests\Categories\UpdateCategoriesRequest;
+use App\Http\Resources\CategoryResources;
 use Illuminate\Http\Request;
 use App\Category;
 use Session;
@@ -54,9 +55,11 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $categories = Category::all();
+
+        return CategoryResources::collection($categories);
     }
 
     /**

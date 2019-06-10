@@ -26,5 +26,7 @@ Route::get('rating/{recipe}', 'ScoreController@show');
 Route::post('gallery', 'GalleryController@store');
 Route::get('gallery', 'GalleryController@index');
 Route::put('gallery', 'GalleryController@edit');
+Route::get('category', 'CategoriesController@show');
+Route::post('recipe', 'RecipesController@stored');
 
 

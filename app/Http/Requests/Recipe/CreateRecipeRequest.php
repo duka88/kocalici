@@ -26,9 +26,10 @@ class CreateRecipeRequest extends FormRequest
         return [
             'title' => 'required|unique:recipes',
             'description' => 'required',
-            'image' => 'required|image',
+            'image' => 'required',
             'content' => 'required',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'name'
         ];
     }
 }
