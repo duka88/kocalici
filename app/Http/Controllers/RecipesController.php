@@ -187,21 +187,42 @@ class RecipesController extends Controller
          return view('recipe_create');
     }
 
-    public function stored(CreateRecipeRequest $request){
+    public function stored(Request $request){
+     
 
-        $imageName = Helper::uploadImageSize($request->image, $request->name);
+     $galleries = [];
+      foreach( $request->gallery as $image){
 
-           $recipe = Recipe::create([
+       if($image['image'] != false){
+           $imageName = Helper::uploadImageSize($image['image'], $image['name']);
+
+            array_push($galleries, $imageName);
+            }
+         }
+       
+        $recipe = Recipe::create([
               'title' =>$request->title,
               'description' => $request->description,
               'content' => $request->content,
-              'image' => $imageName,
-              'user_id' => $request->user_id,
-              
-              'category_id' =>  $request->category_id
-
+              'image' => $galleries[0],
+              'user_id' => $request->user_id,              
+              'category_id' =>  $request->category_id,
            ]);
-         return new RecipeResources($recipe);
+        
+        $i = 0;
+
+        foreach($galleries as $gallery){
+           $i++;
+         if($i == 0) {
+            continue;
+         }else{
+           $recipe->galleries()->create([
+           'image' => $gallery
+             ]);
+           }
        }
+
+       return Response($recipe);
+    }
        
 }
