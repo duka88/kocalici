@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Recipe\CreateRecipeRequest;
 use App\Http\Requests\Recipe\UpdateRecipeRequest;
 use App\Http\Requests\Recipe\GalleryRequest;
+use App\Http\Requests\Recipe\RecipeApiRequest;
 use App\Http\Resources\GalleryResources;
 use App\Http\Resources\RecipeResources;
 use Helper;
@@ -187,42 +188,55 @@ class RecipesController extends Controller
          return view('recipe_create');
     }
 
-    public function stored(Request $request){
+
+    public function stored(RecipeApiRequest $request){
      
 
-     $galleries = [];
-      foreach( $request->gallery as $image){
+           $galleries = [];
+            foreach( $request->gallery as $image){
 
-       if($image['image'] != false){
-           $imageName = Helper::uploadImageSize($image['image'], $image['name']);
+             if($image['image'] != false){
+                 $imageName = Helper::uploadImageSize($image['image'], $image['name']);
 
-            array_push($galleries, $imageName);
-            }
-         }
-       
-        $recipe = Recipe::create([
-              'title' =>$request->title,
-              'description' => $request->description,
-              'content' => $request->content,
-              'image' => $galleries[0],
-              'user_id' => $request->user_id,              
-              'category_id' =>  $request->category_id,
-           ]);
-        
-        $i = 0;
+                  array_push($galleries, $imageName);
+                  }
+               }
+             
+              $recipe = Recipe::create([
+                    'title' =>$request->title,
+                    'description' => $request->description,
+                    'content' => $request->content,
+                    'image' => $galleries[0],
+                    'user_id' => $request->user_id,              
+                    'category_id' =>  $request->category_id,
+                 ]);
+              
+              $i = 0;
 
-        foreach($galleries as $gallery){
-           $i++;
-         if($i == 0) {
-            continue;
-         }else{
-           $recipe->galleries()->create([
-           'image' => $gallery
-             ]);
-           }
-       }
+              foreach($galleries as $gallery){
+                 $i++;
+               if($i == 0) {
+                  continue;
+               }else{
+                 $recipe->galleries()->create([
+                 'image' => $gallery
+                   ]);
+                 }
+             }
 
-       return Response($recipe);
+             
+             foreach($request->tags as $tag){
+                $tag = Tag::firstOrCreate([
+                    'name' => $tag
+                ]);
+             }
+             
+            $tadsId = Tag::whereIn('name', $request->tags)->pluck('id');
+
+              $recipe->tags()->attach($tadsId);
+
+
+             return Response($recipe);
     }
        
 }

@@ -110,4 +110,17 @@ class tagsController extends Controller
 
         return redirect(route('tags.index'));
     }
+
+    public function search(){
+
+        if($search = \Request::get('q')){
+            $tags = Tag::where(function($query) use ($search){
+              $query->where('name', 'LIKE', "%$search%");   
+            })->get();
+        }
+
+         return Response($tags);
+    }
+
+  
 }
