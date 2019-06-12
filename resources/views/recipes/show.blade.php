@@ -4,69 +4,132 @@
    {{$recipe->title}}
 @endsection
 
-@section('header')
-     <!-- Header -->
-    <header class="header text-white h-fullscreen pb-80" style="background-image: url({{asset('/storage/'.$recipe->image)}});" data-overlay="9">
-      <div class="container text-center">
-
-        <div class="row h-100">
-          <div class="col-lg-8 mx-auto align-self-center">
-
-            <p class="opacity-70 text-uppercase small ls-1">{{$recipe->category->name}}</p>
-            <h1 class="display-4 mt-7 mb-8">{{$recipe->title}}</h1>
-            <p><span class="opacity-70 mr-1">By</span> <a class="text-white" href="#">{{$recipe->user->name}}</a></p>
-            <p><img class="avatar avatar-sm" src="{{Gravatar::src(asset($recipe->user->email))}}" alt="..."></p>
-
-          </div>
-
-          <div class="col-12 align-self-end text-center">
-            <a class="scroll-down-1 scroll-down-white" href="#section-content"><span></span></a>
-          </div>
-
-        </div>
-
-      </div>
-    </header><!-- /.header -->
-@endsection
 
 @section('content')
-    <!-- Main Content -->
-    <main class="main-content">
+    
 
-
-     
-      <div class="section" id="section-content">
-        <div class="container">
-
-           {!!$recipe->content!!}
-             
-                <!-- Go to www.addthis.com/dashboard to customize your tools -->
-                <div class="addthis_inline_share_toolbox"></div>
-            
-
-
-          
-
-              <div class="gap-xy-2 mt-6">
-             @foreach($recipe->tags as $tag)
-
-                <a class="badge badge-pill badge-secondary">{{$tag->name}}</a>
-               @endforeach
-              </div>
-
+   <div class="container mt-5">
+    <div class="row">
+      <div class="col-6 single_recipe_info_text px-5 d-flex justify-content-center flex-column"> 
+          <div class="row  flex-column">
+        <h1 class=" text-left">{{$recipe->title}}</h1>
+        
+        <span>{{$recipe->user->name}}</span>
+        <p class="my-3"><i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star mr-2"></i>(1)</p>
+        <p class="my-4"><span class="font-weight-bold text-dark">Author </span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis quam ut diam fringilla malesuada. <a class="single_recipe_link">Read More</a></p>
+        </div>
+            <div class="row my-4">
+              <div class="col-4">
+                <p class="count text-center mb-0">
+                  8
+                </p>
+                <p class="text-center">minutes</p>
+               </div>
+               <div class="col-4 center">
+                <p class="count text-center mb-0">
+                  6
+                </p>
+                <p class="text-center ">dificulty</p>
+               </div>
+               <div class="col-4">
+                <p class="count text-center mb-0">
+                  7
+                </p>
+                <p class="text-center">servings</p>
+               </div>
+              
             </div>
+            <div class="row align-items-center mt-4">
+              <p><a class="large_button" href="#recipe">Read Recipe</a></p>
+              <p><i class="fas fa-heart ml-5"></i><span class="text-dark">(5)</span></p>
+            </div>
+      </div>
+      <div class="col-6">
+        <div class="row">
+       
+          <div class="col-12 mb-3"> 
+          <img class="single_recipe_img w-100" src="{{asset('/img/MD/' . $recipe->image)}}" width="480px" height="480px">
           </div>
-       @if($score)
-          <!--------Vue Score ------>
-         <div id="app">
-           <score-component :user_id="{{auth()->user()->id}}" :post_id="{{$recipe->id}}"></score-component>
-         </div>
+         @foreach($recipe->galleries as $gallery)
+          <div class="col-3">
+          <img class="single_recipe_img  w-100" src="{{asset('/img/MD/' . $gallery->image)}}" width="100px" height="100px">
+          </div>
+         @endforeach               
+       
+       </div> 
+      </div>
+    </div>
+    <hr class="single_recipe-border">
+    <div class="row">
+      <div class="col-6">
+        <h2 class="mb-4">Ingredients</h2>
+        <ul class="ingredients_list">
+          <li >5 tablespoons <span class="list_bold">butter</span></li>
+          <li>5 tablespoons <span class="list_bold">butter</span></li>
+          <li>5 tablespoons <span class="list_bold">butter</span></li>
+          <li>5 tablespoons <span class="list_bold">butter</span></li>
+          <li>5 tablespoons <span class="list_bold">butter</span></li>
+          <li>5 tablespoons <span class="list_bold">butter</span></li>
+          <li>5 tablespoons <span class="list_bold">butter</span></li>
+          <li>5 tablespoons <span class="list_bold">butter</span></li>
+          
+        </ul>
+      </div>
+    </div>
+    <div class="row" id="recipe">
+      <h2 class="my-4">Directions</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tristique diam arcu, sed fringilla nulla dignissim quis. Phasellus erat augue, tincidunt non mauris at, congue fermentum leo. Fusce sodales convallis lorem eu consequat. Maecenas non pretium justo. Proin sit amet cursus ipsum, sit amet laoreet eros. Sed malesuada mollis mattis. Nunc lacinia dolor at condimentum fringilla. Aenean a velit lorem. Morbi congue tempor tellus eget feugiat. Morbi non placerat velit. Cras sed nunc aliquet ipsum gravida dictum. Fusce at mollis tortor, quis eleifend lectus. Suspendisse laoreet, magna et mollis volutpat, urna lectus fermentum sapien, a mattis urna ligula sit amet lorem. Donec ut venenatis mauris.
 
-     @endif
-  
-     <div class="row mt-5 pt-5">
-      <div class="col-lg-8 mx-auto">
-       <div id="disqus_thread"></div>
+    Etiam et felis in diam convallis varius ut nec nisl. Fusce dui tortor, bibendum interdum sollicitudin ut, vestibulum vitae lorem. Sed feugiat lectus et felis fermentum, vel placerat leo dictum. Nunc auctor, enim non iaculis maximus, lacus eros volutpat neque, eu sollicitudin augue metus ut neque. Donec imperdiet mattis quam mattis molestie. Donec finibus volutpat auctor. Donec mi erat, varius at sagittis ut, fringilla at arcu. Pellentesque rutrum massa a justo ultricies accumsan. Vestibulum venenatis urna vitae mollis efficitur. Pellentesque at neque ipsum. Proin vel porttitor diam.
+
+    Etiam vulputate nisl vel metus lacinia ultricies. Aliquam tempus risus non erat porttitor luctus. Maecenas in purus et erat convallis interdum at id libero. Donec auctor orci eu suscipit sagittis. Fusce urna enim, placerat sed commodo ac, facilisis sit amet sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas molestie dolor quis porttitor lacinia. Nunc sed scelerisque ex. Curabitur vitae mauris ac felis cursus mattis. Aliquam rhoncus fermentum nunc sed gravida. Quisque nec faucibus eros.</p>
+    </div>
+        <hr class="single_recipe-border">
+
+    <div class="row">
+        <div class="col-12">
+          <h2 class="mb-5 text-center">Related Recipes</h2>
+        </div> 
+      <div class="col-2">
+        <img class="single_recipe_img" src="C:\Users\Dusan Jankov\Downloads\cake1.jpg" width="150px" height="150px">
+      </div>
+      <div class="col-2">
+        <img class="single_recipe_img" src="C:\Users\Dusan Jankov\Downloads\cake1.jpg" width="150px" height="150px">
+      </div>
+      <div class="col-2">
+        <img class="single_recipe_img" src="C:\Users\Dusan Jankov\Downloads\cake1.jpg" width="150px" height="150px">
+      </div>
+      <div class="col-2">
+        <img class="single_recipe_img" src="C:\Users\Dusan Jankov\Downloads\cake1.jpg" width="150px" height="150px">
+      </div>
+      <div class="col-2">
+        <img class="single_recipe_img" src="C:\Users\Dusan Jankov\Downloads\cake1.jpg" width="150px" height="150px">
+      </div>
+      <div class="col-2">
+        <img class="single_recipe_img" src="C:\Users\Dusan Jankov\Downloads\cake1.jpg" width="150px" height="150px">
+      </div>
+     
+    </div>
+   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <script>
 
 /**
