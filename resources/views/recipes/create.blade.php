@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+{{dd($recipe)}}
   <div class="card card-default">  
         <div class="card-header">
           {{isset($recipe) ? 'Edit Recipe' : 'Creat Recipe'}}
