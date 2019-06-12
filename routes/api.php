@@ -28,5 +28,5 @@ Route::get('gallery', 'GalleryController@index');
 Route::put('gallery', 'GalleryController@edit');
 Route::get('category', 'CategoriesController@show');
 Route::post('recipe', 'RecipesController@stored');
-
+Route::get('searchTag', 'TagsController@search');
 

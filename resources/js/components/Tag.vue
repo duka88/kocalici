@@ -1,26 +1,24 @@
 <template>
   <div class="tags-input-container">
     <label>Tags</label>
-    <div class="tags-input" v-on:click="focusTagInput()">
+    <div class="tags-input" >
       <div class="selected-tag" v-for="(selectedTag, key) in tagsArray">{{ selectedTag }} <span class="remove-tag" v-on:click="removeTag( key )">&times;</span> </div>
-      <input type="text" v-bind:id="unique" class="new-tag-input" v-model="currentTag" v-on:keyup="searchTags" v-on:keyup.enter="addNewTag" v-on:keydown.up="changeIndex( 'up' )" v-on:keydown.delete="handleDelete" v-on:keydown.down="changeIndex( 'down' )" v-bind:class="{ 'duplicate-warning' : duplicateFlag }" placeholder="Add a tag"/>
+      <input type="text"  class="new-tag-input" v-model="currentTag" v-on:keyup="searchTags" v-on:keyup.enter="addNewTag" v-on:keydown.up="changeIndex( 'up' )" v-on:keydown.delete="handleDelete" v-on:keydown.down="changeIndex( 'down' )" v-bind:class="{ 'duplicate-warning' : duplicateFlag }" placeholder="Add a tag"/>
     </div>
     <div class="tag-autocomplete" v-show="showAutocomplete">
-      <div class="tag-search-result" v-for="(tag, key) in tagSearchResults" v-bind:class="{ 'selected-search-index' : searchSelectedIndex == key }" v-on:click="selectTag( tag.tag )">{{ tag.tag }}</div>
+      <div class="tag-search-result" v-for="(tag, key) in tagSearchResults" v-bind:class="{ 'selected-search-index' : searchSelectedIndex == key }" v-on:click="selectTag( tag.name )">{{ tag.name }}</div>
     </div>
+  
   </div>
 </template>
 
 <script>
 
-  export default {
-    props: ['unique'],
-
-    /*
+  export default {    /*
       Defines the data used by the component.
     */
     data(){
-      return {
+      return {      
         currentTag: '',
         tagsArray: [],
         tagSearchResults: [],
@@ -29,24 +27,7 @@
         pauseSearch: false
       }
     },
-
-      /*
-      Clear tags
-    */
-    mounted(){
-      EventBus.$on('clear-tags', function( unique ){
-        this.currentTag = '';
-        this.tagsArray = [];
-        this.tagSearchResults = [];
-        this.duplicateFlag = false;
-        this.searchSelectedIndex = -1;
-        this.pauseSearch = false;
-      }.bind(this));
-    },
-
-    /*
-      Defines the computed data.
-    */
+       
     computed: {
       /*
         Determines if we should show the autocomplete or not.
@@ -60,6 +41,7 @@
       Defines the methods used by the component.
     */
     methods: {
+     
       /*
         Handles the selection of a tag from the autocomplete.
       */
@@ -77,7 +59,7 @@
           /*
             Emit the tags array and reset the inputs.
           */
-          EventBus.$emit( 'tags-edited', { unique: this.unique, tags: this.tagsArray } );
+         
 
           this.resetInputs();
         }else{
@@ -102,7 +84,7 @@
           /*
             Emit the tags have been edited.
           */
-          EventBus.$emit( 'tags-edited', { unique: this.unique, tags: this.tagsArray } );
+        
 
           /*
             Reset the inputs
@@ -122,7 +104,7 @@
         /*
           Emit that the tags have been edited.
         */
-        EventBus.$emit( 'tags-edited', { unique: this.unique, tags: this.tagsArray } );
+       
       },
 
       /*
@@ -142,7 +124,7 @@
         */
                 if( direction == 'up' && ( this.searchSelectedIndex -1 > -1 ) ){
                     this.searchSelectedIndex = this.searchSelectedIndex - 1;
-                    this.currentTag = this.tagSearchResults[this.searchSelectedIndex].tag;
+                    this.currentTag = this.tagSearchResults[this.searchSelectedIndex].name;
                 }
 
         /*
@@ -151,7 +133,7 @@
         */
                 if( direction == 'down' && ( this.searchSelectedIndex + 1 <= this.tagSearchResults.length - 1 ) ){
                     this.searchSelectedIndex = this.searchSelectedIndex + 1;
-                    this.currentTag = this.tagSearchResults[this.searchSelectedIndex].tag;
+                    this.currentTag = this.tagSearchResults[this.searchSelectedIndex].name;
                 }
             },
 
@@ -161,9 +143,9 @@
       searchTags(){
         if( this.currentTag.length > 2 && !this.pauseSearch ){
           this.searchSelectedIndex = -1;
-          axios.get( ROAST_CONFIG.API_URL + '/tags' , {
+          axios.get( 'api/searchTag' , {
             params: {
-              search: this.currentTag
+              q: this.currentTag
             }
           }).then( function( response ){
             this.tagSearchResults = response.data;
@@ -238,17 +220,10 @@
         this.tagSearchResults = [];
         this.duplicateFlag = false;
         this.searchSelectedIndex = -1;
-                this.pauseSearch = false;
+        this.pauseSearch = false;
       },
 
-      /*
-        Focus on the tag input.
-      */
-      focusTagInput(){
-
-                document.getElementById( this.unique ).focus();
-            },
-
+      
       /*
         Handles the deletion in the tag input.
       */
@@ -262,11 +237,12 @@
         */
                 if( this.currentTag.length == 0 ){
                     this.tagsArray.splice( this.tagsArray.length - 1, 1);
-          /*
-            Emit that the tags have been edited.
-          */
-          EventBus.$emit( 'tags-edited', { unique: this.unique, tags: this.tagsArray } );               }
-            }
-    }
+                     }
+            },
+
+    },
+     created(){
+        this.loadTags();
+     }
   }
 </script>
