@@ -17,7 +17,8 @@ class GalleryResources extends JsonResource
          return [
           'id' => $this->id, 
           'image' => $this->image,
-          'recipe_id' => $this->recipe_id          
+          'recipe' => $this->recipe
+
         ];
     }
 }

@@ -78,15 +78,8 @@
                    {
                      image: false,
                      name: ''
-                   },
-                   {
-                     image: false,
-                     name: ''
-                   },
-                   {
-                     image: false,
-                     name: ''
-                   },
+                   }
+                 
                 ],
                photos: {},
                name: '',

@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
@@ -16,9 +16,9 @@ class GalleryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-         $gallery = Gallery::all();
+         $gallery = Gallery::where('recipe_id', $id)->get();
 
         return GalleryResources::collection($gallery);
     }

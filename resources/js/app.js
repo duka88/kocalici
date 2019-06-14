@@ -32,6 +32,7 @@ Vue.component('fridge-component', require('./components/Fridge.vue').default);
 Vue.component('score-component', require('./components/Score.vue').default);
 Vue.component('create-recipe-component', require('./components/CreateRecipe.vue').default);
 Vue.component('tag-component', require('./components/Tag.vue').default);
+Vue.component('gallery-component', require('./components/Gallery.vue').default);
 
 
 
