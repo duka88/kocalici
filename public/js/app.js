@@ -2255,6 +2255,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2439,6 +2440,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ckeditor/ckeditor5-build-classic */ "./node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js");
+/* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2458,21 +2461,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['post_id', 'user_id'],
+  props: ['recipe_id', 'user_id'],
   data: function data() {
     return {
+      editor: _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0___default.a,
+      editorConfig: {
+        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote']
+      },
       avg: '',
-      score: '5'
+      score: '5',
+      comment: ''
     };
   },
   methods: {
     rateRecipe: function rateRecipe() {
       var vm = this;
       axios.post('/api/rating', {
-        recipe_id: this.post_id,
+        recipe_id: this.recipe_id,
         user_id: this.user_id,
-        score: this.score
+        score: this.score,
+        comment: this.comment
       }).then(function (_ref) {
         var data = _ref.data;
         vm.loadScores();
@@ -2481,7 +2492,7 @@ __webpack_require__.r(__webpack_exports__);
     loadScores: function loadScores() {
       var _this = this;
 
-      axios.get("/api/rating/".concat(this.post_id)).then(function (_ref2) {
+      axios.get("/api/rating/".concat(this.recipe_id)).then(function (_ref2) {
         var data = _ref2.data;
         _this.avg = data;
       })["catch"](function (error) {
@@ -40049,17 +40060,15 @@ var render = function() {
     "div",
     { staticClass: "row" },
     [
-      _vm._v(
-        "\n   " +
-          _vm._s(_vm.count) +
-          "\n   " +
-          _vm._s(_vm.user_id) +
-          "\n       "
-      ),
       _c("div", { staticClass: "col-12 mb-3 single_recipe_info_text image" }, [
         _c("p", { staticClass: "heart py-2", on: { click: _vm.togleLike } }, [
-          _c("i", { staticClass: "fas fa-heart " }),
-          _c("span", { staticClass: "text-dark" }, [_vm._v("(5)")])
+          _c("i", {
+            staticClass: "fa-heart",
+            class: { fas: _vm.like, far: !_vm.like }
+          }),
+          _c("span", { staticClass: "text-dark" }, [
+            _vm._v("(" + _vm._s(_vm.count) + ")")
+          ])
         ]),
         _vm._v(" "),
         _c("img", {
@@ -40343,59 +40352,69 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "container mb-5" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c(
-          "form",
-          {
-            staticClass: "form-control",
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.rateRecipe($event)
-              }
+  return _c(
+    "form",
+    {
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.rateRecipe($event)
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "form-group" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.score,
+              expression: "score"
             }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            type: "range",
+            step: "0.01",
+            name: "score",
+            min: "1",
+            max: "10",
+            value: "5",
+            id: "score"
           },
-          [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.score,
-                  expression: "score"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "range",
-                name: "score",
-                min: "1",
-                max: "10",
-                value: "5",
-                id: "score"
+          domProps: { value: _vm.score },
+          on: {
+            __r: function($event) {
+              _vm.score = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("span", [_vm._v(_vm._s(_vm.score))])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "form-gropup mb-4" },
+        [
+          _c("ckeditor", {
+            attrs: { editor: _vm.editor, config: _vm.editorConfig },
+            model: {
+              value: _vm.comment,
+              callback: function($$v) {
+                _vm.comment = $$v
               },
-              domProps: { value: _vm.score },
-              on: {
-                __r: function($event) {
-                  _vm.score = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", [_vm._v(_vm._s(_vm.score) + _vm._s(_vm.avg))]),
-            _vm._v(" "),
-            _c("button", {
-              staticClass: "btn btn-success",
-              attrs: { type: "submit", name: "submit", value: "submit" }
-            }),
-            _vm._v("Rate ")
-          ]
-        )
-      ])
-    ])
-  ])
+              expression: "comment"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-success" }, [_vm._v("Rate")])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -56364,8 +56383,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\kocalici\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\kocalici\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\wamp64\www\kocalici\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\kocalici\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

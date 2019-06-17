@@ -18,6 +18,7 @@ class CreateScoresTable extends Migration
             $table->integer('recipe_id');
             $table->integer('user_id');
             $table->integer('score');
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }

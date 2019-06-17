@@ -1,30 +1,39 @@
 <template>
-    <div class="container">
-        <div class="container mb-5">
-              <div class="row justify-content-center">
-              <form @submit.prevent="rateRecipe" class="form-control">
-             
-                       
-                  <input v-model="score" type="range" name ="score" min="1" max="10" value="5" class="form-control" id="score">
-                 <span >{{score}}{{avg}}</span>
+    
+              <form @submit.prevent="rateRecipe" >
+                <div class="form-group">                   
+                    <input 
+                     v-model="score" type="range" step="0.01" name ="score" min="1" max="10" value="5" class="form-control" id="score">
+                   <span >{{score}}</span>
+               </div>    
+                 <div class="form-gropup mb-4">    
+               <ckeditor :editor="editor" v-model="comment" :config="editorConfig"></ckeditor>
+               </div>
   
                                             
-                 <button class="btn btn-success" type="submit" name="submit" value="submit" />Rate </button>
+                 <button class="btn btn-success" >Rate</button>
             
               </form>
-            </div>
-          </div>
-    </div>
+        
+   
 </template>
 
 <script>
+  import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
     export default {
-        props: ['post_id', 'user_id'],
+
+        props: ['recipe_id', 'user_id'],
         data(){
             return {
+              editor: ClassicEditor,                
+                editorConfig: {
+                    toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+
+                },
                  avg: '',
                  score: '5',
-                
+                 comment: ''
                 }
                
             },
@@ -33,9 +42,10 @@
                 let vm = this;
 
                 axios.post('/api/rating',{ 
-                recipe_id: this.post_id,
+                recipe_id: this.recipe_id,
                 user_id: this.user_id,
-                score: this.score}
+                score: this.score,
+                comment: this.comment}
                 )
                 .then(({data}) => {
                     vm.loadScores();
@@ -44,7 +54,7 @@
 
           },
           loadScores(){
-              axios.get(`/api/rating/${this.post_id}`)
+              axios.get(`/api/rating/${this.recipe_id}`)
                    .then(({data}) =>{
 
                         this.avg = data
