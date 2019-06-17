@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Recipe;
 use App\Gallery;
+use App\User;
 use App\Http\Resources\GalleryResources;
 use App\Http\Requests\Recipe\GalleryRequest;
 use Helper;

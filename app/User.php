@@ -49,4 +49,9 @@ class User extends Authenticatable
      public function scores(){
         return $this->hasMany(Score::class);
     }
+
+    public function likes(){
+
+        return $this->hasMany(Like::class);
+    }
 }

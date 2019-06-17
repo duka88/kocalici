@@ -29,7 +29,7 @@
             <ckeditor :editor="editor" v-model="recipe.content" :config="editorConfig"></ckeditor>
         </div>
            <button class="btn btn-primary mb-4" @click="uploadRecipe">Save</button>
-          <!-------------Gallery ------------------->
+        
 
                     <div v-for="(item, index) in items"  class="form-gropup">
                         <div v-if="!item.image">
@@ -44,8 +44,7 @@
                         </div>
                       </div>                   
                  </div>
-         <!-------------End Gallery ------------------->     
-              
+     
                 
     </div>
 </template>

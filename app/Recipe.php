@@ -41,6 +41,11 @@ class Recipe extends Model
         return $this->hasMany(Gallery::class);
     }
 
+       public function likes(){
+
+        return $this->hasMany(Like::class);
+    }
+
     public function user(){
 
         return $this->belongsTo(User::class);

@@ -172,7 +172,7 @@ class RecipesController extends Controller
     }
 
     public function category($id){
-
+         
         if($id != 0){
         $recipes = Recipe::where('category_id', $id)->latest()->paginate(6);
       }else{
