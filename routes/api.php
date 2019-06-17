@@ -29,4 +29,7 @@ Route::put('gallery', 'GalleryController@edit');
 Route::get('category', 'CategoriesController@show');
 Route::post('recipe', 'RecipesController@stored');
 Route::get('searchTag', 'TagsController@search');
+Route::post('like', 'LikeController@create');
+Route::get('like/{recipe}', 'LikeController@index');
+Route::get('myLike/{recipe}/{user}', 'LikeController@single');
 

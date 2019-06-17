@@ -13,9 +13,13 @@ use App\Score;
 class RecipeController extends Controller
 {
     public function show(Recipe $recipe){
-
-    $avg_score = Score::where('recipe_id', $recipe->id)->avg('score');
     
+    $cat_id = $recipe->category_id;
+    $avg_score = Score::where('recipe_id', $recipe->id)->avg('score');
+    $related = Recipe::whereHas('category', function($query) use ($cat_id){
+        $query->where('id', $cat_id);
+    })->take(6)->get();
+   
      
      if(auth()->user()){
         $score_chack = Score::where([['user_id', auth()->user()->id],['recipe_id', $recipe->id]])->get();
@@ -26,12 +30,12 @@ class RecipeController extends Controller
             $score = true;
         }
      
-    	return view('recipes.show')->with('recipe',$recipe)->with('user', auth()->user())->with('score', $score)->with('avg_score', $avg_score);
+    	return view('recipes.show')->with('recipe',$recipe)->with('user', auth()->user())->with('score', $score)->with('avg_score', $avg_score)->with('related', $related);;
     }else{
 
         $score = Score::where('recipe_id', $recipe->id)->avg('score');
 
-        return view('recipes.show')->with('recipe',$recipe)->with('avg_score', $avg_score);
+        return view('recipes.show')->with('recipe',$recipe)->with('avg_score', $avg_score)->with('related', $related);
     }
  }
 

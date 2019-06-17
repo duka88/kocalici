@@ -44,19 +44,19 @@
               
             </div>
             <div class="row align-items-center mt-4">
-              <p><a class="large_button" href="#recipe">Read Recipe</a></p>
+              <a href="#recipe" class="large_button" >Read Recipe</a>
               
             </div>
       </div>
       <div class="col-6">
         
 
-        <gallery-component :recipe_id={{$recipe->id}}></gallery-component>             
+        <gallery-component :user_id={{auth()->user()->id}} :recipe_id={{$recipe->id}}></gallery-component>             
        
      
       </div>
     </div>
-    <hr class="single_recipe-border">
+    <hr class="single_recipe-border" id="recipe">
     <div class="row">
       <div class="col-6">
         <h2 class="mb-4">Ingredients</h2>
@@ -73,7 +73,7 @@
         </ul>
       </div>
     </div>
-    <div class="row" id="recipe">
+    <div class="row" >
       <h2 class="my-4">Directions</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tristique diam arcu, sed fringilla nulla dignissim quis. Phasellus erat augue, tincidunt non mauris at, congue fermentum leo. Fusce sodales convallis lorem eu consequat. Maecenas non pretium justo. Proin sit amet cursus ipsum, sit amet laoreet eros. Sed malesuada mollis mattis. Nunc lacinia dolor at condimentum fringilla. Aenean a velit lorem. Morbi congue tempor tellus eget feugiat. Morbi non placerat velit. Cras sed nunc aliquet ipsum gravida dictum. Fusce at mollis tortor, quis eleifend lectus. Suspendisse laoreet, magna et mollis volutpat, urna lectus fermentum sapien, a mattis urna ligula sit amet lorem. Donec ut venenatis mauris.
 
@@ -84,27 +84,14 @@
         <hr class="single_recipe-border">
 
     <div class="row">
-       <!-- <div class="col-12">
+       <div class="col-12">
           <h2 class="mb-5 text-center">Related Recipes</h2>
         </div> 
+    @foreach($related as $recipe)    
       <div class="col-2">
-        <img class="single_recipe_img" src="C:\Users\Dusan Jankov\Downloads\cake1.jpg" width="150px" height="150px">
-      </div>
-      <div class="col-2">
-        <img class="single_recipe_img" src="C:\Users\Dusan Jankov\Downloads\cake1.jpg" width="150px" height="150px">
-      </div>
-      <div class="col-2">
-        <img class="single_recipe_img" src="C:\Users\Dusan Jankov\Downloads\cake1.jpg" width="150px" height="150px">
-      </div>
-      <div class="col-2">
-        <img class="single_recipe_img" src="C:\Users\Dusan Jankov\Downloads\cake1.jpg" width="150px" height="150px">
-      </div>
-      <div class="col-2">
-        <img class="single_recipe_img" src="C:\Users\Dusan Jankov\Downloads\cake1.jpg" width="150px" height="150px">
-      </div>
-      <div class="col-2">
-        <img class="single_recipe_img" src="C:\Users\Dusan Jankov\Downloads\cake1.jpg" width="150px" height="150px">
-      </div> -->
+        <a href="{{route('recipes.show', $recipe->id)}}"><img class="single_recipe_img" src="{{asset('/img/S/' . $recipe->image)}}" width="150px" height="150px">
+      </div></a>
+   @endforeach
      
     </div>
    </div>
