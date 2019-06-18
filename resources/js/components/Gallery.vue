@@ -1,9 +1,10 @@
 <template>
         <div class="row">
-           {{count}}
-           {{user_id}}
+           
                <div class="col-12 mb-3 single_recipe_info_text image">
-                    <p @click="togleLike" class="heart py-2"><i class="fas fa-heart "></i><span class="text-dark">(5)</span></p>
+                    <p @click="togleLike" class="heart py-2"><i 
+                    :class="{'fas':like, 'far':!like }"
+                     class="fa-heart"></i><span class="text-dark">({{count}})</span></p>
                     <img class="single_recipe_img w-100" :src="`/img/MD/${photos[show].image}`" width="480px" height="480px">
                   </div>             
               <div v-for="(photo, index) in photos" :key="photo.id" class="col-3">               

@@ -20,7 +20,7 @@
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="fas fa-star mr-2"></i>(1)</p>
-        <p class="my-4"><span class="font-weight-bold text-dark">Author </span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis quam ut diam fringilla malesuada. <a class="single_recipe_link">Read More</a></p>
+        <p class="my-4"><span class="font-weight-bold text-dark">Author </span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis quam ut diam fringilla malesuada. <a class="single_recipe_link" >Read More</a></p>
         </div>
             <div class="row my-4">
               <div class="col-4">
@@ -44,8 +44,9 @@
               
             </div>
             <div class="row align-items-center mt-4">
-              <a href="#recipe" class="large_button" >Read Recipe</a>
-              
+               <div class="col-12"> 
+                <a href="#recipe" class="large_button" >Read Recipe</a>
+               </div>
             </div>
       </div>
       <div class="col-6">
@@ -82,17 +83,38 @@
     Etiam vulputate nisl vel metus lacinia ultricies. Aliquam tempus risus non erat porttitor luctus. Maecenas in purus et erat convallis interdum at id libero. Donec auctor orci eu suscipit sagittis. Fusce urna enim, placerat sed commodo ac, facilisis sit amet sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas molestie dolor quis porttitor lacinia. Nunc sed scelerisque ex. Curabitur vitae mauris ac felis cursus mattis. Aliquam rhoncus fermentum nunc sed gravida. Quisque nec faucibus eros.</p>
     </div>
         <hr class="single_recipe-border">
-
     <div class="row">
-       <div class="col-12">
-          <h2 class="mb-5 text-center">Related Recipes</h2>
-        </div> 
-    @foreach($related as $recipe)    
-      <div class="col-2">
-        <a href="{{route('recipes.show', $recipe->id)}}"><img class="single_recipe_img" src="{{asset('/img/S/' . $recipe->image)}}" width="150px" height="150px">
-      </div></a>
-   @endforeach
-     
+      <div class="col-12">
+        <score-component :user_id={{auth()->user()->id}} :recipe_id={{$recipe->id}}></score-component>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+              <h2 class="mb-5 text-left">Reviews</h2>
+      </div>
+
+    </div>
+    <div class="row">
+         <div class="col-12">
+            <h2 class="mb-5 text-center">Related Recipes</h2>{{$avg_score}}
+          @for ($i = 1; $i <= $avg_score; $i= $i+2)
+            <i class="fas fa-star"></i>
+               
+          @endfor
+           @for ($n = 10; $n > $avg_score; $n= $n-2)
+            <i class="far fa-star"></i>
+               
+          @endfor
+          </div> 
+       </div>   
+      @foreach($related as $recipe)    
+        <div class="col-2">
+          <div class="single_recipe_img_container" >
+            <a href="{{route('recipes.show', $recipe->id)}}"><img class="single_recipe_img related" src="{{asset('/img/S/' . $recipe->image)}}" width="150px" height="150px">
+          </div></a>
+        </div>  
+     @endforeach
+       
     </div>
    </div>
 

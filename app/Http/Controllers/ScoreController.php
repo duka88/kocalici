@@ -6,16 +6,25 @@ use Illuminate\Http\Request;
 use App\Score;
 use Session;
 use App\Http\Resources\ScoreResources;
+use App\Http\Requests\ScoreCrateRequest;
 
 class ScoreController extends Controller
 {
-   public function create(Request $request){
-      
+   public function create(ScoreCrateRequest $request){
+
+    $score = Score::where('recipe_id', $request->recipe_id)->where('user_id',$request->user_id)->get();
+
+     if(empty($score)){  
        $score = Score::create([
-          'recipe_id' => $request->input('recipe_id'),
-          'user_id' => $request->input('user_id'),
-          'score' =>$request->input('score')        
+          'recipe_id' => $request->recipe_id,
+          'user_id' => $request->user_id,
+          'score' =>$request->score,
+          'comment' => $request->comment        
         ]);
+        return Response($score);
+     }else{
+        return Response('Already commented');
+     }
      
    }
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Score extends Model{
 
     protected $fillable = [
-        'recipe_id', 'user_id', 'score'
+        'recipe_id', 'user_id', 'score', 'comment'
     ];
 
      public function recipes(){
