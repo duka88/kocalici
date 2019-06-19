@@ -1879,40 +1879,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     removeImage: function removeImage(item) {
       item.image = false;
     },
-    uploadGallery: function uploadGallery() {
-      axios.post('/api/gallery', {
-        image: this.photo,
-        name: this.name
-      });
-    },
-    loadGallery: function loadGallery() {
+    loadCategories: function loadCategories() {
       var _this = this;
 
-      axios.get('api/gallery').then(function (_ref) {
+      axios.get('/api/category').then(function (_ref) {
         var data = _ref.data;
-        _this.photos = data.data;
-        _this.show = data.data[0].image;
-      });
-    },
-    loadCategories: function loadCategories() {
-      var _this2 = this;
-
-      axios.get('api/category').then(function (_ref2) {
-        var data = _ref2.data;
-        _this2.categories = data.data;
-      });
-    },
-    editGallery: function editGallery() {
-      var recipe_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-      axios.put('api/gallery', {
-        image: this.photo,
-        name: this.name,
-        id: this.id
+        _this.categories = data.data;
       });
     },
     uploadRecipe: function uploadRecipe() {
       var image = this.items[0];
-      axios.post('api/recipe', {
+      axios.post('/api/recipe', {
         title: this.recipe.title,
         description: this.recipe.description,
         content: this.recipe.content,
@@ -1922,8 +1899,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         category_id: this.recipe.category_id,
         gallery: this.items,
         tags: this.tagsArray
-      }).then(function (_ref3) {
-        var data = _ref3.data;
+      }).then(function (_ref2) {
+        var data = _ref2.data;
         var recipe_id = data.id;
       });
     },
@@ -2025,7 +2002,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     searchTags: function searchTags() {
       if (this.currentTag.length > 2 && !this.pauseSearch) {
         this.searchSelectedIndex = -1;
-        axios.get('api/searchTag', {
+        axios.get('/api/searchTag', {
           params: {
             q: this.currentTag
           }
@@ -2099,7 +2076,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }), _methods),
   created: function created() {
-    this.loadGallery();
     this.loadCategories();
   }
 });
@@ -2462,6 +2438,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['recipe_id', 'user_id'],
@@ -2469,15 +2449,19 @@ __webpack_require__.r(__webpack_exports__);
     return {
       editor: _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0___default.a,
       editorConfig: {
-        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote']
+        toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote']
       },
       avg: '',
       score: '5',
-      comment: ''
+      comment: '',
+      comments: {},
+      rate: ''
     };
   },
   methods: {
     rateRecipe: function rateRecipe() {
+      var _this = this;
+
       var vm = this;
       axios.post('/api/rating', {
         recipe_id: this.recipe_id,
@@ -2487,21 +2471,51 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (_ref) {
         var data = _ref.data;
         vm.loadScores();
+        vm.loadComments();
+        _this.rate = false;
+      });
+    },
+    loadComments: function loadComments() {
+      var _this2 = this;
+
+      axios.get("/api/comments/".concat(this.recipe_id)).then(function (_ref2) {
+        var data = _ref2.data;
+        _this2.comments = data.data;
       });
     },
     loadScores: function loadScores() {
-      var _this = this;
+      var _this3 = this;
 
-      axios.get("/api/rating/".concat(this.recipe_id)).then(function (_ref2) {
-        var data = _ref2.data;
-        _this.avg = data;
+      axios.get("/api/rating/".concat(this.recipe_id, "/").concat(this.user_id)).then(function (_ref3) {
+        var data = _ref3.data;
+        _this3.avg = data[1];
+        _this3.rate = data[0];
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    starRating: function starRating(avg) {
+      var star = "";
+
+      for (var i = 1; i <= 10; i += 2) {
+        if (avg > 1) {
+          star += '<i class="fas fa-star"></i>';
+          avg = avg - 2;
+        } else if (avg > 0.5) {
+          star += ' <i class="fas fa-star-half-alt"></i>';
+          avg = avg - 2;
+        } else {
+          star += '<i class="far fa-star"></i>';
+        }
+      }
+
+      return star;
     }
   },
   created: function created() {
     this.loadScores();
+    this.loadComments();
+    console.log(this.starRating(8));
   }
 });
 
@@ -40353,70 +40367,101 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "form",
-    {
-      on: {
-        submit: function($event) {
-          $event.preventDefault()
-          return _vm.rateRecipe($event)
-        }
-      }
-    },
+    "div",
     [
-      _c("div", { staticClass: "form-group" }, [
-        _c("input", {
-          directives: [
+      _vm.rate
+        ? _c(
+            "form",
             {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.score,
-              expression: "score"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "range",
-            step: "0.01",
-            name: "score",
-            min: "1",
-            max: "10",
-            value: "5",
-            id: "score"
-          },
-          domProps: { value: _vm.score },
-          on: {
-            __r: function($event) {
-              _vm.score = $event.target.value
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("span", [_vm._v(_vm._s(_vm.score))])
-      ]),
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.rateRecipe($event)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "form-group" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.score,
+                      expression: "score"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "range",
+                    step: "0.01",
+                    name: "score",
+                    min: "1",
+                    max: "10",
+                    value: "5",
+                    id: "score"
+                  },
+                  domProps: { value: _vm.score },
+                  on: {
+                    __r: function($event) {
+                      _vm.score = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", [_vm._v(_vm._s(_vm.score))])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "form-gropup mb-4" },
+                [
+                  _c("ckeditor", {
+                    attrs: { editor: _vm.editor, config: _vm.editorConfig },
+                    model: {
+                      value: _vm.comment,
+                      callback: function($$v) {
+                        _vm.comment = $$v
+                      },
+                      expression: "comment"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("button", { staticClass: "btn btn-success" }, [_vm._v("Rate")])
+            ]
+          )
+        : _vm._e(),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form-gropup mb-4" },
-        [
-          _c("ckeditor", {
-            attrs: { editor: _vm.editor, config: _vm.editorConfig },
-            model: {
-              value: _vm.comment,
-              callback: function($$v) {
-                _vm.comment = $$v
-              },
-              expression: "comment"
-            }
+      _vm._l(_vm.comments, function(comment) {
+        return _c("div", { key: comment.id, staticClass: "col-12" }, [
+          _vm._m(0, true),
+          _vm._v(" "),
+          _c("p", { domProps: { innerHTML: _vm._s(comment.comment) } }),
+          _c("p", [_vm._v(_vm._s(comment.user))]),
+          _c("p", {
+            domProps: { innerHTML: _vm._s(_vm.starRating(comment.score)) }
           })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-success" }, [_vm._v("Rate")])
-    ]
+        ])
+      })
+    ],
+    2
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _c("img", {
+        attrs: { src: "/img/XS/300px-No_image_available.svg.png", alt: "" }
+      })
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -56383,8 +56428,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\kocalici\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\kocalici\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\wamp64\www\kocalici\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\kocalici\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

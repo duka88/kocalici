@@ -1,6 +1,6 @@
 <template>
-    
-              <form @submit.prevent="rateRecipe" >
+        <div>
+              <form @submit.prevent="rateRecipe" v-if="rate" >
                 <div class="form-group">                   
                     <input 
                      v-model="score" type="range" step="0.01" name ="score" min="1" max="10" value="5" class="form-control" id="score">
@@ -15,7 +15,11 @@
             
               </form>
         
-   
+             <div class="col-12" v-for="comment in comments" :key="comment.id">
+               <p><img src="/img/XS/300px-No_image_available.svg.png" alt=""></p>
+                <p v-html="comment.comment"> </p><p>{{comment.user}}</p><p<p v-html="starRating(comment.score)"></p>
+             </div>
+     </div>        
 </template>
 
 <script>
@@ -28,12 +32,15 @@
             return {
               editor: ClassicEditor,                
                 editorConfig: {
-                    toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+                    toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
 
                 },
                  avg: '',
                  score: '5',
-                 comment: ''
+                 comment: '',
+                 comments: {},
+                 rate: ''
+
                 }
                
             },
@@ -49,23 +56,52 @@
                 )
                 .then(({data}) => {
                     vm.loadScores();
+                    vm.loadComments();
+                    this.rate = false;
                    
             })
 
           },
+          loadComments(){
+             axios.get(`/api/comments/${this.recipe_id}`)
+                  .then(({data}) =>{
+                    this.comments = data.data
+                  })
+          },
           loadScores(){
-              axios.get(`/api/rating/${this.recipe_id}`)
+              axios.get(`/api/rating/${this.recipe_id}/${this.user_id}`)
                    .then(({data}) =>{
 
-                        this.avg = data
+                        this.avg = data[1];
+                        this.rate = data[0];
                       })
                       .catch(error => {
                         console.log(error);
                       })
-          }
+          },
+          starRating(avg){
+               let star = "";
+            for (let i = 1; i <= 10; i+=2){
+                    if(avg > 1){
+                      star += '<i class="fas fa-star"></i>';
+                     avg = avg - 2;
+                    }else if(avg > 0.5){  
+                      star += ' <i class="fas fa-star-half-alt"></i>';
+                     avg = avg - 2;
+                  }else { 
+                    star += '<i class="far fa-star"></i>';
+                  }
+                }
+
+                return star;
+             }
+          
         },
+
         created(){
             this.loadScores();
+            this.loadComments();
+            console.log(this.starRating(8));
         }
         
     }

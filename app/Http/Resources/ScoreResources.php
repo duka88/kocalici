@@ -18,6 +18,8 @@ class ScoreResources extends JsonResource
           'score' => $this->score,
           'recipe_id' => $this->recipe_id,
           'user_id' => $this->user_id,
+          'user' => $this->user->name,
+          'comment' => $this->comment
         ];
     }
 }
