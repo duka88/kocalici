@@ -215,7 +215,7 @@ class RecipesController extends Controller
 
               foreach($galleries as $gallery){
                  $i++;
-               if($i == 0) {
+               if($i == 1) {
                   continue;
                }else{
                  $recipe->galleries()->create([

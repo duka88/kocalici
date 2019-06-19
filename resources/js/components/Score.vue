@@ -15,10 +15,22 @@
             
               </form>
         
-             <div class="col-12" v-for="comment in comments" :key="comment.id">
-               <p><img src="/img/XS/300px-No_image_available.svg.png" alt=""></p>
-                <p v-html="comment.comment"> </p><p>{{comment.user}}</p><p<p v-html="starRating(comment.score)"></p>
-             </div>
+             <div class="col-12 comment" v-for="comment in comments" :key="comment.id">
+                <div class="avatar">
+                  <img src="/img/XS/300px-No_image_available.svg.png" alt="">
+                </div>
+                <div class="comment-content">
+                  <div class="comment-name">
+                    <p>{{comment.user}}</p>
+                  </div>
+                  <div class="comment-score">
+                    <p v-html="starRating(comment.score)"></p>
+                  </div>
+                </div>
+                <div class="comment-text" v-html="comment.comment">
+                </div>
+              </div>
+             
      </div>        
 </template>
 
@@ -57,7 +69,7 @@
                 .then(({data}) => {
                     vm.loadScores();
                     vm.loadComments();
-                    this.rate = false;
+                   
                    
             })
 
@@ -86,7 +98,7 @@
                       star += '<i class="fas fa-star"></i>';
                      avg = avg - 2;
                     }else if(avg > 0.5){  
-                      star += ' <i class="fas fa-star-half-alt"></i>';
+                      star += '<i class="fas fa-star-half-alt"></i>';
                      avg = avg - 2;
                   }else { 
                     star += '<i class="far fa-star"></i>';
