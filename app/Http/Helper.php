@@ -34,4 +34,24 @@ class Helper{
 
          return $imageName;           
     }
+
+
+    public static function Rating($min, $max, $avg){
+
+      $star = "";
+        for ($i = $min; $i <= $max; $i+=2){
+                if($avg > 1){
+                  $star .= '<i class="fas fa-star"></i>';
+                 $avg -= 2;
+                }elseif($avg > 0.5) {  
+                  $star .= ' <i class="fas fa-star-half-alt"></i>';
+                 $avg -= 2;
+              }else { 
+                 $star .= '<i class="far fa-star"></i>';
+              }
+            }
+
+            return $star;
+         }
+            
 }

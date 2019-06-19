@@ -15,7 +15,7 @@ class RecipeController extends Controller
     public function show(Recipe $recipe){
     
     $cat_id = $recipe->category_id;
-    $avg_score = Score::where('recipe_id', $recipe->id)->avg('score');
+    $avg_score = round(Score::where('recipe_id', $recipe->id)->avg('score'),1);
     $related = Recipe::whereHas('category', function($query) use ($cat_id){
         $query->where('id', $cat_id);
     })->take(6)->get();
@@ -30,12 +30,12 @@ class RecipeController extends Controller
             $score = true;
         }
      
-    	return view('recipes.show')->with('recipe',$recipe)->with('user', auth()->user())->with('score', $score)->with('avg_score', $avg_score)->with('related', $related);;
+    	return view('recipes.show')->with('recipe',$recipe)->with('user', auth()->user())->with('score', $score)->with('min', 1)->with('max', 10)->with('avg_score', $avg_score)->with('related', $related);;
     }else{
 
         $score = Score::where('recipe_id', $recipe->id)->avg('score');
 
-        return view('recipes.show')->with('recipe',$recipe)->with('avg_score', $avg_score)->with('related', $related);
+        return view('recipes.show')->with('recipe',$recipe)->with('avg_score', $avg_score)->with('min', 1)->with('max', 10)->with('related', $related);
     }
  }
 
