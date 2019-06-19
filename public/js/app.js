@@ -2442,6 +2442,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['recipe_id', 'user_id'],
@@ -2460,8 +2472,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     rateRecipe: function rateRecipe() {
-      var _this = this;
-
       var vm = this;
       axios.post('/api/rating', {
         recipe_id: this.recipe_id,
@@ -2472,24 +2482,23 @@ __webpack_require__.r(__webpack_exports__);
         var data = _ref.data;
         vm.loadScores();
         vm.loadComments();
-        _this.rate = false;
       });
     },
     loadComments: function loadComments() {
-      var _this2 = this;
+      var _this = this;
 
       axios.get("/api/comments/".concat(this.recipe_id)).then(function (_ref2) {
         var data = _ref2.data;
-        _this2.comments = data.data;
+        _this.comments = data.data;
       });
     },
     loadScores: function loadScores() {
-      var _this3 = this;
+      var _this2 = this;
 
       axios.get("/api/rating/".concat(this.recipe_id, "/").concat(this.user_id)).then(function (_ref3) {
         var data = _ref3.data;
-        _this3.avg = data[1];
-        _this3.rate = data[0];
+        _this2.avg = data[1];
+        _this2.rate = data[0];
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2502,7 +2511,7 @@ __webpack_require__.r(__webpack_exports__);
           star += '<i class="fas fa-star"></i>';
           avg = avg - 2;
         } else if (avg > 0.5) {
-          star += ' <i class="fas fa-star-half-alt"></i>';
+          star += '<i class="fas fa-star-half-alt"></i>';
           avg = avg - 2;
         } else {
           star += '<i class="far fa-star"></i>';
@@ -40436,13 +40445,24 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm._l(_vm.comments, function(comment) {
-        return _c("div", { key: comment.id, staticClass: "col-12" }, [
+        return _c("div", { key: comment.id, staticClass: "col-12 comment" }, [
           _vm._m(0, true),
           _vm._v(" "),
-          _c("p", { domProps: { innerHTML: _vm._s(comment.comment) } }),
-          _c("p", [_vm._v(_vm._s(comment.user))]),
-          _c("p", {
-            domProps: { innerHTML: _vm._s(_vm.starRating(comment.score)) }
+          _c("div", { staticClass: "comment-content" }, [
+            _c("div", { staticClass: "comment-name" }, [
+              _c("p", [_vm._v(_vm._s(comment.user))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "comment-score" }, [
+              _c("p", {
+                domProps: { innerHTML: _vm._s(_vm.starRating(comment.score)) }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", {
+            staticClass: "comment-text",
+            domProps: { innerHTML: _vm._s(comment.comment) }
           })
         ])
       })
@@ -40455,7 +40475,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", [
+    return _c("div", { staticClass: "avatar" }, [
       _c("img", {
         attrs: { src: "/img/XS/300px-No_image_available.svg.png", alt: "" }
       })
