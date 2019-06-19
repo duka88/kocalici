@@ -134,42 +134,19 @@
             removeImage: function (item) {
               item.image = false; 
                     }, 
-
-            uploadGallery(){
-                axios.post('/api/gallery',{
-                    image: this.photo,
-                    name: this.name                   
-                })
-            },
-            loadGallery(){
-                axios.get('api/gallery')
-                     .then(({data}) => {
-                        this.photos = data.data;
-                        this.show = data.data[0].image;
-                     })
-                     
-
-            },         
+                            
             loadCategories(){
-                axios.get('api/category')
+                axios.get('/api/category')
                      .then(({data}) => {
                         this.categories = data.data;
                        
                      })
             },
-            editGallery(recipe_id = null){
-                axios.put('api/gallery',{
-                    image: this.photo,
-                    name: this.name,
-                    id: this.id
-                   
-                })
-            },
-
+          
             uploadRecipe(){
                 let image = this.items[0];
 
-                axios.post('api/recipe',{    
+                axios.post('/api/recipe',{    
                       title: this.recipe.title,
                       description: this.recipe.description,
                       content: this.recipe.content,
@@ -286,7 +263,7 @@
       searchTags(){
         if( this.currentTag.length > 2 && !this.pauseSearch ){
           this.searchSelectedIndex = -1;
-          axios.get( 'api/searchTag' , {
+          axios.get( '/api/searchTag' , {
             params: {
               q: this.currentTag
             }
@@ -386,7 +363,7 @@
         },
 
        created() {
-            this.loadGallery();
+            
             this.loadCategories();
         
           

@@ -28,14 +28,30 @@ class ScoreController extends Controller
      
    }
 
-   public function show($recipe){
+   public function show($recipe, $user){
        
+      $score=[];
+        if(isset($user)){
+        	$user = Score::where('user_id', $user)->get();
+           if(empty($user)){
+             array_push($score, true);
+           }else{
+            array_push($score, false);
+           }
 
-        if(isset($recipe)){
-        	$score = Score::where('recipe_id', $recipe)->avg('score');
+         $avg = Score::where('recipe_id', $recipe)->avg('score'); 
 
+         array_push($score, $avg); 
+      
          return Response($score);
 
         }
+   }
+
+   public function load($recipe){
+
+      $score = Score::where('recipe_id', $recipe)->latest()->get();
+
+      return ScoreResources::collection($score);
    }
 }
