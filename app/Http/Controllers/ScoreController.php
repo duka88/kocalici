@@ -12,7 +12,7 @@ class ScoreController extends Controller
 {
    public function create(ScoreCrateRequest $request){
 
-    $score = Score::where('recipe_id', $request->recipe_id)->where('user_id',$request->user_id)->get();
+    $score = Score::where('recipe_id', $request->recipe_id)->where('user_id',$request->user_id)->count();
 
      if(empty($score)){  
        $score = Score::create([

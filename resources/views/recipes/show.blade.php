@@ -15,11 +15,9 @@
         <h1 class=" text-left">{{$recipe->title}}</h1>
         
         <span>{{$recipe->user->name}}</span>
-        <p class="my-3"><i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star mr-2"></i>(1)</p>
+        <p class="my-3">   
+              {!!Helper::Rating($min, $max, $avg_score)!!}     
+          ({{$recipe->scores()->count()}})</p>
         <p class="my-4"><span class="font-weight-bold text-dark">Author </span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis quam ut diam fringilla malesuada. <a class="single_recipe_link" >Read More</a></p>
         </div>
             <div class="row my-4">
@@ -88,25 +86,21 @@
         <score-component :user_id={{auth()->user()->id}} :recipe_id={{$recipe->id}}></score-component>
       </div>
     </div>
+   
+ 
+     <div class="row">
+       @foreach($recipe->scores as $comment)
+        <div class="col-12">
+          {!!$comment->comment!!} {{$comment->score}}
+        </div>
+       @endforeach
+     </div>  
     <div class="row">
       <div class="col-12">
-              <h2 class="mb-5 text-left">Reviews</h2>
-      </div>
+        <h2 class="mb-5 text-center">Related Recipes</h2>
+      </div>           
+        
 
-    </div>
-    <div class="row">
-         <div class="col-12">
-            <h2 class="mb-5 text-center">Related Recipes</h2>{{$avg_score}}
-          @for ($i = 1; $i <= $avg_score; $i= $i+2)
-            <i class="fas fa-star"></i>
-               
-          @endfor
-           @for ($n = 10; $n > $avg_score; $n= $n-2)
-            <i class="far fa-star"></i>
-               
-          @endfor
-          </div> 
-       </div>   
       @foreach($related as $recipe)    
         <div class="col-2">
           <div class="single_recipe_img_container" >
@@ -114,7 +108,9 @@
           </div></a>
         </div>  
      @endforeach
-       
+        </div>
+
+      
     </div>
    </div>
 
