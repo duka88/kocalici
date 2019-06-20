@@ -81,14 +81,14 @@
     Etiam vulputate nisl vel metus lacinia ultricies. Aliquam tempus risus non erat porttitor luctus. Maecenas in purus et erat convallis interdum at id libero. Donec auctor orci eu suscipit sagittis. Fusce urna enim, placerat sed commodo ac, facilisis sit amet sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas molestie dolor quis porttitor lacinia. Nunc sed scelerisque ex. Curabitur vitae mauris ac felis cursus mattis. Aliquam rhoncus fermentum nunc sed gravida. Quisque nec faucibus eros.</p>
     </div>
         <hr class="single_recipe-border">
-    @Auth     
+        
       <div class="row">
         <div class="col-12">
-          <score-component :user_id={{auth()->user()->id}} :recipe_id={{$recipe->id}}></score-component>
+          <score-component @Auth  :user_id={{auth()->user()->id}}  @endauth :recipe_id={{$recipe->id}}></score-component>
         </div>
       </div>
    
- @endauth
+
   
     <div class="row">
       <div class="col-12">

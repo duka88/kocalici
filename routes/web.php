@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function(){
 
 
 Route::middleware(['auth', 'admin'])->group(function(){
-	Route::get('users', 'UsersController@index')->name('users.index');
+	//Route::get('users', 'UsersController@index')->name('users.index');
 	Route::get('users/profile', 'UsersController@edit')->name('users.edit-profile');
 	Route::put('users/profile', 'UsersController@update')->name('users.update-profile');
 	Route::post('users/{user}/make-admin', 'UsersController@makeAdmin')->name('users.make-admin');
@@ -42,8 +42,9 @@ Route::middleware(['auth', 'admin'])->group(function(){
 Route::get('recipe-vue', 'RecipesController@recipevue');
 
  
-// Route::get('{path}','HomeController@index')->where( 'path', '([A-z\d-/_.]+)?' );
+Route::get('{path}','HomeController@index')->where( 'path', '([A-z\d-/_.]+)?' );
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+

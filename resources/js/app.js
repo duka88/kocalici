@@ -11,14 +11,30 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router'; 
 import {store} from 'store';
 import CKEditor from '@ckeditor/ckeditor5-vue';
+import {Form , HasError, AlertError} from 'vform';
+
+window.Form = Form;
+Vue.component(HasError.name, HasError);
+Vue.component(AlertError.name, AlertError);
 
 Vue.use(CKEditor);
 Vue.use(VueRouter);
 
+
+
+const users = Vue.component('user-component', require('./components/user/Users.vue').default);
+const dashboard = Vue.component('dashboard-component', require('./components/dashboard/Dashboard.vue').default);
+Vue.component('recipes-component', require('./components/Recipes.vue').default);
+Vue.component('fridge-component', require('./components/Fridge.vue').default);
+Vue.component('score-component', require('./components/Score.vue').default);
+const addRecipe = Vue.component('create-recipe-component', require('./components/recipes/CreateRecipe.vue').default);
+Vue.component('tag-component', require('./components/Tag.vue').default);
+Vue.component('gallery-component', require('./components/Gallery.vue').default);
+
 const routes = [
-  { path: '/cake', component:  require('./components/recipes/Cake.vue').default},
-  { path: '/cookie', component:  require('./components/recipes/Cookie.vue').default},
-  { path: '/recipes', component: require('./components/Recipes.vue').default},
+  { path: '/dashboard', component: dashboard},
+  { path: '/add-recipe', component: addRecipe},
+  { path: '/users', component: users},
   { path: '/score', component:  require('./components/Score.vue').default}
 ]
 
@@ -26,14 +42,6 @@ const router = new VueRouter({
    mode: 'history',
   routes // short for `routes: routes`
 });
-
-Vue.component('recipes-component', require('./components/Recipes.vue').default);
-Vue.component('fridge-component', require('./components/Fridge.vue').default);
-Vue.component('score-component', require('./components/Score.vue').default);
-Vue.component('create-recipe-component', require('./components/CreateRecipe.vue').default);
-Vue.component('tag-component', require('./components/Tag.vue').default);
-Vue.component('gallery-component', require('./components/Gallery.vue').default);
-
 
 
 
