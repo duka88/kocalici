@@ -1,7 +1,8 @@
 <template>
         <div>
               <form @submit.prevent="rateRecipe" v-if="rate" >
-                <div class="form-group">                   
+                <div class="form-group"> 
+                                  
                     <input 
                      v-model="score" type="range" step="0.01" name ="score" min="1" max="10" value="5" class="form-control" id="score">
                    <span >{{score}}</span>

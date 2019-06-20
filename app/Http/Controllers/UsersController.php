@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Http\Requests\UpdateProfileRequest;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Users\UserCreateRequest;
+use App\Http\Requests\Users\UserUpdateRequest;
+use App\Http\Resources\UserResources;
 
 use Illuminate\Http\Request;
 
@@ -11,7 +14,32 @@ class UsersController extends Controller
 {
     public function index()
     {
-       return view('users.index')->with('users', User::all());
+       $users = User::all();
+
+       return UserResources::collection($users);
+    }
+
+    public function create(UserCreateRequest $request){
+         
+         $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request['password']),
+            'role' => $request->role
+
+         ]);
+
+         return new UserResources($user);
+
+    }
+
+    public function update(UserUpdateRequest $request, $id){
+        
+        //$user = User::findOrFail($id);
+
+        //$user->update($request->all());
+
+         return Response("sd");
     }
 
     public function makeAdmin(User $user){
@@ -30,7 +58,7 @@ class UsersController extends Controller
     	return view('users.edit')->with('user', auth()->user());
     }
 
-    public function update(UpdateProfileRequest $request){
+    public function updateProfile(UpdateProfileRequest $request){
 
     	$user = auth()->user();
 
