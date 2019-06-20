@@ -32,7 +32,7 @@ class ScoreController extends Controller
        
       $score=[];
         if(isset($user)){
-        	$user = Score::where('user_id', $user)->get();
+        	$user = Score::where('user_id', $user)->where('recipe_id', $recipe)->count();
            if(empty($user)){
              array_push($score, true);
            }else{
