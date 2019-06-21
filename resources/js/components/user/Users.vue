@@ -21,7 +21,7 @@
                     <th>Registred At</th>
                     <th>Modify</th>
                   </tr>
-                  <tr v-for="user in users" :key="user.id">
+                  <tr v-for="user in users.data" :key="user.id">
                     <td>{{user.id}}</td>
                     <td>{{user.name}}</td>
                     <td>{{user.email}}</td>
@@ -32,7 +32,7 @@
                             <i class="fa fa-edit text-blue"></i>
                         </a>
                         /
-                        <a href="#" >
+                        <a @click="deleteUser(user.id)" >
                             <i class="fa fa-trash text-red"></i>
                         </a>
                        </td>
@@ -40,10 +40,10 @@
                   
                 </tbody></table>
               </div>
-              <!--
+              
              <div class="card-footer">
                <pagination :data="users"  @pagination-change-page="getResults"></pagination>
-             </div>  -->
+             </div>  
             </div>
          
           </div>
@@ -87,8 +87,8 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button  type="submit" class="btn btn-primary">Create</button>
-                        <button  type="submit" class="btn btn-primary">Update</button>
+                        <button v-if="!edit" type="submit" class="btn btn-primary">Create</button>
+                        <button v-if="edit" type="submit" class="btn btn-primary">Update</button>
                       </div>
                  </form>
                 </div>
@@ -118,9 +118,15 @@
                 axios.get('/api/users')
                      .then(({data})=>{
 
-                        this.users = data.data;
+                        this.users = data;
                      })
             },
+              getResults(page = 1) {
+                     axios.get('/api/users?page=' + page)
+                           .then(data => {
+                             this.users = data.data;
+                      });
+              },
             createUser(){
                 let vm = this;
                 this.form.post('/api/users')
@@ -130,13 +136,23 @@
                        });
             },
             updateUser(){
+                let vm = this;
                 this.form.put(`api/users/${this.form.id}`)
                          .then(() =>{
                            $('#addNew').modal('hide'); 
+                            vm.loadUsers();
                          })
                          .catch((errors)=>{
                             console.log(errors);
                          })
+            },
+            deleteUser(id){
+              let vm = this;
+                axios.delete(`/api/users/${id}`)
+                      .then(()=>{
+                         vm.loadUsers();
+                      })
+
             },
             editModal(user){
                 this.edit = true;

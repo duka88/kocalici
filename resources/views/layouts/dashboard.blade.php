@@ -186,12 +186,12 @@
           <li class="nav-header">USERS</li>
 
           <li class="nav-item">
-            <a href="" class="nav-link">
+            <router-link to="/profile" class="nav-link">
               <i class="fas fa-user"></i>
               <p>
                 PROFILE               
               </p>
-            </a>
+            </router-link>
           </li>
           <li class="nav-item">
             <router-link to="/users" class="nav-link">
