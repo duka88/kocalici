@@ -42,3 +42,6 @@ Route::get('myLike/{recipe}/{user}', 'LikeController@single');
 Route::get('users', 'UsersController@index');
 Route::post('users','UsersController@create');
 Route::put('users/{id}','UsersController@update');
+Route::delete('users/{id}','UsersController@delete');
+
+Route::get('profile', 'ProfileController@index');

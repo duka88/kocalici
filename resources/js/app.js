@@ -24,17 +24,21 @@ Vue.use(VueRouter);
 
 const users = Vue.component('user-component', require('./components/user/Users.vue').default);
 const dashboard = Vue.component('dashboard-component', require('./components/dashboard/Dashboard.vue').default);
+const profile = Vue.component('profile-component', require('./components/user/Profile.vue').default);
+
 Vue.component('recipes-component', require('./components/Recipes.vue').default);
 Vue.component('fridge-component', require('./components/Fridge.vue').default);
 Vue.component('score-component', require('./components/Score.vue').default);
 const addRecipe = Vue.component('create-recipe-component', require('./components/recipes/CreateRecipe.vue').default);
 Vue.component('tag-component', require('./components/Tag.vue').default);
 Vue.component('gallery-component', require('./components/Gallery.vue').default);
+Vue.component('pagination', require('laravel-vue-pagination'));
 
 const routes = [
   { path: '/dashboard', component: dashboard},
   { path: '/add-recipe', component: addRecipe},
   { path: '/users', component: users},
+  { path: '/profile', component: profile},
   { path: '/score', component:  require('./components/Score.vue').default}
 ]
 

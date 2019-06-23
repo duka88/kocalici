@@ -14,7 +14,7 @@ class UsersController extends Controller
 {
     public function index()
     {
-       $users = User::all();
+       $users = User::paginate(1);
 
        return UserResources::collection($users);
     }
@@ -30,16 +30,26 @@ class UsersController extends Controller
          ]);
 
          return new UserResources($user);
+      
+    }
 
+    public function delete($id){
+        
+         $user = User::findOrFail($id);
+
+         $user->delete();
+
+         return new UserResources($user);
     }
 
     public function update(UserUpdateRequest $request, $id){
         
-        //$user = User::findOrFail($id);
+        $user = User::findOrFail($id);
 
-        //$user->update($request->all());
+       $user->role = $request->role;
+       $user->update($request->all());
 
-         return Response("sd");
+         return Response($user);
     }
 
     public function makeAdmin(User $user){

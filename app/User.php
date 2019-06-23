@@ -28,6 +28,23 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected static function boot(){
+        
+        parent::boot();
+
+        static::created(function($user){
+           $user->profile()->create();
+
+          
+        });
+        
+        static::deleted(function($user){
+           $user->profile()->delete();
+
+          
+        });
+    }
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -53,5 +70,10 @@ class User extends Authenticatable
     public function likes(){
 
         return $this->hasMany(Like::class);
+    }
+
+    public function profile(){
+
+        return $this->hasOne(Profile::class);
     }
 }
