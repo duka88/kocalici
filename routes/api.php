@@ -17,6 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 Route::get('recipes/{category_id}', 'RecipesController@category');
 
 Route::get('fridge', 'FridgeController@apitags');
@@ -43,5 +44,6 @@ Route::get('users', 'UsersController@index');
 Route::post('users','UsersController@create');
 Route::put('users/{id}','UsersController@update');
 Route::delete('users/{id}','UsersController@delete');
-
+Route::post('/login', 'AuthController@login');
+Route::middleware('auth:api')->post('/logout', 'AuthController@logout');
 Route::get('profile', 'ProfileController@index');
