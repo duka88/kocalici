@@ -47,3 +47,6 @@ Route::delete('users/{id}','UsersController@delete');
 Route::post('/login', 'AuthController@login');
 Route::middleware('auth:api')->post('/logout', 'AuthController@logout');
 Route::get('profile', 'ProfileController@index');
+
+
+

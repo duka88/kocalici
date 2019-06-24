@@ -20,7 +20,7 @@
   </head>
 
   <body>
-
+   <div id="app">
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light navbar-stick-dark" data-navbar="sticky">
@@ -42,8 +42,8 @@
 
           </ul>
         </section>
-
-        <a class="btn btn-xs btn-round btn-success" href="{{route('login')}}">Login</a>
+        <login-component></login-component>  
+        <!--<a class="btn btn-xs btn-round btn-success" href="{{route('login')}}">Login</a>-->
 
       </div>
     </nav><!-- /.navbar -->
@@ -82,12 +82,10 @@
 
 
     <!-- Scripts -->
-    <script src="{{asset('js/page.min.js')}}"></script>
-    <script src="{{asset('js/script.js')}}"></script>
+   </div>
     <script src="{{asset('js/app.js')}}"></script>
 
-    <!-- Go to www.addthis.com/dashboard to customize your tools -->
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5cab6d9dd7c20eb6"></script>
-
+  
+   
   </body>
 </html>
