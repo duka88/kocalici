@@ -25,6 +25,7 @@ Vue.use(VueRouter);
 const users = Vue.component('user-component', require('./components/user/Users.vue').default);
 const dashboard = Vue.component('dashboard-component', require('./components/dashboard/Dashboard.vue').default);
 const profile = Vue.component('profile-component', require('./components/user/Profile.vue').default);
+const login = Vue.component('login-component', require('./components/Login.vue').default);
 
 Vue.component('recipes-component', require('./components/Recipes.vue').default);
 Vue.component('fridge-component', require('./components/Fridge.vue').default);
@@ -39,12 +40,13 @@ const routes = [
   { path: '/add-recipe', component: addRecipe},
   { path: '/users', component: users},
   { path: '/profile', component: profile},
+  { path: '/login', component: login},
   { path: '/score', component:  require('./components/Score.vue').default}
 ]
 
 const router = new VueRouter({
    mode: 'history',
-  routes // short for `routes: routes`
+   routes // short for `routes: routes`
 });
 
 

@@ -17,6 +17,7 @@ class CreateRecipeTagTable extends Migration
             $table->bigIncrements('id');
             $table->integer('recipe_id');
             $table->integer('tag_id');
+            $table->integer('amount')->nullable();
             $table->timestamps();
         });
     }

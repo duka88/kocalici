@@ -5,6 +5,8 @@
 @endsection
 
 @section('header')
+
+
     <!-- Header -->
     <header class="header text-center text-white" style="background-image: linear-gradient(-225deg, #5D9FFF 0%, #B8DCFF 48%, #6BBBFF 100%);">
       <div class="container">
@@ -26,9 +28,9 @@
    <main class="main-content">
       <div class="section bg-gray">
         <div class="container">
-          <div class="row" id="app">
+          <div class="row" >
    
-            <div class="col-md-8 col-xl-8">
+            <div class="col-md-12 col-xl-12">
               <div class="row gap-y">
               <recipes-component></recipes-component> 
               
@@ -40,9 +42,7 @@
             
           </div>
         </div>
-        <div class="col-md-4 col-xl-4 w-100">
-           @include('partials.sidebar')
-        </div>   
+        
       </div>
     </main>
 

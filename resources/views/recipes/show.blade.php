@@ -48,9 +48,10 @@
             </div>
       </div>
       <div class="col-6">
-        
+        @foreach($recipe->tags as $tag)
+        {{$tag->pivot->amount}}
    
-    
+       @endforeach
         <gallery-component  @Auth  :user_id={{auth()->user()->id}} @endauth :recipe_id={{$recipe->id}}></gallery-component>             
      
       </div>

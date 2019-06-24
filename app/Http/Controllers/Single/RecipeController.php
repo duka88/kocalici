@@ -30,7 +30,7 @@ class RecipeController extends Controller
             $score = true;
         }
      
-    	return view('recipes.show')->with('recipe',$recipe)->with('user', auth()->user())->with('score', $score)->with('min', 1)->with('max', 10)->with('avg_score', $avg_score)->with('related', $related);;
+    	return view('recipes.show')->with('recipe',$recipe)->with('user', auth()->user())->with('score', $score)->with('min', 1)->with('max', 10)->with('avg_score', $avg_score)->with('related', $related);
     }else{
 
         $score = Score::where('recipe_id', $recipe->id)->avg('score');
