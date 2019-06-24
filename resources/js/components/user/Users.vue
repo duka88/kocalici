@@ -137,7 +137,7 @@
             },
             updateUser(){
                 let vm = this;
-                this.form.put(`api/users/${this.form.id}`)
+                this.form.put(`/api/users/${this.form.id}`)
                          .then(() =>{
                            $('#addNew').modal('hide'); 
                             vm.loadUsers();
