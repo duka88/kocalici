@@ -17,6 +17,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:api')->group(function(){
+    Route::get('users', 'UsersController@index');
+	Route::post('users','UsersController@create');
+	Route::put('users/{id}','UsersController@update');
+	Route::delete('users/{id}','UsersController@delete');
+	Route::get('profile', 'ProfileController@index');
+	Route::get('users', 'UsersController@index');
+});
+
 
 Route::get('recipes/{category_id}', 'RecipesController@category');
 
@@ -40,13 +49,12 @@ Route::get('like/{recipe}', 'LikeController@index');
 Route::get('myLike/{recipe}/{user}', 'LikeController@single');
 
 
-Route::get('users', 'UsersController@index');
-Route::post('users','UsersController@create');
-Route::put('users/{id}','UsersController@update');
-Route::delete('users/{id}','UsersController@delete');
+
+
+ 
 Route::post('/login', 'AuthController@login');
-Route::middleware('auth:api')->post('/logout', 'AuthController@logout');
-Route::get('profile', 'ProfileController@index');
+Route::post('/logout', 'AuthController@logout');
+
 
 
 
