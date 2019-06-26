@@ -32,107 +32,8 @@ class RecipesController extends Controller
         return view('recipes.index')->with('recipes', Recipe::all())->with('tags', Tag::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('recipes.create')->with('categories', Category::all())->with('tags', Tag::all())->with('recipes', Recipe::all());
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CreateRecipeRequest $request)
-    {
-         $recipeImg = new Recipe;
-        $imageName = Helper::uploadImageSize($request->image);
-
-
-        $recipe = Recipe::create([
-          'title' =>$request->title,
-          'description' => $request->description,
-          'content' =>$request->content,
-          'image' => $imageName,
-          'user_id' => auth()->user()->id,
-          'published_at' => $request->published_at,
-          'category_id' =>  $request->category_id
-        ]);
-
-        $recipe->tags()->attach($request->tags);
-
-        session()->flash('success', 'Recipe created');
-
-        return redirect(route('recipe.index'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Recipe $recipe)
-    {
-        return view('recipes.create')->with('recipe', $recipe)->with('categories', Category::all())->with('tags', Tag::all());
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateRecipeRequest $request, Recipe $recipe)
-    {
-        $data = $request->only(['title', 'description', 'published_at', 'content','category_id']);
-      
-        if($request->hasFile('image')){
-           
-        
-           $imageName = Helper::uploadImageSize($request->image);
-
-         
-
-          $recipe->deleteImage();
-          $data['image'] =  $imageName;
-        }
-
-        if($request->tags){
-            $recipe->tags()->sync($request->tags);
-        }
-
-        $recipe->update($data);
-
-        session()->flash('success', 'Recipe updated');
-
-        return redirect(route('recipe.index'));
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
+   
     public function destroy($id)
     {
 
@@ -183,10 +84,7 @@ class RecipesController extends Controller
         return RecipeResources::collection($recipes);
     }
 
-      public function recipevue(){
 
-         return view('recipe_create');
-    }
 
 
     public function stored(RecipeApiRequest $request){
@@ -207,7 +105,7 @@ class RecipesController extends Controller
                     'description' => $request->description,
                     'content' => $request->content,
                     'image' => $galleries[0],
-                    'user_id' => $request->user_id,              
+                    'user_id' => 1,              
                     'category_id' =>  $request->category_id,
                  ]);
               
@@ -232,8 +130,15 @@ class RecipesController extends Controller
              }
              
             $tadsId = Tag::whereIn('name', $request->tags)->pluck('id');
+            
+            $sync_data = [];
 
-              $recipe->tags()->attach($tadsId);
+            for($i = 0; $i < count($tadsId); $i++){
+            
+            $sync_data[$tadsId[$i]] = ['amount' => $request->amount[$i]];
+            }
+
+              $recipe->tags()->sync($sync_data);
 
 
              return Response($recipe);

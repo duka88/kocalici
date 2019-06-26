@@ -16,11 +16,19 @@
             </select>
         </div>
          <div class="form-group">
-              <label>Tags</label>
+              <label>Ingredients</label>
           <div class="tags-input" >
-              <div class="selected-tag" v-for="(selectedTag, key) in tagsArray">{{ selectedTag }} <span class="remove-tag" v-on:click="removeTag( key )">&times;</span> </div>
-                <input type="text"  class="new-tag-input" v-model="currentTag" v-on:keyup="searchTags" v-on:keyup.enter="addNewTag" v-on:keydown.up="changeIndex( 'up' )" v-on:keydown.delete="handleDelete" v-on:keydown.down="changeIndex( 'down' )" v-bind:class="{ 'duplicate-warning' : duplicateFlag }" placeholder="Add a tag"/>
+              <div class="selected-tag" v-for="(selectedTag, key) in tagsArray.tags">
+                <span class="font-weight-bold">Ingredient </span>{{ selectedTag }}
+                 / <span class="font-weight-bold">Amount</span> {{ tagsArray.amount[key] }} 
+                 <span class="remove-tag" v-on:click="removeTag( key )">&times;</span>
+             
+               </div>
+               
+                <input ref="tag" type="text"  class="new-tag-input" v-model="currentTag" v-on:keyup="searchTags" v-on:keyup.enter="addNewTag" v-on:keydown.up="changeIndex( 'up' )" v-on:keydown.delete="handleDelete" v-on:keydown.down="changeIndex( 'down' )" v-bind:class="{ 'duplicate-warning' : duplicateFlag }" placeholder="Add a tag"/>
+                 <input v-model="currentAmount" type="text" v-on:keyup.enter="addAmount" >
                   </div>
+                 
               <div class="tag-autocomplete" v-show="showAutocomplete">
                 <div class="tag-search-result" v-for="(tag, key) in tagSearchResults" v-bind:class="{ 'selected-search-index' : searchSelectedIndex == key }" v-on:click="selectTag( tag.name )">{{ tag.name }}</div>
           </div>
@@ -86,7 +94,11 @@
                number: 0,
                id: '',
                currentTag: '',
-               tagsArray: [],
+               currentAmount: '',
+               tagsArray: {
+                  tags:[],
+                  amount:[]
+                },
                tagSearchResults: [],
                duplicateFlag: false,
                searchSelectedIndex: -1,
@@ -155,12 +167,18 @@
                       user_id: this.user_id,                      
                       category_id: this.recipe.category_id,
                       gallery: this.items,
-                      tags: this.tagsArray  
+                      tags: this.tagsArray.tags,
+                      amount: this.tagsArray.amount  
                 })
                 .then(({data}) => {                     
                      let recipe_id = data.id;
 
                 });
+            },
+            addAmount(){
+               this.tagsArray.amount.push(this.currentAmount);
+               this.currentAmount = "";
+               this.$refs.tag.focus();
             },
             /*
         Handles the selection of a tag from the autocomplete.
@@ -174,7 +192,7 @@
             Clean the tag name and add it to the array.
           */
           tag = this.cleanTagName( tag );
-          this.tagsArray.push( tag );
+          this.tagsArray.tags.push( tag );
 
           /*
             Emit the tags array and reset the inputs.
@@ -199,8 +217,8 @@
         */
         if( !this.checkDuplicates( this.currentTag ) ){
           var newTagName = this.cleanTagName( this.currentTag );
-          this.tagsArray.push( newTagName );
-
+          this.tagsArray.tags.push( newTagName );
+         this.$refs.tag.nextElementSibling.focus();
           /*
             Emit the tags have been edited.
           */
@@ -216,16 +234,8 @@
       },
 
       /*
-        Remove the tag from the tags array.
-      */
-      removeTag( tagIndex ){
-        this.tagsArray.splice( tagIndex, 1 );
-
-        /*
-          Emit that the tags have been edited.
-        */
-       
-      },
+      
+    
 
       /*
         Allows the user to select a tag going up or down on the
@@ -279,7 +289,7 @@
       checkDuplicates( tagName ){
                 tagName = this.cleanTagName( tagName );
 
-                return this.tagsArray.indexOf( tagName ) > -1;
+                return this.tagsArray.tags.indexOf( tagName ) > -1;
             },
 
       /*
@@ -318,7 +328,8 @@
         Remove the tag from the tags array.
       */
       removeTag( tagIndex ){
-        this.tagsArray.splice( tagIndex, 1 );
+        this.tagsArray.tags.splice( tagIndex, 1 );
+        this.tagsArray.amount.splice( tagIndex, 1 );
       },
 
       /*
@@ -356,7 +367,7 @@
           If the current tag has no data, we remove the last tag.
         */
                 if( this.currentTag.length == 0 ){
-                    this.tagsArray.splice( this.tagsArray.length - 1, 1);
+                    this.tagsArray.tags.splice( this.tagsArray.tags.length - 1, 1);
                      }
             },       
 

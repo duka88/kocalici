@@ -2572,10 +2572,14 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ckeditor/ckeditor5-build-classic */ "./node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js");
 /* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0__);
-var _methods;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2655,7 +2659,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       number: 0,
       id: '',
       currentTag: '',
-      tagsArray: [],
+      currentAmount: '',
+      tagsArray: {
+        tags: [],
+        amount: []
+      },
       tagSearchResults: [],
       duplicateFlag: false,
       searchSelectedIndex: -1,
@@ -2677,7 +2685,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.tagSearchResults.length == 0 ? false : true;
     }
   },
-  methods: (_methods = {
+  methods: {
     onFileChange: function onFileChange(item, e) {
       var files = e.target.files || e.dataTransfer.files;
       var name = e.target.files[0].name;
@@ -2717,11 +2725,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         user_id: this.user_id,
         category_id: this.recipe.category_id,
         gallery: this.items,
-        tags: this.tagsArray
+        tags: this.tagsArray.tags,
+        amount: this.tagsArray.amount
       }).then(function (_ref2) {
         var data = _ref2.data;
         var recipe_id = data.id;
       });
+    },
+    addAmount: function addAmount() {
+      this.tagsArray.amount.push(this.currentAmount);
+      this.currentAmount = "";
+      this.$refs.tag.focus();
     },
 
     /*
@@ -2736,7 +2750,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           Clean the tag name and add it to the array.
         */
         tag = this.cleanTagName(tag);
-        this.tagsArray.push(tag);
+        this.tagsArray.tags.push(tag);
         /*
           Emit the tags array and reset the inputs.
         */
@@ -2759,7 +2773,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       */
       if (!this.checkDuplicates(this.currentTag)) {
         var newTagName = this.cleanTagName(this.currentTag);
-        this.tagsArray.push(newTagName);
+        this.tagsArray.tags.push(newTagName);
+        this.$refs.tag.nextElementSibling.focus();
         /*
           Emit the tags have been edited.
         */
@@ -2775,16 +2790,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
 
     /*
-      Remove the tag from the tags array.
-    */
-    removeTag: function removeTag(tagIndex) {
-      this.tagsArray.splice(tagIndex, 1);
-      /*
-        Emit that the tags have been edited.
-      */
-    },
-
-    /*
+    
+         /*
       Allows the user to select a tag going up or down on the
       autocomplete.
     */
@@ -2836,7 +2843,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     */
     checkDuplicates: function checkDuplicates(tagName) {
       tagName = this.cleanTagName(tagName);
-      return this.tagsArray.indexOf(tagName) > -1;
+      return this.tagsArray.tags.indexOf(tagName) > -1;
     },
 
     /*
@@ -2869,31 +2876,52 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       */
 
       return cleanTag;
-    }
-  }, _defineProperty(_methods, "removeTag", function removeTag(tagIndex) {
-    this.tagsArray.splice(tagIndex, 1);
-  }), _defineProperty(_methods, "trimCharacter", function trimCharacter(string, character) {
-    if (character === "]") c = "\\]";
-    if (character === "\\") c = "\\\\";
-    return string.replace(new RegExp("^[" + character + "]+|[" + character + "]+$", "g"), "");
-  }), _defineProperty(_methods, "resetInputs", function resetInputs() {
-    this.currentTag = '';
-    this.tagSearchResults = [];
-    this.duplicateFlag = false;
-    this.searchSelectedIndex = -1;
-    this.pauseSearch = false;
-  }), _defineProperty(_methods, "handleDelete", function handleDelete() {
-    this.duplicateFlag = false;
-    this.pauseSearch = false;
-    this.searchSelectedIndex = -1;
-    /*
-      If the current tag has no data, we remove the last tag.
-    */
+    },
 
-    if (this.currentTag.length == 0) {
-      this.tagsArray.splice(this.tagsArray.length - 1, 1);
+    /*
+      Remove the tag from the tags array.
+    */
+    removeTag: function removeTag(tagIndex) {
+      this.tagsArray.tags.splice(tagIndex, 1);
+      this.tagsArray.amount.splice(tagIndex, 1);
+    },
+
+    /*
+      Trims any leading or ending characters
+    */
+    trimCharacter: function trimCharacter(string, character) {
+      if (character === "]") c = "\\]";
+      if (character === "\\") c = "\\\\";
+      return string.replace(new RegExp("^[" + character + "]+|[" + character + "]+$", "g"), "");
+    },
+
+    /*
+      Reset the inputs for the tags input
+    */
+    resetInputs: function resetInputs() {
+      this.currentTag = '';
+      this.tagSearchResults = [];
+      this.duplicateFlag = false;
+      this.searchSelectedIndex = -1;
+      this.pauseSearch = false;
+    },
+
+    /*
+      Handles the deletion in the tag input.
+    */
+    handleDelete: function handleDelete() {
+      this.duplicateFlag = false;
+      this.pauseSearch = false;
+      this.searchSelectedIndex = -1;
+      /*
+        If the current tag has no data, we remove the last tag.
+      */
+
+      if (this.currentTag.length == 0) {
+        this.tagsArray.tags.splice(this.tagsArray.tags.length - 1, 1);
+      }
     }
-  }), _methods),
+  },
   created: function created() {
     this.loadCategories();
   }
@@ -43326,15 +43354,24 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [
-        _c("label", [_vm._v("Tags")]),
+        _c("label", [_vm._v("Ingredients")]),
         _vm._v(" "),
         _c(
           "div",
           { staticClass: "tags-input" },
           [
-            _vm._l(_vm.tagsArray, function(selectedTag, key) {
+            _vm._l(_vm.tagsArray.tags, function(selectedTag, key) {
               return _c("div", { staticClass: "selected-tag" }, [
-                _vm._v(_vm._s(selectedTag) + " "),
+                _c("span", { staticClass: "font-weight-bold" }, [
+                  _vm._v("Ingredient ")
+                ]),
+                _vm._v(_vm._s(selectedTag) + "\n             / "),
+                _c("span", { staticClass: "font-weight-bold" }, [
+                  _vm._v("Amount")
+                ]),
+                _vm._v(
+                  " " + _vm._s(_vm.tagsArray.amount[key]) + " \n             "
+                ),
                 _c(
                   "span",
                   {
@@ -43359,6 +43396,7 @@ var render = function() {
                   expression: "currentTag"
                 }
               ],
+              ref: "tag",
               staticClass: "new-tag-input",
               class: { "duplicate-warning": _vm.duplicateFlag },
               attrs: { type: "text", placeholder: "Add a tag" },
@@ -43420,6 +43458,36 @@ var render = function() {
                     return
                   }
                   _vm.currentTag = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.currentAmount,
+                  expression: "currentAmount"
+                }
+              ],
+              attrs: { type: "text" },
+              domProps: { value: _vm.currentAmount },
+              on: {
+                keyup: function($event) {
+                  if (
+                    !$event.type.indexOf("key") &&
+                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                  ) {
+                    return null
+                  }
+                  return _vm.addAmount($event)
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.currentAmount = $event.target.value
                 }
               }
             })

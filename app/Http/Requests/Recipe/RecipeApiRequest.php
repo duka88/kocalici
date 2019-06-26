@@ -31,6 +31,7 @@ class RecipeApiRequest extends FormRequest
             'category_id' => 'required',
             'name',
             'tags' => 'required',
+            'amount' => 'required'
         ];
     }
 }
