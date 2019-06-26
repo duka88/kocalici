@@ -42,8 +42,8 @@
 
           </ul>
         </section>
-        <login-component></login-component>  
-        <!--<a class="btn btn-xs btn-round btn-success" href="{{route('login')}}">Login</a>-->
+        <login-component  @Auth :user_id={{auth()->user()->id}} @endauth></login-component>  
+     
 
       </div>
     </nav><!-- /.navbar -->

@@ -1,10 +1,8 @@
 <template>
     <div class="container">
-         <div class="card-tools">
-                    <button v-if="token" @click="logOut" class="btn btn-success">Logout</button>
-                </div>
+        
           <div class="card-tools">
-                    <button @click="newModal" class="btn btn-success" data-toggle="modal" >Add New</button>
+                    <button v-if="!user_id" @click="newModal" class="btn btn-success" data-toggle="modal" >Login</button>
                 </div>
 
                <div   class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -20,9 +18,9 @@
                   <form @submit.prevent="loginUser">
                       <div class="modal-body">
                          <div class="form-group">
-                            <input v-model="form.username" type="text" name="username" id="username" placeholder="username" 
-                              class="form-control" :class="{'is-invalid': form.errors.has('username')}">
-                              <has-error :form="form" field="username"></has-error>
+                            <input v-model="form.email" type="text" name="email" id="email" placeholder="email" 
+                              class="form-control" :class="{'is-invalid': form.errors.has('email')}">
+                              <has-error :form="form" field="email"></has-error>
                         </div>         
                         <div class="form-group">
                             <input v-model="form.password" type="password" name="password" id="password"
@@ -44,23 +42,23 @@
 
 <script>
     export default {
-        
+       
         data(){
             return {
                form: new Form({                  
-                    username: '',                   
+                    email: '',                   
                     password: ''                   
                 }), 
                token: localStorage.getItem('token') || null,
                register: false
             }
         },
+        props: ['user_id'],
         methods: {
              loginUser(){
-              this.form.post('/api/login')
+              this.form.post('/login')
                          .then(({data})=>{
-                            localStorage.setItem('token', data.access_token);
-                            this.token = localStorage.getItem('token');
+                            window.location.replace("/home");
                              $('#addNew').modal('hide');
                          })
              },
