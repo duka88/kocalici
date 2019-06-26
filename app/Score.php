@@ -10,7 +10,7 @@ class Score extends Model{
         'recipe_id', 'user_id', 'score', 'comment'
     ];
 
-     public function recipes(){
+     public function recipe(){
         return $this->belongsTo(Recipe::class);
     }
 

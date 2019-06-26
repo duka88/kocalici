@@ -23,9 +23,10 @@ Route::middleware(['auth', 'admin'])->group(function(){
 });
 
 
+Auth::routes();
+
 Route::get('{path}','HomeController@index')->where( 'path', '([A-z\d-/_.]+)?' );
 
-Auth::routes();
 
 
 

@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Like;
-use Auth;
-class LikeResources extends JsonResource
+
+class CommentRelationResources extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,12 +13,11 @@ class LikeResources extends JsonResource
      * @return array
      */
     public function toArray($request)
-    { 
-       
-        return [
-          'like' => $this->id,
-          'count' => Like::where('recipe_id', $this->recipe_id )->count(),         
-
+    {
+         return [
+          'id' => $this->recipe_id,
+          'recipe_id' => new RecipeRelationResources($this->recipe),              
+          'comment' => $this->comment
         ];
     }
 }

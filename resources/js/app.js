@@ -12,10 +12,16 @@ import VueRouter from 'vue-router';
 import {store} from 'store';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import {Form , HasError, AlertError} from 'vform';
+import Gate from "./gate";
+
+
+Vue.prototype.$gate = new Gate(window.user);
 
 window.Form = Form;
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
+
+
 
 Vue.use(CKEditor);
 Vue.use(VueRouter);

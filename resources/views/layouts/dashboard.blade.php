@@ -272,6 +272,19 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('logout') }}"
+
+                              onclick="event.preventDefault();
+                               document.getElementById('logout-form').submit();">
+               <i class="nav-icon fa fa-power-off text-red"></i>                
+                               {{ __('Logout') }}
+                           </a>
+
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                </form>
+          </li>
 
         </ul>
       </nav>
@@ -296,6 +309,11 @@
   </aside>
   <!-- /.control-sidebar -->
 </div>
+@auth
+  <script>
+    window.user = @json(auth()->user())
+  </script>
+@endauth
 <!-- ./wrapper -->
 
 <!-- jQuery -->
