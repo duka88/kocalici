@@ -15,6 +15,23 @@
                 <option v-for="category in categories" :value="category.id">{{category.name}}</option>
             </select>
         </div>
+        <div class="form-group"> 
+                                  
+                    <input 
+                     v-model="recipe.dificulty" type="range" step="0.01" name ="dificulty" min="1" max="10" value="5" class="form-control" id="dificulty">
+                   <span >{{recipe.dificulty | round}}</span>
+               </div> 
+        <div class="form-group"> 
+                                  
+                    <input 
+                     v-model="recipe.servings" type="range" step="0.01" name ="servings" min="1" max="100" value="5" class="form-control" id="servings">
+                   <span >{{recipe.servings | round}}</span>
+               </div> 
+        <div class="form-group">                                   
+                    <input 
+                     v-model="recipe.time" type="range" step="0.01" name ="time" min="1" max="240" value="5" class="form-control" id="time">
+                   <span >{{recipe.time | round}}</span>
+               </div> 
          <div class="form-group">
               <label>Ingredients</label>
           <div class="tags-input" >
@@ -108,6 +125,10 @@
                  title: '',                 
                  category_id: '',
                  description: '',
+                 servings: 5,
+                 description: '',
+                 dificulty: 5,
+                 time: 5
                  
                },
             
@@ -158,7 +179,10 @@
             uploadRecipe(){
                 let image = this.items[0];
 
-                axios.post('/api/recipe',{    
+                axios.post('/recipe',{
+                      time: this.recipe.time,
+                      servings: this.recipe.servings,
+                      dificulty: this.recipe.dificulty,    
                       title: this.recipe.title,
                       description: this.recipe.description,
                       content: this.recipe.content,
@@ -372,7 +396,11 @@
             },       
 
         },
-
+      filters: {
+         round: function(value){
+           return Math.round(value);
+         }
+        },
        created() {
             
             this.loadCategories();

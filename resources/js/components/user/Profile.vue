@@ -2,14 +2,10 @@
  <div class="content-wrapper" style="min-height: 1126px;">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        User Profile
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Examples</a></li>
-        <li class="active">User profile</li>
-      </ol>
+      <h2>
+        {{user.name}} Profile
+      </h2>
+    
     </section>
 
     <!-- Main content -->
@@ -21,66 +17,50 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="" alt="User profile picture">
+              <img class="profile-user-img img-responsive img-circle" :src="`/img/S/${user.profile.image}`" alt="User profile picture">
 
-              <h3 class="profile-username text-center">Nina Mcintire</h3>
+              <h3 class="profile-username text-center">{{user.profile.full_name}}</h3>
 
-              <p class="text-muted text-center">Software Engineer</p>
+              <p class="text-muted text-center">{{user.role}}</p>
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>Followers</b> <a class="pull-right">1,322</a>
+                  <b>Posted Recipes</b> <a class="pull-right">{{user.recipes}}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Following</b> <a class="pull-right">543</a>
+                  <b>Recipe Book</b> <a class="pull-right">{{user.likes}}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Friends</b> <a class="pull-right">13,287</a>
+                  <b>Comments</b> <a class="pull-right">{{user.comments}}</a>
                 </li>
               </ul>
 
-              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+             
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
 
           <!-- About Me Box -->
-          <div class="box box-primary">
+          <div class="box box-primary my-5">
             <div class="box-header with-border">
               <h3 class="box-title">About Me</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
+              
 
               <p class="text-muted">
-                B.S. in Computer Science from the University of Tennessee at Knoxville
+                {{user.profile.about}}
               </p>
 
               <hr>
 
-              <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+           
 
-              <p class="text-muted">Malibu, California</p>
+             
 
-              <hr>
-
-              <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
-
-              <p>
-                <span class="label label-danger">UI Design</span>
-                <span class="label label-success">Coding</span>
-                <span class="label label-info">Javascript</span>
-                <span class="label label-warning">PHP</span>
-                <span class="label label-primary">Node.js</span>
-              </p>
-
-              <hr>
-
-              <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
-
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+            
             </div>
             <!-- /.box-body -->
           </div>
@@ -90,276 +70,200 @@
         <div class="col-md-9">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li class=""><a href="#activity" data-toggle="tab" aria-expanded="false">Activity</a></li>
-              <li class="active"><a href="#timeline" data-toggle="tab" aria-expanded="true">Timeline</a></li>
-              <li class=""><a href="#settings" data-toggle="tab" aria-expanded="false">Settings</a></li>
+              <li class="" ><a href="#RecipeBook" @click="loadRecipeBook"  data-toggle="tab" aria-expanded="true"  class="nav-link active" active>Recipe Book</a></li>
+              <li class=""><a @click="loadComments" href="#timeline" data-toggle="tab" aria-expanded="true" class="nav-link">Comments</a></li>
+              <li class=""><a href="#activity" @click="loadRecipes"  data-toggle="tab" aria-expanded="false" class="nav-link">Posted Recipes</a></li>
+              <li class=""><a @click="settings" href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link">Settings</a></li>
             </ul>
             <div class="tab-content">
-              <div class="tab-pane" id="activity">
-                <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="" alt="user image">
-                        <span class="username">
-                          <a href="#">Jonathan Burke Jr.</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                    <span class="description">Shared publicly - 7:30 PM today</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <p>
-                    Lorem ipsum represents a long-held tradition for designers,
-                    typographers and the like. Some people hate it and argue for
-                    its demise, but others ignore the hate as they create awesome
-                    tools to help create filler text for everyone from bacon lovers
-                    to Charlie Sheen fans.
-                  </p>
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                    <li class="pull-right">
-                      <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                        (5)</a></li>
-                  </ul>
+              <div class="tab-pane active" id="RecipeBook">
+           <!-----------Recipes------------>
+                  <div class="row justify-content-center">
+                    <div v-for="likedRecipe in recipeBook.data" :key="likedRecipe.id" class="col-md-4" >             
+                      <div class="card my-card">
+                          <div class="col-12 mb-3 single_recipe_info_text image">
+                    <p @click="togleLike" class="heart py-2"><i @click="togleLike(likedRecipe.recipe.likes[0].like)"
+                    :class="{'fas':likedRecipe.recipe.likes[0].like, 'far':!likedRecipe.recipe.likes[0].count }"
+                     class="fa-heart"></i><span class="text-dark">({{likedRecipe.recipe.likes[0].count}})</span></p>
+                    <img class="single_recipe_img w-100" :src="`/img/MD/${likedRecipe.recipe.image}`" width="480px" height="480px">
+                  </div>  
+                        <div class="card-body">
+                          <div class="card-title d-flex justify-content-center">
+                            <a href="<?php the_permalink(); ?>"class="text-capitalize btn card-link  " >{{likedRecipe.recipe.title}}</a>
+                          </div>
+                          <div class="row">
+                              <div class="col-lg-6 ">
+                                   <h4 class="primary-color d-flex justify-content-center"><i class="fas fa-dollar-sign "></i> 45</h4>
+                             <h4 class="primary-color d-flex justify-content-center"><i class="far fa-clock"></i>60 min</h4>
+                              </div>
+                              <div class="col-lg-6  d-flex justify-content-center ">
+                                  <h2 class="prosek "><i class="fas fa-utensils"></i>{{likedRecipe.recipe.score }}</h2>
+                              </div>
+                          </div>
+                         
 
-                  <input class="form-control input-sm" type="text" placeholder="Type a comment">
-                </div>
-                <!-- /.post -->
-
-                <!-- Post -->
-                <div class="post clearfix">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="" alt="User Image">
-                        <span class="username">
-                          <a href="#">Sarah Ross</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                    <span class="description">Sent you a message - 3 days ago</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <p>
-                    Lorem ipsum represents a long-held tradition for designers,
-                    typographers and the like. Some people hate it and argue for
-                    its demise, but others ignore the hate as they create awesome
-                    tools to help create filler text for everyone from bacon lovers
-                    to Charlie Sheen fans.
-                  </p>
-
-                  <form class="form-horizontal">
-                    <div class="form-group margin-bottom-none">
-                      <div class="col-sm-9">
-                        <input class="form-control input-sm" placeholder="Response">
-                      </div>
-                      <div class="col-sm-3">
-                        <button type="submit" class="btn btn-danger pull-right btn-block btn-sm">Send</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <!-- /.post -->
-
-                <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="" alt="User Image">
-                        <span class="username">
-                          <a href="#">Adam Jones</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                    <span class="description">Posted 5 photos - 5 days ago</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <div class="row margin-bottom">
-                    <div class="col-sm-6">
-                      <img class="img-responsive" src="" alt="Photo">
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-sm-6">
-                      <div class="row">
-                        <div class="col-sm-6">
-                          <img class="img-responsive" src="" alt="Photo">
-                          <br>
-                          <img class="img-responsive" src="" alt="Photo">
+                         
                         </div>
-                        <!-- /.col -->
-                        <div class="col-sm-6">
-                          <img class="img-responsive" src="" alt="Photo">
-                          <br>
-                          <img class="img-responsive" src="" alt="Photo">
+                        <div class="card-footer  team-icons d-flex justify-content-between">
+
+                          <a href="#"><i class="fab fa-facebook social-link"></i></a><a href="#"><i class="fab fa-instagram social-link"></i></a><a href="#"><i class="fab fa-twitter social-link"></i></a><a href="#"><i class="fab fa-yelp social-link"></i></a>
+
                         </div>
-                        <!-- /.col -->
                       </div>
-                      <!-- /.row -->
+              
                     </div>
-                    <!-- /.col -->
-                  </div>
-                  <!-- /.row -->
 
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                    <li class="pull-right">
-                      <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                        (5)</a></li>
-                  </ul>
 
-                  <input class="form-control input-sm" type="text" placeholder="Type a comment">
-                </div>
-                <!-- /.post -->
-              </div>
+      <!-----------End Recipes------------>
+
+           
+                   </div>
+          <pagination :data="recipeBook"  @pagination-change-page="paginateRecipeBook"></pagination>
+        <!-- Comments ------------------------------>
+                 </div>
               <!-- /.tab-pane -->
               <div class="tab-pane active" id="timeline">
                 <!-- The timeline -->
-                <ul class="timeline timeline-inverse">
+                <ul v-for="(comment, index) in comments.data" class="timeline timeline-inverse">
                   <!-- timeline time label -->
                   <li class="time-label">
                         <span class="bg-red">
-                          10 Feb. 2014
+                          {{comment.time}}
                         </span>
                   </li>
                   <!-- /.timeline-label -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-envelope bg-blue"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-
-                      <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
-                      <div class="timeline-body">
-                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                        weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                        jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                        quora plaxo ideeli hulu weebly balihoo...
-                      </div>
-                      <div class="timeline-footer">
-                        <a class="btn btn-primary btn-xs">Read more</a>
-                        <a class="btn btn-danger btn-xs">Delete</a>
-                      </div>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-user bg-aqua"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-
-                      <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
-                      </h3>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
                   <!-- timeline item -->
                   <li>
                     <i class="fa fa-comments bg-yellow"></i>
 
                     <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
+                     
+                      <h3 class="timeline-header d-flex justify-content-between align-middle"><a href="#">{{comment.recipe.title}}
+                        </a><p v-if="!commentEdit"><span class="font-weight-bold">score</span><i class="fas fa-star"></i> {{comment.score}}</p>
+                               <input  v-if="commentEdit"
+                          v-model="commentForm.score" type="range" step="0.01" name ="score" min="1" max="10" value="5" class="form-control w-25" id="score">
+                         <span  v-if="commentEdit">{{commentForm.score | round}}</span>            
 
-                      <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-                      <div class="timeline-body">
-                        Take me to your leader!
-                        Switzerland is small and neutral!
-                        We are more like Germany, ambitious and misunderstood!
-                      </div>
+                        
+                      </h3>
+                      <div  v-if="!commentEdit" class="timeline-body" v-html="comment.comment"></div>
+                 <div class="form-gropup mb-4">    
+            <ckeditor  v-if="commentEdit" :editor="editor" v-model="commentForm.comment" :config="editorConfig"></ckeditor>
+        </div>
+ 
+                      
                       <div class="timeline-footer">
-                        <a class="btn btn-warning btn-flat btn-xs">View comment</a>
+                        <a v-if="!commentEdit" @click="editComments(comment)" class="btn btn-primary btn-xs">Edit</a>
+                         <a v-if="commentEdit" @click="updateComments" class="btn btn-success btn-xs">Done</a>
+                        <a v-if="!commentEdit" @click="deleteComment(comment.id)" class="btn btn-danger btn-xs">Delete</a>
+                         <a v-if="commentEdit" @click="commentEdit = false" class="btn btn-warning btn-xs">Cancel</a>
                       </div>
                     </div>
                   </li>
                   <!-- END timeline item -->
-                  <!-- timeline time label -->
-                  <li class="time-label">
-                        <span class="bg-green">
-                          3 Jan. 2014
-                        </span>
-                  </li>
-                  <!-- /.timeline-label -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-camera bg-purple"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-
-                      <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-
-                      <div class="timeline-body">
-                        <img src="" alt="..." class="margin">
-                        <img src="" alt="..." class="margin">
-                        <img src="" alt="..." class="margin">
-                        <img src="" alt="..." class="margin">
-                      </div>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <li>
-                    <i class="fa fa-clock-o bg-gray"></i>
-                  </li>
+                  <!-- timeline item --> 
                 </ul>
+
+          <pagination :data="comments"  @pagination-change-page="paginateComments"></pagination>
               </div>
               <!-- /.tab-pane -->
+        <!----- End Comments ------------------------------>
+         
 
               <div class="tab-pane" id="settings">
-                <form class="form-horizontal">
+                <form  @submit.prevent="updateProfile()" class="form-horizontal">
                   <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Name</label>
-
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputName" placeholder="Name">
-                    </div>
+                        <input v-model="userForm.name" type="text" name="name" id="name" placeholder="name" 
+                              class="form-control" :class="{'is-invalid': userForm.errors.has('name')}">
+                              <has-error :form="userForm" field="name"></has-error>
+                     </div>
+                  <div class="form-group">
+                       <input v-model="userForm.full_name" type="text" name="full_name" id="full_name" placeholder="full_name" 
+                              class="form-control" :class="{'is-invalid': userForm.errors.has('full_name')}">
+                              <has-error :form="userForm" field="full_name"></has-error>
+                     </div>
+                  
+                  <div class="form-group">
+                   <textarea v-model="userForm.about"  name="about" id="about" placeholder="about" class="form-control" :class="{'is-invalid': userForm.errors.has('about')}"></textarea>
+                              <has-error :form="userForm" field="about"></has-error>
                   </div>
                   <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                      <input v-model="userForm.email" type="text" name="email" id="email" placeholder="email" 
+                              class="form-control" :class="{'is-invalid': userForm.errors.has('email')}">
+                              <has-error :form="userForm" field="email"></has-error>
                     </div>
-                  </div>
+                    <div class="form-group">
+                       <input v-model="userForm.password" type="password" name="password" id="password" placeholder="password" 
+                              class="form-control" :class="{'is-invalid': userForm.errors.has('password')}">
+                              <has-error :form="userForm" field="password"></has-error>
+                    </div>  
+                 
                   <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Name</label>
-
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputName" placeholder="Name">
-                    </div>
+                  
+                    <div v-if="!userForm.imageUpload.image"> 
+                    <img class="profile-user-img img-responsive img-circle" :src="`/img/S/${user.profile.image}`" alt="User profile picture">                            
+                         <label class="custom-file-upload"> 
+                            <input  style="display: none" type="file" @change="onFileChange(userForm.imageUpload, $event)">Edit Image 
+                         </label> 
+                        </div>
+                        <div v-else>
+                          <img :src="userForm.imageUpload.image" class="profile-user-img img-responsive img-circle">
+                          <button @click="removeImage(userForm.imageUpload)">Cancel</button>
+                        </div>
+                       
                   </div>
-                  <div class="form-group">
-                    <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
-
-                    <div class="col-sm-10">
-                      <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
-
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                    </div>
-                  </div>
+                
+                   
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-danger">Submit</button>
+                      <button type="submit" class="btn btn-primary">Edit</button>
+                     
+
                     </div>
                   </div>
                 </form>
+                <button @click="settings" class="btn btn-warning">Cancel</button>
               </div>
               <!-- /.tab-pane -->
+            
+            <div class="tab-pane" id="activity">
+           <!-----------Recipes------------>
+                  <div class="row justify-content-center">
+                    <div v-for="recipe in recipes.data" :key="recipe.id" class="col-md-4" >             
+                      <div class="card my-card">
+                         <img :src="`/img/MD/${recipe.image}`" width="480px" height="300">
+                        <div class="card-body">
+                          <div class="card-title d-flex justify-content-center">
+                            <a href="<?php the_permalink(); ?>"class="text-capitalize btn card-link  " >{{recipe.title}}</a>
+                          </div>
+                          <div class="row">
+                              <div class="col-lg-6 ">
+                                   <h4 class="primary-color d-flex justify-content-center"><i class="fas fa-dollar-sign "></i> 45</h4>
+                             <h4 class="primary-color d-flex justify-content-center"><i class="far fa-clock"></i>60 min</h4>
+                              </div>
+                              <div class="col-lg-6  d-flex justify-content-center ">
+                                  <h2 class="prosek "><i class="fas fa-utensils"></i>{{recipe.avg }}</h2>
+                              </div>
+                          </div>
+                         
+
+                         
+                        </div>
+                        <div class="card-footer  team-icons d-flex justify-content-between">
+
+                          <a href="#"><i class="fab fa-facebook social-link"></i></a><a href="#"><i class="fab fa-instagram social-link"></i></a><a href="#"><i class="fab fa-twitter social-link"></i></a><a href="#"><i class="fab fa-yelp social-link"></i></a>
+
+                        </div>
+                      </div>
+              
+                    </div>
+
+
+      <!-----------End Recipes------------>
+
+           
+                   </div>
+          <pagination :data="recipes"  @pagination-change-page="paginateRecipes"></pagination>
             </div>
             <!-- /.tab-content -->
           </div>
@@ -367,6 +271,7 @@
         </div>
         <!-- /.col -->
       </div>
+    </div>
       <!-- /.row -->
 
     </section>
@@ -375,17 +280,171 @@
 </template>
 
 <script>
+ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
     export default {
+
+
         data(){
             return{
-                user:{}
+                editor: ClassicEditor,                
+                editorConfig: {
+                    toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+
+                },
+                user:{},
+                userForm: new Form({
+                   id: '',
+                   name: '',                           
+                   email: '',                  
+                   password: '',
+                   imageUpload:{
+                    image: false,
+                    name: ''
+                   },           
+                  about: '',
+                  image: '',
+                  full_name: ''
+                }),
+                recipes:{},                
+                recipeBook:{},
+                like: '',
+                comments: {},
+                commentForm: new Form({
+                    id: '',
+                    comment: '',
+                    score: ''
+                   
+                }),
+                commentEdit: false,
+
             }
         },
 
         methods:{
             loadProfile(){
-                
-            }
+               axios.get(`/api/profile/${this.$gate.idUser()}`)
+                      .then(({data}) =>{
+                        this.user = data.data;
+                      })
+            },
+            settings(){
+               this.userForm.id = this.$gate.idUser();
+                this.userForm.password = this.user.password;
+               this.userForm.name = this.user.name;              
+               this.userForm.email = this.user.email;
+               this.userForm.image = this.user.profile.image;
+               this.userForm.full_name = this.user.profile.full_name;
+               this.userForm.about = this.user.profile.about;
+            },
+            updateProfile(){
+               let vm = this;
+                this.userForm.put(`/profile`)
+                             .then(()=>{
+                               vm.loadProfile();
+                              })
+                             
+            },
+            onFileChange(item, e) {
+              let files = e.target.files || e.dataTransfer.files;
+              let name = e.target.files[0].name
+              if (!files.length)
+                return;
+              this.createImage(item, files[0], name);
+           
+            },
+            createImage(item, file, name) {
+              let image = new Image();
+              let reader = new FileReader();
+
+              reader.onload = (e) => {
+                item.image = e.target.result; 
+                item.name = name; 
+
+              };
+              reader.readAsDataURL(file);
+            },
+            removeImage: function (item) {
+              item.image = false; 
+                    }, 
+            loadRecipes(){
+
+               axios.get(`/api/users_recipe/${this.$gate.idUser()}`)
+                      .then(({data}) =>{
+                        this.recipes = data;
+                      })
+              
+            },
+            paginateRecipes(page = 1){
+               axios.get(`/api/users_recipe/${this.$gate.idUser()}?page=` + page)
+                    .then(data => {
+                        this.recipes = data.data;
+                      });
+             
+            },
+            loadComments(){
+              axios.get(`/api/users_comments/${this.$gate.idUser()}`)
+                   .then(({data}) => {
+                    this.comments = data;
+                   })
+            },
+            paginateComments(page = 1){
+               axios.get(`/api/users_comments/${this.$gate.idUser()}?page=` + page)
+                    .then(data => {
+                       this.comments = data.data;
+                      });
+             
+            },
+            editComments(comment){
+              this.commentEdit = true;
+              this.commentForm.fill(comment);
+            },
+            updateComments(){
+              let vm = this;
+              this.commentForm.put(`/api/update_comment/${this.commentForm.id}`)
+                              .then(()=>{
+                                vm.loadComments();
+                                this.commentEdit = false;
+                              })
+            },
+            deleteComment(id){
+                let vm = this;
+                axios.delete(`/api/comment/${id}`)
+                      .then(()=>{
+                                vm.loadComments();                               
+                              })
+            },
+            loadRecipeBook(){
+                axios.get(`/api/my-likes/${this.$gate.idUser()}`)
+                      .then(({data}) =>{
+                        this.recipeBook = data;
+                      })
+            },
+            paginateRecipeBook(page = 1){
+               axios.get(`/api/my-likes/${this.$gate.idUser()}?page=` + page)
+                    .then(data => {
+                       this.recipeBook = data.data;
+                      });
+        },
+        togleLike(like){
+                  let vm = this;
+                  axios.post('/api/like',{
+                    like: like,
+                  })
+                     .then(({data}) => {
+                      vm.loadRecipeBook();
+                                        
+                     }) 
+                },
+      },
+      filters: {
+         round: function(value){
+           return Math.round(value);
+         }
+      },
+        created(){
+          this.loadRecipeBook();
+          this.loadProfile();
+          
         }
     }
 </script>

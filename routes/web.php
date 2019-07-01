@@ -17,9 +17,14 @@ Route::get('/recipes/{recipe}','single\RecipeController@show')->name('recipes.sh
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::middleware(['auth', 'admin'])->group(function(){
 
-	
+Route::middleware(['auth'])->group(function(){
+
+	Route::put('profile','ProfileController@update');
+	Route::get('/home', 'HomeController@index')->name('home');
+
+    
+    Route::post('recipe', 'RecipesController@stored');
 });
 
 

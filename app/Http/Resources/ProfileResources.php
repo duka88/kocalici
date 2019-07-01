@@ -15,15 +15,16 @@ class ProfileResources extends JsonResource
     public function toArray($request)
     {
         return [
-           'id' => $this->id, 
+          'id' => $this->id, 
           'name' => $this->name,
           'email' => $this->email,         
           'role' => $this->role,
+           'password' => $this->password,
           'created_at' => date("d-m-Y", strtotime($this->created_at)),
-          'comments' => CommentRelationResources::collection($this->scores),
-          'likes' => LikeResources::collection($this->likes),
-          'profile' => $this->profile,
-          'recipes' => RecipeRelationResources::collection($this->recipes),
+          'comments' => $this->scores->count(),
+          'likes' => $this->likes->count(),
+          'profile' => $this->profile->only('full_name','image','about'),
+          'recipes' => $this->recipes->count(),
         ];
     }
 }

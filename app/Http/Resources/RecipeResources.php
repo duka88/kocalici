@@ -16,18 +16,19 @@ class RecipeResources extends JsonResource
     public function toArray($request)
     {
          $score = Score::where('recipe_id', $this->id)->avg('score');
-         $count = Score::where('recipe_id', $this->id)->count();
+       
         return [
           'id' => $this->id,
+          'slug'=> $this->slug,
           'title' => $this->title,
-          'content' => $this->content,
+          'likes' => LikeResources::collection($this->likes),
           'image' => $this->image,          
           'description' => $this->description,
           'category_id' => $this->category_id,
           'user_id' => $this->user_id,
           'avg' => $score,
-          'count' => $count,
-          'gallery' => $this->gallery
+          'count' => $this->scores->count(),
+       
         ];
     }
 }

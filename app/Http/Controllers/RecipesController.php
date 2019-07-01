@@ -83,12 +83,19 @@ class RecipesController extends Controller
 
         return RecipeResources::collection($recipes);
     }
+   
+   public function user_recipe($id){
 
+        $recipes = Recipe::where('user_id', $id)->latest()->paginate(6);
+
+        return RecipeResources::collection($recipes);
+   }
 
 
 
     public function stored(RecipeApiRequest $request){
-     
+           
+           $user_id = auth()->user()->id;
 
            $galleries = [];
             foreach( $request->gallery as $image){
@@ -102,8 +109,12 @@ class RecipesController extends Controller
              
               $recipe = Recipe::create([
                     'title' =>$request->title,
+                    'slug' => str_slug($request->title),
                     'description' => $request->description,
                     'content' => $request->content,
+                    'time' => $request->time,
+                    'servings' => $request->servings,
+                    'dificulty' => $request->dificulty, 
                     'image' => $galleries[0],
                     'user_id' => 1,              
                     'category_id' =>  $request->category_id,
