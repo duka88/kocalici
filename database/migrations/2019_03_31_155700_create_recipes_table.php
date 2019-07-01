@@ -17,11 +17,15 @@ class CreateRecipesTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('description');
+            $table->string('slug');
             $table->text('content');
+            $table->integer('time')->nullable();
+            $table->integer('dificulty')->nullable();
+            $table->integer('servings')->nullable();
             $table->string('image');
             $table->integer('user_id');
             $table->integer('category_id');
-            $table->timestamp('published_at')->nullable();
+          
             
             $table->timestamps();
         });

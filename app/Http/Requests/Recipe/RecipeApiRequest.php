@@ -31,7 +31,10 @@ class RecipeApiRequest extends FormRequest
             'category_id' => 'required',
             'name',
             'tags' => 'required',
-            'amount' => 'required'
+            'amount' => 'required',
+             'time' => 'required|max:240',
+            'dificulty' => 'max:10',
+            'servings' => 'max:100'
         ];
     }
 }

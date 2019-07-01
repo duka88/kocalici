@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Score;
 use Session;
 use App\Http\Resources\ScoreResources;
-use App\Http\Requests\ScoreCrateRequest;
+use App\Http\Requests\Comment\ScoreCrateRequest;
+use App\Http\Requests\Comment\UpdateCommentRequest;
 
 class ScoreController extends Controller
 {
@@ -53,5 +54,29 @@ class ScoreController extends Controller
       $score = Score::where('recipe_id', $recipe)->latest()->get();
 
       return ScoreResources::collection($score);
+   }
+
+   public function users_comments($id){
+
+       $score = Score::where('user_id', $id)->latest()->paginate(1);
+
+      return ScoreResources::collection($score);
+   }
+
+   public function update_comment(UpdateCommentRequest $request, $id){
+        
+        $comment = Score::findOrFail($id);
+        $comment->update($request->all());
+
+        return Response($comment);
+   }
+
+   public function delete($id){
+
+      $comment = Score::findOrFail($id);
+      $comment->delete();
+
+       return Response($comment);
+
    }
 }

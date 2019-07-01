@@ -19,7 +19,7 @@ class Recipe extends Model
     ];
 
     protected $fillable = [
-        'title', 'content', 'image', 'published_at', 'description', 'category_id', 'user_id'
+        'title', 'content', 'image', 'published_at', 'description', 'category_id', 'user_id', 'slug'
     ];
 
     public function deleteImage(){

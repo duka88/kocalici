@@ -29,7 +29,9 @@ class CreateRecipeRequest extends FormRequest
             'image' => 'required',
             'content' => 'required',
             'category_id' => 'required',
-            'name'
+            'time' => 'integer|max:10',
+            'dificulty' => 'integer|max:10',
+            'servings' => 'integer|max:10'
         ];
     }
 }

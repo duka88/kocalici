@@ -7,6 +7,7 @@ use App\Like;
 use Auth;
 use App\User;
 use App\Http\Resources\LikeResources;
+use App\Http\Resources\MyLikeResources;
 
 class LikeController extends Controller
 {
@@ -48,6 +49,14 @@ class LikeController extends Controller
    	 $like = Like::where('recipe_id', $recipe )->where('user_id',$user)->pluck('id');
 
    	  return Response($like);
+   }
+
+   public function user_likes($user){
+      
+     $like = Like::where('user_id',$user)->latest()->paginate(1);
+
+      return MyLikeResources::collection($like);
+   
    }
     
 }

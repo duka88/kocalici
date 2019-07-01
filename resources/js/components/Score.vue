@@ -5,7 +5,7 @@
                                   
                     <input 
                      v-model="score" type="range" step="0.01" name ="score" min="1" max="10" value="5" class="form-control" id="score">
-                   <span >{{score}}</span>
+                   <span >{{score | round}}</span>
                </div>    
                  <div class="form-gropup mb-4">    
                <ckeditor :editor="editor" v-model="comment" :config="editorConfig"></ckeditor>
@@ -110,7 +110,11 @@
              }
           
         },
-
+        filters: {
+         round: function(value){
+           return Math.round(value);
+         }
+        },
         created(){
             this.loadScores();
             this.loadComments();
