@@ -19,7 +19,7 @@
                                   
                     <input 
                      v-model="recipe.dificulty" type="range" step="0.01" name ="dificulty" min="1" max="10" value="5" class="form-control" id="dificulty">
-                   <span >{{recipe.dificulty | round}}</span>
+                   <span >{{recipe.dificulty }}</span>
                </div> 
         <div class="form-group"> 
                                   
@@ -180,8 +180,8 @@
                 let image = this.items[0];
 
                 axios.post('/recipe',{
-                      time: this.recipe.time,
-                      servings: this.recipe.servings,
+                      time: Math.round(this.recipe.time),
+                      servings: Math.round(this.recipe.servings),
                       dificulty: this.recipe.dificulty,    
                       title: this.recipe.title,
                       description: this.recipe.description,

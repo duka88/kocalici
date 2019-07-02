@@ -30,6 +30,7 @@ Route::put('profile','ProfileController@update');
 
 
 Route::get('recipes/{category_id}', 'RecipesController@category');
+Route::get('ingredients/{id}', 'RecipesController@ingredients');
 Route::get('users_recipe/{id}','RecipesController@user_recipe');
 
 Route::get('fridge', 'FridgeController@apitags');

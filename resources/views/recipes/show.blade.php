@@ -23,19 +23,19 @@
             <div class="row my-4">
               <div class="col-4">
                 <p class="count text-center mb-0">
-                  8
+                  {{$recipe->time}}
                 </p>
                 <p class="text-center">minutes</p>
                </div>
                <div class="col-4 center">
-                <p class="count text-center mb-0">
-                  6
+                <p class="count text-center mb-0">                 
+                  {{$recipe->dificulty}}
                 </p>
                 <p class="text-center ">dificulty</p>
                </div>
                <div class="col-4">
                 <p class="count text-center mb-0">
-                  7
+                  {{$recipe->servings}}
                 </p>
                 <p class="text-center">servings</p>
                </div>
@@ -49,7 +49,6 @@
       </div>
       <div class="col-6">
         @foreach($recipe->tags as $tag)
-        {{$tag->pivot->amount}}
    
        @endforeach
         <gallery-component  @Auth  :user_id={{auth()->user()->id}} @endauth :recipe_id={{$recipe->id}}></gallery-component>             
@@ -58,20 +57,7 @@
     </div>
     <hr class="single_recipe-border" id="recipe">
     <div class="row">
-      <div class="col-6">
-        <h2 class="mb-4">Ingredients</h2>
-        <ul class="ingredients_list">
-          <li >5 tablespoons <span class="list_bold">butter</span></li>
-          <li>5 tablespoons <span class="list_bold">butter</span></li>
-          <li>5 tablespoons <span class="list_bold">butter</span></li>
-          <li>5 tablespoons <span class="list_bold">butter</span></li>
-          <li>5 tablespoons <span class="list_bold">butter</span></li>
-          <li>5 tablespoons <span class="list_bold">butter</span></li>
-          <li>5 tablespoons <span class="list_bold">butter</span></li>
-          <li>5 tablespoons <span class="list_bold">butter</span></li>
-          
-        </ul>
-      </div>
+      <ingredients-component :recipe_id={{$recipe->id}}></ingredients-component>
     </div>
     <div class="row" >
       <h2 class="my-4">Directions</h2>

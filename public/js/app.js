@@ -1925,9 +1925,9 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/gallery/".concat(this.recipe_id)).then(function (_ref) {
         var data = _ref.data;
-        _this.photos = data.data;
+        _this.photos = data.data.gallery;
 
-        _this.photos.unshift(data.data[0].recipe);
+        _this.photos.unshift(data.data.image);
       });
     },
     togleLike: function togleLike() {
@@ -2740,8 +2740,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     uploadRecipe: function uploadRecipe() {
       var image = this.items[0];
       axios.post('/recipe', {
-        time: this.recipe.time,
-        servings: this.recipe.servings,
+        time: Math.round(this.recipe.time),
+        servings: Math.round(this.recipe.servings),
         dificulty: this.recipe.dificulty,
         title: this.recipe.title,
         description: this.recipe.description,
@@ -2955,6 +2955,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     this.loadCategories();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recipes/Ingredients.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/recipes/Ingredients.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['recipe_id'],
+  data: function data() {
+    return {
+      ingridients: {}
+    };
+  },
+  methods: {
+    loadIngridients: function loadIngridients() {
+      var _this = this;
+
+      axios.get("/api/ingredients/".concat(this.recipe_id)).then(function (_ref) {
+        var data = _ref.data;
+        _this.ingridients = data;
+      });
+    }
+  },
+  created: function created() {
+    this.loadIngridients();
   }
 });
 
@@ -42875,7 +42919,7 @@ var render = function() {
         _c("img", {
           staticClass: "single_recipe_img w-100",
           attrs: {
-            src: "/img/MD/" + _vm.photos[_vm.show].image,
+            src: "/img/MD/" + _vm.photos[_vm.show],
             width: "480px",
             height: "480px"
           }
@@ -42888,7 +42932,7 @@ var render = function() {
             ? _c("img", {
                 staticClass: "single_recipe_img  w-100",
                 attrs: {
-                  src: "/img/MD/" + photo.image,
+                  src: "/img/MD/" + photo,
                   width: "100px",
                   height: "100px"
                 },
@@ -43825,7 +43869,7 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _c("span", [_vm._v(_vm._s(_vm._f("round")(_vm.recipe.dificulty)))])
+        _c("span", [_vm._v(_vm._s(_vm.recipe.dificulty))])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [
@@ -44129,6 +44173,48 @@ var render = function() {
                   [_vm._v("Remove image")]
                 )
               ])
+        ])
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recipes/Ingredients.vue?vue&type=template&id=570c043d&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/recipes/Ingredients.vue?vue&type=template&id=570c043d& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "col-6" },
+    [
+      _c("h2", { staticClass: "mb-4" }, [_vm._v("Ingredients")]),
+      _vm._v(" "),
+      _vm._l(_vm.ingridients, function(ingridient) {
+        return _c("ul", { staticClass: "ingredients_list" }, [
+          _c("li", [
+            _vm._v(_vm._s(ingridient.pivot) + " "),
+            _c("span", { staticClass: "list_bold" }, [
+              _vm._v(_vm._s(ingridient.name))
+            ])
+          ])
         ])
       })
     ],
@@ -60445,6 +60531,7 @@ Vue.component('recipes-component', __webpack_require__(/*! ./components/Recipes.
 Vue.component('fridge-component', __webpack_require__(/*! ./components/Fridge.vue */ "./resources/js/components/Fridge.vue")["default"]);
 Vue.component('score-component', __webpack_require__(/*! ./components/Score.vue */ "./resources/js/components/Score.vue")["default"]);
 var addRecipe = Vue.component('create-recipe-component', __webpack_require__(/*! ./components/recipes/CreateRecipe.vue */ "./resources/js/components/recipes/CreateRecipe.vue")["default"]);
+Vue.component('ingredients-component', __webpack_require__(/*! ./components/recipes/Ingredients.vue */ "./resources/js/components/recipes/Ingredients.vue")["default"]);
 Vue.component('tag-component', __webpack_require__(/*! ./components/Tag.vue */ "./resources/js/components/Tag.vue")["default"]);
 Vue.component('gallery-component', __webpack_require__(/*! ./components/Gallery.vue */ "./resources/js/components/Gallery.vue")["default"]);
 Vue.component('pagination', __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js"));
@@ -61178,6 +61265,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/recipes/Ingredients.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/recipes/Ingredients.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Ingredients_vue_vue_type_template_id_570c043d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Ingredients.vue?vue&type=template&id=570c043d& */ "./resources/js/components/recipes/Ingredients.vue?vue&type=template&id=570c043d&");
+/* harmony import */ var _Ingredients_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Ingredients.vue?vue&type=script&lang=js& */ "./resources/js/components/recipes/Ingredients.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Ingredients_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Ingredients_vue_vue_type_template_id_570c043d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Ingredients_vue_vue_type_template_id_570c043d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/recipes/Ingredients.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/recipes/Ingredients.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/recipes/Ingredients.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Ingredients_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Ingredients.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recipes/Ingredients.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Ingredients_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/recipes/Ingredients.vue?vue&type=template&id=570c043d&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/recipes/Ingredients.vue?vue&type=template&id=570c043d& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Ingredients_vue_vue_type_template_id_570c043d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Ingredients.vue?vue&type=template&id=570c043d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recipes/Ingredients.vue?vue&type=template&id=570c043d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Ingredients_vue_vue_type_template_id_570c043d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Ingredients_vue_vue_type_template_id_570c043d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/user/Profile.vue":
 /*!**************************************************!*\
   !*** ./resources/js/components/user/Profile.vue ***!
@@ -61388,8 +61544,8 @@ function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\kocalici\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\kocalici\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\wamp64\www\kocalici\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\kocalici\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

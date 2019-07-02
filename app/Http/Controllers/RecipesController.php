@@ -12,6 +12,7 @@ use App\Http\Requests\Recipe\UpdateRecipeRequest;
 use App\Http\Requests\Recipe\GalleryRequest;
 use App\Http\Requests\Recipe\RecipeApiRequest;
 use App\Http\Resources\GalleryResources;
+use App\Http\Resources\IngredientsResources;
 use App\Http\Resources\RecipeResources;
 use Helper;
 
@@ -95,7 +96,7 @@ class RecipesController extends Controller
 
     public function stored(RecipeApiRequest $request){
            
-           $user_id = auth()->user()->id;
+          $user_id = auth()->user()->id;
 
            $galleries = [];
             foreach( $request->gallery as $image){
@@ -116,7 +117,7 @@ class RecipesController extends Controller
                     'servings' => $request->servings,
                     'dificulty' => $request->dificulty, 
                     'image' => $galleries[0],
-                    'user_id' => 1,              
+                    'user_id' => $user_id,              
                     'category_id' =>  $request->category_id,
                  ]);
               
@@ -152,7 +153,14 @@ class RecipesController extends Controller
               $recipe->tags()->sync($sync_data);
 
 
-             return Response($recipe);
+             return Response($request);
+    }
+
+    public function ingredients($id){
+      
+       $ingredients = Recipe::findOrFail($id);
+
+       return new IngredientsResources($ingredients);
     }
        
 }

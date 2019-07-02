@@ -19,7 +19,7 @@ class Recipe extends Model
     ];
 
     protected $fillable = [
-        'title', 'content', 'image', 'published_at', 'description', 'category_id', 'user_id', 'slug'
+        'title', 'content', 'image',  'description', 'category_id', 'user_id', 'slug', 'time', 'servings', 'dificulty'
     ];
 
     public function deleteImage(){
@@ -51,7 +51,7 @@ class Recipe extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function scopeSearched($query){
+    /*public function scopeSearched($query){
 
         $search = request()->query('search');
 
@@ -60,7 +60,7 @@ class Recipe extends Model
         }
 
         return $query->published()->where('title', 'LIKE', "%{$search}%");
-    }
+    }*/
 
     public function scopePublished($query){
 

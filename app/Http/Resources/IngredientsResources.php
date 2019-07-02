@@ -3,8 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Gallery;
-class GalleryResources extends JsonResource
+
+class IngredientsResources extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,11 +14,10 @@ class GalleryResources extends JsonResource
      */
     public function toArray($request)
     {
-    
-        $gallery = Gallery::where('recipe_id', $this->id)->pluck('image');
-         return [          
-          'image' => $this->image,
-          'gallery' => $gallery
+        return [          
+          'servings' => $this->servings,
+          'ingredients' => $this->tags,
+
 
         ];
     }
