@@ -180,8 +180,8 @@
                 let image = this.items[0];
 
                 axios.post('/recipe',{
-                      time: Math.round(this.recipe.time),
-                      servings: Math.round(this.recipe.servings),
+                      time: this.recipe.time,
+                      servings: this.recipe.servings,
                       dificulty: this.recipe.dificulty,    
                       title: this.recipe.title,
                       description: this.recipe.description,
@@ -197,7 +197,8 @@
                 .then(({data}) => {                     
                      let recipe_id = data.id;
 
-                });
+                })
+                 .catch(errors => console.log(errors));
             },
             addAmount(){
                this.tagsArray.amount.push(this.currentAmount);

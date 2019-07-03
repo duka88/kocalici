@@ -2740,8 +2740,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     uploadRecipe: function uploadRecipe() {
       var image = this.items[0];
       axios.post('/recipe', {
-        time: Math.round(this.recipe.time),
-        servings: Math.round(this.recipe.servings),
+        time: this.recipe.time,
+        servings: this.recipe.servings,
         dificulty: this.recipe.dificulty,
         title: this.recipe.title,
         description: this.recipe.description,
@@ -2756,6 +2756,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function (_ref2) {
         var data = _ref2.data;
         var recipe_id = data.id;
+      })["catch"](function (errors) {
+        return console.log(errors);
       });
     },
     addAmount: function addAmount() {
@@ -2980,11 +2982,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['recipe_id'],
   data: function data() {
     return {
-      ingridients: {}
+      ingredients: {}
     };
   },
   methods: {
@@ -2993,8 +2996,19 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/api/ingredients/".concat(this.recipe_id)).then(function (_ref) {
         var data = _ref.data;
-        _this.ingridients = data;
+        _this.ingredients = data.data;
       });
+    },
+    decrement: function decrement() {
+      if (this.ingredients.servings > 0) {
+        this.ingredients.servings--;
+      }
+    },
+    increment: function increment() {
+      this.ingredients.servings++;
+    },
+    calculate: function calculate(value) {
+      return "".concat(parseInt(value) * this.ingredients.servings).concat(value.replace(/[0-9]/g, ''));
     }
   },
   created: function created() {
@@ -44207,15 +44221,31 @@ var render = function() {
     [
       _c("h2", { staticClass: "mb-4" }, [_vm._v("Ingredients")]),
       _vm._v(" "),
-      _vm._l(_vm.ingridients, function(ingridient) {
-        return _c("ul", { staticClass: "ingredients_list" }, [
-          _c("li", [
-            _vm._v(_vm._s(ingridient.pivot) + " "),
-            _c("span", { staticClass: "list_bold" }, [
-              _vm._v(_vm._s(ingridient.name))
+      _c(
+        "button",
+        { staticClass: "btn-sm btn-primary", on: { click: _vm.decrement } },
+        [_vm._v("-")]
+      ),
+      _c("span", [_vm._v(_vm._s(_vm.ingredients.servings))]),
+      _c(
+        "button",
+        { staticClass: "btn-sm btn-primary", on: { click: _vm.increment } },
+        [_vm._v("+")]
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.ingredients.ingredients, function(ingridient) {
+        return _c(
+          "ul",
+          { key: ingridient.id, staticClass: "ingredients_list" },
+          [
+            _c("li", [
+              _vm._v(_vm._s(_vm.calculate(ingridient.pivot.amount)) + " "),
+              _c("span", { staticClass: "list_bold" }, [
+                _vm._v(_vm._s(ingridient.name))
+              ])
             ])
-          ])
-        ])
+          ]
+        )
       })
     ],
     2
