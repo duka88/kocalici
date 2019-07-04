@@ -19,7 +19,7 @@
                                   
                     <input 
                      v-model="recipe.dificulty" type="range" step="0.01" name ="dificulty" min="1" max="10" value="5" class="form-control" id="dificulty">
-                   <span >{{recipe.dificulty | round}}</span>
+                   <span >{{recipe.dificulty }}</span>
                </div> 
         <div class="form-group"> 
                                   
@@ -197,7 +197,8 @@
                 .then(({data}) => {                     
                      let recipe_id = data.id;
 
-                });
+                })
+                 .catch(errors => console.log(errors));
             },
             addAmount(){
                this.tagsArray.amount.push(this.currentAmount);

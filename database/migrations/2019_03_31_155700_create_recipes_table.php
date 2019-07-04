@@ -19,9 +19,9 @@ class CreateRecipesTable extends Migration
             $table->string('description');
             $table->string('slug');
             $table->text('content');
-            $table->integer('time')->nullable();
-            $table->integer('dificulty')->nullable();
-            $table->integer('servings')->nullable();
+            $table->integer('time');
+            $table->integer('dificulty');
+            $table->integer('servings');
             $table->string('image');
             $table->integer('user_id');
             $table->integer('category_id');

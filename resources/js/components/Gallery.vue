@@ -5,10 +5,10 @@
                     <p @click="togleLike" class="heart py-2"><i 
                     :class="{'fas':like, 'far':!like }"
                      class="fa-heart"></i><span class="text-dark">({{count}})</span></p>
-                    <img class="single_recipe_img w-100" :src="`/img/MD/${photos[show].image}`" width="480px" height="480px">
+                    <img class="single_recipe_img w-100" :src="`/img/MD/${photos[show]}`" width="480px" height="480px">
                   </div>             
               <div v-for="(photo, index) in photos" :key="photo.id" class="col-3">               
-                <img v-if="index < 4" class="single_recipe_img  w-100" :src="`/img/MD/${photo.image}`" width="100px" height="100px" @click="show = index">
+                <img v-if="index < 4" class="single_recipe_img  w-100" :src="`/img/MD/${photo}`" width="100px" height="100px" @click="show = index">
               </div>
         
 
@@ -31,8 +31,8 @@
               loadGallery(){
                 axios.get(`/api/gallery/${this.recipe_id}`)
                      .then(({data}) => {
-                        this.photos = data.data;  
-                       this.photos.unshift(data.data[0].recipe);
+                        this.photos = data.data.gallery;  
+                       this.photos.unshift(data.data.image);
                                         
                      }) 
                 },

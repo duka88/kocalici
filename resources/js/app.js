@@ -37,6 +37,7 @@ Vue.component('recipes-component', require('./components/Recipes.vue').default);
 Vue.component('fridge-component', require('./components/Fridge.vue').default);
 Vue.component('score-component', require('./components/Score.vue').default);
 const addRecipe = Vue.component('create-recipe-component', require('./components/recipes/CreateRecipe.vue').default);
+Vue.component('ingredients-component', require('./components/recipes/Ingredients.vue').default);
 Vue.component('tag-component', require('./components/Tag.vue').default);
 Vue.component('gallery-component', require('./components/Gallery.vue').default);
 Vue.component('pagination', require('laravel-vue-pagination'));

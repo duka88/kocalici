@@ -25,16 +25,16 @@ class RecipeApiRequest extends FormRequest
     {
         return [
            'title' => 'required|unique:recipes',
-            'description' => 'required',
+            'description' => 'required|max:255',
             'image' => 'required',
-            'content' => 'required',
+            'content' => 'required|max:2550',
             'category_id' => 'required',
-            'name',
-            'tags' => 'required',
-            'amount' => 'required',
-             'time' => 'required|max:240',
-            'dificulty' => 'max:10',
-            'servings' => 'max:100'
+            'name' => 'required|max:255',
+            'tags' => 'required|max:255',
+            'amount' => 'required|max:255',
+             'time' => 'required|integer|max:240',
+            'dificulty' => 'required|integer|max:10',
+            'servings' => 'required|integer|max:100'
         ];
     }
 }

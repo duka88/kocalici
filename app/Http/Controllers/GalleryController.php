@@ -19,9 +19,9 @@ class GalleryController extends Controller
      */
     public function index($id)
     {
-         $gallery = Gallery::where('recipe_id', $id)->get();
+         $gallery = Recipe::findOrFail($id);
 
-        return GalleryResources::collection($gallery);
+        return new GalleryResources($gallery);
     }
 
     /**
