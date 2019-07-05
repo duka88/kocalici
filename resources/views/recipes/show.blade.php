@@ -60,7 +60,7 @@
       <ingredients-component :recipe_id={{$recipe->id}}></ingredients-component>
     </div>
     <div class="row" >
-      <h2 class="my-4">Directions</h2>
+      <h2 class="my-4 col-12">Directions</h2>
       <p>{!!$recipe->content!!}</p>
     </div>
         <hr class="single_recipe-border">

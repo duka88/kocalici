@@ -2,35 +2,38 @@
      <div class="container">
        <div class="form-group"> 
              <label for="title">Title</label>
-             <input name="title" v-model="recipe.title" type="text" class="form-control">
-             
+             <input name="title" id='title' v-model="form.title" type="text" class="form-control" :class="{'is-invalid': form.errors.has('title')}">
+               <has-error :form="form" field="title"></has-error>
         </div>     
         <div class="form-gropup">
             <label for="title">Description</label>
-            <input name="description"  type="text" v-model="recipe.description" class="form-control">
+            <input name="description"  type="text" v-model="form.description" class="form-control"  :class="{'is-invalid': form.errors.has('description')}">
+               <has-error :form="form" field="description"></has-error>
         </div>    
         <div class="form-gropup mb-4">
             <label for="title">Category</label>
-            <select v-model="recipe.category_id" class="form-control">
+            <select v-model="form.category_id" class="form-control" name="category_id"
+            :class="{'is-invalid': form.errors.has('category_id')}">
                 <option v-for="category in categories" :value="category.id">{{category.name}}</option>
             </select>
+            <has-error :form="form" field="category_id"></has-error>
         </div>
         <div class="form-group"> 
                                   
                     <input 
-                     v-model="recipe.dificulty" type="range" step="0.01" name ="dificulty" min="1" max="10" value="5" class="form-control" id="dificulty">
-                   <span >{{recipe.dificulty }}</span>
+                     v-model="form.dificulty" type="range" step="0.01" name ="dificulty" min="1" max="10" value="5" class="form-control" id="dificulty">
+                   <span >{{form.dificulty | round }}</span>
                </div> 
         <div class="form-group"> 
                                   
                     <input 
-                     v-model="recipe.servings" type="range" step="0.01" name ="servings" min="1" max="100" value="5" class="form-control" id="servings">
-                   <span >{{recipe.servings | round}}</span>
+                     v-model="form.servings" type="range" step="0.01" name ="servings" min="1" max="100" value="5" class="form-control" id="servings">
+                   <span >{{form.servings | round}}</span>
                </div> 
         <div class="form-group">                                   
                     <input 
-                     v-model="recipe.time" type="range" step="0.01" name ="time" min="1" max="240" value="5" class="form-control" id="time">
-                   <span >{{recipe.time | round}}</span>
+                     v-model="form.time" type="range" step="0.01" name ="time" min="1" max="240" value="5" class="form-control" id="time">
+                   <span >{{form.time | round}}</span>
                </div> 
          <div class="form-group">
               <label>Ingredients</label>
@@ -43,15 +46,16 @@
                </div>
                
                 <input ref="tag" type="text"  class="new-tag-input" v-model="currentTag" v-on:keyup="searchTags" v-on:keyup.enter="addNewTag" v-on:keydown.up="changeIndex( 'up' )" v-on:keydown.delete="handleDelete" v-on:keydown.down="changeIndex( 'down' )" v-bind:class="{ 'duplicate-warning' : duplicateFlag }" placeholder="Add a tag"/>
-                 <input v-model="currentAmount" type="text" v-on:keyup.enter="addAmount" >
+                 <input v-model="currentAmount" type="text" v-on:keyup.enter="addAmount" :class="{'is-invalid': form.errors.has('tag')}">
                   </div>
-                 
+                 <has-error :form="form" field="tag"></has-error>
               <div class="tag-autocomplete" v-show="showAutocomplete">
                 <div class="tag-search-result" v-for="(tag, key) in tagSearchResults" v-bind:class="{ 'selected-search-index' : searchSelectedIndex == key }" v-on:click="selectTag( tag.name )">{{ tag.name }}</div>
           </div>
         </div>       
         <div class="form-gropup mb-4">    
-            <ckeditor :editor="editor" v-model="recipe.content" :config="editorConfig"></ckeditor>
+            <ckeditor :editor="editor" v-model="form.content" :config="editorConfig" :class="{'is-invalid': form.errors.has('content')}"></ckeditor>
+             <has-error :form="form" field="content"></has-error>
         </div>
            <button class="btn btn-primary mb-4" @click="uploadRecipe">Save</button>
         
@@ -120,7 +124,7 @@
                duplicateFlag: false,
                searchSelectedIndex: -1,
                pauseSearch: false,
-                recipe: {
+                form: new Form({
                  content: '',
                  title: '',                 
                  category_id: '',
@@ -128,9 +132,13 @@
                  servings: 5,
                  description: '',
                  dificulty: 5,
-                 time: 5
-                 
-               },
+                 time: 5,
+                 image: '',
+                 name: '', 
+                 gallery: '', 
+                 tags: '',
+                 amount: '',
+               }),
             
             }
 
@@ -177,23 +185,15 @@
             },
           
             uploadRecipe(){
-                let image = this.items[0];
 
-                axios.post('/recipe',{
-                      time: this.recipe.time,
-                      servings: this.recipe.servings,
-                      dificulty: this.recipe.dificulty,    
-                      title: this.recipe.title,
-                      description: this.recipe.description,
-                      content: this.recipe.content,
-                      image: image.image,
-                      name: image.name,
-                      user_id: this.user_id,                      
-                      category_id: this.recipe.category_id,
-                      gallery: this.items,
-                      tags: this.tagsArray.tags,
-                      amount: this.tagsArray.amount  
-                })
+                 this.form.image = this.items[0].image;
+                 this.form.name = this.items[0].name;
+                 this.form.gallery = this.items;
+                 this.form.tags = this.tagsArray.tags;
+                 this.form.amount = this.tagsArray.amount; 
+
+                this.form.post('/recipe'            
+                )
                 .then(({data}) => {                     
                      let recipe_id = data.id;
 
