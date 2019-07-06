@@ -16,8 +16,8 @@
 
        data(){
           return {
-            ingredients: {}
-
+            ingredients: {},
+            servings: '',
           }
        },
 
@@ -26,7 +26,8 @@
             axios.get(`/api/ingredients/${this.recipe_id}`)
                 .then(({data}) => {
 
-                   this.ingredients = data.data
+                   this.ingredients = data.data;
+                   this.servings = data.data.servings;
                 })
          },
          decrement(){
@@ -38,7 +39,7 @@
           this.ingredients.servings++;
          },
          calculate(value){
-             return `${parseInt(value)*this.ingredients.servings}${value.replace(/[0-9]/g, '')}`  
+             return `${Math.round((parseInt(value)/this.servings)*this.ingredients.servings)/10}${value.replace(/[0-9]/g, '')}`  
          }
        },       
        

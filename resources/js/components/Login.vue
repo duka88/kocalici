@@ -3,6 +3,7 @@
         
           <div class="card-tools">
                     <button v-if="!user_id" @click="newModal" class="btn btn-success" data-toggle="modal" >Login</button>
+                    <button v-if="user_id" @click="logOut" class="btn btn-success" data-toggle="modal" >Logout</button>
                 </div>
 
                <div   class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -63,6 +64,12 @@
                          })
              },
              logOut(){
+                 axios.post('/logout')
+                       .then(()=>{
+                      
+                       })
+             },
+             logOutApi(){
             axios.defaults.headers.post['Authorization'] = `Bearer ${this.token}` // 
             console.log(axios.defaults.headers.post['Authorization']);
                 axios.post('/api/logout')
