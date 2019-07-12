@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Like extends Model
 {
    protected $fillable = [
-        'recipe_id', 'like', 'user_id'
+        'recipe_id', 'like', 'user_id', 'admin_notification', 'user_notification'
     ];
 
        public function recipe(){

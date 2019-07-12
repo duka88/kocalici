@@ -13,19 +13,29 @@ class ScoreController extends Controller
 {
    public function create(ScoreCrateRequest $request){
 
-    $score = Score::where('recipe_id', $request->recipe_id)->where('user_id',$request->user_id)->count();
+      $id = auth()->user()->id;
 
-     if(empty($score)){  
-       $score = Score::create([
-          'recipe_id' => $request->recipe_id,
-          'user_id' => $request->user_id,
-          'score' =>$request->score,
-          'comment' => $request->comment        
-        ]);
-        return Response($score);
-     }else{
-        return Response('Already commented');
-     }
+    $score = Score::where('recipe_id', $request->recipe_id)->where('user_id',$id)->count();
+
+         
+         if(empty($score)){  
+           $score = Score::create([
+              'recipe_id' => $request->recipe_id,
+              'user_id' => $id,
+              'score' =>$request->score,
+              'comment' => $request->comment        
+            ]);
+            return Response($score);
+         }elseif(!empty($request->comment_id)){
+            $score = Score::create([
+              'recipe_id' => $request->recipe_id,
+              'user_id' => $id,
+              'perent_comment_id' => $request->comment_id,
+              'comment' => $request->comment        
+            ]);
+         }else{
+            return Response('Already commented');
+         }
      
    }
 
@@ -58,7 +68,7 @@ class ScoreController extends Controller
 
    public function users_comments($id){
 
-       $score = Score::where('user_id', $id)->latest()->paginate(1);
+       $score = Score::where('user_id', $id)->latest()->paginate(2);
 
       return ScoreResources::collection($score);
    }
@@ -78,5 +88,22 @@ class ScoreController extends Controller
 
        return Response($comment);
 
+   }
+
+   public function new_comments(){
+
+       $id = auth()->user()->id;
+    
+      if(auth()->user()->role == 'admin'){
+
+         $comments = Score::where('admin_notification' , '0')->paginate(5);
+
+      }else{
+
+        $comments = Score::where('user_id', $id)->where('user_notification' , '0')->paginate(5);
+       }
+
+
+       return ScoreResources::collection($comments);
    }
 }

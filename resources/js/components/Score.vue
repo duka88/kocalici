@@ -4,7 +4,7 @@
                 <div class="form-group"> 
                                   
                     <input 
-                     v-model="score" type="range" step="0.01" name ="score" min="1" max="10" value="5" class="form-control" id="score">
+                     v-model="score"  type="range" step="0.01" name ="score" min="1" max="10" value="5" class="form-control" id="score">
                    <span >{{score | round}}</span>
                </div>    
                  <div class="form-gropup mb-4">    
@@ -22,7 +22,7 @@
                 </div>
                 <div class="comment-content">
                   <div class="comment-name">
-                    <p>{{comment.user}}</p>
+                    <p>{{comment.user.name}}</p>
                   </div>
                   <div class="comment-score">
                     <p v-html="starRating(comment.score)"></p>
@@ -30,6 +30,15 @@
                 </div>
                 <div class="comment-text" v-html="comment.comment">
                 </div>
+                   <form @submit.prevent="replyCreate(comment.id)" v-if="showReply" >
+                       
+                       <div class="form-gropup mb-4">    
+                     <ckeditor :editor="editor" v-model="reply" :config="editorConfig"></ckeditor>
+                     </div> 
+                     <button  class="btn btn-success">Reply</button>           
+               </form>
+                 <button @click="showReply = true" v-if="!showReply" class="btn btn-success">Reply</button>
+                 <button  v-if="showReply" class="btn btn-success">Reply</button>
               </div>
              
      </div>        
@@ -51,8 +60,10 @@
                  avg: '',
                  score: '5',
                  comment: '',
+                 reply: '',
                  comments: {},
-                 rate: ''
+                 rate: '',
+                 showReply: false  
 
                 }
                
@@ -61,7 +72,7 @@
             rateRecipe(){
                 let vm = this;
 
-                axios.post('/api/rating',{ 
+                axios.post('/rating',{ 
                 recipe_id: this.recipe_id,
                 user_id: this.user_id,
                 score: this.score,
@@ -69,11 +80,25 @@
                 )
                 .then(({data}) => {
                     vm.loadScores();
-                    vm.loadComments();
-                   
+                    vm.loadComments();         
                    
             })
 
+          },
+          replyCreate(id){
+              let vm = this;
+
+                axios.post('/rating',{ 
+                recipe_id: this.recipe_id,
+                user_id: this.user_id,
+                comment_id: id,                
+                comment: this.reply}
+                )
+                .then(({data}) => {
+                    
+                    vm.loadComments();         
+                   
+            })
           },
           loadComments(){
              axios.get(`/api/comments/${this.recipe_id}`)

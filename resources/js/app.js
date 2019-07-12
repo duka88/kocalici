@@ -9,10 +9,13 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import VueRouter from 'vue-router'; 
-import {store} from 'store';
+import {store} from './store';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import {Form , HasError, AlertError} from 'vform';
 import Gate from "./gate";
+
+ 
+
 
 
 Vue.prototype.$gate = new Gate(window.user);
@@ -28,19 +31,21 @@ Vue.use(VueRouter);
 
 
 
+const addRecipe = Vue.component('create-recipe-component', require('./components/recipes/CreateRecipe.vue').default);
 const users = Vue.component('user-component', require('./components/user/Users.vue').default);
 const dashboard = Vue.component('dashboard-component', require('./components/dashboard/Dashboard.vue').default);
 const profile = Vue.component('profile-component', require('./components/user/Profile.vue').default);
 const login = Vue.component('login-component', require('./components/Login.vue').default);
 
+Vue.component('VuexRecipe', require('./components/VuexRecipe.vue').default);
 Vue.component('recipes-component', require('./components/Recipes.vue').default);
 Vue.component('fridge-component', require('./components/Fridge.vue').default);
 Vue.component('score-component', require('./components/Score.vue').default);
-const addRecipe = Vue.component('create-recipe-component', require('./components/recipes/CreateRecipe.vue').default);
 Vue.component('ingredients-component', require('./components/recipes/Ingredients.vue').default);
 Vue.component('tag-component', require('./components/Tag.vue').default);
 Vue.component('gallery-component', require('./components/Gallery.vue').default);
 Vue.component('pagination', require('laravel-vue-pagination'));
+Vue.component('search-component', require('./components/Search.vue').default);
 
 const routes = [
   { path: '/dashboard', component: dashboard},
@@ -81,5 +86,15 @@ const app = new Vue({
     el: '#app',
     store,
     router,
+    data:{
+      overlay: false  
+    },
+    methods:{
+      overlayFn(value){
+         console.log(value);
+          this.overlay = value;   
+      }
+    }
+  
    
 });

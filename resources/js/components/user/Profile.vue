@@ -192,11 +192,7 @@
                               class="form-control" :class="{'is-invalid': userForm.errors.has('email')}">
                               <has-error :form="userForm" field="email"></has-error>
                     </div>
-                    <div class="form-group">
-                       <input v-model="userForm.password" type="password" name="password" id="password" placeholder="password" 
-                              class="form-control" :class="{'is-invalid': userForm.errors.has('password')}">
-                              <has-error :form="userForm" field="password"></has-error>
-                    </div>  
+                
                  
                   <div class="form-group">
                   
@@ -296,7 +292,7 @@
                    id: '',
                    name: '',                           
                    email: '',                  
-                   password: '',
+                 
                    imageUpload:{
                     image: false,
                     name: ''
@@ -329,7 +325,7 @@
             },
             settings(){
                this.userForm.id = this.$gate.idUser();
-                this.userForm.password = this.user.password;
+               
                this.userForm.name = this.user.name;              
                this.userForm.email = this.user.email;
                this.userForm.image = this.user.profile.image;
