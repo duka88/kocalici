@@ -22,8 +22,8 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::put('profile','ProfileController@update');
 	Route::get('/home', 'HomeController@index')->name('home');
-
-    
+    Route::get('new_comments', 'ScoreController@new_comments');
+    Route::post('rating', 'ScoreController@create');
     Route::post('recipe', 'RecipesController@stored');
 });
 

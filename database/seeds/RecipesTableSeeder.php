@@ -4,6 +4,8 @@ use Illuminate\Database\Seeder;
 use App\Tag;
 use App\Category;
 use App\Recipe;
+use App\Score;
+use App\Like;
 use Illuminate\Support\Facades\Hash;
 class RecipesTableSeeder extends Seeder
 {
@@ -44,7 +46,10 @@ class RecipesTableSeeder extends Seeder
 
 
           foreach(Recipe::all() as $recipe) {
-
+          
+         
+          
+          $recipe->scores()->create(['score' => rand(1,10), 'comment' => '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy </p>', 'user_id'=>1] );
           $recipe->tags()->attach([rand(1, 2),rand(3, 4)]);
            
         }

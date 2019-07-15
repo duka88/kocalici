@@ -17,6 +17,8 @@ class CreateLikesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->integer('recipe_id');
+            $table->enum('admin_notification', [0, 1])->default(0);
+            $table->enum('user_notification', [0, 1])->default(0);
             $table->integer('like');
             $table->timestamps();
         });

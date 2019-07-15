@@ -17,11 +17,13 @@ class ScoreResources extends JsonResource
         return [
           'id' => $this->id,
           'score' => $this->score,
-          'recipe' => $this->recipe->only('title', 'slug'),
-          'user_id' => $this->user_id,
-          'user' => $this->user->name,
-          'comment' => $this->comment,
+          'recipe' => $this->recipe->only('title', 'slug'),         
+          'user' => new UserResources($this->user),
+          'comment' => $this->comment,          
           'time' => date("d-m-Y", strtotime($this->created_at)),
+        
         ];
     }
+
+  
 }

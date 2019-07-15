@@ -174,3 +174,39 @@
 .router-link-exact-active{
   background-color: #566069;
 }
+
+.overlay{
+  position: fixed;
+  width: 75%;
+  height: 75vh;
+  top: 10vh;
+  margin: 0 auto;
+  background: #fff;
+  overflow-y: auto;
+}
+
+.z-index{
+  z-index: 999999999999;
+}
+
+.overlay-active{
+    background: #0f0f0f73;
+    overflow: hidden;
+}
+
+.notification{
+  position: relative;
+}
+
+.notification i{
+  font-size: 20px;
+  }
+
+.notification span{
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+.notification-meny{
+  width: 250px;
+}  

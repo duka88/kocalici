@@ -17,7 +17,10 @@ class CreateScoresTable extends Migration
             $table->bigIncrements('id');
             $table->integer('recipe_id');
             $table->integer('user_id');
-            $table->integer('score');
+            $table->integer('score')->nullable();
+            $table->integer('perent_comment_id')->nullable();
+            $table->enum('admin_notification', [0, 1])->default(0);
+            $table->enum('user_notification', [0, 1])->default(0);  
             $table->text('comment')->nullable();
             $table->timestamps();
         });

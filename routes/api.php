@@ -32,15 +32,21 @@ Route::put('profile','ProfileController@update');
 Route::get('recipes/{category_id}', 'RecipesController@category');
 Route::get('ingredients/{id}', 'RecipesController@ingredients');
 Route::get('users_recipe/{id}','RecipesController@user_recipe');
+Route::get('search/{search}/{category}/{order}/{direction}', 'RecipesController@search');
+
+
 
 Route::get('fridge', 'FridgeController@apitags');
 Route::get('fridged', 'FridgeController@search');
 
 
-Route::post('rating', 'ScoreController@create');
+
 Route::get('comments/{recipe}', 'ScoreController@load');
 Route::get('rating/{recipe}/{user}', 'ScoreController@show');
 Route::get('users_comments/{id}','ScoreController@users_comments' );
+
+
+
 Route::put('update_comment/{id}','ScoreController@update_comment');
 Route::delete('comment/{id}', 'ScoreController@delete');
 

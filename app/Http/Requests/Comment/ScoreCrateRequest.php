@@ -24,7 +24,7 @@ class ScoreCrateRequest extends FormRequest
     public function rules()
     {
           return [
-           'score' => 'required| numeric',
+           'score' => 'numeric',
            'comment' => 'max:1200',
            'user_id'=> 'required',
            'recipe_id' => 'required'
