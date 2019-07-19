@@ -30,7 +30,7 @@ Vue.use(CKEditor);
 Vue.use(VueRouter);
 
 
-
+const comments = Vue.component('comment-component', require('./components/Comments.vue').default);
 const addRecipe = Vue.component('create-recipe-component', require('./components/recipes/CreateRecipe.vue').default);
 const users = Vue.component('user-component', require('./components/user/Users.vue').default);
 const dashboard = Vue.component('dashboard-component', require('./components/dashboard/Dashboard.vue').default);
@@ -48,6 +48,7 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('search-component', require('./components/Search.vue').default);
 
 const routes = [
+  { path: '/get-comments', component: comments},
   { path: '/dashboard', component: dashboard},
   { path: '/add-recipe', component: addRecipe},
   { path: '/users', component: users},

@@ -70,13 +70,13 @@
         <div class="col-md-9">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li class="" ><a href="#RecipeBook" @click="loadRecipeBook"  data-toggle="tab" aria-expanded="true"  class="nav-link active" active>Recipe Book</a></li>
+              <li class="" ><a href="#RecipeBook" @click="loadRecipeBook"  data-toggle="tab" aria-expanded="true"  class="nav-link active" >Recipe Book</a></li>
               <li class=""><a @click="loadComments" href="#timeline" data-toggle="tab" aria-expanded="true" class="nav-link">Comments</a></li>
               <li class=""><a href="#activity" @click="loadRecipes"  data-toggle="tab" aria-expanded="false" class="nav-link">Posted Recipes</a></li>
               <li class=""><a @click="settings" href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link">Settings</a></li>
             </ul>
             <div class="tab-content">
-              <div class="tab-pane active" id="RecipeBook">
+              <div class="tab-pane mt-4 active" id="RecipeBook">
            <!-----------Recipes------------>
                   <div class="row justify-content-center">
                     <div v-for="likedRecipe in recipeBook.data" :key="likedRecipe.id" class="col-md-4" >             
@@ -122,7 +122,7 @@
         <!-- Comments ------------------------------>
                  </div>
               <!-- /.tab-pane -->
-              <div class="tab-pane active" id="timeline">
+              <div class="tab-pane mt-4 " id="timeline">
                 <!-- The timeline -->
                 <ul v-for="(comment, index) in comments.data" class="timeline timeline-inverse">
                   <!-- timeline time label -->
@@ -138,25 +138,31 @@
 
                     <div class="timeline-item">
                      
-                      <h3 class="timeline-header d-flex justify-content-between align-middle"><a href="#">{{comment.recipe.title}}
-                        </a><p v-if="!commentEdit"><span class="font-weight-bold">score</span><i class="fas fa-star"></i> {{comment.score}}</p>
-                               <input  v-if="commentEdit"
-                          v-model="commentForm.score" type="range" step="0.01" name ="score" min="1" max="10" value="5" class="form-control w-25" id="score">
-                         <span  v-if="commentEdit">{{commentForm.score | round}}</span>            
+                      <h3 class="timeline-header d-flex justify-content-between align-middle"><a :href="`/recipes/${comment.recipe.slug}`">{{comment.recipe.title}}
+                        </a><p ><span class="font-weight-bold">score</span><i class="fas fa-star"></i> {{comment.score}}</p>
+            
 
                         
                       </h3>
-                      <div  v-if="!commentEdit" class="timeline-body" v-html="comment.comment"></div>
-                 <div class="form-gropup mb-4">    
-            <ckeditor  v-if="commentEdit" :editor="editor" v-model="commentForm.comment" :config="editorConfig"></ckeditor>
-        </div>
+                      <div   class="timeline-body" v-html="comment.comment"></div>
+        
  
                       
                       <div class="timeline-footer">
-                        <a v-if="!commentEdit" @click="editComments(comment)" class="btn btn-primary btn-xs">Edit</a>
-                         <a v-if="commentEdit" @click="updateComments" class="btn btn-success btn-xs">Done</a>
-                        <a v-if="!commentEdit" @click="deleteComment(comment.id)" class="btn btn-danger btn-xs">Delete</a>
-                         <a v-if="commentEdit" @click="commentEdit = false" class="btn btn-warning btn-xs">Cancel</a>
+                        <input  v-if="commentEdit == comment.id"
+                          v-model="commentForm.score" type="range" step="0.01" name ="score" min="1" max="10" value="5" class="w-25" id="score">
+                           <span class="counter" v-if="commentEdit == comment.id">{{commentForm.score | round}}</span>
+                                   <div class="form-gropup my-4">    
+                              <ckeditor  v-if="commentEdit == comment.id" :editor="editor" v-model="commentForm.comment" :config="editorConfig"></ckeditor>
+                          </div>
+                        
+                       
+                         <a v-if="commentEdit == comment.id" @click="updateComments" class="reply mr-3"><i class="fas fa-check"></i> Done</a>
+                          <a v-else @click="editComments(comment)" class="edit"><i class="fas fa-edit"></i> Edit</a>
+
+                         <a v-if="commentEdit == comment.id" @click="commentEdit = false" class="cancel">Cancel</a>
+                          <a v-else @click="deleteComment(comment.id)"class="delete"><i class="fas fa-trash-alt"></i> Delete</a>
+                        
                       </div>
                     </div>
                   </li>
@@ -170,7 +176,7 @@
         <!----- End Comments ------------------------------>
          
 
-              <div class="tab-pane" id="settings">
+              <div class="tab-pane mt-4" id="settings">
                 <form  @submit.prevent="updateProfile()" class="form-horizontal">
                   <div class="form-group">
                         <input v-model="userForm.name" type="text" name="name" id="name" placeholder="name" 
@@ -198,8 +204,8 @@
                   
                     <div v-if="!userForm.imageUpload.image"> 
                     <img class="profile-user-img img-responsive img-circle" :src="`/img/S/${user.profile.image}`" alt="User profile picture">                            
-                         <label class="custom-file-upload"> 
-                            <input  style="display: none" type="file" @change="onFileChange(userForm.imageUpload, $event)">Edit Image 
+                         <label class="custom-file-upload d-flex mt-2 mb-4"> 
+                            <input  style="display: none" type="file" @change="onFileChange(userForm.imageUpload, $event)">Change Image 
                          </label> 
                         </div>
                         <div v-else>
@@ -212,42 +218,39 @@
                    
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-primary">Edit</button>
-                     
+                      <a @click="updateProfile()" class="edit"><i class="fas fa-edit"></i> Edit</a>
+                     <a @click="settings" class="cancel">Cancel</a>
 
                     </div>
                   </div>
                 </form>
-                <button @click="settings" class="btn btn-warning">Cancel</button>
+                
               </div>
               <!-- /.tab-pane -->
             
-            <div class="tab-pane" id="activity">
+            <div class="tab-pane mt-4" id="activity">
            <!-----------Recipes------------>
                   <div class="row justify-content-center">
                     <div v-for="recipe in recipes.data" :key="recipe.id" class="col-md-4" >             
                       <div class="card my-card">
-                         <img :src="`/img/MD/${recipe.image}`" width="480px" height="300">
-                        <div class="card-body">
-                          <div class="card-title d-flex justify-content-center">
-                            <a href="<?php the_permalink(); ?>"class="text-capitalize btn card-link  " >{{recipe.title}}</a>
+                        <a :href="`/recipes/${recipe.slug}`">
+                         <img :src="`/img/MD/${recipe.image}`" width="100%" height="300">
+                         </a>
+                        <div class="card-body archive align-items-center">
+                          <div class="card-title  d-flex justify-content-center">
+                            <a :href="`/recipes/${recipe.slug}`"><h2>{{recipe.title}} </h2></a>
                           </div>
-                          <div class="row">
-                              <div class="col-lg-6 ">
-                                   <h4 class="primary-color d-flex justify-content-center"><i class="fas fa-dollar-sign "></i> 45</h4>
-                             <h4 class="primary-color d-flex justify-content-center"><i class="far fa-clock"></i>60 min</h4>
-                              </div>
-                              <div class="col-lg-6  d-flex justify-content-center ">
-                                  <h2 class="prosek "><i class="fas fa-utensils"></i>{{recipe.avg }}</h2>
-                              </div>
-                          </div>
+                      
                          
 
                          
                         </div>
-                        <div class="card-footer  team-icons d-flex justify-content-between">
+                        <div class="card-footer  team-icons d-flex  justify-content-around">
 
-                          <a href="#"><i class="fab fa-facebook social-link"></i></a><a href="#"><i class="fab fa-instagram social-link"></i></a><a href="#"><i class="fab fa-twitter social-link"></i></a><a href="#"><i class="fab fa-yelp social-link"></i></a>
+                          <span><i class="fas fa-utensils mr-2"></i>{{recipe.servings}}</span>
+                          <span><i class="far fa-clock mr-2"></i>{{recipe.time}}</span>
+                          <span><i class="far fa-chart-bar mr-2"></i></i>{{recipe.dificulty}}</span>
+                          <span><i class="fas fa-star mr-2"></i></i>{{recipe.avg | round}}</span>
 
                         </div>
                       </div>
@@ -391,7 +394,7 @@
              
             },
             editComments(comment){
-              this.commentEdit = true;
+              this.commentEdit = comment.id;
               this.commentForm.fill(comment);
             },
             updateComments(){

@@ -88,7 +88,7 @@ class RecipesController extends Controller
    
    public function user_recipe($id){
 
-        $recipes = Recipe::where('user_id', $id)->latest()->paginate(6);
+        $recipes = Recipe::where('user_id', $id)->latest()->paginate(9);
 
         return RecipeResources::collection($recipes);
    }
@@ -166,54 +166,9 @@ class RecipesController extends Controller
 
     public function search($search, $category, $order, $direction){
         
-      
+      $recipes = Recipe::search($search, $category, $order, $direction);
 
-
-       if($category != 0){
-          if($order == 'score'){
-           $recipes = Recipe::where('title', 'LIKE', "%$search%")
-                       ->where('category_id', $category)
-                       ->withCount(['scores as average' => function ($q){
-                        $q->select(DB::raw('coalesce(avg(score), 0)'));
-                      }])->orderBy('average' ,$direction)->paginate(9); 
-         }elseif($order == 'likes'){
-             $recipes = Recipe::where('title', 'LIKE', "%$search%")
-                       ->where('category_id', $category)
-                       ->withCount('likes')
-                       ->orderBy('likes_count', $direction)->paginate(9);  
-          }else{
-            $recipes = Recipe::where('title', 'LIKE', "%$search%")
-                       ->where('category_id', $category)
-                       ->orderBy($order, $direction)->paginate(9);
-          }
-
-
-       }else{
-          
-           if($order == 'score'){
-               $recipes = Recipe::where('title', 'LIKE', "%$search%")
-                           
-                           ->withCount(['scores as average' => function ($q){
-                            $q->select(DB::raw('coalesce(avg(score), 0)'));
-                          }])->orderBy('average' ,$direction)->paginate(9); 
-             }elseif($order == 'likes'){
-                 $recipes = Recipe::where('title', 'LIKE', "%$search%")
-                           
-                           ->withCount('likes')
-                           ->orderBy('likes_count', $direction)->paginate(9);  
-              }else{
-                $recipes = Recipe::where('title', 'LIKE', "%$search%")
-                           
-                           ->orderBy($order, $direction)->paginate(9);
-              }
-
-           
-       }
-       
-   
-
-              return RecipeResources::collection($recipes);
-
+       return RecipeResources::collection($recipes);
    
     }
        

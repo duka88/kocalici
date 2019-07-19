@@ -4,7 +4,7 @@ namespace App\Http\Requests\Comment;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ScoreCrateRequest extends FormRequest
+class ReplyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,14 @@ class ScoreCrateRequest extends FormRequest
      */
     public function rules()
     {
-          return [
-           'score' => 'numeric',
-           'comment' => 'max:1200',
+        return [
+               
+          
+           'comment' => 'required|max:1200',
            
+           'perent_comment_id' => 'required',
            'recipe_id' => 'required'
+        
         ];
     }
 }

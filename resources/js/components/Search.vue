@@ -23,15 +23,15 @@
     </div>
    </div> 
     <ul class="navbar-nav ml-auto">
-  
+ 
       <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown" >
         <a class="nav-link notification" data-toggle="dropdown" href="#">
           <i class="far fa-comments "></i>
-          <span class="badge badge-danger navbar-badge ">{{comments.meta.total}}</span>
+          <span v-if="comments.length > 0" class="badge badge-danger navbar-badge ">{{comments[0].admin_count}}er</span>
         </a>
         <div class="dropdown-menu notification-meny dropdown-menu-lg dropdown-menu-right">
-          <a v-for="comment in comments.data" href="#" class="dropdown-item ">
+          <a v-for="comment in comments" @click="checked(comment.id)" class="dropdown-item ">
             <!-- Message Start -->
             <div class="media">
               <img :src="`/img/XS/${comment.user.profile}`" alt="User Avatar" class="img-size-50 mr-3 img-circle">
@@ -40,7 +40,7 @@
                   {{comment.recipe.title}}
                   <span class="float-right text-sm text-danger"><i class="fas fa-star"></i>{{comment.score}}</span>
                 </h3>
-                <p class="text-sm" v-html="$options.filters.slice(comment.comment)"></p>
+                <p class="text-sm" v-html="">{{comment.excerpt}}</p>
                 <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>{{comment.time}}</p>
               </div>
             </div>
@@ -48,8 +48,10 @@
           </a>
          
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+           <router-link to="/get-comments" class="dropdown-item dropdown-footer">See All Messages</router-link> 
+
         </div>
+         
       </li>
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
@@ -84,6 +86,7 @@
         </a>
       </li>
     </ul>
+
  </div>  
 </template>
 
@@ -95,7 +98,7 @@
             return{
                 overlay: false,
                 search:'',
-                comments:{}
+               
               
             }
         },
@@ -117,19 +120,36 @@
                 this.$emit('overlay', false);
                 document.documentElement.classList.remove('overlay-active');
             },
-            loadComments(){
+            checked(id){
+             this.$store.dispatch('approved', id );
+             
+           },
+            /*loadComments(){
                axios.get('/new_comments')
                     .then(({data})=>{
                        this.comments = data;
                     }) 
-            },
+            },*/
+          
+          
             ...mapActions([               
-                'searchIt'
-              ])
+                'searchIt',
+                'loadComments',
+                'loadNotifications',
+                'approved'
+              ]),
+            
         },
-         created(){
-            this.loadComments(); 
-    },
+        computed: {
+          
+           comments(){
+              return this.$store.state.notifications;
+           }
+        },
+         created(){            
+            this.$store.dispatch('loadNotifications'); 
+        },
+     
         filters: {
             slice: function(value){
               

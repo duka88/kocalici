@@ -22,9 +22,17 @@ Route::middleware(['auth'])->group(function(){
 
 	Route::put('profile','ProfileController@update');
 	Route::get('/home', 'HomeController@index')->name('home');
+
+
+    Route::get('notifications', 'ScoreController@notifications');
+    Route::get('comments', 'ScoreController@allComments');
     Route::get('new_comments', 'ScoreController@new_comments');
+    Route::post('approved', 'ScoreController@approved');    
     Route::post('rating', 'ScoreController@create');
     Route::post('recipe', 'RecipesController@stored');
+    Route::post('raply', 'ScoreController@reply');
+
+
 });
 
 

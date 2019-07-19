@@ -16,29 +16,49 @@
             
               </form>
         
-             <div class="col-12 comment" v-for="comment in comments" :key="comment.id">
-                <div class="avatar">
-                  <img src="/img/XS/300px-No_image_available.svg.png" alt="">
-                </div>
-                <div class="comment-content">
-                  <div class="comment-name">
-                    <p>{{comment.user.name}}</p>
+             <div class="col-12 comment "  v-for="(comment,index) in comments" :key="comment.id"  v-if="!comment.comment_parent">
+                  <div class="avatar">
+                    <img src="/img/XS/300px-No_image_available.svg.png" alt="">
                   </div>
-                  <div class="comment-score">
-                    <p v-html="starRating(comment.score)"></p>
+                  <div class="comment-content">
+                    <div class="comment-name">
+                      <p>{{comment.user.name}}</p>
+                    </div>
+                    <div class="comment-score">
+                      <p v-html="starRating(comment.score)"></p>
+                    </div>
                   </div>
-                </div>
-                <div class="comment-text" v-html="comment.comment">
-                </div>
-                   <form @submit.prevent="replyCreate(comment.id)" v-if="showReply" >
-                       
-                       <div class="form-gropup mb-4">    
-                     <ckeditor :editor="editor" v-model="reply" :config="editorConfig"></ckeditor>
-                     </div> 
-                     <button  class="btn btn-success">Reply</button>           
-               </form>
-                 <button @click="showReply = true" v-if="!showReply" class="btn btn-success">Reply</button>
-                 <button  v-if="showReply" class="btn btn-success">Reply</button>
+                  <div class="comment-text" v-html="comment.comment">
+                  </div>
+
+                   <!-----------Reply------------->
+                    <div class="col-12 comment ml-4"  v-for="(reply,index) in comment.replies" :key="reply.id" >
+                        <div class="avatar">
+                          <img src="/img/XS/300px-No_image_available.svg.png" alt="">
+                        </div>
+                        <div class="comment-content">
+                          <div class="comment-name">
+                            <p>{{reply.user.name}}</p>
+                          </div>
+                          <div class="comment-score">
+                            <p v-html="starRating(reply.score)"></p>
+                          </div>
+                        </div>
+                        <div class="comment-text" v-html="reply.comment">
+                        </div>                       
+                    </div>
+
+
+
+                    <!-----------Reply------------->
+                     <form @submit.prevent="replyCreate(comment.id)" v-if="showReply == comment.id" >
+                                                  <div class="form-gropup mb-4">    
+                       <ckeditor :editor="editor" v-model="reply" :config="editorConfig"></ckeditor>
+                       </div> 
+                       <button  class="btn btn-success">Reply</button>           
+                 </form>
+                   <button @click="showReply = comment.id" v-if="showReply != comment.id" class="btn btn-success">Reply</button>
+                   
               </div>
              
      </div>        
@@ -63,7 +83,7 @@
                  reply: '',
                  comments: {},
                  rate: '',
-                 showReply: false  
+                 showReply: 'no'  
 
                 }
                
@@ -88,10 +108,10 @@
           replyCreate(id){
               let vm = this;
 
-                axios.post('/rating',{ 
+                axios.post('/raply',{ 
                 recipe_id: this.recipe_id,
                 user_id: this.user_id,
-                comment_id: id,                
+                perent_comment_id: id,                
                 comment: this.reply}
                 )
                 .then(({data}) => {

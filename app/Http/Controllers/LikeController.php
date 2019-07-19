@@ -53,7 +53,7 @@ class LikeController extends Controller
 
    public function user_likes($user){
       
-     $like = Like::where('user_id',$user)->latest()->paginate(2);
+     $like = Like::where('user_id',$user)->latest()->paginate(6);
 
       return MyLikeResources::collection($like);
    
