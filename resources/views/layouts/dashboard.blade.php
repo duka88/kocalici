@@ -47,14 +47,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{{asset('/img/Watchmen-logo.png')}}" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <p class="d-block">@Auth{{auth()->user()->name}} @endauth</p>
-        </div>
-      </div>
+   
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
@@ -183,11 +176,7 @@
   <!-- /.content-wrapper -->
 
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+
 </div>
 @auth
   <script>

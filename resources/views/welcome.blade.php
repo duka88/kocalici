@@ -56,7 +56,7 @@
    
             <div class="col-md-12 col-xl-12">
               <div class="row gap-y">
-              <recipes-component></recipes-component> 
+              <recipes-component ></recipes-component> 
               
            
 

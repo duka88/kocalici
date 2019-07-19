@@ -15,7 +15,7 @@ use  App\Http\Controllers\Single\RecipeController;
 Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::get('/recipes/{recipe}','single\RecipeController@show')->name('recipes.show');    
 
-Route::get('/home', 'HomeController@index')->name('home');
+
 
 
 Route::middleware(['auth'])->group(function(){

@@ -14,7 +14,7 @@
     <div class="contaier " v-if="overlay">
        <div class="row overlay">
          <div class="col ">
-             <button @click="overlayClose" class="btn btn-small btn-danger">X</button>
+             <p @click="overlayClose" class="close-search text-danger">X</p>
              <VuexRecipe></VuexRecipe>
          </div>
             
@@ -23,12 +23,12 @@
     </div>
    </div> 
     <ul class="navbar-nav ml-auto">
- 
+    
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown" >
         <a class="nav-link notification" data-toggle="dropdown" href="#">
           <i class="far fa-comments "></i>
-          <span v-if="comments.length > 0" class="badge badge-danger navbar-badge ">{{comments[0].admin_count}}er</span>
+          <span v-if="comments.length > 0" class="badge badge-danger navbar-badge ">{{comments[0].admin_count}}</span>
         </a>
         <div class="dropdown-menu notification-meny dropdown-menu-lg dropdown-menu-right">
           <a v-for="comment in comments" @click="checked(comment.id)" class="dropdown-item ">
@@ -38,7 +38,7 @@
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   {{comment.recipe.title}}
-                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i>{{comment.score}}</span>
+                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i>{{comment.score }}</span>
                 </h3>
                 <p class="text-sm" v-html="">{{comment.excerpt}}</p>
                 <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>{{comment.time}}</p>
@@ -56,35 +56,33 @@
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link notification" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+              <div class="user-panel d-flex">
+                <div class="image">
+                  <img src="/img/Watchmen-logo.png" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                  <i class="fas fa-chevron-down"></i>
+               </div>
+        </div>
+       
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
+         
+          
+          <router-link to="/profile" class="nav-link">
+            <i class="fas fa-user  mx-2"></i>Profile
+            
+          </router-link>
+         
+         
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+          <a href="#" class="dropdown-item " @click="logout">
+
+               <i class="nav-icon fa fa-power-off text-danger"></i>                
+               LOGOUT</a>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
+   
     </ul>
 
  </div>  
@@ -118,11 +116,19 @@
             overlayClose(){
                 this.overlay = false;
                 this.$emit('overlay', false);
+                this.search= '';
                 document.documentElement.classList.remove('overlay-active');
             },
             checked(id){
              this.$store.dispatch('approved', id );
              
+           },
+           logout(){
+              axios.post('logout')
+                  .then(()=>{
+                     window.location.replace("/");
+                  }) 
+
            },
             /*loadComments(){
                axios.get('/new_comments')
@@ -151,11 +157,9 @@
         },
      
         filters: {
-            slice: function(value){
-              
-              let slice = value.slice(0,50); 
-             return `${slice}...`;
-            }
+           round: function(value){
+             return Math.round(value);
+           }
         },    
     }
 </script>
