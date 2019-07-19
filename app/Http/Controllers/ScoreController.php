@@ -8,6 +8,8 @@ use Session;
 use App\Http\Resources\ScoreResources;
 use App\Http\Requests\Comment\ScoreCrateRequest;
 use App\Http\Requests\Comment\UpdateCommentRequest;
+use App\Http\Requests\Comment\ReplyRequest;
+use App\Http\Resources\NotificationResources;
 
 class ScoreController extends Controller
 {
@@ -26,18 +28,32 @@ class ScoreController extends Controller
               'comment' => $request->comment        
             ]);
             return Response($score);
-         }elseif(!empty($request->comment_id)){
-            $score = Score::create([
-              'recipe_id' => $request->recipe_id,
-              'user_id' => $id,
-              'perent_comment_id' => $request->comment_id,
-              'comment' => $request->comment        
-            ]);
          }else{
             return Response('Already commented');
          }
      
    }
+   
+  public function reply(ReplyRequest $request){
+    
+     $id = auth()->user()->id;
+         if(auth()->user()->role){
+            $admin_notification = '1';
+         }else{
+            $admin_notification = '0';
+         }
+
+       
+        $score = Score::create([
+              'recipe_id' => $request->recipe_id,
+              'user_id' => $id,
+              'admin_notification' => $admin_notification,
+              'perent_comment_id' => $request->perent_comment_id,
+              'comment' => $request->comment        
+            ]);
+
+        return Response('Replayed successfily');
+  }
 
    public function show($recipe, $user){
        
@@ -61,16 +77,20 @@ class ScoreController extends Controller
 
    public function load($recipe){
 
-      $score = Score::where('recipe_id', $recipe)->latest()->get();
-
+      $score = Score::where('recipe_id', $recipe)->get();
+      
       return ScoreResources::collection($score);
+
+      
    }
 
    public function users_comments($id){
 
-       $score = Score::where('user_id', $id)->latest()->paginate(2);
+       $score = Score::where('user_id', $id)->latest()->paginate(10);
 
       return ScoreResources::collection($score);
+
+     
    }
 
    public function update_comment(UpdateCommentRequest $request, $id){
@@ -105,5 +125,46 @@ class ScoreController extends Controller
 
 
        return ScoreResources::collection($comments);
+   }
+
+   public function approved(Request $request){
+          
+        $comment = Score::findOrFail($request->id);
+
+         $comment->update(['admin_notification' => '1']);
+
+         return Response($comment);
+
+
+   }
+
+   public function allComments(){
+
+         if(auth()->user()->role == 'admin'){
+
+            $comments = Score::orderBy('admin_notification' , 'asc')->latest()->paginate(10);
+         }else{
+              
+            $comments = Score::orderBy('user_notification' , 'asc')->latest()->paginate(10);
+
+         }
+         
+         return ScoreResources::collection($comments);
+
+   }
+
+
+   public function notifications(){
+
+       if(auth()->user()->role == 'admin'){
+
+            $comments = Score::where('admin_notification' , 1)->latest()->paginate(5);
+         }else{
+              
+            $comments = Score::where('user_notification' , 1)->latest()->paginate(5);
+
+         }
+         
+         return NotificationResources::collection($comments);
    }
 }

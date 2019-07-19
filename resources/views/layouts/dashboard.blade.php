@@ -52,7 +52,7 @@
           <img src="{{asset('/img/Watchmen-logo.png')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">@Auth{{auth()->user()->name}} @endauth</a>
+          <p class="d-block">@Auth{{auth()->user()->name}} @endauth</p>
         </div>
       </div>
 
@@ -109,6 +109,18 @@
             </a>
           </li>
 
+            <li class="nav-header">COMMENTS</li>
+
+          <li class="nav-item">
+            <router-link to="/get-comments" class="nav-link">
+              <i class="fas fa-comments"></i>
+              <p>
+                COMMENTS               
+              </p>
+            </a>
+          </li>
+         
+
           <li class="nav-header">USERS</li>
 
           <li class="nav-item">
@@ -128,84 +140,24 @@
             </router-link>
           </li>
    
-          <li class="nav-header">TOOLS</li>
+          <li class="nav-header">PAGES
+          </li>          
           
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-envelope"></i>
-              <p>
-                Mailbox
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Inbox</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Compose</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Read</p>
-                </a>
-              </li>
-            </ul>
-          </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-book"></i>
               <p>
                 Pages
-                <i class="fas fa-angle-left right"></i>
+                
               </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Invoice</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Profile</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Login</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Register</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Lockscreen</p>
-                </a>
-              </li>
-            </ul>
+            </a>            
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ route('logout') }}"
 
                               onclick="event.preventDefault();
                                document.getElementById('logout-form').submit();">
-               <i class="nav-icon fa fa-power-off text-red"></i>                
+               <i class="nav-icon fa fa-power-off text-danger"></i>                
                                {{ __('Logout') }}
                            </a>
 

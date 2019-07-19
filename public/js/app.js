@@ -1759,6 +1759,179 @@ module.exports = function isBuffer (obj) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Comments.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Comments.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ckeditor/ckeditor5-build-classic */ "./node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js");
+/* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1__);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      editor: _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1___default.a,
+      editorConfig: {
+        toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote']
+      },
+      commentReply: false,
+      replyComment: ''
+    };
+  },
+  methods: _objectSpread({
+    paginateComment: function paginateComment() {
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.$store.dispatch('paginateComments', page);
+    },
+    checked: function checked(id) {
+      this.$store.dispatch('approved', id);
+    },
+    updateComments: function updateComments(comment) {
+      this.commentReply = false;
+      this.$store.dispatch('reply', {
+        id: comment.id,
+        comment: this.replyComment,
+        recipeId: comment.recipe.id
+      });
+    },
+    replyComments: function replyComments(id) {
+      this.commentReply = id;
+    },
+    deleteComment: function deleteComment(id) {
+      this.$store.dispatch('commentDelete', id);
+    }
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['loadComments', 'paginateComments', 'approved', 'commentDelete', 'reply'])),
+  computed: {
+    comments: function comments() {
+      return this.$store.state.comments;
+    }
+  },
+  created: function created() {
+    this.$store.dispatch('loadComments');
+  },
+  filters: {
+    round: function round(value) {
+      return Math.round(value);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
@@ -2238,6 +2411,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['recipe_id', 'user_id'],
@@ -2253,7 +2446,7 @@ __webpack_require__.r(__webpack_exports__);
       reply: '',
       comments: {},
       rate: '',
-      showReply: false
+      showReply: 'no'
     };
   },
   methods: {
@@ -2272,10 +2465,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     replyCreate: function replyCreate(id) {
       var vm = this;
-      axios.post('/rating', {
+      axios.post('/raply', {
         recipe_id: this.recipe_id,
         user_id: this.user_id,
-        comment_id: id,
+        perent_comment_id: id,
         comment: this.reply
       }).then(function (_ref2) {
         var data = _ref2.data;
@@ -2436,13 +2629,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       overlay: false,
-      search: '',
-      comments: {}
+      search: ''
     };
   },
   methods: _objectSpread({
@@ -2464,17 +2659,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$emit('overlay', false);
       document.documentElement.classList.remove('overlay-active');
     },
-    loadComments: function loadComments() {
-      var _this = this;
-
-      axios.get('/new_comments').then(function (_ref) {
-        var data = _ref.data;
-        _this.comments = data;
-      });
+    checked: function checked(id) {
+      this.$store.dispatch('approved', id);
     }
-  }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['searchIt'])),
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['searchIt', 'loadComments', 'loadNotifications', 'approved'])),
+  computed: {
+    comments: function comments() {
+      return this.$store.state.notifications;
+    }
+  },
   created: function created() {
-    this.loadComments();
+    this.$store.dispatch('loadNotifications');
   },
   filters: {
     slice: function slice(value) {
@@ -3618,6 +3813,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3727,7 +3925,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     editComments: function editComments(comment) {
-      this.commentEdit = true;
+      this.commentEdit = comment.id;
       this.commentForm.fill(comment);
     },
     updateComments: function updateComments() {
@@ -41613,6 +41811,334 @@ AlertSuccess_component.options.__file = "AlertSuccess.vue"
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Comments.vue?vue&type=template&id=4aa6d95f&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Comments.vue?vue&type=template&id=4aa6d95f& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "div",
+      { staticClass: "tab-pane active", attrs: { id: "timeline" } },
+      [
+        _vm._l(_vm.comments.data, function(comment, index) {
+          return !comment.perent_comment_id
+            ? _c(
+                "ul",
+                { staticClass: "timeline timeline-inverse" },
+                [
+                  _c("li", { staticClass: "time-label" }, [
+                    _c("span", { staticClass: "bg-red" }, [
+                      _vm._v(
+                        "\n                      " +
+                          _vm._s(comment.time) +
+                          "\n                    "
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c("i", { staticClass: "fa fa-comments bg-yellow" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "timeline-item" }, [
+                      _c(
+                        "h3",
+                        {
+                          staticClass:
+                            "timeline-header d-flex justify-content-between align-middle"
+                        },
+                        [
+                          _c(
+                            "a",
+                            { staticClass: "text-dark", attrs: { href: "#" } },
+                            [
+                              _vm._v(
+                                _vm._s(comment.recipe.title) +
+                                  "\n                    "
+                              )
+                            ]
+                          ),
+                          _c("p", [
+                            _c(
+                              "span",
+                              { staticClass: "font-weight-bold ml-5" },
+                              [_vm._v("score")]
+                            ),
+                            _c("i", { staticClass: "fas fa-star" }),
+                            _vm._v(" " + _vm._s(comment.score))
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", {
+                        staticClass: "timeline-body",
+                        domProps: { innerHTML: _vm._s(comment.comment) }
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "timeline-footer" }, [
+                        _vm.commentReply == comment.id
+                          ? _c(
+                              "div",
+                              { staticClass: "form-gropup mb-4" },
+                              [
+                                _c("ckeditor", {
+                                  attrs: {
+                                    editor: _vm.editor,
+                                    config: _vm.editorConfig
+                                  },
+                                  model: {
+                                    value: _vm.replyComment,
+                                    callback: function($$v) {
+                                      _vm.replyComment = $$v
+                                    },
+                                    expression: "replyComment"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "d-flex justify-content-between" },
+                          [
+                            _c("div", [
+                              _vm.commentReply == comment.id
+                                ? _c(
+                                    "a",
+                                    {
+                                      staticClass: "mr-3 reply",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.updateComments(comment)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", { staticClass: "fas  fa-reply" }),
+                                      _vm._v(" Reply")
+                                    ]
+                                  )
+                                : _c(
+                                    "a",
+                                    {
+                                      staticClass: "mr-3 reply",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.replyComments(comment.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", { staticClass: "fas  fa-reply" }),
+                                      _vm._v(" Reply")
+                                    ]
+                                  ),
+                              _vm._v(" "),
+                              _vm.commentReply == comment.id
+                                ? _c(
+                                    "a",
+                                    {
+                                      staticClass: "mr-3 cancel ",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.commentReply = false
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Cancel")]
+                                  )
+                                : _c(
+                                    "a",
+                                    {
+                                      staticClass: "delete",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleteComment(comment.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fas fa-trash-alt"
+                                      }),
+                                      _vm._v(" Delete")
+                                    ]
+                                  )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", [
+                              comment.admin_notification == 0
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass: "notification",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.checked(comment.id)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("remove notification")]
+                                  )
+                                : _vm._e()
+                            ])
+                          ]
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(comment.replies, function(comment) {
+                    return _c(
+                      "ul",
+                      { staticClass: "timeline timeline-inverse ml-5" },
+                      [
+                        _c("li", { staticClass: "time-label" }, [
+                          _c("span", { staticClass: "bg-red" }, [
+                            _vm._v(
+                              "\n                              " +
+                                _vm._s(comment.time) +
+                                "\n                            "
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c("i", { staticClass: "fa fa-comments bg-yellow" }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "timeline-item" }, [
+                            _c(
+                              "h3",
+                              {
+                                staticClass:
+                                  "timeline-header d-flex justify-content-between align-middle"
+                              },
+                              [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "text-dark",
+                                    attrs: { href: "#" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(comment.recipe.title) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                ),
+                                !_vm.commentReply
+                                  ? _c("p", [
+                                      _c(
+                                        "span",
+                                        { staticClass: "font-weight-bold" },
+                                        [_vm._v("score")]
+                                      ),
+                                      _c("i", { staticClass: "fas fa-star" }),
+                                      _vm._v(" " + _vm._s(comment.score))
+                                    ])
+                                  : _vm._e()
+                              ]
+                            ),
+                            _vm._v(" "),
+                            !_vm.commentReply
+                              ? _c("div", {
+                                  staticClass: "timeline-body",
+                                  domProps: {
+                                    innerHTML: _vm._s(comment.comment)
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "timeline-footer" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "d-flex justify-content-between"
+                                },
+                                [
+                                  _c("div", [
+                                    !_vm.commentReply
+                                      ? _c(
+                                          "a",
+                                          {
+                                            staticClass: "delete",
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.deleteComment(
+                                                  comment.id
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fas fa-trash-alt"
+                                            }),
+                                            _vm._v(" Delete")
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", [
+                                    comment.admin_notification == 0
+                                      ? _c(
+                                          "span",
+                                          {
+                                            staticClass: "notification",
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.checked(comment.id)
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("remove notification")]
+                                        )
+                                      : _vm._e()
+                                  ])
+                                ]
+                              )
+                            ])
+                          ])
+                        ])
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
+            : _vm._e()
+        }),
+        _vm._v(" "),
+        _c("pagination", {
+          attrs: { data: _vm.comments },
+          on: { "pagination-change-page": _vm.paginateComment }
+        })
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
@@ -42452,91 +42978,136 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm._l(_vm.comments, function(comment) {
-        return _c("div", { key: comment.id, staticClass: "col-12 comment" }, [
-          _vm._m(0, true),
-          _vm._v(" "),
-          _c("div", { staticClass: "comment-content" }, [
-            _c("div", { staticClass: "comment-name" }, [
-              _c("p", [_vm._v(_vm._s(comment.user.name))])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "comment-score" }, [
-              _c("p", {
-                domProps: { innerHTML: _vm._s(_vm.starRating(comment.score)) }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", {
-            staticClass: "comment-text",
-            domProps: { innerHTML: _vm._s(comment.comment) }
-          }),
-          _vm._v(" "),
-          _vm.showReply
-            ? _c(
-                "form",
-                {
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.replyCreate(comment.id)
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "form-gropup mb-4" },
-                    [
-                      _c("ckeditor", {
-                        attrs: { editor: _vm.editor, config: _vm.editorConfig },
-                        model: {
-                          value: _vm.reply,
-                          callback: function($$v) {
-                            _vm.reply = $$v
-                          },
-                          expression: "reply"
-                        }
-                      })
-                    ],
-                    1
-                  ),
+      _vm._l(_vm.comments, function(comment, index) {
+        return !comment.comment_parent
+          ? _c(
+              "div",
+              { key: comment.id, staticClass: "col-12 comment " },
+              [
+                _vm._m(0, true),
+                _vm._v(" "),
+                _c("div", { staticClass: "comment-content" }, [
+                  _c("div", { staticClass: "comment-name" }, [
+                    _c("p", [_vm._v(_vm._s(comment.user.name))])
+                  ]),
                   _vm._v(" "),
-                  _c("button", { staticClass: "btn btn-success" }, [
-                    _vm._v("Reply")
+                  _c("div", { staticClass: "comment-score" }, [
+                    _c("p", {
+                      domProps: {
+                        innerHTML: _vm._s(_vm.starRating(comment.score))
+                      }
+                    })
                   ])
-                ]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          !_vm.showReply
-            ? _c(
-                "button",
-                {
-                  staticClass: "btn btn-success",
-                  on: {
-                    click: function($event) {
-                      _vm.showReply = true
-                    }
-                  }
-                },
-                [_vm._v("Reply")]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.showReply
-            ? _c("button", { staticClass: "btn btn-success" }, [
-                _vm._v("Reply")
-              ])
-            : _vm._e()
-        ])
+                ]),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "comment-text",
+                  domProps: { innerHTML: _vm._s(comment.comment) }
+                }),
+                _vm._v(" "),
+                _vm._l(comment.replies, function(reply, index) {
+                  return _c(
+                    "div",
+                    { key: reply.id, staticClass: "col-12 comment ml-4" },
+                    [
+                      _vm._m(1, true),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "comment-content" }, [
+                        _c("div", { staticClass: "comment-name" }, [
+                          _c("p", [_vm._v(_vm._s(reply.user.name))])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "comment-score" }, [
+                          _c("p", {
+                            domProps: {
+                              innerHTML: _vm._s(_vm.starRating(reply.score))
+                            }
+                          })
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", {
+                        staticClass: "comment-text",
+                        domProps: { innerHTML: _vm._s(reply.comment) }
+                      })
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _vm.showReply == comment.id
+                  ? _c(
+                      "form",
+                      {
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.replyCreate(comment.id)
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "form-gropup mb-4" },
+                          [
+                            _c("ckeditor", {
+                              attrs: {
+                                editor: _vm.editor,
+                                config: _vm.editorConfig
+                              },
+                              model: {
+                                value: _vm.reply,
+                                callback: function($$v) {
+                                  _vm.reply = $$v
+                                },
+                                expression: "reply"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("button", { staticClass: "btn btn-success" }, [
+                          _vm._v("Reply")
+                        ])
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.showReply != comment.id
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        on: {
+                          click: function($event) {
+                            _vm.showReply = comment.id
+                          }
+                        }
+                      },
+                      [_vm._v("Reply")]
+                    )
+                  : _vm._e()
+              ],
+              2
+            )
+          : _vm._e()
       })
     ],
     2
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "avatar" }, [
+      _c("img", {
+        attrs: { src: "/img/XS/300px-No_image_available.svg.png", alt: "" }
+      })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -42669,9 +43240,13 @@ var render = function() {
           [
             _c("i", { staticClass: "far fa-comments " }),
             _vm._v(" "),
-            _c("span", { staticClass: "badge badge-danger navbar-badge " }, [
-              _vm._v(_vm._s(_vm.comments.meta.total))
-            ])
+            _vm.comments.length > 0
+              ? _c(
+                  "span",
+                  { staticClass: "badge badge-danger navbar-badge " },
+                  [_vm._v(_vm._s(_vm.comments[0].admin_count) + "er")]
+                )
+              : _vm._e()
           ]
         ),
         _vm._v(" "),
@@ -42682,10 +43257,17 @@ var render = function() {
               "dropdown-menu notification-meny dropdown-menu-lg dropdown-menu-right"
           },
           [
-            _vm._l(_vm.comments.data, function(comment) {
+            _vm._l(_vm.comments, function(comment) {
               return _c(
                 "a",
-                { staticClass: "dropdown-item ", attrs: { href: "#" } },
+                {
+                  staticClass: "dropdown-item ",
+                  on: {
+                    click: function($event) {
+                      return _vm.checked(comment.id)
+                    }
+                  }
+                },
                 [
                   _c("div", { staticClass: "media" }, [
                     _c("img", {
@@ -42713,14 +43295,9 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _c("p", {
-                        staticClass: "text-sm",
-                        domProps: {
-                          innerHTML: _vm._s(
-                            _vm.$options.filters.slice(comment.comment)
-                          )
-                        }
-                      }),
+                      _c("p", { staticClass: "text-sm" }, [
+                        _vm._v(_vm._s(comment.excerpt))
+                      ]),
                       _vm._v(" "),
                       _c("p", { staticClass: "text-sm text-muted" }, [
                         _c("i", { staticClass: "far fa-clock mr-1" }),
@@ -42735,10 +43312,10 @@ var render = function() {
             _c("div", { staticClass: "dropdown-divider" }),
             _vm._v(" "),
             _c(
-              "a",
+              "router-link",
               {
                 staticClass: "dropdown-item dropdown-footer",
-                attrs: { href: "#" }
+                attrs: { to: "/get-comments" }
               },
               [_vm._v("See All Messages")]
             )
@@ -43949,8 +44526,7 @@ var render = function() {
                       attrs: {
                         href: "#RecipeBook",
                         "data-toggle": "tab",
-                        "aria-expanded": "true",
-                        active: ""
+                        "aria-expanded": "true"
                       },
                       on: { click: _vm.loadRecipeBook }
                     },
@@ -44011,7 +44587,7 @@ var render = function() {
                 _c(
                   "div",
                   {
-                    staticClass: "tab-pane active",
+                    staticClass: "tab-pane mt-4 active",
                     attrs: { id: "RecipeBook" }
                   },
                   [
@@ -44138,7 +44714,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "tab-pane active", attrs: { id: "timeline" } },
+                  { staticClass: "tab-pane mt-4 ", attrs: { id: "timeline" } },
                   [
                     _vm._l(_vm.comments.data, function(comment, index) {
                       return _c(
@@ -44168,156 +44744,145 @@ var render = function() {
                                     "timeline-header d-flex justify-content-between align-middle"
                                 },
                                 [
-                                  _c("a", { attrs: { href: "#" } }, [
-                                    _vm._v(
-                                      _vm._s(comment.recipe.title) +
-                                        "\n                       "
-                                    )
-                                  ]),
-                                  !_vm.commentEdit
-                                    ? _c("p", [
-                                        _c(
-                                          "span",
-                                          { staticClass: "font-weight-bold" },
-                                          [_vm._v("score")]
-                                        ),
-                                        _c("i", { staticClass: "fas fa-star" }),
-                                        _vm._v(" " + _vm._s(comment.score))
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  _vm.commentEdit
-                                    ? _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.commentForm.score,
-                                            expression: "commentForm.score"
-                                          }
-                                        ],
-                                        staticClass: "form-control w-25",
-                                        attrs: {
-                                          type: "range",
-                                          step: "0.01",
-                                          name: "score",
-                                          min: "1",
-                                          max: "10",
-                                          value: "5",
-                                          id: "score"
-                                        },
-                                        domProps: {
-                                          value: _vm.commentForm.score
-                                        },
-                                        on: {
-                                          __r: function($event) {
-                                            return _vm.$set(
-                                              _vm.commentForm,
-                                              "score",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  _vm.commentEdit
-                                    ? _c("span", [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm._f("round")(
-                                              _vm.commentForm.score
-                                            )
-                                          )
-                                        )
-                                      ])
-                                    : _vm._e()
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "/recipes/" + comment.recipe.slug
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._s(comment.recipe.title) +
+                                          "\n                       "
+                                      )
+                                    ]
+                                  ),
+                                  _c("p", [
+                                    _c(
+                                      "span",
+                                      { staticClass: "font-weight-bold" },
+                                      [_vm._v("score")]
+                                    ),
+                                    _c("i", { staticClass: "fas fa-star" }),
+                                    _vm._v(" " + _vm._s(comment.score))
+                                  ])
                                 ]
                               ),
                               _vm._v(" "),
-                              !_vm.commentEdit
-                                ? _c("div", {
-                                    staticClass: "timeline-body",
-                                    domProps: {
-                                      innerHTML: _vm._s(comment.comment)
-                                    }
-                                  })
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-gropup mb-4" },
-                                [
-                                  _vm.commentEdit
-                                    ? _c("ckeditor", {
-                                        attrs: {
-                                          editor: _vm.editor,
-                                          config: _vm.editorConfig
-                                        },
-                                        model: {
-                                          value: _vm.commentForm.comment,
-                                          callback: function($$v) {
-                                            _vm.$set(
-                                              _vm.commentForm,
-                                              "comment",
-                                              $$v
-                                            )
-                                          },
-                                          expression: "commentForm.comment"
-                                        }
-                                      })
-                                    : _vm._e()
-                                ],
-                                1
-                              ),
+                              _c("div", {
+                                staticClass: "timeline-body",
+                                domProps: { innerHTML: _vm._s(comment.comment) }
+                              }),
                               _vm._v(" "),
                               _c("div", { staticClass: "timeline-footer" }, [
-                                !_vm.commentEdit
+                                _vm.commentEdit == comment.id
+                                  ? _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.commentForm.score,
+                                          expression: "commentForm.score"
+                                        }
+                                      ],
+                                      staticClass: "w-25",
+                                      attrs: {
+                                        type: "range",
+                                        step: "0.01",
+                                        name: "score",
+                                        min: "1",
+                                        max: "10",
+                                        value: "5",
+                                        id: "score"
+                                      },
+                                      domProps: {
+                                        value: _vm.commentForm.score
+                                      },
+                                      on: {
+                                        __r: function($event) {
+                                          return _vm.$set(
+                                            _vm.commentForm,
+                                            "score",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    })
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.commentEdit == comment.id
+                                  ? _c("span", { staticClass: "counter" }, [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm._f("round")(_vm.commentForm.score)
+                                        )
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-gropup my-4" },
+                                  [
+                                    _vm.commentEdit == comment.id
+                                      ? _c("ckeditor", {
+                                          attrs: {
+                                            editor: _vm.editor,
+                                            config: _vm.editorConfig
+                                          },
+                                          model: {
+                                            value: _vm.commentForm.comment,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.commentForm,
+                                                "comment",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "commentForm.comment"
+                                          }
+                                        })
+                                      : _vm._e()
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _vm.commentEdit == comment.id
                                   ? _c(
                                       "a",
                                       {
-                                        staticClass: "btn btn-primary btn-xs",
+                                        staticClass: "reply mr-3",
+                                        on: { click: _vm.updateComments }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fas fa-check"
+                                        }),
+                                        _vm._v(" Done")
+                                      ]
+                                    )
+                                  : _c(
+                                      "a",
+                                      {
+                                        staticClass: "edit",
                                         on: {
                                           click: function($event) {
                                             return _vm.editComments(comment)
                                           }
                                         }
                                       },
-                                      [_vm._v("Edit")]
-                                    )
-                                  : _vm._e(),
+                                      [
+                                        _c("i", { staticClass: "fas fa-edit" }),
+                                        _vm._v(" Edit")
+                                      ]
+                                    ),
                                 _vm._v(" "),
-                                _vm.commentEdit
+                                _vm.commentEdit == comment.id
                                   ? _c(
                                       "a",
                                       {
-                                        staticClass: "btn btn-success btn-xs",
-                                        on: { click: _vm.updateComments }
-                                      },
-                                      [_vm._v("Done")]
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                !_vm.commentEdit
-                                  ? _c(
-                                      "a",
-                                      {
-                                        staticClass: "btn btn-danger btn-xs",
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.deleteComment(comment.id)
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("Delete")]
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _vm.commentEdit
-                                  ? _c(
-                                      "a",
-                                      {
-                                        staticClass: "btn btn-warning btn-xs",
+                                        staticClass: "cancel",
                                         on: {
                                           click: function($event) {
                                             _vm.commentEdit = false
@@ -44326,7 +44891,23 @@ var render = function() {
                                       },
                                       [_vm._v("Cancel")]
                                     )
-                                  : _vm._e()
+                                  : _c(
+                                      "a",
+                                      {
+                                        staticClass: "delete",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.deleteComment(comment.id)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fas fa-trash-alt"
+                                        }),
+                                        _vm._v(" Delete")
+                                      ]
+                                    )
                               ])
                             ])
                           ])
@@ -44344,7 +44925,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "tab-pane", attrs: { id: "settings" } },
+                  { staticClass: "tab-pane mt-4", attrs: { id: "settings" } },
                   [
                     _c(
                       "form",
@@ -44553,7 +45134,10 @@ var render = function() {
                                 _vm._v(" "),
                                 _c(
                                   "label",
-                                  { staticClass: "custom-file-upload" },
+                                  {
+                                    staticClass:
+                                      "custom-file-upload d-flex mt-2 mb-4"
+                                  },
                                   [
                                     _c("input", {
                                       staticStyle: { display: "none" },
@@ -44568,7 +45152,7 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(
-                                      "Edit Image \n                        "
+                                      "Change Image \n                        "
                                     )
                                   ]
                                 )
@@ -44596,24 +45180,46 @@ var render = function() {
                               ])
                         ]),
                         _vm._v(" "),
-                        _vm._m(3)
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "div",
+                            { staticClass: "col-sm-offset-2 col-sm-10" },
+                            [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "edit",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.updateProfile()
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "fas fa-edit" }),
+                                  _vm._v(" Edit")
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "cancel",
+                                  on: { click: _vm.settings }
+                                },
+                                [_vm._v("Cancel")]
+                              )
+                            ]
+                          )
+                        ])
                       ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-warning",
-                        on: { click: _vm.settings }
-                      },
-                      [_vm._v("Cancel")]
                     )
                   ]
                 ),
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "tab-pane", attrs: { id: "activity" } },
+                  { staticClass: "tab-pane mt-4", attrs: { id: "activity" } },
                   [
                     _c(
                       "div",
@@ -44624,58 +45230,88 @@ var render = function() {
                           { key: recipe.id, staticClass: "col-md-4" },
                           [
                             _c("div", { staticClass: "card my-card" }, [
-                              _c("img", {
-                                attrs: {
-                                  src: "/img/MD/" + recipe.image,
-                                  width: "480px",
-                                  height: "300"
-                                }
-                              }),
+                              _c(
+                                "a",
+                                { attrs: { href: "/recipes/" + recipe.slug } },
+                                [
+                                  _c("img", {
+                                    attrs: {
+                                      src: "/img/MD/" + recipe.image,
+                                      width: "100%",
+                                      height: "300"
+                                    }
+                                  })
+                                ]
+                              ),
                               _vm._v(" "),
-                              _c("div", { staticClass: "card-body" }, [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "card-title d-flex justify-content-center"
-                                  },
-                                  [
-                                    _c(
-                                      "a",
-                                      {
-                                        staticClass:
-                                          "text-capitalize btn card-link  ",
-                                        attrs: {
-                                          href: "<?php the_permalink(); ?>"
-                                        }
-                                      },
-                                      [_vm._v(_vm._s(recipe.title))]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "row" }, [
-                                  _vm._m(4, true),
-                                  _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "card-body archive align-items-center"
+                                },
+                                [
                                   _c(
                                     "div",
                                     {
                                       staticClass:
-                                        "col-lg-6  d-flex justify-content-center "
+                                        "card-title  d-flex justify-content-center"
                                     },
                                     [
-                                      _c("h2", { staticClass: "prosek " }, [
-                                        _c("i", {
-                                          staticClass: "fas fa-utensils"
-                                        }),
-                                        _vm._v(_vm._s(recipe.avg))
-                                      ])
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "/recipes/" + recipe.slug
+                                          }
+                                        },
+                                        [
+                                          _c("h2", [
+                                            _vm._v(_vm._s(recipe.title) + " ")
+                                          ])
+                                        ]
+                                      )
                                     ]
                                   )
-                                ])
-                              ]),
+                                ]
+                              ),
                               _vm._v(" "),
-                              _vm._m(5, true)
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "card-footer  team-icons d-flex  justify-content-around"
+                                },
+                                [
+                                  _c("span", [
+                                    _c("i", {
+                                      staticClass: "fas fa-utensils mr-2"
+                                    }),
+                                    _vm._v(_vm._s(recipe.servings))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _c("i", {
+                                      staticClass: "far fa-clock mr-2"
+                                    }),
+                                    _vm._v(_vm._s(recipe.time))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _c("i", {
+                                      staticClass: "far fa-chart-bar mr-2"
+                                    }),
+                                    _vm._v(_vm._s(recipe.dificulty))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _c("i", {
+                                      staticClass: "fas fa-star mr-2"
+                                    }),
+                                    _vm._v(_vm._s(_vm._f("round")(recipe.avg)))
+                                  ])
+                                ]
+                              )
                             ])
                           ]
                         )
@@ -44705,59 +45341,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "box-header with-border" }, [
       _c("h3", { staticClass: "box-title" }, [_vm._v("About Me")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-6 " }, [
-      _c("h4", { staticClass: "primary-color d-flex justify-content-center" }, [
-        _c("i", { staticClass: "fas fa-dollar-sign " }),
-        _vm._v(" 45")
-      ]),
-      _vm._v(" "),
-      _c("h4", { staticClass: "primary-color d-flex justify-content-center" }, [
-        _c("i", { staticClass: "far fa-clock" }),
-        _vm._v("60 min")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "card-footer  team-icons d-flex justify-content-between" },
-      [
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fab fa-facebook social-link" })
-        ]),
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fab fa-instagram social-link" })
-        ]),
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fab fa-twitter social-link" })
-        ]),
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fab fa-yelp social-link" })
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("div", { staticClass: "col-sm-offset-2 col-sm-10" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-          [_vm._v("Edit")]
-        )
-      ])
     ])
   },
   function() {
@@ -61125,6 +61708,7 @@ Vue.component(vform__WEBPACK_IMPORTED_MODULE_3__["HasError"].name, vform__WEBPAC
 Vue.component(vform__WEBPACK_IMPORTED_MODULE_3__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_3__["AlertError"]);
 Vue.use(_ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_2___default.a);
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
+var comments = Vue.component('comment-component', __webpack_require__(/*! ./components/Comments.vue */ "./resources/js/components/Comments.vue")["default"]);
 var addRecipe = Vue.component('create-recipe-component', __webpack_require__(/*! ./components/recipes/CreateRecipe.vue */ "./resources/js/components/recipes/CreateRecipe.vue")["default"]);
 var users = Vue.component('user-component', __webpack_require__(/*! ./components/user/Users.vue */ "./resources/js/components/user/Users.vue")["default"]);
 var dashboard = Vue.component('dashboard-component', __webpack_require__(/*! ./components/dashboard/Dashboard.vue */ "./resources/js/components/dashboard/Dashboard.vue")["default"]);
@@ -61140,6 +61724,9 @@ Vue.component('gallery-component', __webpack_require__(/*! ./components/Gallery.
 Vue.component('pagination', __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js"));
 Vue.component('search-component', __webpack_require__(/*! ./components/Search.vue */ "./resources/js/components/Search.vue")["default"]);
 var routes = [{
+  path: '/get-comments',
+  component: comments
+}, {
   path: '/dashboard',
   component: dashboard
 }, {
@@ -61254,6 +61841,75 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/Comments.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/Comments.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Comments_vue_vue_type_template_id_4aa6d95f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Comments.vue?vue&type=template&id=4aa6d95f& */ "./resources/js/components/Comments.vue?vue&type=template&id=4aa6d95f&");
+/* harmony import */ var _Comments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Comments.vue?vue&type=script&lang=js& */ "./resources/js/components/Comments.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Comments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Comments_vue_vue_type_template_id_4aa6d95f___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Comments_vue_vue_type_template_id_4aa6d95f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Comments.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Comments.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/Comments.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Comments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Comments.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Comments.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Comments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Comments.vue?vue&type=template&id=4aa6d95f&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/Comments.vue?vue&type=template&id=4aa6d95f& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Comments_vue_vue_type_template_id_4aa6d95f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Comments.vue?vue&type=template&id=4aa6d95f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Comments.vue?vue&type=template&id=4aa6d95f&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Comments_vue_vue_type_template_id_4aa6d95f___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Comments_vue_vue_type_template_id_4aa6d95f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -62299,8 +62955,11 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     search: '',
     recipes: {},
     order: '',
-    direction: ''
+    direction: '',
+    notifications: {},
+    comments: {}
   },
+  getters: {},
   mutations: {
     searchIt: function searchIt(state, data) {
       state.recipes = data.data;
@@ -62308,6 +62967,12 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       state.category = data.payLoad.category;
       state.order = data.payLoad.order;
       state.direction = data.payLoad.direction;
+    },
+    loadNotifications: function loadNotifications(state, data) {
+      state.notifications = data.data;
+    },
+    loadComments: function loadComments(state, data) {
+      state.comments = data.data;
     }
   },
   actions: {
@@ -62330,6 +62995,64 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
         commit('searchIt', {
           data: data
         });
+      });
+    },
+    loadNotifications: function loadNotifications(_ref5) {
+      var commit = _ref5.commit;
+      axios.get('/notifications').then(function (_ref6) {
+        var data = _ref6.data;
+        commit('loadNotifications', {
+          data: data.data
+        });
+      });
+    },
+    loadComments: function loadComments(_ref7) {
+      var commit = _ref7.commit;
+      axios.get('/comments').then(function (_ref8) {
+        var data = _ref8.data;
+        commit('loadComments', {
+          data: data
+        });
+      });
+    },
+    paginateComments: function paginateComments(_ref9, payLoad) {
+      var commit = _ref9.commit;
+      axios.get("/comments?page=".concat(payLoad)).then(function (_ref10) {
+        var data = _ref10.data;
+        commit('loadComments', {
+          data: data
+        });
+      });
+    },
+    approved: function approved(_ref11, payLoad) {
+      var commit = _ref11.commit,
+          dispatch = _ref11.dispatch;
+      axios.post('/approved', {
+        id: payLoad
+      }).then(function () {
+        dispatch('loadNotifications');
+        dispatch('loadComments');
+      });
+    },
+    commentDelete: function commentDelete(_ref12, payLoad) {
+      var commit = _ref12.commit,
+          dispatch = _ref12.dispatch;
+      axios["delete"]("/api/comment/".concat(payLoad)).then(function () {
+        dispatch('loadNotifications');
+        dispatch('loadComments');
+      });
+    },
+    reply: function reply(_ref13, payLoad) {
+      var commit = _ref13.commit,
+          dispatch = _ref13.dispatch;
+      axios.post('/raply', {
+        recipe_id: payLoad.recipeId,
+        comment: payLoad.comment,
+        perent_comment_id: payLoad.id
+      }).then(function (_ref14) {
+        var data = _ref14.data;
+        dispatch('loadNotifications');
+        dispatch('loadComments');
       });
     }
   }
