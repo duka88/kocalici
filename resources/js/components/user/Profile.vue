@@ -81,32 +81,34 @@
                   <div class="row justify-content-center">
                     <div v-for="likedRecipe in recipeBook.data" :key="likedRecipe.id" class="col-md-4" >             
                       <div class="card my-card">
-                          <div class="col-12 mb-3 single_recipe_info_text image">
-                    <p @click="togleLike" class="heart py-2"><i @click="togleLike(likedRecipe.recipe.likes[0].like)"
-                    :class="{'fas':likedRecipe.recipe.likes[0].like, 'far':!likedRecipe.recipe.likes[0].count }"
-                     class="fa-heart"></i><span class="text-dark">({{likedRecipe.recipe.likes[0].count}})</span></p>
-                    <img class="single_recipe_img w-100" :src="`/img/MD/${likedRecipe.recipe.image}`" width="480px" height="480px">
-                  </div>  
-                        <div class="card-body">
-                          <div class="card-title d-flex justify-content-center">
-                            <a href="<?php the_permalink(); ?>"class="text-capitalize btn card-link  " >{{likedRecipe.recipe.title}}</a>
+                       <div class="archive-like mb-3 single_recipe_info_text image">
+                        <p @click="togleLike" class="heart py-2"><i @click="togleLike(likedRecipe.recipe.likes[0].like)"
+                        :class="{'fas':likedRecipe.recipe.likes[0].like, 'far':!likedRecipe.recipe.likes[0].count }"
+                         class="fa-heart"></i><span class="text-dark">({{likedRecipe.recipe.likes[0].count}})</span></p>
+                           <div class="image">
+                                <a :href="`/recipes/${likedRecipe.recipe.slug}`">
+                                 <img :src="`/img/MD/${likedRecipe.recipe.image}`" width="100%" height="300">
+                                 </a>
+                            </div> 
+                          <div class="card-body archive align-items-center">
+                            <div class="card-title  d-flex justify-content-center">
+                              <a :href="`/recipes/${likedRecipe.recipe.slug}`"><h2>{{likedRecipe.recipe.title}} </h2></a>
                           </div>
-                          <div class="row">
-                              <div class="col-lg-6 ">
-                                   <h4 class="primary-color d-flex justify-content-center"><i class="fas fa-dollar-sign "></i> 45</h4>
-                             <h4 class="primary-color d-flex justify-content-center"><i class="far fa-clock"></i>60 min</h4>
-                              </div>
-                              <div class="col-lg-6  d-flex justify-content-center ">
-                                  <h2 class="prosek "><i class="fas fa-utensils"></i>{{likedRecipe.recipe.score }}</h2>
-                              </div>
-                          </div>
+                      
+                         
+
+                         
+                        </div>                    
                          
 
                          
                         </div>
-                        <div class="card-footer  team-icons d-flex justify-content-between">
+                         <div class="card-footer  team-icons d-flex  justify-content-around">
 
-                          <a href="#"><i class="fab fa-facebook social-link"></i></a><a href="#"><i class="fab fa-instagram social-link"></i></a><a href="#"><i class="fab fa-twitter social-link"></i></a><a href="#"><i class="fab fa-yelp social-link"></i></a>
+                            <span><i class="fas fa-utensils mr-2"></i>{{likedRecipe.recipe.servings}}</span>
+                            <span><i class="far fa-clock mr-2"></i>{{likedRecipe.recipe.time}}</span>
+                            <span><i class="far fa-chart-bar mr-2"></i></i>{{likedRecipe.recipe.dificulty}}</span>
+                            <span><i class="fas fa-star mr-2"></i></i>{{likedRecipe.recipe.score | numberFormat}}</span>
 
                         </div>
                       </div>
@@ -233,9 +235,11 @@
                   <div class="row justify-content-center">
                     <div v-for="recipe in recipes.data" :key="recipe.id" class="col-md-4" >             
                       <div class="card my-card">
-                        <a :href="`/recipes/${recipe.slug}`">
-                         <img :src="`/img/MD/${recipe.image}`" width="100%" height="300">
-                         </a>
+                       <div class="image">
+                          <a :href="`/recipes/${recipe.slug}`">
+                           <img :src="`/img/MD/${recipe.image}`" width="100%" height="300">
+                           </a>
+                          </div> 
                         <div class="card-body archive align-items-center">
                           <div class="card-title  d-flex justify-content-center">
                             <a :href="`/recipes/${recipe.slug}`"><h2>{{recipe.title}} </h2></a>
@@ -250,7 +254,7 @@
                           <span><i class="fas fa-utensils mr-2"></i>{{recipe.servings}}</span>
                           <span><i class="far fa-clock mr-2"></i>{{recipe.time}}</span>
                           <span><i class="far fa-chart-bar mr-2"></i></i>{{recipe.dificulty}}</span>
-                          <span><i class="fas fa-star mr-2"></i></i>{{recipe.avg | round}}</span>
+                          <span><i class="fas fa-star mr-2"></i></i>{{recipe.avg | numberFormat}}</span>
 
                         </div>
                       </div>
@@ -438,7 +442,17 @@
       filters: {
          round: function(value){
            return Math.round(value);
+         },
+         numberFormat: function(value){
+          
+          if(value != null){
+           value = (Math.round(value * 10) / 10).toFixed(1);
+
+           return value;
+         }else{
+          return value;
          }
+        }
       },
         created(){
           this.loadRecipeBook();

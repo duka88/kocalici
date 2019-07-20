@@ -8,6 +8,7 @@ export const store = new Vuex.Store({
      category: '',
   	 search: '',
   	 recipes: {},
+     
      order: '',
      direction: '',   
      notifications: {},
@@ -31,6 +32,9 @@ export const store = new Vuex.Store({
      },
      loadComments: (state, data)=>{
         state.comments = data.data;
+     },
+     searchInput: (state)=>{
+        state.recipes = {};
      }
     
   },

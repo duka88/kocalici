@@ -1,53 +1,50 @@
 <template>
     <div class="container"> 
         <div v-if="recipes.data" class="row">
-          <div class="col-3">
-            <button  class="btn btn-primary mr-2" v-for="category in uniqCategory"
-              @click="selectCategory(category.category.id)">{{category.category.name}}</button>        
+          <div class="col-3 d-flex flex-row">
+            <p  class="filter_search" v-for="category in uniqCategory"
+              @click="selectCategory(category.category.id)">{{category.category.name}}</p>        
             </div>
-            <div class="col-6">
-              <button class="btn btn-primary mr-2"  @click="sort('time')">Time</button>
-              <button class="btn btn-primary mr-2" @click="sort('dificulty')">Dificulty</button>
-              <button class="btn btn-primary mr-2" @click="sort('score')">Score</button>
-              <button class="btn btn-primary mr-2" @click="sort('likes')">Likes</button>
+            <div class="col-6 d-flex flex-row">
+              <p class="filter_search"  @click="sort('time')">Time</p>
+              <p class="filter_search" @click="sort('dificulty')">Dificulty</p>
+              <p class="filter_search" @click="sort('score')">Score</p>
+              <p class="filter_search" @click="sort('likes')">Likes</p>
             </div>
-            <div class="col-3">
-              <button class="btn btn-primary mr-2" @click="upDown('asc')"><i class="fas fa-arrow-up"></i></button>
-              <button class="btn btn-primary mr-2" @click="upDown('desc')""><i class="fas fa-arrow-down"></i></button>
+            <div class="col-3 d-flex flex-row">
+              <p class="filter_search" @click="upDown('asc')"><i class="fas fa-arrow-up"></i></p>
+              <p class="filter_search" @click="upDown('desc')"><i class="fas fa-arrow-down"></i></p>
               
             </div>
         </div>
 
         <div class="row justify-content-center">
             <div v-for="recipe in recipes.data" :key="recipe.id" class="col-md-4" >             
-              <div class="card my-card">
-                 <img :src="`/img/MD/${recipe.image}`" width="480px" height="300">
-                <div class="card-body">
-                  <div class="card-title d-flex justify-content-center">
-                    <a href="<?php the_permalink(); ?>"class="text-capitalize btn card-link  " >{{recipe.title}}</a>
-                  </div>
-                  <div class="row">
-                      <div class="col-lg-6 ">
-                           <h4 class="primary-color d-flex justify-content-center"><i class="fas fa-dollar-sign "></i> 45</h4>
-                     <h4 class="primary-color d-flex justify-content-center"><i class="far fa-clock"></i>{{recipe.time}} min</h4>
+                    <div class="card my-card">
+                       <div class="image">
+                          <a :href="`/recipes/${recipe.slug}`">
+                           <img :src="`/img/MD/${recipe.image}`" width="100%" height="300">
+                           </a>
+                          </div> 
+                        <div class="card-body archive align-items-center">
+                          <div class="card-title  d-flex justify-content-center">
+                            <a :href="`/recipes/${recipe.slug}`"><h2>{{recipe.title}} </h2></a>
+                          </div>
+                      
+                         
+
+                         
+                        </div>
+                        <div class="card-footer  team-icons d-flex  justify-content-around">
+
+                          <span><i class="fas fa-utensils mr-2"></i>{{recipe.servings}}</span>
+                          <span><i class="far fa-clock mr-2"></i>{{recipe.time}}</span>
+                          <span><i class="far fa-chart-bar mr-2"></i></i>{{recipe.dificulty}}</span>
+                          <span><i class="fas fa-star mr-2"></i></i>{{recipe.avg | numberFormat}}</span>
+
+                        </div>
                       </div>
-                      <div class="col-lg-6  d-flex justify-content-center ">
-                          <h2 class="prosek "><i class="fas fa-utensils"></i>{{recipe.avg |  numberFormat}}</h2>
-                      </div>
-                  </div>
-                 
-
-                 
-                </div>
-                <div class="card-footer  team-icons d-flex justify-content-between">
-
-                  <a href="#"><i class="fab fa-facebook social-link"></i></a><a href="#"><i class="fab fa-instagram social-link"></i></a><a href="#"><i class="fab fa-twitter social-link"></i></a><a href="#"><i class="fab fa-yelp social-link"></i></a>
-
-                </div>
-              </div>
-      
- 
-           </div>
+                     </div> 
 
         </div>
          <nav aria-label="Page navigation example">

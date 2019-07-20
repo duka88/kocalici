@@ -2300,6 +2300,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2630,8 +2634,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2657,10 +2659,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     overlayClose: function overlayClose() {
       this.overlay = false;
       this.$emit('overlay', false);
+      this.search = '';
       document.documentElement.classList.remove('overlay-active');
     },
     checked: function checked(id) {
       this.$store.dispatch('approved', id);
+    },
+    logout: function logout() {
+      axios.post('logout').then(function () {
+        window.location.replace("/");
+      });
     }
   }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['searchIt', 'loadComments', 'loadNotifications', 'approved'])),
   computed: {
@@ -2672,9 +2680,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.$store.dispatch('loadNotifications');
   },
   filters: {
-    slice: function slice(value) {
-      var slice = value.slice(0, 50);
-      return "".concat(slice, "...");
+    round: function round(value) {
+      return Math.round(value);
     }
   }
 });
@@ -2926,9 +2933,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
 //
 //
 //
@@ -3816,6 +3820,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3972,6 +3980,14 @@ __webpack_require__.r(__webpack_exports__);
   filters: {
     round: function round(value) {
       return Math.round(value);
+    },
+    numberFormat: function numberFormat(value) {
+      if (value != null) {
+        value = (Math.round(value * 10) / 10).toFixed(1);
+        return value;
+      } else {
+        return value;
+      }
     }
   },
   created: function created() {
@@ -42684,49 +42700,111 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("ul", [
-      _c("li", [
-        _c(
-          "button",
-          {
-            on: {
-              click: function($event) {
-                return _vm.selectCategory(0)
-              }
-            }
-          },
-          [_vm._v("All")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("li", [
-        _c(
-          "button",
-          {
-            on: {
-              click: function($event) {
-                return _vm.selectCategory(1)
-              }
-            }
-          },
-          [_vm._v("Cake")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("li", [
-        _c(
-          "button",
-          {
-            on: {
-              click: function($event) {
-                return _vm.selectCategory(2)
-              }
-            }
-          },
-          [_vm._v("Cookie")]
-        )
-      ])
-    ]),
+    _vm.recipes.data
+      ? _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col-3 d-flex flex-row" },
+            _vm._l(_vm.uniqCategory, function(category) {
+              return _c(
+                "p",
+                {
+                  staticClass: "filter_search",
+                  on: {
+                    click: function($event) {
+                      return _vm.selectCategory(category.category.id)
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(category.category.name))]
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-6 d-flex flex-row" }, [
+            _c(
+              "p",
+              {
+                staticClass: "filter_search",
+                on: {
+                  click: function($event) {
+                    return _vm.sort("time")
+                  }
+                }
+              },
+              [_vm._v("Time")]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                staticClass: "filter_search",
+                on: {
+                  click: function($event) {
+                    return _vm.sort("dificulty")
+                  }
+                }
+              },
+              [_vm._v("Dificulty")]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                staticClass: "filter_search",
+                on: {
+                  click: function($event) {
+                    return _vm.sort("score")
+                  }
+                }
+              },
+              [_vm._v("Score")]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                staticClass: "filter_search",
+                on: {
+                  click: function($event) {
+                    return _vm.sort("likes")
+                  }
+                }
+              },
+              [_vm._v("Likes")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-3 d-flex flex-row" }, [
+            _c(
+              "p",
+              {
+                staticClass: "filter_search",
+                on: {
+                  click: function($event) {
+                    return _vm.upDown("asc")
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-arrow-up" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                staticClass: "filter_search",
+                on: {
+                  click: function($event) {
+                    return _vm.upDown("desc")
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-arrow-down" })]
+            )
+          ])
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c(
       "div",
@@ -42734,160 +42812,78 @@ var render = function() {
       _vm._l(_vm.recipes.data, function(recipe) {
         return _c("div", { key: recipe.id, staticClass: "col-md-4" }, [
           _c("div", { staticClass: "card my-card" }, [
-            _c("img", {
-              attrs: {
-                src: "/img/MD/" + recipe.image,
-                width: "480px",
-                height: "300"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c(
-                "div",
-                { staticClass: "card-title d-flex justify-content-center" },
-                [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "text-capitalize btn card-link  ",
-                      attrs: { href: "<?php the_permalink(); ?>" }
-                    },
-                    [_vm._v(_vm._s(recipe.title))]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _vm._m(0, true),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "col-lg-6  d-flex justify-content-center " },
-                  [
-                    _c("h2", { staticClass: "prosek " }, [
-                      _c("i", { staticClass: "fas fa-utensils" }),
-                      _vm._v(_vm._s(_vm._f("numberFormat")(recipe.avg)))
-                    ])
-                  ]
-                )
+            _c("div", { staticClass: "image" }, [
+              _c("a", { attrs: { href: "/recipes/" + recipe.slug } }, [
+                _c("img", {
+                  attrs: {
+                    src: "/img/MD/" + recipe.image,
+                    width: "100%",
+                    height: "300"
+                  }
+                })
               ])
             ]),
             _vm._v(" "),
-            _vm._m(1, true)
+            _c("div", { staticClass: "card-body archive align-items-center" }, [
+              _c(
+                "div",
+                { staticClass: "card-title  d-flex justify-content-center" },
+                [
+                  _c("a", { attrs: { href: "/recipes/" + recipe.slug } }, [
+                    _c("h2", [_vm._v(_vm._s(recipe.title) + " ")])
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "card-footer  team-icons d-flex  justify-content-around"
+              },
+              [
+                _c("span", [
+                  _c("i", { staticClass: "fas fa-utensils mr-2" }),
+                  _vm._v(_vm._s(recipe.servings))
+                ]),
+                _vm._v(" "),
+                _c("span", [
+                  _c("i", { staticClass: "far fa-clock mr-2" }),
+                  _vm._v(_vm._s(recipe.time))
+                ]),
+                _vm._v(" "),
+                _c("span", [
+                  _c("i", { staticClass: "far fa-chart-bar mr-2" }),
+                  _vm._v(_vm._s(recipe.dificulty))
+                ]),
+                _vm._v(" "),
+                _c("span", [
+                  _c("i", { staticClass: "fas fa-star mr-2" }),
+                  _vm._v(_vm._s(_vm._f("numberFormat")(recipe.avg)))
+                ])
+              ]
+            )
           ])
         ])
       }),
       0
     ),
     _vm._v(" "),
-    _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
-      _c("ul", { staticClass: "pagination" }, [
-        _c(
-          "li",
-          {
-            staticClass: "page-item",
-            class: [{ disabled: !_vm.pagination.prev_page_url }]
-          },
-          [
-            _c(
-              "a",
-              {
-                staticClass: "page-link",
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    return _vm.loadRecipes(_vm.pagination.prev_page_url)
-                  }
-                }
-              },
-              [_vm._v("Previous")]
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c("li", { staticClass: "page-item disabled" }, [
-          _c(
-            "a",
-            { staticClass: "page-link text-dark", attrs: { href: "#" } },
-            [
-              _vm._v(
-                "Page " +
-                  _vm._s(_vm.pagination.current_page) +
-                  " of " +
-                  _vm._s(_vm.pagination.last_page)
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "li",
-          {
-            staticClass: "page-item",
-            class: [{ disabled: !_vm.pagination.next_page_url }]
-          },
-          [
-            _c(
-              "a",
-              {
-                staticClass: "page-link",
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    return _vm.loadRecipes(_vm.pagination.next_page_url)
-                  }
-                }
-              },
-              [_vm._v("Next")]
-            )
-          ]
-        )
-      ])
-    ])
+    _c(
+      "nav",
+      { attrs: { "aria-label": "Page navigation example" } },
+      [
+        _c("pagination", {
+          attrs: { data: _vm.recipes },
+          on: { "pagination-change-page": _vm.getResult }
+        })
+      ],
+      1
+    )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-6 " }, [
-      _c("h4", { staticClass: "primary-color d-flex justify-content-center" }, [
-        _c("i", { staticClass: "fas fa-dollar-sign " }),
-        _vm._v(" 45")
-      ]),
-      _vm._v(" "),
-      _c("h4", { staticClass: "primary-color d-flex justify-content-center" }, [
-        _c("i", { staticClass: "far fa-clock" }),
-        _vm._v("60 min")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "card-footer  team-icons d-flex justify-content-between" },
-      [
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fab fa-facebook social-link" })
-        ]),
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fab fa-instagram social-link" })
-        ]),
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fab fa-twitter social-link" })
-        ]),
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fab fa-yelp social-link" })
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -43211,9 +43207,9 @@ var render = function() {
                   { staticClass: "col " },
                   [
                     _c(
-                      "button",
+                      "p",
                       {
-                        staticClass: "btn btn-small btn-danger",
+                        staticClass: "close-search text-danger",
                         on: { click: _vm.overlayClose }
                       },
                       [_vm._v("X")]
@@ -43244,7 +43240,7 @@ var render = function() {
               ? _c(
                   "span",
                   { staticClass: "badge badge-danger navbar-badge " },
-                  [_vm._v(_vm._s(_vm.comments[0].admin_count) + "er")]
+                  [_vm._v(_vm._s(_vm.comments[0].admin_count))]
                 )
               : _vm._e()
           ]
@@ -43324,9 +43320,42 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._m(1),
-      _vm._v(" "),
-      _vm._m(2)
+      _c("li", { staticClass: "nav-item dropdown" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "dropdown-menu dropdown-menu-lg dropdown-menu-right" },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/profile" } },
+              [
+                _c("i", { staticClass: "fas fa-user  mx-2" }),
+                _vm._v("Profile\n           \n         ")
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "dropdown-divider" }),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "dropdown-item ",
+                attrs: { href: "#" },
+                on: { click: _vm.logout }
+              },
+              [
+                _c("i", {
+                  staticClass: "nav-icon fa fa-power-off text-danger"
+                }),
+                _vm._v("                \n              LOGOUT")
+              ]
+            )
+          ],
+          1
+        )
+      ])
     ])
   ])
 }
@@ -43345,92 +43374,27 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item dropdown" }, [
-      _c(
-        "a",
-        {
-          staticClass: "nav-link notification",
-          attrs: { "data-toggle": "dropdown", href: "#" }
-        },
-        [
-          _c("i", { staticClass: "far fa-bell" }),
+    return _c(
+      "a",
+      {
+        staticClass: "nav-link notification",
+        attrs: { "data-toggle": "dropdown", href: "#" }
+      },
+      [
+        _c("div", { staticClass: "user-panel d-flex" }, [
+          _c("div", { staticClass: "image" }, [
+            _c("img", {
+              staticClass: "img-circle elevation-2",
+              attrs: { src: "/img/Watchmen-logo.png", alt: "User Image" }
+            })
+          ]),
           _vm._v(" "),
-          _c("span", { staticClass: "badge badge-warning navbar-badge" }, [
-            _vm._v("15")
+          _c("div", { staticClass: "info" }, [
+            _c("i", { staticClass: "fas fa-chevron-down" })
           ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "dropdown-menu dropdown-menu-lg dropdown-menu-right" },
-        [
-          _c("span", { staticClass: "dropdown-item dropdown-header" }, [
-            _vm._v("15 Notifications")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "dropdown-divider" }),
-          _vm._v(" "),
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "fas fa-envelope mr-2" }),
-            _vm._v(" 4 new messages\n           "),
-            _c("span", { staticClass: "float-right text-muted text-sm" }, [
-              _vm._v("3 mins")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "dropdown-divider" }),
-          _vm._v(" "),
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "fas fa-users mr-2" }),
-            _vm._v(" 8 friend requests\n           "),
-            _c("span", { staticClass: "float-right text-muted text-sm" }, [
-              _vm._v("12 hours")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "dropdown-divider" }),
-          _vm._v(" "),
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "fas fa-file mr-2" }),
-            _vm._v(" 3 new reports\n           "),
-            _c("span", { staticClass: "float-right text-muted text-sm" }, [
-              _vm._v("2 days")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "dropdown-divider" }),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "dropdown-item dropdown-footer",
-              attrs: { href: "#" }
-            },
-            [_vm._v("See All Notifications")]
-          )
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c(
-        "a",
-        {
-          staticClass: "nav-link",
-          attrs: {
-            "data-widget": "control-sidebar",
-            "data-slide": "true",
-            href: "#"
-          }
-        },
-        [_c("i", { staticClass: "fas fa-th-large" })]
-      )
-    ])
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -43615,12 +43579,12 @@ var render = function() {
       ? _c("div", { staticClass: "row" }, [
           _c(
             "div",
-            { staticClass: "col-3" },
+            { staticClass: "col-3 d-flex flex-row" },
             _vm._l(_vm.uniqCategory, function(category) {
               return _c(
-                "button",
+                "p",
                 {
-                  staticClass: "btn btn-primary mr-2",
+                  staticClass: "filter_search",
                   on: {
                     click: function($event) {
                       return _vm.selectCategory(category.category.id)
@@ -43633,11 +43597,11 @@ var render = function() {
             0
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "col-6" }, [
+          _c("div", { staticClass: "col-6 d-flex flex-row" }, [
             _c(
-              "button",
+              "p",
               {
-                staticClass: "btn btn-primary mr-2",
+                staticClass: "filter_search",
                 on: {
                   click: function($event) {
                     return _vm.sort("time")
@@ -43648,9 +43612,9 @@ var render = function() {
             ),
             _vm._v(" "),
             _c(
-              "button",
+              "p",
               {
-                staticClass: "btn btn-primary mr-2",
+                staticClass: "filter_search",
                 on: {
                   click: function($event) {
                     return _vm.sort("dificulty")
@@ -43661,9 +43625,9 @@ var render = function() {
             ),
             _vm._v(" "),
             _c(
-              "button",
+              "p",
               {
-                staticClass: "btn btn-primary mr-2",
+                staticClass: "filter_search",
                 on: {
                   click: function($event) {
                     return _vm.sort("score")
@@ -43674,9 +43638,9 @@ var render = function() {
             ),
             _vm._v(" "),
             _c(
-              "button",
+              "p",
               {
-                staticClass: "btn btn-primary mr-2",
+                staticClass: "filter_search",
                 on: {
                   click: function($event) {
                     return _vm.sort("likes")
@@ -43687,11 +43651,11 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-3" }, [
+          _c("div", { staticClass: "col-3 d-flex flex-row" }, [
             _c(
-              "button",
+              "p",
               {
-                staticClass: "btn btn-primary mr-2",
+                staticClass: "filter_search",
                 on: {
                   click: function($event) {
                     return _vm.upDown("asc")
@@ -43702,9 +43666,9 @@ var render = function() {
             ),
             _vm._v(" "),
             _c(
-              "button",
+              "p",
               {
-                staticClass: "btn btn-primary mr-2",
+                staticClass: "filter_search",
                 on: {
                   click: function($event) {
                     return _vm.upDown("desc")
@@ -43723,60 +43687,58 @@ var render = function() {
       _vm._l(_vm.recipes.data, function(recipe) {
         return _c("div", { key: recipe.id, staticClass: "col-md-4" }, [
           _c("div", { staticClass: "card my-card" }, [
-            _c("img", {
-              attrs: {
-                src: "/img/MD/" + recipe.image,
-                width: "480px",
-                height: "300"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c(
-                "div",
-                { staticClass: "card-title d-flex justify-content-center" },
-                [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "text-capitalize btn card-link  ",
-                      attrs: { href: "<?php the_permalink(); ?>" }
-                    },
-                    [_vm._v(_vm._s(recipe.title))]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-lg-6 " }, [
-                  _vm._m(0, true),
-                  _vm._v(" "),
-                  _c(
-                    "h4",
-                    {
-                      staticClass: "primary-color d-flex justify-content-center"
-                    },
-                    [
-                      _c("i", { staticClass: "far fa-clock" }),
-                      _vm._v(_vm._s(recipe.time) + " min")
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "col-lg-6  d-flex justify-content-center " },
-                  [
-                    _c("h2", { staticClass: "prosek " }, [
-                      _c("i", { staticClass: "fas fa-utensils" }),
-                      _vm._v(_vm._s(_vm._f("numberFormat")(recipe.avg)))
-                    ])
-                  ]
-                )
+            _c("div", { staticClass: "image" }, [
+              _c("a", { attrs: { href: "/recipes/" + recipe.slug } }, [
+                _c("img", {
+                  attrs: {
+                    src: "/img/MD/" + recipe.image,
+                    width: "100%",
+                    height: "300"
+                  }
+                })
               ])
             ]),
             _vm._v(" "),
-            _vm._m(1, true)
+            _c("div", { staticClass: "card-body archive align-items-center" }, [
+              _c(
+                "div",
+                { staticClass: "card-title  d-flex justify-content-center" },
+                [
+                  _c("a", { attrs: { href: "/recipes/" + recipe.slug } }, [
+                    _c("h2", [_vm._v(_vm._s(recipe.title) + " ")])
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "card-footer  team-icons d-flex  justify-content-around"
+              },
+              [
+                _c("span", [
+                  _c("i", { staticClass: "fas fa-utensils mr-2" }),
+                  _vm._v(_vm._s(recipe.servings))
+                ]),
+                _vm._v(" "),
+                _c("span", [
+                  _c("i", { staticClass: "far fa-clock mr-2" }),
+                  _vm._v(_vm._s(recipe.time))
+                ]),
+                _vm._v(" "),
+                _c("span", [
+                  _c("i", { staticClass: "far fa-chart-bar mr-2" }),
+                  _vm._v(_vm._s(recipe.dificulty))
+                ]),
+                _vm._v(" "),
+                _c("span", [
+                  _c("i", { staticClass: "fas fa-star mr-2" }),
+                  _vm._v(_vm._s(_vm._f("numberFormat")(recipe.avg)))
+                ])
+              ]
+            )
           ])
         ])
       }),
@@ -43796,41 +43758,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "h4",
-      { staticClass: "primary-color d-flex justify-content-center" },
-      [_c("i", { staticClass: "fas fa-dollar-sign " }), _vm._v(" 45")]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "card-footer  team-icons d-flex justify-content-between" },
-      [
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fab fa-facebook social-link" })
-        ]),
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fab fa-instagram social-link" })
-        ]),
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fab fa-twitter social-link" })
-        ]),
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fab fa-yelp social-link" })
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -44604,7 +44532,7 @@ var render = function() {
                                 "div",
                                 {
                                   staticClass:
-                                    "col-12 mb-3 single_recipe_info_text image"
+                                    "archive-like mb-3 single_recipe_info_text image"
                                 },
                                 [
                                   _c(
@@ -44641,62 +44569,112 @@ var render = function() {
                                     ]
                                   ),
                                   _vm._v(" "),
-                                  _c("img", {
-                                    staticClass: "single_recipe_img w-100",
-                                    attrs: {
-                                      src:
-                                        "/img/MD/" + likedRecipe.recipe.image,
-                                      width: "480px",
-                                      height: "480px"
-                                    }
-                                  })
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "card-body" }, [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "card-title d-flex justify-content-center"
-                                  },
-                                  [
+                                  _c("div", { staticClass: "image" }, [
                                     _c(
                                       "a",
                                       {
-                                        staticClass:
-                                          "text-capitalize btn card-link  ",
                                         attrs: {
-                                          href: "<?php the_permalink(); ?>"
+                                          href:
+                                            "/recipes/" +
+                                            likedRecipe.recipe.slug
                                         }
                                       },
-                                      [_vm._v(_vm._s(likedRecipe.recipe.title))]
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src:
+                                              "/img/MD/" +
+                                              likedRecipe.recipe.image,
+                                            width: "100%",
+                                            height: "300"
+                                          }
+                                        })
+                                      ]
                                     )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "row" }, [
-                                  _vm._m(1, true),
+                                  ]),
                                   _vm._v(" "),
                                   _c(
                                     "div",
                                     {
                                       staticClass:
-                                        "col-lg-6  d-flex justify-content-center "
+                                        "card-body archive align-items-center"
                                     },
                                     [
-                                      _c("h2", { staticClass: "prosek " }, [
-                                        _c("i", {
-                                          staticClass: "fas fa-utensils"
-                                        }),
-                                        _vm._v(_vm._s(likedRecipe.recipe.score))
-                                      ])
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "card-title  d-flex justify-content-center"
+                                        },
+                                        [
+                                          _c(
+                                            "a",
+                                            {
+                                              attrs: {
+                                                href:
+                                                  "/recipes/" +
+                                                  likedRecipe.recipe.slug
+                                              }
+                                            },
+                                            [
+                                              _c("h2", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    likedRecipe.recipe.title
+                                                  ) + " "
+                                                )
+                                              ])
+                                            ]
+                                          )
+                                        ]
+                                      )
                                     ]
                                   )
-                                ])
-                              ]),
+                                ]
+                              ),
                               _vm._v(" "),
-                              _vm._m(2, true)
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "card-footer  team-icons d-flex  justify-content-around"
+                                },
+                                [
+                                  _c("span", [
+                                    _c("i", {
+                                      staticClass: "fas fa-utensils mr-2"
+                                    }),
+                                    _vm._v(_vm._s(likedRecipe.recipe.servings))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _c("i", {
+                                      staticClass: "far fa-clock mr-2"
+                                    }),
+                                    _vm._v(_vm._s(likedRecipe.recipe.time))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _c("i", {
+                                      staticClass: "far fa-chart-bar mr-2"
+                                    }),
+                                    _vm._v(_vm._s(likedRecipe.recipe.dificulty))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _c("i", {
+                                      staticClass: "fas fa-star mr-2"
+                                    }),
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("numberFormat")(
+                                          likedRecipe.recipe.score
+                                        )
+                                      )
+                                    )
+                                  ])
+                                ]
+                              )
                             ])
                           ]
                         )
@@ -45230,19 +45208,23 @@ var render = function() {
                           { key: recipe.id, staticClass: "col-md-4" },
                           [
                             _c("div", { staticClass: "card my-card" }, [
-                              _c(
-                                "a",
-                                { attrs: { href: "/recipes/" + recipe.slug } },
-                                [
-                                  _c("img", {
-                                    attrs: {
-                                      src: "/img/MD/" + recipe.image,
-                                      width: "100%",
-                                      height: "300"
-                                    }
-                                  })
-                                ]
-                              ),
+                              _c("div", { staticClass: "image" }, [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "/recipes/" + recipe.slug }
+                                  },
+                                  [
+                                    _c("img", {
+                                      attrs: {
+                                        src: "/img/MD/" + recipe.image,
+                                        width: "100%",
+                                        height: "300"
+                                      }
+                                    })
+                                  ]
+                                )
+                              ]),
                               _vm._v(" "),
                               _c(
                                 "div",
@@ -45308,7 +45290,9 @@ var render = function() {
                                     _c("i", {
                                       staticClass: "fas fa-star mr-2"
                                     }),
-                                    _vm._v(_vm._s(_vm._f("round")(recipe.avg)))
+                                    _vm._v(
+                                      _vm._s(_vm._f("numberFormat")(recipe.avg))
+                                    )
                                   ])
                                 ]
                               )
@@ -45342,45 +45326,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "box-header with-border" }, [
       _c("h3", { staticClass: "box-title" }, [_vm._v("About Me")])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-6 " }, [
-      _c("h4", { staticClass: "primary-color d-flex justify-content-center" }, [
-        _c("i", { staticClass: "fas fa-dollar-sign " }),
-        _vm._v(" 45")
-      ]),
-      _vm._v(" "),
-      _c("h4", { staticClass: "primary-color d-flex justify-content-center" }, [
-        _c("i", { staticClass: "far fa-clock" }),
-        _vm._v("60 min")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "card-footer  team-icons d-flex justify-content-between" },
-      [
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fab fa-facebook social-link" })
-        ]),
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fab fa-instagram social-link" })
-        ]),
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fab fa-twitter social-link" })
-        ]),
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fab fa-yelp social-link" })
-        ])
-      ]
-    )
   }
 ]
 render._withStripped = true
@@ -62973,6 +62918,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     loadComments: function loadComments(state, data) {
       state.comments = data.data;
+    },
+    searchInput: function searchInput(state) {
+      state.recipes = {};
     }
   },
   actions: {
