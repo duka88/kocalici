@@ -2304,45 +2304,70 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       category: 0,
+      categories: {},
       recipes: {},
       recipe_id: '',
-      pagination: {}
+      pagination: {},
+      order: 'created_at',
+      direction: 'desc'
     };
   },
   methods: {
-    loadRecipes: function loadRecipes(page_url) {
+    loadRecipes: function loadRecipes() {
       var _this = this;
 
-      var vm = this;
-      page_url = page_url || "api/recipes/".concat(this.category);
-      axios.get(page_url).then(function (_ref) {
+      axios.get("api/recipes/".concat(this.category, "/").concat(this.order, "/").concat(this.direction)).then(function (_ref) {
         var data = _ref.data;
         _this.recipes = data;
-        vm.makePagination(data.meta, data.links);
       })["catch"](function (error) {
         console.log(error);
       });
     },
-    makePagination: function makePagination(meta, links) {
-      var pagination = {
-        current_page: meta.current_page,
-        last_page: meta.last_page,
-        next_page_url: links.next,
-        prev_page_url: links.prev
-      };
-      this.pagination = pagination;
+    getResult: function getResult() {
+      var _this2 = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get("api/recipes/".concat(this.category, "/").concat(this.order, "/").concat(this.direction, "?page=").concat(page)).then(function (_ref2) {
+        var data = _ref2.data;
+        _this2.recipes = data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    loadCategory: function loadCategory() {
+      var _this3 = this;
+
+      axios.get('/api/category').then(function (_ref3) {
+        var data = _ref3.data;
+        _this3.categories = data.data;
+      });
     },
     selectCategory: function selectCategory(id) {
       this.category = id;
+      this.loadRecipes();
+    },
+    sort: function sort(_sort) {
+      this.order = _sort;
+      this.loadRecipes();
+    },
+    upDown: function upDown(sort) {
+      this.direction = sort;
       this.loadRecipes();
     }
   },
   created: function created() {
     this.loadRecipes();
+    this.loadCategory();
   },
   filters: {
     numberFormat: function numberFormat(value) {
@@ -42707,30 +42732,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _vm.recipes.data
-      ? _c("div", { staticClass: "row" }, [
-          _c(
-            "div",
-            { staticClass: "col-3 d-flex flex-row" },
-            _vm._l(_vm.uniqCategory, function(category) {
-              return _c(
-                "p",
-                {
-                  staticClass: "filter_search",
-                  on: {
-                    click: function($event) {
-                      return _vm.selectCategory(category.category.id)
-                    }
-                  }
-                },
-                [_vm._v(_vm._s(category.category.name))]
-              )
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-6 d-flex flex-row" }, [
+  return _c("div", { staticClass: "col-10 my-5" }, [
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-3 my-5" },
+        _vm._l(_vm.categories, function(category) {
+          return _c(
+            "p",
+            {
+              staticClass: "filter_search",
+              on: {
+                click: function($event) {
+                  return _vm.selectCategory(category.id)
+                }
+              }
+            },
+            [_vm._v(_vm._s(category.name))]
+          )
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-9" }, [
+        _c("div", { staticClass: "row justify-content-between" }, [
+          _c("div", { staticClass: "col-9 d-flex flex-row" }, [
             _c(
               "p",
               {
@@ -42784,111 +42810,124 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-3 d-flex flex-row" }, [
-            _c(
-              "p",
-              {
-                staticClass: "filter_search",
-                on: {
-                  click: function($event) {
-                    return _vm.upDown("asc")
-                  }
-                }
-              },
-              [_c("i", { staticClass: "fas fa-arrow-up" })]
-            ),
-            _vm._v(" "),
-            _c(
-              "p",
-              {
-                staticClass: "filter_search",
-                on: {
-                  click: function($event) {
-                    return _vm.upDown("desc")
-                  }
-                }
-              },
-              [_c("i", { staticClass: "fas fa-arrow-down" })]
-            )
-          ])
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "row justify-content-center" },
-      _vm._l(_vm.recipes.data, function(recipe) {
-        return _c("div", { key: recipe.id, staticClass: "col-md-4" }, [
-          _c("div", { staticClass: "card my-card" }, [
-            _c("div", { staticClass: "image" }, [
-              _c("a", { attrs: { href: "/recipes/" + recipe.slug } }, [
-                _c("img", {
-                  attrs: {
-                    src: "/img/MD/" + recipe.image,
-                    width: "100%",
-                    height: "300"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body archive align-items-center" }, [
+          _c(
+            "div",
+            { staticClass: "col-3  d-flex flex-row justify-content-end" },
+            [
               _c(
-                "div",
-                { staticClass: "card-title  d-flex justify-content-center" },
-                [
-                  _c("a", { attrs: { href: "/recipes/" + recipe.slug } }, [
-                    _c("h2", [_vm._v(_vm._s(recipe.title) + " ")])
-                  ])
-                ]
+                "p",
+                {
+                  staticClass: "filter_search",
+                  on: {
+                    click: function($event) {
+                      return _vm.upDown("asc")
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-arrow-up" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  staticClass: "filter_search",
+                  on: {
+                    click: function($event) {
+                      return _vm.upDown("desc")
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-arrow-down" })]
               )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "card-footer  team-icons d-flex  justify-content-around"
-              },
-              [
-                _c("span", [
-                  _c("i", { staticClass: "fas fa-utensils mr-2" }),
-                  _vm._v(_vm._s(recipe.servings))
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "row justify-content-center" },
+          _vm._l(_vm.recipes.data, function(recipe) {
+            return _c("div", { key: recipe.id, staticClass: "col-md-4" }, [
+              _c("div", { staticClass: "card my-card" }, [
+                _c("div", { staticClass: "image" }, [
+                  _c("a", { attrs: { href: "/recipes/" + recipe.slug } }, [
+                    _c("img", {
+                      attrs: {
+                        src: "/img/MD/" + recipe.image,
+                        width: "100%",
+                        height: "300"
+                      }
+                    })
+                  ])
                 ]),
                 _vm._v(" "),
-                _c("span", [
-                  _c("i", { staticClass: "far fa-clock mr-2" }),
-                  _vm._v(_vm._s(recipe.time))
-                ]),
+                _c(
+                  "div",
+                  { staticClass: "card-body archive align-items-center" },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "card-title  d-flex justify-content-center"
+                      },
+                      [
+                        _c(
+                          "a",
+                          { attrs: { href: "/recipes/" + recipe.slug } },
+                          [_c("h2", [_vm._v(_vm._s(recipe.title) + " ")])]
+                        )
+                      ]
+                    )
+                  ]
+                ),
                 _vm._v(" "),
-                _c("span", [
-                  _c("i", { staticClass: "far fa-chart-bar mr-2" }),
-                  _vm._v(_vm._s(recipe.dificulty))
-                ]),
-                _vm._v(" "),
-                _c("span", [
-                  _c("i", { staticClass: "fas fa-star mr-2" }),
-                  _vm._v(_vm._s(_vm._f("numberFormat")(recipe.avg)))
-                ])
-              ]
-            )
-          ])
-        ])
-      }),
-      0
-    ),
-    _vm._v(" "),
-    _c(
-      "nav",
-      { attrs: { "aria-label": "Page navigation example" } },
-      [
-        _c("pagination", {
-          attrs: { data: _vm.recipes },
-          on: { "pagination-change-page": _vm.getResult }
-        })
-      ],
-      1
-    )
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "card-footer  team-icons d-flex  justify-content-around"
+                  },
+                  [
+                    _c("span", [
+                      _c("i", { staticClass: "fas fa-utensils mr-2" }),
+                      _vm._v(_vm._s(recipe.servings))
+                    ]),
+                    _vm._v(" "),
+                    _c("span", [
+                      _c("i", { staticClass: "far fa-clock mr-2" }),
+                      _vm._v(_vm._s(recipe.time))
+                    ]),
+                    _vm._v(" "),
+                    _c("span", [
+                      _c("i", { staticClass: "far fa-chart-bar mr-2" }),
+                      _vm._v(_vm._s(recipe.dificulty))
+                    ]),
+                    _vm._v(" "),
+                    _c("span", [
+                      _c("i", { staticClass: "fas fa-star mr-2" }),
+                      _vm._v(_vm._s(_vm._f("numberFormat")(recipe.avg)))
+                    ])
+                  ]
+                )
+              ])
+            ])
+          }),
+          0
+        ),
+        _vm._v(" "),
+        _c(
+          "nav",
+          { attrs: { "aria-label": "Page navigation example" } },
+          [
+            _c("pagination", {
+              attrs: { data: _vm.recipes },
+              on: { "pagination-change-page": _vm.getResult }
+            })
+          ],
+          1
+        )
+      ])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -62211,14 +62250,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************!*\
   !*** ./resources/js/components/Recipes.vue ***!
   \*********************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Recipes_vue_vue_type_template_id_4fb0ab8a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Recipes.vue?vue&type=template&id=4fb0ab8a& */ "./resources/js/components/Recipes.vue?vue&type=template&id=4fb0ab8a&");
 /* harmony import */ var _Recipes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Recipes.vue?vue&type=script&lang=js& */ "./resources/js/components/Recipes.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Recipes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Recipes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -62248,7 +62288,7 @@ component.options.__file = "resources/js/components/Recipes.vue"
 /*!**********************************************************************!*\
   !*** ./resources/js/components/Recipes.vue?vue&type=script&lang=js& ***!
   \**********************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

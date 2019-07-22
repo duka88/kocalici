@@ -6,6 +6,7 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 class Recipe extends Model
 
 {
@@ -112,6 +113,44 @@ class Recipe extends Model
                 $recipes = Recipe::where('title', 'LIKE', "%$search%")
                            
                            ->orderBy($order, $direction)->paginate(9);
+              }
+
+           
+       }
+       
+   
+
+              return $recipes;
+    }
+
+    public static function searchCategory($category, $order, $direction){
+            if($category != 0){
+          if($order == 'score'){
+           $recipes = Recipe::where('category_id', $category)
+                       ->withCount(['scores as average' => function ($q){
+                        $q->select(DB::raw('coalesce(avg(score), 0)'));
+                      }])->orderBy('average' ,$direction)->paginate(9); 
+         }elseif($order == 'likes'){
+             $recipes = Recipe::where('category_id', $category)
+                       ->withCount('likes')
+                       ->orderBy('likes_count', $direction)->paginate(9);  
+          }else{
+            $recipes = Recipe::where('category_id', $category)
+                       ->orderBy($order, $direction)->paginate(9);
+          }
+
+
+       }else{
+          
+           if($order == 'score'){
+               $recipes = Recipe::withCount(['scores as average' => function ($q){
+                            $q->select(DB::raw('coalesce(avg(score), 0)'));
+                          }])->orderBy('average' ,$direction)->paginate(9); 
+             }elseif($order == 'likes'){
+                 $recipes = Recipe::withCount('likes')
+                           ->orderBy('likes_count', $direction)->paginate(9);  
+              }else{
+                $recipes = Recipe::orderBy($order, $direction)->paginate(9);
               }
 
            

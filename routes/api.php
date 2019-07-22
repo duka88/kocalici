@@ -29,7 +29,7 @@ Route::put('profile','ProfileController@update');
 
 
 
-Route::get('recipes/{category_id}', 'RecipesController@category');
+Route::get('recipes/{category_id}/{order}/{direction}', 'RecipesController@category');
 Route::get('ingredients/{id}', 'RecipesController@ingredients');
 Route::get('users_recipe/{id}','RecipesController@user_recipe');
 Route::get('search/{search}/{category}/{order}/{direction}', 'RecipesController@search');
