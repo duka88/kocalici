@@ -6,7 +6,6 @@ use App\Tag;
 use App\Recipe;
 use App\Category;
 use App\Gallery;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\Recipe\CreateRecipeRequest;
 use App\Http\Requests\Recipe\UpdateRecipeRequest;
@@ -74,14 +73,9 @@ class RecipesController extends Controller
         return redirect()->back();
     }
 
-    public function category($id){
+    public function category($category, $order, $direction){
          
-        if($id != 0){
-        $recipes = Recipe::where('category_id', $id)->latest()->paginate(6);
-      }else{
-        $recipes = Recipe::latest()->paginate(6);
-
-        }
+      $recipes = Recipe::searchCategory($category, $order, $direction);
 
         return RecipeResources::collection($recipes);
     }
