@@ -18,7 +18,23 @@
             </select>
             <has-error :form="form" field="category_id"></has-error>
         </div>
-        <div class="range-wrap">
+        <div class="d-flex flex-wrap justify-content-between upload-image-wrap mb-4">
+          <p class="w-100 mb-0 font-weight-bold">Main Image</p>
+          <div v-for="(item, index) in items" :class="{'upload-box-small':index !== 0 }" class="form-gropup d-flex flex-wrap justify-content-center align-items-center upload-box">
+            <div v-if="!item.image" class="w-100 h-100">    
+              <label class="custom-file-upload">
+                  <input  style="display: none" type="file" @change="onFileChange(item, $event)"> 
+                  <span class="add-image mb-1">+</span>
+                  <span v-if="index === 0">Add Image</span>
+              </label> 
+            </div>
+            <div v-else>
+              <img :src="item.image" class="w-100">
+              <button @click="removeImage(item)" class="remove-img">×</button>
+            </div>
+          </div> 
+        </div>  
+        <div class="range-wrap mb-4">
           <div class="form-group range-box d-flex flex-wrap align-items-center"> 
                       <label for="title" class="d-block w-100">Dificulty</label>              
                       <input 
@@ -37,49 +53,37 @@
                        v-model="form.time" type="range" step="0.01" name ="time" min="1" max="240" value="5" id="time">
                      <span class="score d-block">{{form.time | round}}</span>
                  </div> 
-        </div>
-         <div class="form-group">
-              <label>Ingredients</label>
+          </div>
+         <div class="form-group mb-4">
+          <label>Ingredients</label>
           <div class="tags-input" >
+            <div class="tags-wrap mb-3" v-if="tagsArray.tags.length > 0">
               <div class="selected-tag" v-for="(selectedTag, key) in tagsArray.tags">
-                <span class="font-weight-bold">Ingredient </span>{{ selectedTag }}
-                 / <span class="font-weight-bold">Amount</span> {{ tagsArray.amount[key] }} 
+                <span class="font-weight-bold">Ingredient: </span>{{ selectedTag }}
+                 / <span class="font-weight-bold">Amount:</span> {{ tagsArray.amount[key] }} 
                  <span class="remove-tag" v-on:click="removeTag( key )">&times;</span>
-             
               </div>
+            </div>
               <div class="form-row">
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-6 mb-0 d-flex flex-wrap">
                   <input ref="tag" type="text"  class="new-tag-input form-control" v-model="currentTag" v-on:keyup="searchTags" v-on:keyup.enter="addNewTag" v-on:keydown.up="changeIndex( 'up' )" v-on:keydown.delete="handleDelete" v-on:keydown.down="changeIndex( 'down' )" v-bind:class="{ 'duplicate-warning' : duplicateFlag }" placeholder="Add ingredient">
-                </div>
-                <div class="form-group col-md-3">
-                  <input v-model="currentAmount" type="text" v-on:keyup.enter="addAmount" :class="{'is-invalid': form.errors.has('tag')}" placeholder="Enter amount" class="form-control">
+
+                  <input v-model="currentAmount" type="text" v-on:keyup.enter="addAmount" :class="{'is-invalid': form.errors.has('tag')}" placeholder="Enter amount" class="form-control amount-input">
+
+                  <div class="tag-autocomplete" v-show="showAutocomplete">
+                    <div class="tag-search-result" v-for="(tag, key) in tagSearchResults" v-bind:class="{ 'selected-search-index' : searchSelectedIndex == key }" v-on:click="selectTag( tag.name )">{{ tag.name }}</div>
+                  </div>
                 </div>
               </div>
           </div>
-              <has-error :form="form" field="tag"></has-error>
-              <div class="tag-autocomplete" v-show="showAutocomplete">
-                <div class="tag-search-result" v-for="(tag, key) in tagSearchResults" v-bind:class="{ 'selected-search-index' : searchSelectedIndex == key }" v-on:click="selectTag( tag.name )">{{ tag.name }}</div>
-          </div>
+          <has-error :form="form" field="tag"></has-error>
+
         </div>       
         <div class="form-gropup mb-4">    
             <ckeditor :editor="editor" v-model="form.content" :config="editorConfig" :class="{'is-invalid': form.errors.has('content')}"></ckeditor>
              <has-error :form="form" field="content"></has-error>
         </div>
-           <button class="btn btn-primary mb-4" @click="uploadRecipe">Save</button>
-        
-
-        <div v-for="(item, index) in items"  class="form-gropup">
-          <div v-if="!item.image">
-            <h3 v-if="index === 0">Main Image</h3>                     
-            <label class="custom-file-upload"> 
-              <input  style="display: none" type="file" @change="onFileChange(item, $event)">Custom Upload
-            </label> 
-          </div>
-          <div v-else>
-            <img :src="item.image"  height="300" width="480">
-            <button @click="removeImage(item)">Remove image</button>
-          </div>
-        </div>                   
+        <button class="large_button mb-4" @click="uploadRecipe">Add Recipe</button>                
       </div>
      
                 
