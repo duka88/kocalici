@@ -3203,6 +3203,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -43862,405 +43866,395 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container py-5" },
-    [
-      _c(
-        "div",
-        { staticClass: "form-group" },
-        [
-          _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.title,
-                expression: "form.title"
-              }
-            ],
-            staticClass: "form-control",
-            class: { "is-invalid": _vm.form.errors.has("title") },
-            attrs: { name: "title", id: "title", type: "text" },
-            domProps: { value: _vm.form.title },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.form, "title", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("has-error", { attrs: { form: _vm.form, field: "title" } })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form-group" },
-        [
-          _c("label", { attrs: { for: "title" } }, [_vm._v("Description")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.description,
-                expression: "form.description"
-              }
-            ],
-            staticClass: "form-control",
-            class: { "is-invalid": _vm.form.errors.has("description") },
-            attrs: { name: "description", type: "text" },
-            domProps: { value: _vm.form.description },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.form, "description", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("has-error", { attrs: { form: _vm.form, field: "description" } })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form-group mb-4" },
-        [
-          _c("label", { attrs: { for: "title" } }, [_vm._v("Category")]),
-          _vm._v(" "),
-          _c(
-            "select",
+  return _c("div", { staticClass: "container py-5" }, [
+    _c(
+      "div",
+      { staticClass: "form-group" },
+      [
+        _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
             {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.category_id,
-                  expression: "form.category_id"
-                }
-              ],
-              staticClass: "form-control",
-              class: { "is-invalid": _vm.form.errors.has("category_id") },
-              attrs: { name: "category_id" },
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.$set(
-                    _vm.form,
-                    "category_id",
-                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                  )
-                }
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.title,
+              expression: "form.title"
+            }
+          ],
+          staticClass: "form-control",
+          class: { "is-invalid": _vm.form.errors.has("title") },
+          attrs: { name: "title", id: "title", type: "text" },
+          domProps: { value: _vm.form.title },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
               }
+              _vm.$set(_vm.form, "title", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("has-error", { attrs: { form: _vm.form, field: "title" } })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "form-group" },
+      [
+        _c("label", { attrs: { for: "title" } }, [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.description,
+              expression: "form.description"
+            }
+          ],
+          staticClass: "form-control",
+          class: { "is-invalid": _vm.form.errors.has("description") },
+          attrs: { name: "description", type: "text" },
+          domProps: { value: _vm.form.description },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.form, "description", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("has-error", { attrs: { form: _vm.form, field: "description" } })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "form-group mb-4" },
+      [
+        _c("label", { attrs: { for: "title" } }, [_vm._v("Category")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.category_id,
+                expression: "form.category_id"
+              }
+            ],
+            staticClass: "form-control",
+            class: { "is-invalid": _vm.form.errors.has("category_id") },
+            attrs: { name: "category_id" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.form,
+                  "category_id",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              }
+            }
+          },
+          _vm._l(_vm.categories, function(category) {
+            return _c("option", { domProps: { value: category.id } }, [
+              _vm._v(_vm._s(category.name))
+            ])
+          }),
+          0
+        ),
+        _vm._v(" "),
+        _c("has-error", { attrs: { form: _vm.form, field: "category_id" } })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "d-flex flex-wrap justify-content-between upload-image-wrap mb-4"
+      },
+      [
+        _c("p", { staticClass: "w-100 mb-0 font-weight-bold" }, [
+          _vm._v("Main Image")
+        ]),
+        _vm._v(" "),
+        _vm._l(_vm.items, function(item, index) {
+          return _c(
+            "div",
+            {
+              staticClass:
+                "form-gropup d-flex flex-wrap justify-content-center align-items-center upload-box",
+              class: { "upload-box-small": index !== 0 }
             },
-            _vm._l(_vm.categories, function(category) {
-              return _c("option", { domProps: { value: category.id } }, [
-                _vm._v(_vm._s(category.name))
-              ])
-            }),
-            0
+            [
+              !item.image
+                ? _c("div", { staticClass: "w-100 h-100" }, [
+                    _c("label", { staticClass: "custom-file-upload" }, [
+                      _c("input", {
+                        staticStyle: { display: "none" },
+                        attrs: { type: "file" },
+                        on: {
+                          change: function($event) {
+                            return _vm.onFileChange(item, $event)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "add-image mb-1" }, [
+                        _vm._v("+")
+                      ]),
+                      _vm._v(" "),
+                      index === 0 ? _c("span", [_vm._v("Add Image")]) : _vm._e()
+                    ])
+                  ])
+                : _c("div", [
+                    _c("img", {
+                      staticClass: "w-100",
+                      attrs: { src: item.image }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "remove-img",
+                        on: {
+                          click: function($event) {
+                            return _vm.removeImage(item)
+                          }
+                        }
+                      },
+                      [_vm._v("×")]
+                    )
+                  ])
+            ]
+          )
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "range-wrap mb-4" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "form-group range-box d-flex flex-wrap align-items-center"
+        },
+        [
+          _c(
+            "label",
+            { staticClass: "d-block w-100", attrs: { for: "title" } },
+            [_vm._v("Dificulty")]
           ),
           _vm._v(" "),
-          _c("has-error", { attrs: { form: _vm.form, field: "category_id" } })
-        ],
-        1
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.dificulty,
+                expression: "form.dificulty"
+              }
+            ],
+            attrs: {
+              type: "range",
+              step: "0.01",
+              name: "dificulty",
+              min: "1",
+              max: "10",
+              value: "5",
+              id: "dificulty"
+            },
+            domProps: { value: _vm.form.dificulty },
+            on: {
+              __r: function($event) {
+                return _vm.$set(_vm.form, "dificulty", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "score d-block" }, [
+            _vm._v(_vm._s(_vm._f("round")(_vm.form.dificulty)))
+          ])
+        ]
       ),
-      _vm._v(" "),
-      _c("div", { staticClass: "range-wrap" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "form-group range-box d-flex flex-wrap align-items-center"
-          },
-          [
-            _c(
-              "label",
-              { staticClass: "d-block w-100", attrs: { for: "title" } },
-              [_vm._v("Dificulty")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.dificulty,
-                  expression: "form.dificulty"
-                }
-              ],
-              attrs: {
-                type: "range",
-                step: "0.01",
-                name: "dificulty",
-                min: "1",
-                max: "10",
-                value: "5",
-                id: "dificulty"
-              },
-              domProps: { value: _vm.form.dificulty },
-              on: {
-                __r: function($event) {
-                  return _vm.$set(_vm.form, "dificulty", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "score d-block" }, [
-              _vm._v(_vm._s(_vm._f("round")(_vm.form.dificulty)))
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "form-group range-box d-flex flex-wrap align-items-center"
-          },
-          [
-            _c(
-              "label",
-              { staticClass: "d-block w-100", attrs: { for: "title" } },
-              [_vm._v("Servings")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.servings,
-                  expression: "form.servings"
-                }
-              ],
-              attrs: {
-                type: "range",
-                step: "0.01",
-                name: "servings",
-                min: "1",
-                max: "100",
-                value: "5",
-                id: "servings"
-              },
-              domProps: { value: _vm.form.servings },
-              on: {
-                __r: function($event) {
-                  return _vm.$set(_vm.form, "servings", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "score d-block" }, [
-              _vm._v(_vm._s(_vm._f("round")(_vm.form.servings)))
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "form-group range-box d-flex flex-wrap align-items-center"
-          },
-          [
-            _c(
-              "label",
-              { staticClass: "d-block w-100", attrs: { for: "title" } },
-              [_vm._v("Time (m)")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.time,
-                  expression: "form.time"
-                }
-              ],
-              attrs: {
-                type: "range",
-                step: "0.01",
-                name: "time",
-                min: "1",
-                max: "240",
-                value: "5",
-                id: "time"
-              },
-              domProps: { value: _vm.form.time },
-              on: {
-                __r: function($event) {
-                  return _vm.$set(_vm.form, "time", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "score d-block" }, [
-              _vm._v(_vm._s(_vm._f("round")(_vm.form.time)))
-            ])
-          ]
-        )
-      ]),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "form-group" },
+        {
+          staticClass:
+            "form-group range-box d-flex flex-wrap align-items-center"
+        },
         [
-          _c("label", [_vm._v("Ingredients")]),
-          _vm._v(" "),
           _c(
-            "div",
-            { staticClass: "tags-input" },
-            [
-              _vm._l(_vm.tagsArray.tags, function(selectedTag, key) {
-                return _c("div", { staticClass: "selected-tag" }, [
-                  _c("span", { staticClass: "font-weight-bold" }, [
-                    _vm._v("Ingredient ")
-                  ]),
-                  _vm._v(_vm._s(selectedTag) + "\n             / "),
-                  _c("span", { staticClass: "font-weight-bold" }, [
-                    _vm._v("Amount")
-                  ]),
-                  _vm._v(
-                    " " + _vm._s(_vm.tagsArray.amount[key]) + " \n             "
-                  ),
-                  _c(
-                    "span",
+            "label",
+            { staticClass: "d-block w-100", attrs: { for: "title" } },
+            [_vm._v("Servings")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.servings,
+                expression: "form.servings"
+              }
+            ],
+            attrs: {
+              type: "range",
+              step: "0.01",
+              name: "servings",
+              min: "1",
+              max: "100",
+              value: "5",
+              id: "servings"
+            },
+            domProps: { value: _vm.form.servings },
+            on: {
+              __r: function($event) {
+                return _vm.$set(_vm.form, "servings", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "score d-block" }, [
+            _vm._v(_vm._s(_vm._f("round")(_vm.form.servings)))
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "form-group range-box d-flex flex-wrap align-items-center"
+        },
+        [
+          _c(
+            "label",
+            { staticClass: "d-block w-100", attrs: { for: "title" } },
+            [_vm._v("Time (m)")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.time,
+                expression: "form.time"
+              }
+            ],
+            attrs: {
+              type: "range",
+              step: "0.01",
+              name: "time",
+              min: "1",
+              max: "240",
+              value: "5",
+              id: "time"
+            },
+            domProps: { value: _vm.form.time },
+            on: {
+              __r: function($event) {
+                return _vm.$set(_vm.form, "time", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "score d-block" }, [
+            _vm._v(_vm._s(_vm._f("round")(_vm.form.time)))
+          ])
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "form-group mb-4" },
+      [
+        _c("label", [_vm._v("Ingredients")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "tags-input" }, [
+          _vm.tagsArray.tags.length > 0
+            ? _c(
+                "div",
+                { staticClass: "tags-wrap mb-3" },
+                _vm._l(_vm.tagsArray.tags, function(selectedTag, key) {
+                  return _c("div", { staticClass: "selected-tag" }, [
+                    _c("span", { staticClass: "font-weight-bold" }, [
+                      _vm._v("Ingredient: ")
+                    ]),
+                    _vm._v(_vm._s(selectedTag) + "\n             / "),
+                    _c("span", { staticClass: "font-weight-bold" }, [
+                      _vm._v("Amount:")
+                    ]),
+                    _vm._v(
+                      " " +
+                        _vm._s(_vm.tagsArray.amount[key]) +
+                        " \n             "
+                    ),
+                    _c(
+                      "span",
+                      {
+                        staticClass: "remove-tag",
+                        on: {
+                          click: function($event) {
+                            return _vm.removeTag(key)
+                          }
+                        }
+                      },
+                      [_vm._v("×")]
+                    )
+                  ])
+                }),
+                0
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-row" }, [
+            _c(
+              "div",
+              { staticClass: "form-group col-md-6 mb-0 d-flex flex-wrap" },
+              [
+                _c("input", {
+                  directives: [
                     {
-                      staticClass: "remove-tag",
-                      on: {
-                        click: function($event) {
-                          return _vm.removeTag(key)
-                        }
-                      }
-                    },
-                    [_vm._v("×")]
-                  )
-                ])
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-row" }, [
-                _c("div", { staticClass: "form-group col-md-3" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.currentTag,
-                        expression: "currentTag"
-                      }
-                    ],
-                    ref: "tag",
-                    staticClass: "new-tag-input form-control",
-                    class: { "duplicate-warning": _vm.duplicateFlag },
-                    attrs: { type: "text", placeholder: "Add ingredient" },
-                    domProps: { value: _vm.currentTag },
-                    on: {
-                      keyup: [
-                        _vm.searchTags,
-                        function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          return _vm.addNewTag($event)
-                        }
-                      ],
-                      keydown: [
-                        function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k($event.keyCode, "up", 38, $event.key, [
-                              "Up",
-                              "ArrowUp"
-                            ])
-                          ) {
-                            return null
-                          }
-                          return _vm.changeIndex("up")
-                        },
-                        function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "delete",
-                              [8, 46],
-                              $event.key,
-                              ["Backspace", "Delete", "Del"]
-                            )
-                          ) {
-                            return null
-                          }
-                          return _vm.handleDelete($event)
-                        },
-                        function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k($event.keyCode, "down", 40, $event.key, [
-                              "Down",
-                              "ArrowDown"
-                            ])
-                          ) {
-                            return null
-                          }
-                          return _vm.changeIndex("down")
-                        }
-                      ],
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.currentTag = $event.target.value
-                      }
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.currentTag,
+                      expression: "currentTag"
                     }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group col-md-3" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.currentAmount,
-                        expression: "currentAmount"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.form.errors.has("tag") },
-                    attrs: { type: "text", placeholder: "Enter amount" },
-                    domProps: { value: _vm.currentAmount },
-                    on: {
-                      keyup: function($event) {
+                  ],
+                  ref: "tag",
+                  staticClass: "new-tag-input form-control",
+                  class: { "duplicate-warning": _vm.duplicateFlag },
+                  attrs: { type: "text", placeholder: "Add ingredient" },
+                  domProps: { value: _vm.currentTag },
+                  on: {
+                    keyup: [
+                      _vm.searchTags,
+                      function($event) {
                         if (
                           !$event.type.indexOf("key") &&
                           _vm._k(
@@ -44273,131 +44267,161 @@ var render = function() {
                         ) {
                           return null
                         }
-                        return _vm.addAmount($event)
-                      },
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.currentAmount = $event.target.value
+                        return _vm.addNewTag($event)
                       }
-                    }
-                  })
-                ])
-              ])
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c("has-error", { attrs: { form: _vm.form, field: "tag" } }),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.showAutocomplete,
-                  expression: "showAutocomplete"
-                }
-              ],
-              staticClass: "tag-autocomplete"
-            },
-            _vm._l(_vm.tagSearchResults, function(tag, key) {
-              return _c(
-                "div",
-                {
-                  staticClass: "tag-search-result",
-                  class: {
-                    "selected-search-index": _vm.searchSelectedIndex == key
-                  },
-                  on: {
-                    click: function($event) {
-                      return _vm.selectTag(tag.name)
+                    ],
+                    keydown: [
+                      function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k($event.keyCode, "up", 38, $event.key, [
+                            "Up",
+                            "ArrowUp"
+                          ])
+                        ) {
+                          return null
+                        }
+                        return _vm.changeIndex("up")
+                      },
+                      function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "delete",
+                            [8, 46],
+                            $event.key,
+                            ["Backspace", "Delete", "Del"]
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.handleDelete($event)
+                      },
+                      function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k($event.keyCode, "down", 40, $event.key, [
+                            "Down",
+                            "ArrowDown"
+                          ])
+                        ) {
+                          return null
+                        }
+                        return _vm.changeIndex("down")
+                      }
+                    ],
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.currentTag = $event.target.value
                     }
                   }
-                },
-                [_vm._v(_vm._s(tag.name))]
-              )
-            }),
-            0
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form-gropup mb-4" },
-        [
-          _c("ckeditor", {
-            class: { "is-invalid": _vm.form.errors.has("content") },
-            attrs: { editor: _vm.editor, config: _vm.editorConfig },
-            model: {
-              value: _vm.form.content,
-              callback: function($$v) {
-                _vm.$set(_vm.form, "content", $$v)
-              },
-              expression: "form.content"
-            }
-          }),
-          _vm._v(" "),
-          _c("has-error", { attrs: { form: _vm.form, field: "content" } })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary mb-4",
-          on: { click: _vm.uploadRecipe }
-        },
-        [_vm._v("Save")]
-      ),
-      _vm._v(" "),
-      _vm._l(_vm.items, function(item, index) {
-        return _c("div", { staticClass: "form-gropup" }, [
-          !item.image
-            ? _c("div", [
-                index === 0 ? _c("h3", [_vm._v("Main Image")]) : _vm._e(),
+                }),
                 _vm._v(" "),
-                _c("label", { staticClass: "custom-file-upload" }, [
-                  _c("input", {
-                    staticStyle: { display: "none" },
-                    attrs: { type: "file" },
-                    on: {
-                      change: function($event) {
-                        return _vm.onFileChange(item, $event)
-                      }
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.currentAmount,
+                      expression: "currentAmount"
                     }
-                  }),
-                  _vm._v("Custom Upload\n                     ")
-                ])
-              ])
-            : _c("div", [
-                _c("img", {
-                  attrs: { src: item.image, height: "300", width: "480" }
+                  ],
+                  staticClass: "form-control amount-input",
+                  class: { "is-invalid": _vm.form.errors.has("tag") },
+                  attrs: { type: "text", placeholder: "Enter amount" },
+                  domProps: { value: _vm.currentAmount },
+                  on: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.addAmount($event)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.currentAmount = $event.target.value
+                    }
+                  }
                 }),
                 _vm._v(" "),
                 _c(
-                  "button",
+                  "div",
                   {
-                    on: {
-                      click: function($event) {
-                        return _vm.removeImage(item)
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.showAutocomplete,
+                        expression: "showAutocomplete"
                       }
-                    }
+                    ],
+                    staticClass: "tag-autocomplete"
                   },
-                  [_vm._v("Remove image")]
+                  _vm._l(_vm.tagSearchResults, function(tag, key) {
+                    return _c(
+                      "div",
+                      {
+                        staticClass: "tag-search-result",
+                        class: {
+                          "selected-search-index":
+                            _vm.searchSelectedIndex == key
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.selectTag(tag.name)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(tag.name))]
+                    )
+                  }),
+                  0
                 )
-              ])
-        ])
-      })
-    ],
-    2
-  )
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("has-error", { attrs: { form: _vm.form, field: "tag" } })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "form-gropup mb-4" },
+      [
+        _c("ckeditor", {
+          class: { "is-invalid": _vm.form.errors.has("content") },
+          attrs: { editor: _vm.editor, config: _vm.editorConfig },
+          model: {
+            value: _vm.form.content,
+            callback: function($$v) {
+              _vm.$set(_vm.form, "content", $$v)
+            },
+            expression: "form.content"
+          }
+        }),
+        _vm._v(" "),
+        _c("has-error", { attrs: { form: _vm.form, field: "content" } })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      { staticClass: "large_button mb-4", on: { click: _vm.uploadRecipe } },
+      [_vm._v("Add Recipe")]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -62250,15 +62274,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************!*\
   !*** ./resources/js/components/Recipes.vue ***!
   \*********************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Recipes_vue_vue_type_template_id_4fb0ab8a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Recipes.vue?vue&type=template&id=4fb0ab8a& */ "./resources/js/components/Recipes.vue?vue&type=template&id=4fb0ab8a&");
 /* harmony import */ var _Recipes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Recipes.vue?vue&type=script&lang=js& */ "./resources/js/components/Recipes.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Recipes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Recipes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -62288,7 +62311,7 @@ component.options.__file = "resources/js/components/Recipes.vue"
 /*!**********************************************************************!*\
   !*** ./resources/js/components/Recipes.vue?vue&type=script&lang=js& ***!
   \**********************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
