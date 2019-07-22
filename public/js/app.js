@@ -3170,6 +3170,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -43817,7 +43825,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container" },
+    { staticClass: "container py-5" },
     [
       _c(
         "div",
@@ -43855,7 +43863,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "form-gropup" },
+        { staticClass: "form-group" },
         [
           _c("label", { attrs: { for: "title" } }, [_vm._v("Description")]),
           _vm._v(" "),
@@ -43889,7 +43897,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "form-gropup mb-4" },
+        { staticClass: "form-group mb-4" },
         [
           _c("label", { attrs: { for: "title" } }, [_vm._v("Category")]),
           _vm._v(" "),
@@ -43938,97 +43946,141 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.dificulty,
-              expression: "form.dificulty"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "range",
-            step: "0.01",
-            name: "dificulty",
-            min: "1",
-            max: "10",
-            value: "5",
-            id: "dificulty"
+      _c("div", { staticClass: "range-wrap" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "form-group range-box d-flex flex-wrap align-items-center"
           },
-          domProps: { value: _vm.form.dificulty },
-          on: {
-            __r: function($event) {
-              return _vm.$set(_vm.form, "dificulty", $event.target.value)
-            }
-          }
-        }),
+          [
+            _c(
+              "label",
+              { staticClass: "d-block w-100", attrs: { for: "title" } },
+              [_vm._v("Dificulty")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.dificulty,
+                  expression: "form.dificulty"
+                }
+              ],
+              attrs: {
+                type: "range",
+                step: "0.01",
+                name: "dificulty",
+                min: "1",
+                max: "10",
+                value: "5",
+                id: "dificulty"
+              },
+              domProps: { value: _vm.form.dificulty },
+              on: {
+                __r: function($event) {
+                  return _vm.$set(_vm.form, "dificulty", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "score d-block" }, [
+              _vm._v(_vm._s(_vm._f("round")(_vm.form.dificulty)))
+            ])
+          ]
+        ),
         _vm._v(" "),
-        _c("span", [_vm._v(_vm._s(_vm._f("round")(_vm.form.dificulty)))])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.servings,
-              expression: "form.servings"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "range",
-            step: "0.01",
-            name: "servings",
-            min: "1",
-            max: "100",
-            value: "5",
-            id: "servings"
+        _c(
+          "div",
+          {
+            staticClass:
+              "form-group range-box d-flex flex-wrap align-items-center"
           },
-          domProps: { value: _vm.form.servings },
-          on: {
-            __r: function($event) {
-              return _vm.$set(_vm.form, "servings", $event.target.value)
-            }
-          }
-        }),
+          [
+            _c(
+              "label",
+              { staticClass: "d-block w-100", attrs: { for: "title" } },
+              [_vm._v("Servings")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.servings,
+                  expression: "form.servings"
+                }
+              ],
+              attrs: {
+                type: "range",
+                step: "0.01",
+                name: "servings",
+                min: "1",
+                max: "100",
+                value: "5",
+                id: "servings"
+              },
+              domProps: { value: _vm.form.servings },
+              on: {
+                __r: function($event) {
+                  return _vm.$set(_vm.form, "servings", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "score d-block" }, [
+              _vm._v(_vm._s(_vm._f("round")(_vm.form.servings)))
+            ])
+          ]
+        ),
         _vm._v(" "),
-        _c("span", [_vm._v(_vm._s(_vm._f("round")(_vm.form.servings)))])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.time,
-              expression: "form.time"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "range",
-            step: "0.01",
-            name: "time",
-            min: "1",
-            max: "240",
-            value: "5",
-            id: "time"
+        _c(
+          "div",
+          {
+            staticClass:
+              "form-group range-box d-flex flex-wrap align-items-center"
           },
-          domProps: { value: _vm.form.time },
-          on: {
-            __r: function($event) {
-              return _vm.$set(_vm.form, "time", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("span", [_vm._v(_vm._s(_vm._f("round")(_vm.form.time)))])
+          [
+            _c(
+              "label",
+              { staticClass: "d-block w-100", attrs: { for: "title" } },
+              [_vm._v("Time (m)")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.time,
+                  expression: "form.time"
+                }
+              ],
+              attrs: {
+                type: "range",
+                step: "0.01",
+                name: "time",
+                min: "1",
+                max: "240",
+                value: "5",
+                id: "time"
+              },
+              domProps: { value: _vm.form.time },
+              on: {
+                __r: function($event) {
+                  return _vm.$set(_vm.form, "time", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "score d-block" }, [
+              _vm._v(_vm._s(_vm._f("round")(_vm.form.time)))
+            ])
+          ]
+        )
       ]),
       _vm._v(" "),
       _c(
@@ -44068,111 +44120,132 @@ var render = function() {
                 ])
               }),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.currentTag,
-                    expression: "currentTag"
-                  }
-                ],
-                ref: "tag",
-                staticClass: "new-tag-input",
-                class: { "duplicate-warning": _vm.duplicateFlag },
-                attrs: { type: "text", placeholder: "Add a tag" },
-                domProps: { value: _vm.currentTag },
-                on: {
-                  keyup: [
-                    _vm.searchTags,
-                    function($event) {
-                      if (
-                        !$event.type.indexOf("key") &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                      ) {
-                        return null
+              _c("div", { staticClass: "form-row" }, [
+                _c("div", { staticClass: "form-group col-md-3" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.currentTag,
+                        expression: "currentTag"
                       }
-                      return _vm.addNewTag($event)
-                    }
-                  ],
-                  keydown: [
-                    function($event) {
-                      if (
-                        !$event.type.indexOf("key") &&
-                        _vm._k($event.keyCode, "up", 38, $event.key, [
-                          "Up",
-                          "ArrowUp"
-                        ])
-                      ) {
-                        return null
+                    ],
+                    ref: "tag",
+                    staticClass: "new-tag-input form-control",
+                    class: { "duplicate-warning": _vm.duplicateFlag },
+                    attrs: { type: "text", placeholder: "Add ingredient" },
+                    domProps: { value: _vm.currentTag },
+                    on: {
+                      keyup: [
+                        _vm.searchTags,
+                        function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.addNewTag($event)
+                        }
+                      ],
+                      keydown: [
+                        function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k($event.keyCode, "up", 38, $event.key, [
+                              "Up",
+                              "ArrowUp"
+                            ])
+                          ) {
+                            return null
+                          }
+                          return _vm.changeIndex("up")
+                        },
+                        function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "delete",
+                              [8, 46],
+                              $event.key,
+                              ["Backspace", "Delete", "Del"]
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.handleDelete($event)
+                        },
+                        function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k($event.keyCode, "down", 40, $event.key, [
+                              "Down",
+                              "ArrowDown"
+                            ])
+                          ) {
+                            return null
+                          }
+                          return _vm.changeIndex("down")
+                        }
+                      ],
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.currentTag = $event.target.value
                       }
-                      return _vm.changeIndex("up")
-                    },
-                    function($event) {
-                      if (
-                        !$event.type.indexOf("key") &&
-                        _vm._k($event.keyCode, "delete", [8, 46], $event.key, [
-                          "Backspace",
-                          "Delete",
-                          "Del"
-                        ])
-                      ) {
-                        return null
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group col-md-3" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.currentAmount,
+                        expression: "currentAmount"
                       }
-                      return _vm.handleDelete($event)
-                    },
-                    function($event) {
-                      if (
-                        !$event.type.indexOf("key") &&
-                        _vm._k($event.keyCode, "down", 40, $event.key, [
-                          "Down",
-                          "ArrowDown"
-                        ])
-                      ) {
-                        return null
+                    ],
+                    staticClass: "form-control",
+                    class: { "is-invalid": _vm.form.errors.has("tag") },
+                    attrs: { type: "text", placeholder: "Enter amount" },
+                    domProps: { value: _vm.currentAmount },
+                    on: {
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.addAmount($event)
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.currentAmount = $event.target.value
                       }
-                      return _vm.changeIndex("down")
                     }
-                  ],
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.currentTag = $event.target.value
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.currentAmount,
-                    expression: "currentAmount"
-                  }
-                ],
-                class: { "is-invalid": _vm.form.errors.has("tag") },
-                attrs: { type: "text" },
-                domProps: { value: _vm.currentAmount },
-                on: {
-                  keyup: function($event) {
-                    if (
-                      !$event.type.indexOf("key") &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                    ) {
-                      return null
-                    }
-                    return _vm.addAmount($event)
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.currentAmount = $event.target.value
-                  }
-                }
-              })
+                  })
+                ])
+              ])
             ],
             2
           ),
@@ -63026,8 +63099,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\kocalici\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\kocalici\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\kocalici\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\kocalici\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
