@@ -3207,6 +3207,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -44189,211 +44193,200 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "form-group mb-4" },
-      [
-        _c("label", [_vm._v("Ingredients")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "tags-input" }, [
-          _vm.tagsArray.tags.length > 0
-            ? _c(
-                "div",
-                { staticClass: "tags-wrap mb-3" },
-                _vm._l(_vm.tagsArray.tags, function(selectedTag, key) {
-                  return _c("div", { staticClass: "selected-tag" }, [
-                    _c("span", { staticClass: "font-weight-bold" }, [
-                      _vm._v("Ingredient: ")
-                    ]),
-                    _vm._v(_vm._s(selectedTag) + "\n             / "),
-                    _c("span", { staticClass: "font-weight-bold" }, [
-                      _vm._v("Amount:")
-                    ]),
-                    _vm._v(
-                      " " +
-                        _vm._s(_vm.tagsArray.amount[key]) +
-                        " \n             "
-                    ),
-                    _c(
-                      "span",
-                      {
-                        staticClass: "remove-tag",
-                        on: {
-                          click: function($event) {
-                            return _vm.removeTag(key)
-                          }
-                        }
-                      },
-                      [_vm._v("×")]
-                    )
-                  ])
-                }),
-                0
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-row" }, [
-            _c(
+    _c("div", { staticClass: "form-group mb-4" }, [
+      _c("label", [_vm._v("Ingredients")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "tags-input" }, [
+        _vm.tagsArray.tags.length > 0
+          ? _c(
               "div",
-              { staticClass: "form-group col-md-6 mb-0 d-flex flex-wrap" },
-              [
-                _c("input", {
-                  directives: [
+              { staticClass: "tags-wrap mb-3" },
+              _vm._l(_vm.tagsArray.tags, function(selectedTag, key) {
+                return _c("div", { staticClass: "selected-tag" }, [
+                  _c("span", { staticClass: "font-weight-bold" }, [
+                    _vm._v("Ingredient: ")
+                  ]),
+                  _vm._v(_vm._s(selectedTag) + "\n             / "),
+                  _c("span", { staticClass: "font-weight-bold" }, [
+                    _vm._v("Amount:")
+                  ]),
+                  _vm._v(
+                    " " + _vm._s(_vm.tagsArray.amount[key]) + " \n             "
+                  ),
+                  _c(
+                    "span",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.currentTag,
-                      expression: "currentTag"
-                    }
-                  ],
-                  ref: "tag",
-                  staticClass: "new-tag-input form-control",
-                  class: { "duplicate-warning": _vm.duplicateFlag },
-                  attrs: { type: "text", placeholder: "Add ingredient" },
-                  domProps: { value: _vm.currentTag },
-                  on: {
-                    keyup: [
-                      _vm.searchTags,
-                      function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
+                      staticClass: "remove-tag",
+                      on: {
+                        click: function($event) {
+                          return _vm.removeTag(key)
                         }
-                        return _vm.addNewTag($event)
                       }
-                    ],
-                    keydown: [
-                      function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k($event.keyCode, "up", 38, $event.key, [
-                            "Up",
-                            "ArrowUp"
-                          ])
-                        ) {
-                          return null
-                        }
-                        return _vm.changeIndex("up")
-                      },
-                      function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "delete",
-                            [8, 46],
-                            $event.key,
-                            ["Backspace", "Delete", "Del"]
-                          )
-                        ) {
-                          return null
-                        }
-                        return _vm.handleDelete($event)
-                      },
-                      function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k($event.keyCode, "down", 40, $event.key, [
-                            "Down",
-                            "ArrowDown"
-                          ])
-                        ) {
-                          return null
-                        }
-                        return _vm.changeIndex("down")
-                      }
-                    ],
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.currentTag = $event.target.value
-                    }
+                    },
+                    [_vm._v("×")]
+                  )
+                ])
+              }),
+              0
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-row" }, [
+          _c(
+            "div",
+            { staticClass: "form-group col-md-6 mb-0 d-flex flex-wrap" },
+            [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.currentTag,
+                    expression: "currentTag"
                   }
-                }),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.currentAmount,
-                      expression: "currentAmount"
-                    }
-                  ],
-                  staticClass: "form-control amount-input",
-                  class: { "is-invalid": _vm.form.errors.has("tag") },
-                  attrs: { type: "text", placeholder: "Enter amount" },
-                  domProps: { value: _vm.currentAmount },
-                  on: {
-                    keyup: function($event) {
+                ],
+                ref: "tag",
+                staticClass: "new-tag-input form-control",
+                class: { "is-invalid": _vm.form.errors.has("tag") },
+                attrs: {
+                  type: "text",
+                  name: "tag",
+                  class: { "duplicate-warning": _vm.duplicateFlag },
+                  placeholder: "Add ingredient"
+                },
+                domProps: { value: _vm.currentTag },
+                on: {
+                  keyup: [
+                    _vm.searchTags,
+                    function($event) {
                       if (
                         !$event.type.indexOf("key") &&
                         _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
                       ) {
                         return null
                       }
-                      return _vm.addAmount($event)
-                    },
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.currentAmount = $event.target.value
+                      return _vm.addNewTag($event)
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.showAutocomplete,
-                        expression: "showAutocomplete"
+                  ],
+                  keydown: [
+                    function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "up", 38, $event.key, [
+                          "Up",
+                          "ArrowUp"
+                        ])
+                      ) {
+                        return null
                       }
-                    ],
-                    staticClass: "tag-autocomplete"
+                      return _vm.changeIndex("up")
+                    },
+                    function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "delete", [8, 46], $event.key, [
+                          "Backspace",
+                          "Delete",
+                          "Del"
+                        ])
+                      ) {
+                        return null
+                      }
+                      return _vm.handleDelete($event)
+                    },
+                    function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "down", 40, $event.key, [
+                          "Down",
+                          "ArrowDown"
+                        ])
+                      ) {
+                        return null
+                      }
+                      return _vm.changeIndex("down")
+                    }
+                  ],
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.currentTag = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("has-error", { attrs: { form: _vm.form, field: "tag" } }),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.currentAmount,
+                    expression: "currentAmount"
+                  }
+                ],
+                staticClass: "form-control amount-input",
+                attrs: { type: "text", placeholder: "Enter amount" },
+                domProps: { value: _vm.currentAmount },
+                on: {
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.addAmount($event)
                   },
-                  _vm._l(_vm.tagSearchResults, function(tag, key) {
-                    return _c(
-                      "div",
-                      {
-                        staticClass: "tag-search-result",
-                        class: {
-                          "selected-search-index":
-                            _vm.searchSelectedIndex == key
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.selectTag(tag.name)
-                          }
-                        }
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.currentAmount = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.showAutocomplete,
+                      expression: "showAutocomplete"
+                    }
+                  ],
+                  staticClass: "tag-autocomplete"
+                },
+                _vm._l(_vm.tagSearchResults, function(tag, key) {
+                  return _c(
+                    "div",
+                    {
+                      staticClass: "tag-search-result",
+                      class: {
+                        "selected-search-index": _vm.searchSelectedIndex == key
                       },
-                      [_vm._v(_vm._s(tag.name))]
-                    )
-                  }),
-                  0
-                )
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("has-error", { attrs: { form: _vm.form, field: "tag" } })
-      ],
-      1
-    ),
+                      on: {
+                        click: function($event) {
+                          return _vm.selectTag(tag.name)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(tag.name))]
+                  )
+                }),
+                0
+              )
+            ],
+            1
+          )
+        ])
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -63162,8 +63155,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\kocalici\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\kocalici\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\wamp64\www\kocalici\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\kocalici\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

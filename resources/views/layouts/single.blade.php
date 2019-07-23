@@ -9,14 +9,11 @@
 
     <title>@yield('title')</title>
 
-    <!-- Styles -->
-    <link href="{{asset('css/page.min.css')}}" rel="stylesheet">
-    <link href="{{asset('css/style.css')}}" rel="stylesheet">
+  
+   
     <link href="{{asset('css/app.css')}}" rel="stylesheet">
 
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" href="{{asset('img/apple-touch-icon.png')}}">
-    <link rel="icon" href="{{asset('img/favicon.png')}}">
+  
   </head>
 
   <body>
@@ -29,8 +26,7 @@
         <div class="navbar-left">
           <button class="navbar-toggler" type="button">&#9776;</button>
            <a class="navbar-brand" href="{{route('welcome')}}">
-            <img class="logo-dark" src="{{asset('img/logo-dark.png')}}" alt="logo">
-            <img class="logo-light" src="{{asset('img/logo-light.png')}}" alt="logo">
+            
            </a>
         </div>
 
@@ -43,7 +39,7 @@
           </ul>
         </section>
         <login-component  @Auth :user_id={{auth()->user()->id}} @endauth></login-component>  
-     
+        <search-component></search-component>  
 
       </div>
     </nav><!-- /.navbar -->
@@ -58,26 +54,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-      <div class="container">
-        <div class="row gap-y align-items-center">
-
-          <div class="col-6 col-lg-3">
-            <a href=""><img src="{{asset('img/logo-dark.png')}}" alt="logo"></a>
-          </div>
-
-
-          <div class="col-lg-6">
-            <div class="nav nav-bold nav-uppercase nav-trim justify-content-lg-center">
-              <a class="nav-link" href="../uikit/index.html">Elements</a>
-              <a class="nav-link" href="../block/index.html">Blocks</a>
-              <a class="nav-link" href="../page/about-1.html">About</a>
-              <a class="nav-link" href="../blog/grid.html">Blog</a>
-              <a class="nav-link" href="../page/contact-1.html">Contact</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
+     
     </footer><!-- /.footer -->
 
 

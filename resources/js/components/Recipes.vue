@@ -9,7 +9,7 @@
        <div class="col-9">
             <div class="row justify-content-between">
              
-                <div class="col-9 d-flex flex-row">
+                <div class="col-9  d-flex flex-row">
                   <p class="filter_search"  @click="sort('time')">Time</p>
                   <p class="filter_search" @click="sort('dificulty')">Dificulty</p>
                   <p class="filter_search" @click="sort('score')">Score</p>

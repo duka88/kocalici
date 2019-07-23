@@ -66,9 +66,13 @@
             </div>
               <div class="form-row">
                 <div class="form-group col-md-6 mb-0 d-flex flex-wrap">
-                  <input ref="tag" type="text"  class="new-tag-input form-control" v-model="currentTag" v-on:keyup="searchTags" v-on:keyup.enter="addNewTag" v-on:keydown.up="changeIndex( 'up' )" v-on:keydown.delete="handleDelete" v-on:keydown.down="changeIndex( 'down' )" v-bind:class="{ 'duplicate-warning' : duplicateFlag }" placeholder="Add ingredient">
+                  <input ref="tag" type="text"  class="new-tag-input form-control"
+                   :class="{'is-invalid': form.errors.has('tag')}" name='tag'
+                   v-model="currentTag" v-on:keyup="searchTags" v-on:keyup.enter="addNewTag" v-on:keydown.up="changeIndex( 'up' )" v-on:keydown.delete="handleDelete" v-on:keydown.down="changeIndex( 'down' )" v-bind:class="{ 'duplicate-warning' : duplicateFlag }" placeholder="Add ingredient">
 
-                  <input v-model="currentAmount" type="text" v-on:keyup.enter="addAmount" :class="{'is-invalid': form.errors.has('tag')}" placeholder="Enter amount" class="form-control amount-input">
+                  <has-error :form="form" field="tag"></has-error>
+
+                  <input v-model="currentAmount" type="text" v-on:keyup.enter="addAmount"  placeholder="Enter amount" class="form-control amount-input">
 
                   <div class="tag-autocomplete" v-show="showAutocomplete">
                     <div class="tag-search-result" v-for="(tag, key) in tagSearchResults" v-bind:class="{ 'selected-search-index' : searchSelectedIndex == key }" v-on:click="selectTag( tag.name )">{{ tag.name }}</div>
@@ -76,7 +80,7 @@
                 </div>
               </div>
           </div>
-          <has-error :form="form" field="tag"></has-error>
+          
 
         </div>       
         <div class="form-gropup mb-4">    

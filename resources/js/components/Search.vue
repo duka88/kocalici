@@ -54,7 +54,7 @@
          
       </li>
       <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
+      <li v-if="$gate.getAuth()" class="nav-item dropdown">
         <a class="nav-link notification" data-toggle="dropdown" href="#">
               <div class="user-panel d-flex">
                 <div class="image">
