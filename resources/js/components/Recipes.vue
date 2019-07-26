@@ -21,8 +21,9 @@
                   
                 </div>
             </div>
-
+         
             <div class="row justify-content-center">
+             
                 <div v-for="recipe in recipes.data" :key="recipe.id" class="col-md-4" >             
                         <div class="card my-card">
                            <div class="image">
@@ -49,8 +50,10 @@
                             </div>
                           </div>
                          </div> 
+             
 
             </div>
+          
              <nav aria-label="Page navigation example">
             
             <pagination :data="recipes"  @pagination-change-page="getResult"></pagination>

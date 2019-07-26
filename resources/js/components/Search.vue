@@ -22,7 +22,8 @@
        
     </div>
    </div> 
-    <ul class="navbar-nav ml-auto">
+   
+    <ul  v-if="location == 'http://recipes.test/home'" class="navbar-nav ml-auto">
     
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown" >
@@ -54,7 +55,8 @@
          
       </li>
       <!-- Notifications Dropdown Menu -->
-      <li v-if="$gate.getAuth()" class="nav-item dropdown">
+     
+      <li  class="nav-item dropdown">
         <a class="nav-link notification" data-toggle="dropdown" href="#">
               <div class="user-panel d-flex">
                 <div class="image">
@@ -96,6 +98,7 @@
             return{
                 overlay: false,
                 search:'',
+                location: ''
                
               
             }
@@ -147,12 +150,13 @@
             
         },
         computed: {
-          
+           
            comments(){
               return this.$store.state.notifications;
            }
         },
-         created(){            
+         created(){  
+           this.location = window.location.href;          
             this.$store.dispatch('loadNotifications'); 
         },
      

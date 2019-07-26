@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);/*!
+@import url(https://fonts.googleapis.com/css?family=Nunito);@import url(https://fonts.googleapis.com/css?family=Dancing+Script&display=swap);/*!
  *   AdminLTE v3.0.0-alpha
  *   Author: Abdullah Almsaeed
  *	 Website: AdminLTE.io <http://adminlte.io>
@@ -24018,6 +24018,12 @@ a.text-dark:focus {
 **************************** DASHBOARD ******************************
 **********************************************************************************************/
 
+.logo-text {
+  font-family: "Dancing Script", cursive;
+  font-size: 22px;
+  color: #FC99C5;
+}
+
 .router-link-exact-active {
   background-color: #566069;
 }
@@ -24428,9 +24434,67 @@ input[type=range]:focus::-ms-fill-upper {
   font-weight: bold;
   border-bottom: 1px solid;
   border-radius: 5px;
-  color: #FC8DAF;
+  color: #FC8DAF !important;
   margin-right: 15px;
   cursor: pointer;
+}
+
+.flip-enter-active {
+  -webkit-animation: in 0.5s ease-in-out forwards;
+          animation: in 0.5s ease-in-out forwards;
+}
+
+.flip-leave-active {
+  -webkit-animation: out 0.5s ease-in-out forwards;
+          animation: out 0.5s ease-in-out forwards;
+}
+
+@-webkit-keyframes out {
+  from {
+    -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+  }
+
+  to {
+    -webkit-transform: rotateY(90deg);
+            transform: rotateY(90deg);
+  }
+}
+
+@keyframes out {
+  from {
+    -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+  }
+
+  to {
+    -webkit-transform: rotateY(90deg);
+            transform: rotateY(90deg);
+  }
+}
+
+@-webkit-keyframes in {
+  from {
+    -webkit-transform: rotateY(90deg);
+            transform: rotateY(90deg);
+  }
+
+  to {
+    -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+  }
+}
+
+@keyframes in {
+  from {
+    -webkit-transform: rotateY(90deg);
+            transform: rotateY(90deg);
+  }
+
+  to {
+    -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+  }
 }
 
 /*!

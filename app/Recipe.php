@@ -160,4 +160,22 @@ class Recipe extends Model
 
               return $recipes;
     }
+
+    public static function user_recipes_order($order, $direction){
+          $id = auth()->user()->id; 
+
+        if($order == 'score'){
+               $recipes = Recipe::where('user_id', $id)->withCount(['scores as average' => function ($q){
+                            $q->select(DB::raw('coalesce(avg(score), 0)'));
+                          }])->orderBy('average' ,$direction)->paginate(15); 
+             }elseif($order == 'likes'){
+                 $recipes = Recipe::where('user_id', $id)->withCount('likes')
+                           ->orderBy('likes_count', $direction)->paginate(15);
+            }else{
+            $recipes = Recipe::where('user_id', $id)->orderBy($order, $direction)->paginate(15);
+
+            }             
+
+        return $recipes;
+    }
 }

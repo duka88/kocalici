@@ -232,41 +232,7 @@
             
             <div class="tab-pane mt-4" id="activity">
            <!-----------Recipes------------>
-                  <div class="row justify-content-center">
-                    <div v-for="recipe in recipes.data" :key="recipe.id" class="col-md-4" >             
-                      <div class="card my-card">
-                       <div class="image">
-                          <a :href="`/recipes/${recipe.slug}`">
-                           <img :src="`/img/MD/${recipe.image}`" width="100%" height="300">
-                           </a>
-                          </div> 
-                        <div class="card-body archive align-items-center">
-                          <div class="card-title  d-flex justify-content-center">
-                            <a :href="`/recipes/${recipe.slug}`"><h2>{{recipe.title}} </h2></a>
-                          </div>
-                      
-                         
-
-                         
-                        </div>
-                        <div class="card-footer  team-icons d-flex  justify-content-around">
-
-                          <span><i class="fas fa-utensils mr-2"></i>{{recipe.servings}}</span>
-                          <span><i class="far fa-clock mr-2"></i>{{recipe.time}}</span>
-                          <span><i class="far fa-chart-bar mr-2"></i></i>{{recipe.dificulty}}</span>
-                          <span><i class="fas fa-star mr-2"></i></i>{{recipe.avg | numberFormat}}</span>
-
-                        </div>
-                      </div>
-              
-                    </div>
-
-
-      <!-----------End Recipes------------>
-
-           
-                   </div>
-          <pagination :data="recipes"  @pagination-change-page="paginateRecipes"></pagination>
+              <edit-recipe-component></edit-recipe-component> 
             </div>
             <!-- /.tab-content -->
           </div>
@@ -277,12 +243,17 @@
     </div>
       <!-- /.row -->
 
+
+   
+
+
     </section>
     <!-- /.content -->
   </div>
 </template>
 
 <script>
+ import { mapActions } from 'vuex';
  import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
     export default {
 
@@ -294,6 +265,7 @@
                     toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
 
                 },
+               
                 user:{},
                 userForm: new Form({
                    id: '',
@@ -308,7 +280,7 @@
                   image: '',
                   full_name: ''
                 }),
-                recipes:{},                
+                                
                 recipeBook:{},
                 like: '',
                 comments: {},
@@ -319,7 +291,7 @@
                    
                 }),
                 commentEdit: false,
-
+                editRecipe: ''
             }
         },
 
@@ -338,6 +310,9 @@
                this.userForm.image = this.user.profile.image;
                this.userForm.full_name = this.user.profile.full_name;
                this.userForm.about = this.user.profile.about;
+            },
+            loadRecipes(){
+               this.$store.dispatch('loadUsersRecipes');               
             },
             updateProfile(){
                let vm = this;
@@ -369,27 +344,18 @@
             removeImage: function (item) {
               item.image = false; 
                     }, 
-            loadRecipes(){
+         
+               
+        
 
-               axios.get(`/api/users_recipe/${this.$gate.idUser()}`)
-                      .then(({data}) =>{
-                        this.recipes = data;
-                      })
-              
-            },
-            paginateRecipes(page = 1){
-               axios.get(`/api/users_recipe/${this.$gate.idUser()}?page=` + page)
-                    .then(data => {
-                        this.recipes = data.data;
-                      });
-             
-            },
             loadComments(){
               axios.get(`/api/users_comments/${this.$gate.idUser()}`)
                    .then(({data}) => {
                     this.comments = data;
                    })
             },
+   
+
             paginateComments(page = 1){
                axios.get(`/api/users_comments/${this.$gate.idUser()}?page=` + page)
                     .then(data => {
@@ -438,6 +404,7 @@
                                         
                      }) 
                 },
+               
       },
       filters: {
          round: function(value){

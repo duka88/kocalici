@@ -7,6 +7,7 @@
     <meta name="keywords" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+
     <title>@yield('title')</title>
 
   
@@ -26,7 +27,9 @@
         <div class="navbar-left">
           <button class="navbar-toggler" type="button">&#9776;</button>
            <a class="navbar-brand" href="{{route('welcome')}}">
-            
+             <img src="{{asset('img/logo.jpg')}}" alt="Logo" class="brand-image img-circle elevation-3"
+             style="opacity: .8">
+             <span class="brand-text font-weight-light  logo-text">Cookie</span>
            </a>
         </div>
 
@@ -38,7 +41,7 @@
 
           </ul>
         </section>
-        <login-component  @Auth :user_id={{auth()->user()->id}} @endauth></login-component>  
+        <login-component></login-component>  
         <search-component></search-component>  
 
       </div>
@@ -60,9 +63,14 @@
 
     <!-- Scripts -->
    </div>
+    @auth
+  <script>
+    window.user = @json(auth()->user())
+  </script>
+@endauth
     <script src="{{asset('js/app.js')}}"></script>
 
-  
+
    
   </body>
 </html>
