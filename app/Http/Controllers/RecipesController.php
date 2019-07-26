@@ -14,6 +14,8 @@ use App\Http\Requests\Recipe\RecipeApiRequest;
 use App\Http\Resources\GalleryResources;
 use App\Http\Resources\IngredientsResources;
 use App\Http\Resources\RecipeResources;
+use App\Http\Resources\UsersRecipeResources;
+use App\Http\Resources\SingleRecipeResources;
 use Helper;
 
 class RecipesController extends Controller
@@ -55,6 +57,19 @@ class RecipesController extends Controller
 
     }
 
+    public function single($id){
+         $recipe = Recipe::findOrFail($id);
+
+        return new SingleRecipeResources($recipe);
+    }
+
+    public function edit_recipe($id){
+
+        $recipe = Recipe::findOrFail($id);
+
+        return Response($recipe);
+    }
+
     public function trashed(){
 
         $trashed = Recipe::onlyTrashed()->get();
@@ -80,11 +95,12 @@ class RecipesController extends Controller
         return RecipeResources::collection($recipes);
     }
    
-   public function user_recipe($id){
+   public function user_recipe($order, $direction){
 
-        $recipes = Recipe::where('user_id', $id)->latest()->paginate(9);
+         $recipes = Recipe::user_recipes_order($order, $direction);
 
-        return RecipeResources::collection($recipes);
+          return UsersRecipeResources::collection($recipes);
+
    }
 
 

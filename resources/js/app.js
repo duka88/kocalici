@@ -46,6 +46,7 @@ Vue.component('tag-component', require('./components/Tag.vue').default);
 Vue.component('gallery-component', require('./components/Gallery.vue').default);
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('search-component', require('./components/Search.vue').default);
+Vue.component('edit-recipe-component', require('./components/recipes/EditRecipe.vue').default);
 
 const routes = [
   { path: '/get-comments', component: comments},

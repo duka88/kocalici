@@ -1,14 +1,18 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import {Form , HasError, AlertError} from 'vform';
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
+
   state:{
      category: '',
   	 search: '',
   	 recipes: {},
-     
+     usersRecipes: {},
+     userSort: 'created_at',
+     userDirection: 'DESC',
      order: '',
      direction: '',   
      notifications: {},
@@ -35,6 +39,14 @@ export const store = new Vuex.Store({
      },
      searchInput: (state)=>{
         state.recipes = {};
+     },
+       
+     loadUsersRecipes: (state, data)=>{
+        state.usersRecipes = data.data;
+     },
+     usersRecipesSort: (state, data)=>{
+        state.userSort = data.userSort;
+        state.userDirection = data.userDirection;
      }
     
   },
@@ -103,8 +115,34 @@ export const store = new Vuex.Store({
                     dispatch('loadComments');         
                    
             })
-          },                    
-     }       
+          },
+        loadRecipe: ({commit}, payLoad)=>{
+              axios.get(`/api/recipe/${payLoad}`)
+                  .then(({data})=>{
+                     commit('loadRecipe', {data:data})
+                  })
+        },
+       loadUsersRecipes: ({commit, state})=>{
+
+               axios.get(`/users_recipe/${state.userSort}/${state.userDirection}`)
+                      .then(({data}) =>{
+                        commit('loadUsersRecipes', {data:data})
+                      })
+              
+            },
+
+       usersRecipesSort: ({commit, dispatch}, payLoad)=>{
+                commit('usersRecipesSort',  payLoad );
+                dispatch('loadUsersRecipes');
+       },      
+       paginateRecipes: ({commit, state}, payLoad)=>{
+              axios.get(`/users_recipe/${state.userSort}/${state.userDirection}?page=${payLoad}`)
+                    .then(({data}) => {
+                        commit('loadUsersRecipes', {data:data})
+                      });
+             
+            },                          
+     }             
   	
   
 });

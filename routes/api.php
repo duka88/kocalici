@@ -31,8 +31,9 @@ Route::put('profile','ProfileController@update');
 
 Route::get('recipes/{category_id}/{order}/{direction}', 'RecipesController@category');
 Route::get('ingredients/{id}', 'RecipesController@ingredients');
-Route::get('users_recipe/{id}','RecipesController@user_recipe');
+
 Route::get('search/{search}/{category}/{order}/{direction}', 'RecipesController@search');
+Route::get('recipe/{id}', 'RecipesController@single');
 
 
 
@@ -61,7 +62,6 @@ Route::post('like', 'LikeController@create');
 Route::get('like/{recipe}', 'LikeController@index');
 Route::get('myLike/{recipe}/{user}', 'LikeController@single');
 Route::get('my-likes/{user}','LikeController@user_likes');
-
 
 
 

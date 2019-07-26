@@ -32,6 +32,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('recipe', 'RecipesController@stored');
     Route::post('raply', 'ScoreController@reply');
 
+    Route::get('users_recipe/{order}/{direction}','RecipesController@user_recipe');
+
 
 });
 

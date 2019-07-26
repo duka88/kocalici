@@ -1,12 +1,13 @@
 <template>
     <div class="container">
         
-          <div class="card-tools">
-                    <button v-if="!user_id" @click="newModal" class="btn btn-success" data-toggle="modal" >Login</button>
+          <div class="card-tools d-flex justify-content-start">
+                    <a v-if="!$gate.getAuth()" @click="newModal" 
+                      class="filter_search" data-toggle="modal" >Login / Register</a>
                    
                 </div>
 
-               <div   class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div   class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog " role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -16,8 +17,13 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <form @submit.prevent="loginUser">
+                  <form >                  
                       <div class="modal-body">
+                       <div class="form-group" v-if="register">
+                            <input v-model="form.name" type="text" name="name" id="name" placeholder="name" 
+                              class="form-control" :class="{'is-invalid': form.errors.has('name')}">
+                              <has-error :form="form" field="name"></has-error>
+                      </div> 
                          <div class="form-group">
                             <input v-model="form.email" type="text" name="email" id="email" placeholder="email" 
                               class="form-control" :class="{'is-invalid': form.errors.has('email')}">
@@ -28,13 +34,21 @@
                               class="form-control" placeholder="password" :class="{'is-invalid': form.errors.has('password')}">
                               <has-error :form="form" field="password"></has-error>
                         </div>
+                         <div class="form-group" v-if="register">
+                            <input v-model="form.password_confirmation" type="password" name="password_confirmation" id="password_confirmation"
+                              class="form-control" placeholder="password_confirmation" :class="{'is-invalid': form.errors.has('password_confirmation')}">
+                              <has-error :form="form" field="password_confirmation"></has-error>
+                        </div>
                       </div>
+                       </form>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button v-if="register" type="submit" class="btn btn-primary">Register</button>
-                        <button v-if="!register" type="submit" class="btn btn-primary">Login</button>
+                        <button v-if="!register" @click='register = true' class="btn btn-primary">Register</button>
+                        <button v-if="!register" @click="loginUser()" class="btn btn-primary">
+                        Login</button>
+                        <button v-else @click='registerUser()' class="btn btn-primary">Register</button>
                       </div>
-                 </form>
+                
                 </div>
               </div>
             </div>      
@@ -48,27 +62,25 @@
             return {
                form: new Form({                  
                     email: '',                   
-                    password: ''                   
+                    password: '',
+                    password_confirmation: '',
+                    name: ''                   
                 }), 
                token: localStorage.getItem('token') || null,
                register: false
             }
         },
-        props: ['user_id'],
+       
         methods: {
              loginUser(){
+
               this.form.post('/login')
                          .then(({data})=>{
                             window.location.replace("/home");
                              $('#addNew').modal('hide');
                          })
              },
-             logOut(){
-                 axios.post('/logout')
-                       .then(()=>{
-                      
-                       })
-             },
+            
              logOutApi(){
             axios.defaults.headers.post['Authorization'] = `Bearer ${this.token}` // 
             console.log(axios.defaults.headers.post['Authorization']);
@@ -79,7 +91,11 @@
                 })
              },
              registerUser(){
-
+                this.form.post('/register')
+                         .then(({data})=>{
+                            window.location.replace("/home");
+                             $('#addNew').modal('hide');
+                         })
              },
              newModal(){
                 this.edit = false;

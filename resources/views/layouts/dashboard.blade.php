@@ -38,10 +38,10 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="" class="brand-link">
+    <a href="/" class="brand-link">
       <img src="{{asset('img/logo.jpg')}}" alt="Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">Cookie</span>
+      <span class="brand-text font-weight-light logo-text">Cookie</span>
     </a>
 
     <!-- Sidebar -->

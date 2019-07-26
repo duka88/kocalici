@@ -32,15 +32,19 @@
                                     </form>
                                
     <!-- Header -->
-    <header class="header text-center text-white" style="background-image: linear-gradient(-225deg, #5D9FFF 0%, #B8DCFF 48%, #6BBBFF 100%);">
-      <div class="container">
+    <header class="header text-center text-white my-5" >
+      <div class="container-fluid">
 
         <div class="row">
-          <div class="col-md-8 mx-auto">
+          <div class="col-6 background-1">
 
-            <h1>Latest Blog Posts</h1>
-            <p class="lead-2 opacity-90 mt-6">Read and get updated on how we progress</p>
+            <h1 class="text-dark text-left">Cookie is your smart cooking sidekick</h1>
+            <p class="text-dark mt-5 text-left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley </p>
+            <login-component></login-component>  
 
+          </div>
+          <div class="col-6 background-2">
+            
           </div>
         </div>
 

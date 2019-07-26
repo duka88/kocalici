@@ -27,7 +27,7 @@ class RecipeResources extends JsonResource
           'servings' => $this->servings,
           'likes' => LikeResources::collection($this->likes),
           'image' => $this->image, 
-                 
+           'created_at' => date("d-m-Y", strtotime($this->created_at)),      
           'description' => $this->description,
           'category' => $this->category->only('id', 'name'),
           'user_id' => $this->user_id,
