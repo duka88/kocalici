@@ -27,7 +27,7 @@ class ScoreController extends Controller
               'score' =>$request->score,
               'comment' => $request->comment        
             ]);
-            return Response($score);
+            return new ScoreResources($score);
          }else{
             return Response('Already commented');
          }
@@ -55,7 +55,8 @@ class ScoreController extends Controller
         return Response('Replayed successfily');
   }
 
-   public function show($recipe, $user){
+   public function show($recipe){
+      $user = auth()->user()->id;
        
       $score=[];
         if(isset($user)){
@@ -77,7 +78,7 @@ class ScoreController extends Controller
 
    public function load($recipe){
 
-      $score = Score::where('recipe_id', $recipe)->get();
+      $score = Score::where('recipe_id', $recipe)->where('perent_comment_id', null )->latest()->paginate(1); 
       
       return ScoreResources::collection($score);
 

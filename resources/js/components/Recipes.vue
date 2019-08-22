@@ -1,12 +1,28 @@
 <template>
 
-    <div class="col-10 my-5">
+    <div class="col-12 my-5 col-">
      <div class="row">
-      <div class="col-3 my-5">
-          <p v-for="category in categories"
-            class="filter_search"  @click="selectCategory(category.id)">{{category.name}}</p>
+      <div class="col-12 my-5">
+        <div class="row d-flex justify-content-center">
+          <div   :class="{'active-border-top' : active == 0}" 
+            class="filter_category "  @click="selectCategory(0)">
+             
+             
+               <img :src="`/img/S/cake3.jpg`" class="mt-3 img-responsive img-circle"  alt="">
+               <p class="text-center">All</p>
+             
+           </div>
+          <div  v-for="(category, index) in categories" :class="{'active-border-top' : active == category.id}" :key="category.id"
+            class="filter_category "  @click="selectCategory(category.id)">
+             <div @click="selectCategory(category.id)">
+             
+               <img :src="`/img/S/${category.image}`" class="mt-3 img-responsive img-circle"  alt="">
+               <p class="text-center">{{category.name}}</p>
+             </div>
+           </div>
+          </div>
        </div>
-       <div class="col-9">
+       <div class="col-10 offset-1">
             <div class="row justify-content-between">
              
                 <div class="col-9  d-flex flex-row">
@@ -23,13 +39,14 @@
             </div>
          
             <div class="row justify-content-center">
-             
-                <div v-for="recipe in recipes.data" :key="recipe.id" class="col-md-4" >             
+             <transition-group name="fade" tag="div" class="row justify-content-center" mode="out-in">
+                <div  v-for="recipe in recipes.data" :key="recipe.id" class="col-4" >   
+                          
                         <div class="card my-card">
                            <div class="image">
                               <a :href="`/recipes/${recipe.slug}`">
                                <img :src="`/img/MD/${recipe.image}`" width="100%" height="300">
-                               </a>
+       `                        </a>
                               </div> 
                             <div class="card-body archive align-items-center">
                               <div class="card-title  d-flex justify-content-center">
@@ -49,9 +66,10 @@
 
                             </div>
                           </div>
+
                          </div> 
              
-
+              </transition-group>
             </div>
           
              <nav aria-label="Page navigation example">
@@ -67,6 +85,7 @@
     export default {
        data(){
         return {
+          active: 0,
           category: 0,
           categories: {},
           recipes: {},
@@ -105,7 +124,8 @@
            })
     },
     selectCategory(id){
-       this.category = id ;
+
+       this.category = this.active  = id ;
        this.loadRecipes();
 
      },

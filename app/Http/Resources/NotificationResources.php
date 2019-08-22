@@ -21,7 +21,7 @@ class NotificationResources extends JsonResource
         return [
           'id' => $this->id,
           'score' => $this->score,         
-          'recipe' => $this->recipe->only('title'),         
+          'recipe' => $this->recipe->only('title', 'slug'),         
           'user' => new UserResources($this->user),
           'excerpt' => substr(strip_tags($this->comment),40),        
           'time' => date("d-m-Y", strtotime($this->created_at)),

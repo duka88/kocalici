@@ -19,6 +19,7 @@ class RecipeResources extends JsonResource
          $score = Score::where('recipe_id', $this->id)->avg('score');
       
         return [
+          'tags' => $this->tags,
           'id' => $this->id,
           'slug'=> $this->slug,
           'title' => $this->title,

@@ -75,10 +75,11 @@
              loginUser(){
 
               this.form.post('/login')
-                         .then(({data})=>{
-                            window.location.replace("/home");
+                         .then(()=>{
+                            window.location = "/home";
                              $('#addNew').modal('hide');
                          })
+
              },
             
              logOutApi(){
@@ -92,8 +93,8 @@
              },
              registerUser(){
                 this.form.post('/register')
-                         .then(({data})=>{
-                            window.location.replace("/home");
+                         .then(()=>{
+                            window.location = "/home";
                              $('#addNew').modal('hide');
                          })
              },

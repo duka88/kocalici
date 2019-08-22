@@ -1,7 +1,6 @@
 <template>
     <div class="container">
-         
-       <div class="card"  >
+               <div class="card"  >
           <div class="card-header">
             <h3 class="card-title">Users Table</h3>
                 <form @submit.prevent="searchRecipe" class="form-inline ml-3">
@@ -26,15 +25,15 @@
                   <tbody><tr>
                     <th>ID</th>
                     <th @click="Sort('category_id')">Category <i class="fas "
-                      :class="{'fa-chevron-down':userDirection == 'DESC' && userSort=='category_id', 'fa-chevron-up':userDirection == 'ASC'  && userSort=='category_id' }"></i></th>
+                      :class="{'fa-chevron-down':recipeDirection == 'DESC' && recipeSort=='category_id', 'fa-chevron-up':recipeDirection == 'ASC'  && recipeSort=='category_id' }"></i></th>
                     <th @click="Sort('title')">Title <i class="fas" 
-                      :class="{'fa-chevron-down':userDirection == 'DESC' && userSort=='title', 'fa-chevron-up':userDirection== 'ASC'  && userSort=='title' }"></i></th>
+                      :class="{'fa-chevron-down':recipeDirection == 'DESC' && recipeSort=='title', 'fa-chevron-up':recipeDirection== 'ASC'  && recipeSort=='title' }"></i></th>
                     <th @click="Sort('score')">Avg <i class="fas"
-                      :class="{'fa-chevron-down':userDirection == 'DESC' && userSort=='score', 'fa-chevron-up':userDirection== 'ASC'  && userSort=='score' }"></i></th>
+                      :class="{'fa-chevron-down':recipeDirection == 'DESC' && recipeSort=='score', 'fa-chevron-up':recipeDirection== 'ASC'  && recipeSort=='score' }"></i></th>
                     <th @click="Sort('likes')">Likes <i class="fas"
-                      :class="{'fa-chevron-down':userDirection == 'DESC' && userSort=='likes', 'fa-chevron-up':userDirection== 'ASC'  && userSort=='likes' }"></i></th>
+                      :class="{'fa-chevron-down':recipeDirection == 'DESC' && recipeSort=='likes', 'fa-chevron-up':recipeDirection== 'ASC'  && recipeSort=='likes' }"></i></th>
                     <th @click="Sort('created_at')">Created_at <i class="fas" 
-                      :class="{'fa-chevron-down':userDirection == 'DESC' && userSort=='created_at', 'fa-chevron-up':userDirection== 'ASC'  && userSort=='created_at' }"></i></th>
+                      :class="{'fa-chevron-down':recipeDirection == 'DESC' && recipeSort=='created_at', 'fa-chevron-up':recipeDirection== 'ASC'  && recipeSort=='created_at' }"></i></th>
                     <th>Modify</th>
                   </tr>
                   <tr v-for="recipe in recipes.data" :key="recipe.id">
@@ -69,7 +68,8 @@
       </div>
 
 
-
+   <!----------Edit----------->
+       
        <div   class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog " role="document">
                 <div class="modal-content">
@@ -218,21 +218,17 @@
           </div>
           </div>               
     </div>
-    </div>
 
+    </div>
 </template>
 
 <script>
-   import { mapActions } from 'vuex';
-   import { mapState } from 'vuex';
-   import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
- 
+    import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
     export default {
-         
-        data(){            
-            return {
-               search: '', 
-               items: [
+      data(){
+        return{        
+           
+            items: [
                    {
                      id: '',
                      image: false,
@@ -308,17 +304,56 @@
                   tags:[],
                   amount:[]
                 },
-
-            }
-        },
-
-        methods:{
-          searchRecipe: _.debounce(function(){
+            search: '',
+            recipeSort: 'created_at',
+            recipeDirection: 'DESC',
+            recipes: {}, 
+              
+        }
+      },
+      methods: {
+        searchRecipe: _.debounce(function(){
 
              
-              this.Sort('created_at');
+              this.loadRecipes();
                }, 500),
-            updateRecipe(){
+       loadRecipes(){
+           
+            let search = 0;
+            
+            if(this.search){
+                search = this.search;
+            }
+
+            axios.get(`/all-recipes/${this.recipeSort}/${this.recipeDirection}/${search}`)
+                 .then(({data})=>{
+                    this.recipes = data;
+                 })
+        },
+        Sort(value){
+          
+           this.recipeSort = value;
+              if(this.recipeDirection == 'DESC'){
+                 this.recipeDirection = 'ASC';
+                this.loadRecipes();                                
+               }else{
+                this.recipeDirection = 'DESC';
+                 this.loadRecipes(); 
+               }  
+
+        },
+        paginate(page = 1){
+            let search = 0;
+            
+            if(this.search){
+                search = this.search;
+            }
+            axios.get(`/all-recipes/${this.recipeSort}/${this.recipeDirection}/${search}?page=${page}`)
+                 .then(({data})=>{
+                    this.recipes = data;
+                 })
+        },
+        updateRecipe(){
                 let vm = this;
 
                 for(let tag in this.recipeForm.tags){
@@ -332,22 +367,26 @@
                 this.updateRecipeForm.image = this.items[0];
                 this.updateRecipeForm.tags = this.tagsArray;
                 this.updateRecipeForm.put('/edit-recipe')
-                        .then(()=>{
-                           toast.fire({
+                        .then(()=>{                          
+                            toast.fire({
                             type: 'success',
                             title: 'Recipe updated successfully'
-                           })
-                           vm.$store.dispatch('loadUsersRecipes');
+                          })
+                           vm.loadRecipes();
                            $('#addNew').modal('hide');  
+
+                })
+                 .catch((error) => {
+                   if (error.response) {
+                        toast.fire({
+                          type: 'error',
+                          title: error.response.data.message
                         })
-                      .catch((error) => {
-                        if (error.response) {
-                              toast.fire({
-                              type: 'error',
-                              title: error.response.data.message
-                            })               
-                           } 
-                        } );
+                      
+                
+                 
+                  } 
+                } );
 
             },
             onFileChange(item, index, e) {
@@ -392,9 +431,10 @@
             },
             deleteRecipe(id){
                let vm = this;
-                swal.fire({
+              
+               swal.fire({
                       title: 'Are you sure?',
-                      text: "Recipe will be trashed",
+                      text: "Recipe will be moved to trash!",
                       type: 'warning',
                       showCancelButton: true,
                       confirmButtonColor: '#3085d6',
@@ -403,26 +443,18 @@
                     }).then((result) => {
                      if (result.value) {
 
-                      axios.delete(`/recipe/${id}`)
-                       .then(()=>{
-                         toast.fire(
+                     axios.delete(`/recipe/${id}`)
+                           .then(()=>{
+                              toast.fire(
                               'Deleted!',
-                              'Recipe has been trashed.',
+                              'Recipe has been moved to trash.',
                               'success'
                               );
-                         vm.$store.dispatch('loadUsersRecipes');                               
-                       }) 
-                          
-                    }
-                 })
-                  .catch((error) => {
-                     if (error.response) {
-                              toast.fire({
-                              type: 'error',
-                              title: error.response.data.message
-                            })               
-                           } 
-                        } );        
+                              vm.loadRecipes();
+                           })
+                         }
+                 })        
+
             },
             removeImage: function (item) {
               item.image = false; 
@@ -447,24 +479,7 @@
                
                this.recipeForm.tags[index].name = '';
                this.recipeForm.tags[index] = {};
-           },                  
-            Sort(value){
-              this.sort = value;
-              let vm = this;
-              if(this.userDirection == 'DESC'){
-                this.$store.dispatch('usersRecipesSort',
-                {userSort: value, userDirection: 'ASC', userSearch: this.search })
-                 
-               }else{
-                 this.$store.dispatch('usersRecipesSort',
-                {userSort: value, userDirection: 'DESC', userSearch: this.search })
-               }
-             
-
-            },       
-            paginate(page = 1){
-               this.$store.dispatch('paginateRecipes', page); 
-           },
+           }, 
            addAmount(){
                this.tagsArray.amount.push(this.currentAmount);
                this.currentAmount = "";
@@ -666,30 +681,22 @@
                 if( this.currentTag.length == 0 ){
                     this.tagsArray.tags.splice( this.tagsArray.tags.length - 1, 1);
                      }
-            },
-            
-        },
-      computed: {
-        recipes(){
-            return this.$store.state.usersRecipes;
-        },
+            }, 
+
+      },
+      created(){
+        this.loadRecipes();
+      },
+        computed: {
+      
         showAutocomplete: function(){
                 return this.tagSearchResults.length == 0 ? false : true;
-            },
-
-      ...mapState([
-         'userSort',
-         'userDirection',
-         'userSearch'
-        ])
-
-      }, 
-        
+            }
+     },
       filters: {
          round: function(value){
            return Math.round(value);
          },
-      }, 
-     
+      },
     }
 </script>

@@ -1759,6 +1759,233 @@ module.exports = function isBuffer (obj) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Categories.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Categories.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      item: {
+        image: false,
+        name: ''
+      },
+      categorise: {},
+      edit: false,
+      form: new Form({
+        id: '',
+        name: '',
+        image: ''
+      })
+    };
+  },
+  methods: {
+    onFileChange: function onFileChange(item, e) {
+      var files = e.target.files || e.dataTransfer.files;
+      var name = e.target.files[0].name;
+      var vm = this;
+      if (!files.length) return;
+      this.createImage(item, files[0], name);
+    },
+    createImage: function createImage(item, file, name) {
+      var image = new Image();
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        item.image = e.target.result;
+        item.name = name;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    loadCategories: function loadCategories() {
+      var _this = this;
+
+      axios.get('/category').then(function (_ref) {
+        var data = _ref.data;
+        _this.categorise = data;
+      });
+    },
+    createCaregory: function createCaregory() {
+      var vm = this;
+      this.form.image = this.item;
+      this.form.post('/category').then(function () {
+        toast.fire({
+          type: 'success',
+          title: 'Category created successfully'
+        });
+        $('#addNew').modal('hide');
+        vm.loadCategories();
+      })["catch"](function (error) {
+        if (error.response) {
+          toast.fire({
+            type: 'error',
+            title: error.response.data.message
+          });
+        }
+      });
+    },
+    updateCaregory: function updateCaregory() {
+      var vm = this;
+      this.form.image = this.item;
+      this.form.put("/category").then(function () {
+        toast.fire({
+          type: 'success',
+          title: 'Category updated successfully'
+        });
+        $('#addNew').modal('hide');
+        vm.loadCategories();
+      })["catch"](function (error) {
+        if (error.response) {
+          toast.fire({
+            type: 'error',
+            title: error.response.data.message
+          });
+        }
+      });
+    },
+    deleteCategory: function deleteCategory(id) {
+      var vm = this;
+      swal.fire({
+        title: 'Are you sure?',
+        text: "Category will be deleted!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          axios["delete"]("/category/".concat(id)).then(function () {
+            toast.fire('Deleted!', 'Caregory has been removed.', 'success');
+            vm.loadCategories();
+          })["catch"](function (error) {
+            if (error.response) {
+              console.log(error.response.data);
+              toast.fire({
+                type: 'error',
+                title: error.response.data
+              });
+            }
+          });
+        }
+      });
+    },
+    editModal: function editModal(user) {
+      this.edit = true;
+      this.form.reset();
+      $('#addNew').modal('show');
+      this.form.fill(user);
+      this.item['image'] = false;
+      this.item['name'] = '';
+    },
+    newModal: function newModal() {
+      this.edit = false;
+      this.form.reset();
+      this.item['image'] = false;
+      this.item['name'] = '';
+      $('#addNew').modal('show');
+    }
+  },
+  created: function created() {
+    this.loadCategories();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Comments.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Comments.vue?vue&type=script&lang=js& ***!
@@ -1965,6 +2192,130 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Footer.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Footer.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      formNewsletter: new Form({
+        newsletter: ''
+      }),
+      formContact: new Form({
+        massege: '',
+        email: ''
+      })
+    };
+  },
+  methods: {
+    newsletterSend: function newsletterSend() {
+      this.formNewsletter.post('/newslleter').then(function (_ref) {
+        var data = _ref.data;
+
+        if (data == 'Already Subscribed') {
+          console.log(data);
+          toast.fire({
+            type: 'info',
+            title: data
+          });
+        } else {
+          console.log(data);
+          toast.fire({
+            type: 'success',
+            title: data
+          });
+        }
+      });
+    },
+    contactFormSend: function contactFormSend() {
+      var _this = this;
+
+      this.formContact.post('/contact_us').then(function (_ref2) {
+        var data = _ref2.data;
+        toast.fire({
+          type: 'success',
+          title: 'Message sent successfully'
+        });
+
+        _this.formContact.reset();
+      })["catch"](function (error) {
+        if (error.response) {
+          toast.fire({
+            type: 'error',
+            title: error.response.data.message
+          });
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Fridge.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Fridge.vue?vue&type=script&lang=js& ***!
@@ -1974,6 +2325,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2032,7 +2390,7 @@ __webpack_require__.r(__webpack_exports__);
     loadTags: function loadTags() {
       var _this = this;
 
-      axios.get('api/fridge').then(function (_ref) {
+      axios.get('/api/fridge').then(function (_ref) {
         var data = _ref.data;
         _this.tags = data.data;
       })["catch"](function (error) {
@@ -2042,8 +2400,7 @@ __webpack_require__.r(__webpack_exports__);
     searchedRecipes: function searchedRecipes(page_url) {
       var _this2 = this;
 
-      var result = JSON.stringify(this.searchRecipes);
-      axios.get("api/fridged/?tag=".concat(result)).then(function (_ref2) {
+      axios.get("/api/fridged?tag=".concat(this.searchRecipes)).then(function (_ref2) {
         var data = _ref2.data;
         _this2.recipes = data.data;
       });
@@ -2223,9 +2580,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     loginUser: function loginUser() {
-      this.form.post('/login').then(function (_ref) {
-        var data = _ref.data;
-        window.location.replace("/home");
+      this.form.post('/login').then(function () {
+        window.location = "/home";
         $('#addNew').modal('hide');
       });
     },
@@ -2241,9 +2597,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     registerUser: function registerUser() {
-      this.form.post('/register').then(function (_ref2) {
-        var data = _ref2.data;
-        window.location.replace("/home");
+      this.form.post('/register').then(function () {
+        window.location = "/home";
         $('#addNew').modal('hide');
       });
     },
@@ -2331,9 +2686,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      active: 0,
       category: 0,
       categories: {},
       recipes: {},
@@ -2374,7 +2748,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     selectCategory: function selectCategory(id) {
-      this.category = id;
+      this.category = this.active = id;
       this.loadRecipes();
     },
     sort: function sort(_sort) {
@@ -2413,8 +2787,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ckeditor/ckeditor5-build-classic */ "./node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js");
-/* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2481,26 +2853,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['recipe_id', 'user_id'],
+  props: ['recipe_id'],
   data: function data() {
     return {
-      editor: _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0___default.a,
-      editorConfig: {
-        toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote']
-      },
+      replyCount: 1,
+      commentId: '',
       avg: '',
       score: '5',
       comment: '',
       reply: '',
       comments: {},
       rate: '',
-      showReply: 'no'
+      showReply: 'no',
+      pagination: {}
     };
   },
   methods: {
     rateRecipe: function rateRecipe() {
+      var _this = this;
+
       var vm = this;
       axios.post('/rating', {
         recipe_id: this.recipe_id,
@@ -2509,37 +2890,105 @@ __webpack_require__.r(__webpack_exports__);
         comment: this.comment
       }).then(function (_ref) {
         var data = _ref.data;
+        toast.fire('success', 'Comentet is successful', 'success');
         vm.loadScores();
-        vm.loadComments();
+
+        _this.comments.unshift(data.data);
+      })["catch"](function (error) {
+        if (error.response) {
+          toast.fire({
+            type: 'error',
+            title: error.response.data.message
+          });
+        }
       });
     },
-    replyCreate: function replyCreate(id) {
+    loadMoreReples: function loadMoreReples(id) {
+      this.replyCount += 2;
+      this.commentId = id;
+    },
+    show: function show(id) {
+      if (id == this.commentId) {
+        return this.replyCount;
+      } else {
+        return 1;
+      }
+    },
+    loadComments: function loadComments() {
+      var _this2 = this;
+
+      var vm = this;
+      axios.get("/comments/".concat(this.recipe_id)).then(function (_ref2) {
+        var data = _ref2.data;
+        _this2.comments = data.data;
+        vm.loadMore(data.meta, data.links);
+      });
+    },
+    loadMoreComments: function loadMoreComments(page_url) {
+      var _this3 = this;
+
+      var vm = this;
+      axios.get(page_url).then(function (_ref3) {
+        var data = _ref3.data;
+        data.data.forEach(function (item) {
+          console.log(item);
+
+          _this3.comments.push(item);
+        });
+        vm.loadMore(data.meta, data.links);
+      });
+    },
+    loadMore: function loadMore(meta, links) {
+      var pagination = {
+        current_page: meta.current_page,
+        last_page: meta.last_page,
+        next_page_url: links.next,
+        prev_page_url: links.prev
+      };
+      this.pagination = pagination;
+    },
+    replyCreate: function replyCreate(id, index) {
+      var _this4 = this;
+
       var vm = this;
       axios.post('/raply', {
         recipe_id: this.recipe_id,
         user_id: this.user_id,
         perent_comment_id: id,
         comment: this.reply
-      }).then(function (_ref2) {
-        var data = _ref2.data;
-        vm.loadComments();
+      }).then(function (_ref4) {
+        var data = _ref4.data;
+        toast.fire('success', 'Raply is successful', 'success');
+
+        _this4.comments[index].replies.push({
+          comment: _this4.reply,
+          user: {
+            name: _this4.$gate.getName()
+          }
+        });
+
+        _this4.showReply = false;
+        _this4.reply = "";
+      })["catch"](function (error) {
+        if (error.response) {
+          toast.fire({
+            type: 'error',
+            title: error.response.data.message
+          });
+        }
       });
     },
-    loadComments: function loadComments() {
-      var _this = this;
-
-      axios.get("/api/comments/".concat(this.recipe_id)).then(function (_ref3) {
-        var data = _ref3.data;
-        _this.comments = data.data;
-      });
+    cancel: function cancel() {
+      this.showReply = false;
+      this.reply = "";
     },
     loadScores: function loadScores() {
-      var _this2 = this;
+      var _this5 = this;
 
-      axios.get("/api/rating/".concat(this.recipe_id, "/").concat(this.user_id)).then(function (_ref4) {
-        var data = _ref4.data;
-        _this2.avg = data[1];
-        _this2.rate = data[0];
+      axios.get("/rating/".concat(this.recipe_id, "/")).then(function (_ref5) {
+        var data = _ref5.data;
+        _this5.avg = data[1];
+        _this5.rate = data[0];
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2718,6 +3167,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.post('logout').then(function () {
         window.location.replace("/");
       });
+    },
+    loadComments: function loadComments() {
+      var _this = this;
+
+      axios.get('/new_comments').then(function (_ref) {
+        var data = _ref.data;
+        _this.comments = data;
+      });
     }
   }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['searchIt', 'loadComments', 'loadNotifications', 'approved'])),
   computed: {
@@ -2726,7 +3183,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   created: function created() {
-    this.location = window.location.href;
+    this.location = document.title;
     this.$store.dispatch('loadNotifications');
   },
   filters: {
@@ -3102,15 +3559,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/Dashboard.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/Dashboard.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recipes/AllRecipe.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/recipes/AllRecipe.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ckeditor/ckeditor5-build-classic */ "./node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js");
+/* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -3119,9 +3580,646 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  data: function data() {
+    var _ref, _ref2;
+
+    return {
+      items: [{
+        id: '',
+        image: false,
+        name: ''
+      }, {
+        id: '',
+        image: false,
+        name: ''
+      }, {
+        id: '',
+        image: false,
+        name: ''
+      }, {
+        id: '',
+        image: false,
+        name: ''
+      }],
+      tagSearchResults: [],
+      duplicateFlag: false,
+      searchSelectedIndex: -1,
+      pauseSearch: false,
+      recipeForm: new Form((_ref = {
+        content: '',
+        id: '',
+        title: '',
+        category: '',
+        description: '',
+        servings: 5
+      }, _defineProperty(_ref, "description", ''), _defineProperty(_ref, "dificulty", 5), _defineProperty(_ref, "time", 5), _defineProperty(_ref, "image", ''), _defineProperty(_ref, "name", ''), _defineProperty(_ref, "gallery", ''), _defineProperty(_ref, "tags", ''), _defineProperty(_ref, "amount", ''), _defineProperty(_ref, "categories", ''), _ref)),
+      updateRecipeForm: new Form((_ref2 = {
+        content: '',
+        id: '',
+        title: '',
+        category: '',
+        description: '',
+        servings: 5
+      }, _defineProperty(_ref2, "description", ''), _defineProperty(_ref2, "dificulty", 5), _defineProperty(_ref2, "time", 5), _defineProperty(_ref2, "image", ''), _defineProperty(_ref2, "name", ''), _defineProperty(_ref2, "gallery", ''), _defineProperty(_ref2, "tags", ''), _defineProperty(_ref2, "amount", ''), _defineProperty(_ref2, "categories", ''), _ref2)),
+      tagAmount: false,
+      categories: {},
+      editor: _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0___default.a,
+      editorConfig: {// The configuration of the rich-text editor.
+      },
+      currentTag: '',
+      currentAmount: '',
+      tagsArray: {
+        tags: [],
+        amount: []
+      },
+      search: '',
+      recipeSort: 'created_at',
+      recipeDirection: 'DESC',
+      recipes: {}
+    };
+  },
+  methods: {
+    searchRecipe: _.debounce(function () {
+      this.loadRecipes();
+    }, 500),
+    loadRecipes: function loadRecipes() {
+      var _this = this;
+
+      var search = 0;
+
+      if (this.search) {
+        search = this.search;
+      }
+
+      axios.get("/all-recipes/".concat(this.recipeSort, "/").concat(this.recipeDirection, "/").concat(search)).then(function (_ref3) {
+        var data = _ref3.data;
+        _this.recipes = data;
+      });
+    },
+    Sort: function Sort(value) {
+      this.recipeSort = value;
+
+      if (this.recipeDirection == 'DESC') {
+        this.recipeDirection = 'ASC';
+        this.loadRecipes();
+      } else {
+        this.recipeDirection = 'DESC';
+        this.loadRecipes();
+      }
+    },
+    paginate: function paginate() {
+      var _this2 = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      var search = 0;
+
+      if (this.search) {
+        search = this.search;
+      }
+
+      axios.get("/all-recipes/".concat(this.recipeSort, "/").concat(this.recipeDirection, "/").concat(search, "?page=").concat(page)).then(function (_ref4) {
+        var data = _ref4.data;
+        _this2.recipes = data;
+      });
+    },
+    updateRecipe: function updateRecipe() {
+      var vm = this;
+
+      for (var tag in this.recipeForm.tags) {
+        if (this.recipeForm.tags[tag].name) {
+          vm.tagsArray.tags.push(this.recipeForm.tags[tag].name);
+          vm.tagsArray.amount.push(this.recipeForm.tags[tag].pivot.amount);
+        }
+      }
+
+      ;
+      this.updateRecipeForm.fill(this.recipeForm);
+      this.updateRecipeForm.gallery = this.items;
+      this.updateRecipeForm.image = this.items[0];
+      this.updateRecipeForm.tags = this.tagsArray;
+      this.updateRecipeForm.put('/edit-recipe').then(function () {
+        toast.fire({
+          type: 'success',
+          title: 'Recipe updated successfully'
+        });
+        vm.loadRecipes();
+        $('#addNew').modal('hide');
+      })["catch"](function (error) {
+        if (error.response) {
+          toast.fire({
+            type: 'error',
+            title: error.response.data.message
+          });
+        }
+      });
+    },
+    onFileChange: function onFileChange(item, index, e) {
+      var files = e.target.files || e.dataTransfer.files;
+      var name = e.target.files[0].name;
+      var vm = this;
+      if (!files.length) return;
+
+      if (index != 0 && vm.recipeForm.gallery[index - 1]) {
+        vm.items[index].id = vm.recipeForm.gallery[index - 1].id;
+        vm.recipeForm.gallery[index - 1] = false;
+      }
+
+      this.createImage(item, files[0], name);
+    },
+    createImage: function createImage(item, file, name) {
+      var image = new Image();
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        item.image = e.target.result;
+        item.name = name;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    closeModel: function closeModel() {
+      var vm = this;
+
+      for (var i = 0; i < 4; i++) {
+        vm.items[i].image = false;
+        vm.items[i].name = '';
+      }
+
+      for (var _i = 0; _i < this.tagsArray.tags.length; _i++) {
+        vm.tagsArray.tags = '';
+        vm.tagsArray.amount = '';
+      }
+
+      this.currentAmount = '';
+      this.currentTag = '';
+      this.recipeForm.reset();
+      $('#addNew').modal('hide');
+    },
+    deleteRecipe: function deleteRecipe(id) {
+      var vm = this;
+      swal.fire({
+        title: 'Are you sure?',
+        text: "Recipe will be moved to trash!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          axios["delete"]("/recipe/".concat(id)).then(function () {
+            toast.fire('Deleted!', 'Recipe has been moved to trash.', 'success');
+            vm.loadRecipes();
+          });
+        }
+      });
+    },
+    removeImage: function removeImage(item) {
+      item.image = false;
+    },
+    editAmount: function editAmount(tag) {
+      this.tagAmount = tag;
+    },
+    doneEditTag: function doneEditTag(index) {
+      this.tagsArray.amount.push(this.currentAmount);
+      this.tagsArray.tags.push(this.recipeForm.tags[index].name);
+      this.recipeForm.tags[index] = {};
+      this.tagAmount = false;
+      this.currentAmount = '';
+    },
+    cancelEditTag: function cancelEditTag() {
+      this.currentAmount = '';
+      this.tagAmount = false;
+    },
+    deleteTag: function deleteTag(index) {
+      this.recipeForm.tags[index].name = '';
+      this.recipeForm.tags[index] = {};
+    },
+    addAmount: function addAmount() {
+      this.tagsArray.amount.push(this.currentAmount);
+      this.currentAmount = "";
+      this.$refs.tag.focus();
+    },
+    newModal: function newModal(value) {
+      $('#addNew').modal('show');
+      this.title = value;
+      this.recipeForm.fill(value);
+    },
+
+    /*
+    Handles the selection of a tag from the autocomplete.
+    */
+    selectTag: function selectTag(tag) {
+      /*
+        Check if there are duplicates in the array.
+      */
+      if (!this.checkDuplicates(tag)) {
+        /*
+          Clean the tag name and add it to the array.
+        */
+        tag = this.cleanTagName(tag);
+        this.tagsArray.tags.push(tag);
+        /*
+          Emit the tags array and reset the inputs.
+        */
+
+        this.resetInputs();
+      } else {
+        /*
+          Flag as duplicate
+        */
+        this.duplicateFlag = true;
+      }
+    },
+
+    /*
+      Adds a new tag from the input
+    */
+    addNewTag: function addNewTag() {
+      /*
+        If the tag is not a duplicate, continue.
+      */
+      if (!this.checkDuplicates(this.currentTag)) {
+        var newTagName = this.cleanTagName(this.currentTag);
+        this.tagsArray.tags.push(newTagName);
+        this.$refs.tag.nextElementSibling.focus();
+        /*
+          Emit the tags have been edited.
+        */
+
+        /*
+          Reset the inputs
+        */
+
+        this.resetInputs();
+      } else {
+        this.duplicateFlag = true;
+      }
+    },
+
+    /*
+    
+      /*
+      Allows the user to select a tag going up or down on the
+      autocomplete.
+    */
+    changeIndex: function changeIndex(direction) {
+      /*
+        Flags to pause the search since we don't want to search on arrows up
+        or down.
+      */
+      this.pauseSearch = true;
+      /*
+        If the direction is up and we are not at the beginning of the tags array,
+        we move the index up and set the current tag to that in the autocomplete.
+      */
+
+      if (direction == 'up' && this.searchSelectedIndex - 1 > -1) {
+        this.searchSelectedIndex = this.searchSelectedIndex - 1;
+        this.currentTag = this.tagSearchResults[this.searchSelectedIndex].name;
+      }
+      /*
+        If the direction is down and we are not at the end of the tags array, we
+        move the index down and set the current tag to that of the autocomplete.
+      */
+
+
+      if (direction == 'down' && this.searchSelectedIndex + 1 <= this.tagSearchResults.length - 1) {
+        this.searchSelectedIndex = this.searchSelectedIndex + 1;
+        this.currentTag = this.tagSearchResults[this.searchSelectedIndex].name;
+      }
+    },
+
+    /*
+      Searches the API route for tags with the autocomplete.
+    */
+    searchTags: function searchTags() {
+      if (this.currentTag.length > 2 && !this.pauseSearch) {
+        this.searchSelectedIndex = -1;
+        axios.get('/api/searchTag', {
+          params: {
+            q: this.currentTag
+          }
+        }).then(function (response) {
+          this.tagSearchResults = response.data;
+        }.bind(this));
+      }
+    },
+
+    /*
+      Check for tag duplicates.
+    */
+    checkDuplicates: function checkDuplicates(tagName) {
+      tagName = this.cleanTagName(tagName);
+      return this.tagsArray.tags.indexOf(tagName) > -1;
+    },
+
+    /*
+      Cleans the tag to remove any unnecessary whitespace or
+      symbols.
+    */
+    cleanTagName: function cleanTagName(tagName) {
+      /*
+        Convert to lower case
+      */
+      var cleanTag = tagName.toLowerCase();
+      /*
+        Trim whitespace from beginning and end of tag and
+        convert anything not a letter or number to a dash.
+      */
+
+      cleanTag = cleanTag.trim().replace(/[^a-zA-Z0-9]/g, '-');
+      /*
+        Remove multiple instance of '-' and group to one.
+      */
+
+      cleanTag = cleanTag.replace(/-{2,}/, '-');
+      /*
+        Get rid of leading and trailing '-'
+      */
+
+      cleanTag = this.trimCharacter(cleanTag, '-');
+      /*
+        Return the clean tag
+      */
+
+      return cleanTag;
+    },
+
+    /*
+      Remove the tag from the tags array.
+    */
+    removeTag: function removeTag(tagIndex) {
+      this.tagsArray.tags.splice(tagIndex, 1);
+      this.tagsArray.amount.splice(tagIndex, 1);
+    },
+
+    /*
+      Trims any leading or ending characters
+    */
+    trimCharacter: function trimCharacter(string, character) {
+      if (character === "]") c = "\\]";
+      if (character === "\\") c = "\\\\";
+      return string.replace(new RegExp("^[" + character + "]+|[" + character + "]+$", "g"), "");
+    },
+
+    /*
+      Reset the inputs for the tags input
+    */
+    resetInputs: function resetInputs() {
+      this.currentTag = '';
+      this.tagSearchResults = [];
+      this.duplicateFlag = false;
+      this.searchSelectedIndex = -1;
+      this.pauseSearch = false;
+    },
+
+    /*
+      Handles the deletion in the tag input.
+    */
+    handleDelete: function handleDelete() {
+      this.duplicateFlag = false;
+      this.pauseSearch = false;
+      this.searchSelectedIndex = -1;
+      /*
+        If the current tag has no data, we remove the last tag.
+      */
+
+      if (this.currentTag.length == 0) {
+        this.tagsArray.tags.splice(this.tagsArray.tags.length - 1, 1);
+      }
+    }
+  },
+  created: function created() {
+    this.loadRecipes();
+  },
+  computed: {
+    showAutocomplete: function showAutocomplete() {
+      return this.tagSearchResults.length == 0 ? false : true;
+    }
+  },
+  filters: {
+    round: function round(value) {
+      return Math.round(value);
+    }
   }
 });
 
@@ -3331,8 +4429,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.form.post('/recipe').then(function (_ref3) {
         var data = _ref3.data;
         var recipe_id = data.id;
-      })["catch"](function (errors) {
-        return console.log(errors);
+        toast.fire({
+          type: 'success',
+          title: 'Recipe created successfully'
+        });
+      })["catch"](function (error) {
+        if (error.response) {
+          toast.fire({
+            type: 'error',
+            title: error.response.data.message
+          });
+        }
       });
     },
     addAmount: function addAmount() {
@@ -3776,24 +4883,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    var _ref;
+    var _ref, _ref2;
 
     return {
+      search: '',
       items: [{
+        id: '',
         image: false,
         name: ''
       }, {
+        id: '',
         image: false,
         name: ''
       }, {
+        id: '',
         image: false,
         name: ''
       }, {
+        id: '',
         image: false,
         name: ''
       }],
@@ -3803,11 +4916,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       pauseSearch: false,
       recipeForm: new Form((_ref = {
         content: '',
+        id: '',
         title: '',
         category: '',
         description: '',
         servings: 5
       }, _defineProperty(_ref, "description", ''), _defineProperty(_ref, "dificulty", 5), _defineProperty(_ref, "time", 5), _defineProperty(_ref, "image", ''), _defineProperty(_ref, "name", ''), _defineProperty(_ref, "gallery", ''), _defineProperty(_ref, "tags", ''), _defineProperty(_ref, "amount", ''), _defineProperty(_ref, "categories", ''), _ref)),
+      updateRecipeForm: new Form((_ref2 = {
+        content: '',
+        id: '',
+        title: '',
+        category: '',
+        description: '',
+        servings: 5
+      }, _defineProperty(_ref2, "description", ''), _defineProperty(_ref2, "dificulty", 5), _defineProperty(_ref2, "time", 5), _defineProperty(_ref2, "image", ''), _defineProperty(_ref2, "name", ''), _defineProperty(_ref2, "gallery", ''), _defineProperty(_ref2, "tags", ''), _defineProperty(_ref2, "amount", ''), _defineProperty(_ref2, "categories", ''), _ref2)),
+      tagAmount: false,
       categories: {},
       editor: _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_1___default.a,
       editorConfig: {// The configuration of the rich-text editor.
@@ -3821,11 +4944,51 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: {
+    searchRecipe: _.debounce(function () {
+      this.Sort('created_at');
+    }, 500),
+    updateRecipe: function updateRecipe() {
+      var vm = this;
+
+      for (var tag in this.recipeForm.tags) {
+        if (this.recipeForm.tags[tag].name) {
+          vm.tagsArray.tags.push(this.recipeForm.tags[tag].name);
+          vm.tagsArray.amount.push(this.recipeForm.tags[tag].pivot.amount);
+        }
+      }
+
+      ;
+      this.updateRecipeForm.fill(this.recipeForm);
+      this.updateRecipeForm.gallery = this.items;
+      this.updateRecipeForm.image = this.items[0];
+      this.updateRecipeForm.tags = this.tagsArray;
+      this.updateRecipeForm.put('/edit-recipe').then(function () {
+        toast.fire({
+          type: 'success',
+          title: 'Recipe updated successfully'
+        });
+        vm.$store.dispatch('loadUsersRecipes');
+        $('#addNew').modal('hide');
+      })["catch"](function (error) {
+        if (error.response) {
+          toast.fire({
+            type: 'error',
+            title: error.response.data.message
+          });
+        }
+      });
+    },
     onFileChange: function onFileChange(item, index, e) {
       var files = e.target.files || e.dataTransfer.files;
       var name = e.target.files[0].name;
+      var vm = this;
       if (!files.length) return;
-      this.recipeForm.gallery[index - 1] = false;
+
+      if (index != 0 && vm.recipeForm.gallery[index - 1]) {
+        vm.items[index].id = vm.recipeForm.gallery[index - 1].id;
+        vm.recipeForm.gallery[index - 1] = false;
+      }
+
       this.createImage(item, files[0], name);
     },
     createImage: function createImage(item, file, name) {
@@ -3839,21 +5002,86 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       reader.readAsDataURL(file);
     },
+    closeModel: function closeModel() {
+      var vm = this;
+
+      for (var i = 0; i < 4; i++) {
+        vm.items[i].image = false;
+        vm.items[i].name = '';
+      }
+
+      for (var _i = 0; _i < this.tagsArray.tags.length; _i++) {
+        vm.tagsArray.tags = '';
+        vm.tagsArray.amount = '';
+      }
+
+      this.currentAmount = '';
+      this.currentTag = '';
+      this.recipeForm.reset();
+      $('#addNew').modal('hide');
+    },
+    deleteRecipe: function deleteRecipe(id) {
+      var vm = this;
+      swal.fire({
+        title: 'Are you sure?',
+        text: "Recipe will be trashed",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          axios["delete"]("/recipe/".concat(id)).then(function () {
+            toast.fire('Deleted!', 'Recipe has been trashed.', 'success');
+            vm.$store.dispatch('loadUsersRecipes');
+          });
+        }
+      })["catch"](function (error) {
+        if (error.response) {
+          toast.fire({
+            type: 'error',
+            title: error.response.data.message
+          });
+        }
+      });
+    },
     removeImage: function removeImage(item) {
       item.image = false;
     },
+    editAmount: function editAmount(tag) {
+      this.tagAmount = tag;
+    },
+    doneEditTag: function doneEditTag(index) {
+      this.tagsArray.amount.push(this.currentAmount);
+      this.tagsArray.tags.push(this.recipeForm.tags[index].name);
+      this.recipeForm.tags[index] = {};
+      this.tagAmount = false;
+      this.currentAmount = '';
+    },
+    cancelEditTag: function cancelEditTag() {
+      this.currentAmount = '';
+      this.tagAmount = false;
+    },
+    deleteTag: function deleteTag(index) {
+      this.recipeForm.tags[index].name = '';
+      this.recipeForm.tags[index] = {};
+    },
     Sort: function Sort(value) {
       this.sort = value;
+      var vm = this;
 
       if (this.userDirection == 'DESC') {
         this.$store.dispatch('usersRecipesSort', {
           userSort: value,
-          userDirection: 'ASC'
+          userDirection: 'ASC',
+          userSearch: this.search
         });
       } else {
         this.$store.dispatch('usersRecipesSort', {
           userSort: value,
-          userDirection: 'DESC'
+          userDirection: 'DESC',
+          userSearch: this.search
         });
       }
     },
@@ -3925,7 +5153,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     /*
     
-        /*
+       /*
       Allows the user to select a tag going up or down on the
       autocomplete.
     */
@@ -4063,7 +5291,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     showAutocomplete: function showAutocomplete() {
       return this.tagSearchResults.length == 0 ? false : true;
     }
-  }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['userSort', 'userDirection'])),
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['userSort', 'userDirection', 'userSearch'])),
   filters: {
     round: function round(value) {
       return Math.round(value);
@@ -4094,10 +5322,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['recipe_id'],
   data: function data() {
     return {
+      togleDec: false,
+      togleInc: false,
       ingredients: {},
       servings: ''
     };
@@ -4115,10 +5353,18 @@ __webpack_require__.r(__webpack_exports__);
     decrement: function decrement() {
       if (this.ingredients.servings > 0) {
         this.ingredients.servings--;
+        this.togleDec = true;
+        setTimeout(function () {
+          this.togleDec = false;
+        }.bind(this), 100);
       }
     },
     increment: function increment() {
       this.ingredients.servings++;
+      this.togleInc = true;
+      setTimeout(function () {
+        this.togleInc = false;
+      }.bind(this), 100);
     },
     calculate: function calculate(value) {
       return "".concat(Math.round(parseInt(value) / this.servings * this.ingredients.servings) / 10).concat(value.replace(/[0-9]/g, ''));
@@ -4126,6 +5372,171 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.loadIngridients();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recipes/Trash.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/recipes/Trash.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      search: '',
+      recipeSort: 'created_at',
+      recipeDirection: 'DESC',
+      recipes: {}
+    };
+  },
+  methods: {
+    searchRecipe: _.debounce(function () {
+      this.loadRecipes();
+    }, 500),
+    loadRecipes: function loadRecipes() {
+      var _this = this;
+
+      var search = 0;
+
+      if (this.search) {
+        search = this.search;
+      }
+
+      axios.get("/trash/".concat(this.recipeSort, "/").concat(this.recipeDirection, "/").concat(search)).then(function (_ref) {
+        var data = _ref.data;
+        _this.recipes = data;
+      });
+    },
+    Sort: function Sort(value) {
+      this.recipeSort = value;
+
+      if (this.recipeDirection == 'DESC') {
+        this.recipeDirection = 'ASC';
+        this.loadRecipes();
+      } else {
+        this.recipeDirection = 'DESC';
+        this.loadRecipes();
+      }
+    },
+    paginate: function paginate() {
+      var _this2 = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      var search = 0;
+
+      if (this.search) {
+        search = this.search;
+      }
+
+      axios.get("/trash/".concat(this.recipeSort, "/").concat(this.recipeDirection, "/").concat(search, "?page=").concat(page)).then(function (_ref2) {
+        var data = _ref2.data;
+        _this2.recipes = data;
+      });
+    },
+    deleteRecipe: function deleteRecipe(id) {
+      var vm = this;
+      swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          axios["delete"]("/recipe/".concat(id)).then(function () {
+            toast.fire('Deleted!', 'Your file has been deleted.', 'success');
+            vm.loadRecipes();
+          });
+        }
+      });
+    },
+    restoreRecipe: function restoreRecipe(id) {
+      var vm = this;
+      axios.get("/restore/".concat(id)).then(function () {
+        toast.fire('success', 'Recipe has been restored.', 'success');
+        vm.loadRecipes();
+      });
+    }
+  },
+  created: function created() {
+    this.loadRecipes();
   }
 });
 
@@ -4397,6 +5808,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4407,6 +5819,7 @@ __webpack_require__.r(__webpack_exports__);
         toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote']
       },
       user: {},
+      editProfile: false,
       userForm: new Form({
         id: '',
         name: '',
@@ -4447,6 +5860,7 @@ __webpack_require__.r(__webpack_exports__);
       this.userForm.image = this.user.profile.image;
       this.userForm.full_name = this.user.profile.full_name;
       this.userForm.about = this.user.profile.about;
+      this.editProfile = false;
     },
     loadRecipes: function loadRecipes() {
       this.$store.dispatch('loadUsersRecipes');
@@ -4454,7 +5868,19 @@ __webpack_require__.r(__webpack_exports__);
     updateProfile: function updateProfile() {
       var vm = this;
       this.userForm.put("/profile").then(function () {
+        toast.fire({
+          type: 'success',
+          title: 'Profile updated successfully'
+        });
+        vm.editProfile = false;
         vm.loadProfile();
+      })["catch"](function (error) {
+        if (error.response) {
+          toast.fire({
+            type: 'error',
+            title: error.response.data.message
+          });
+        }
       });
     },
     onFileChange: function onFileChange(item, e) {
@@ -4502,14 +5928,38 @@ __webpack_require__.r(__webpack_exports__);
 
       var vm = this;
       this.commentForm.put("/api/update_comment/".concat(this.commentForm.id)).then(function () {
+        toast.fire({
+          type: 'success',
+          title: 'Comment edited successfully'
+        });
         vm.loadComments();
         _this4.commentEdit = false;
+      })["catch"](function (error) {
+        if (error.response) {
+          toast.fire({
+            type: 'error',
+            title: error.response.data.message
+          });
+        }
       });
     },
     deleteComment: function deleteComment(id) {
       var vm = this;
-      axios["delete"]("/api/comment/".concat(id)).then(function () {
-        vm.loadComments();
+      swal.fire({
+        title: 'Are you sure?',
+        text: "Comment will be deleted",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          axios["delete"]("/api/comment/".concat(id)).then(function () {
+            toast.fire('Deleted!', 'Comment has been deleted.', 'success');
+            vm.loadComments();
+          });
+        }
       });
     },
     loadRecipeBook: function loadRecipeBook() {
@@ -4702,23 +6152,63 @@ __webpack_require__.r(__webpack_exports__);
     createUser: function createUser() {
       var vm = this;
       this.form.post('/api/users').then(function () {
+        toast.fire({
+          type: 'success',
+          title: 'User created successfully'
+        });
         $('#addNew').modal('hide');
         vm.loadUsers();
+      })["catch"](function (error) {
+        if (error.response) {
+          toast.fire({
+            type: 'error',
+            title: error.response.data.message
+          });
+        }
       });
     },
     updateUser: function updateUser() {
       var vm = this;
       this.form.put("/api/users/".concat(this.form.id)).then(function () {
+        toast.fire({
+          type: 'success',
+          title: 'User updated successfully'
+        });
         $('#addNew').modal('hide');
         vm.loadUsers();
-      })["catch"](function (errors) {
-        console.log(errors);
+      })["catch"](function (error) {
+        if (error.response) {
+          toast.fire({
+            type: 'error',
+            title: error.response.data.message
+          });
+        }
       });
     },
     deleteUser: function deleteUser(id) {
       var vm = this;
-      axios["delete"]("/api/users/".concat(id)).then(function () {
-        vm.loadUsers();
+      swal.fire({
+        title: 'Are you sure?',
+        text: "User will be deleted",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          axios["delete"]("/api/users/".concat(id)).then(function () {
+            toast.fire('Deleted!', 'User has been deleted.', 'success');
+            vm.loadUsers();
+          });
+        }
+      })["catch"](function (error) {
+        if (error.response) {
+          toast.fire({
+            type: 'error',
+            title: error.response.data.message
+          });
+        }
       });
     },
     editModal: function editModal(user) {
@@ -41291,6 +42781,2914 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/sweetalert2/dist/sweetalert2.all.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/sweetalert2/dist/sweetalert2.all.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*!
+* sweetalert2 v8.16.2
+* Released under the MIT License.
+*/
+(function (global, factory) {
+	 true ? module.exports = factory() :
+	undefined;
+}(this, (function () { 'use strict';
+
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) _setPrototypeOf(subClass, superClass);
+}
+
+function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+function isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === "function") return true;
+
+  try {
+    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function _construct(Parent, args, Class) {
+  if (isNativeReflectConstruct()) {
+    _construct = Reflect.construct;
+  } else {
+    _construct = function _construct(Parent, args, Class) {
+      var a = [null];
+      a.push.apply(a, args);
+      var Constructor = Function.bind.apply(Parent, a);
+      var instance = new Constructor();
+      if (Class) _setPrototypeOf(instance, Class.prototype);
+      return instance;
+    };
+  }
+
+  return _construct.apply(null, arguments);
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (typeof call === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return _assertThisInitialized(self);
+}
+
+function _superPropBase(object, property) {
+  while (!Object.prototype.hasOwnProperty.call(object, property)) {
+    object = _getPrototypeOf(object);
+    if (object === null) break;
+  }
+
+  return object;
+}
+
+function _get(target, property, receiver) {
+  if (typeof Reflect !== "undefined" && Reflect.get) {
+    _get = Reflect.get;
+  } else {
+    _get = function _get(target, property, receiver) {
+      var base = _superPropBase(target, property);
+
+      if (!base) return;
+      var desc = Object.getOwnPropertyDescriptor(base, property);
+
+      if (desc.get) {
+        return desc.get.call(receiver);
+      }
+
+      return desc.value;
+    };
+  }
+
+  return _get(target, property, receiver || target);
+}
+
+var consolePrefix = 'SweetAlert2:';
+/**
+ * Filter the unique values into a new array
+ * @param arr
+ */
+
+var uniqueArray = function uniqueArray(arr) {
+  var result = [];
+
+  for (var i = 0; i < arr.length; i++) {
+    if (result.indexOf(arr[i]) === -1) {
+      result.push(arr[i]);
+    }
+  }
+
+  return result;
+};
+/**
+ * Returns the array ob object values (Object.values isn't supported in IE11)
+ * @param obj
+ */
+
+var objectValues = function objectValues(obj) {
+  return Object.keys(obj).map(function (key) {
+    return obj[key];
+  });
+};
+/**
+ * Convert NodeList to Array
+ * @param nodeList
+ */
+
+var toArray = function toArray(nodeList) {
+  return Array.prototype.slice.call(nodeList);
+};
+/**
+ * Standardise console warnings
+ * @param message
+ */
+
+var warn = function warn(message) {
+  console.warn("".concat(consolePrefix, " ").concat(message));
+};
+/**
+ * Standardise console errors
+ * @param message
+ */
+
+var error = function error(message) {
+  console.error("".concat(consolePrefix, " ").concat(message));
+};
+/**
+ * Private global state for `warnOnce`
+ * @type {Array}
+ * @private
+ */
+
+var previousWarnOnceMessages = [];
+/**
+ * Show a console warning, but only if it hasn't already been shown
+ * @param message
+ */
+
+var warnOnce = function warnOnce(message) {
+  if (!(previousWarnOnceMessages.indexOf(message) !== -1)) {
+    previousWarnOnceMessages.push(message);
+    warn(message);
+  }
+};
+/**
+ * Show a one-time console warning about deprecated params/methods
+ */
+
+var warnAboutDepreation = function warnAboutDepreation(deprecatedParam, useInstead) {
+  warnOnce("\"".concat(deprecatedParam, "\" is deprecated and will be removed in the next major release. Please use \"").concat(useInstead, "\" instead."));
+};
+/**
+ * If `arg` is a function, call it (with no arguments or context) and return the result.
+ * Otherwise, just pass the value through
+ * @param arg
+ */
+
+var callIfFunction = function callIfFunction(arg) {
+  return typeof arg === 'function' ? arg() : arg;
+};
+var isPromise = function isPromise(arg) {
+  return arg && Promise.resolve(arg) === arg;
+};
+
+var DismissReason = Object.freeze({
+  cancel: 'cancel',
+  backdrop: 'backdrop',
+  close: 'close',
+  esc: 'esc',
+  timer: 'timer'
+});
+
+var argsToParams = function argsToParams(args) {
+  var params = {};
+
+  switch (_typeof(args[0])) {
+    case 'object':
+      _extends(params, args[0]);
+
+      break;
+
+    default:
+      ['title', 'html', 'type'].forEach(function (name, index) {
+        switch (_typeof(args[index])) {
+          case 'string':
+            params[name] = args[index];
+            break;
+
+          case 'undefined':
+            break;
+
+          default:
+            error("Unexpected type of ".concat(name, "! Expected \"string\", got ").concat(_typeof(args[index])));
+        }
+      });
+  }
+
+  return params;
+};
+
+var swalPrefix = 'swal2-';
+var prefix = function prefix(items) {
+  var result = {};
+
+  for (var i in items) {
+    result[items[i]] = swalPrefix + items[i];
+  }
+
+  return result;
+};
+var swalClasses = prefix(['container', 'shown', 'height-auto', 'iosfix', 'popup', 'modal', 'no-backdrop', 'toast', 'toast-shown', 'toast-column', 'fade', 'show', 'hide', 'noanimation', 'close', 'title', 'header', 'content', 'actions', 'confirm', 'cancel', 'footer', 'icon', 'image', 'input', 'file', 'range', 'select', 'radio', 'checkbox', 'label', 'textarea', 'inputerror', 'validation-message', 'progress-steps', 'active-progress-step', 'progress-step', 'progress-step-line', 'loading', 'styled', 'top', 'top-start', 'top-end', 'top-left', 'top-right', 'center', 'center-start', 'center-end', 'center-left', 'center-right', 'bottom', 'bottom-start', 'bottom-end', 'bottom-left', 'bottom-right', 'grow-row', 'grow-column', 'grow-fullscreen', 'rtl']);
+var iconTypes = prefix(['success', 'warning', 'info', 'question', 'error']);
+
+var states = {
+  previousBodyPadding: null
+};
+var hasClass = function hasClass(elem, className) {
+  return elem.classList.contains(className);
+};
+var applyCustomClass = function applyCustomClass(elem, customClass, className) {
+  // Clean up previous custom classes
+  toArray(elem.classList).forEach(function (className) {
+    if (!(objectValues(swalClasses).indexOf(className) !== -1) && !(objectValues(iconTypes).indexOf(className) !== -1)) {
+      elem.classList.remove(className);
+    }
+  });
+
+  if (customClass && customClass[className]) {
+    addClass(elem, customClass[className]);
+  }
+};
+function getInput(content, inputType) {
+  if (!inputType) {
+    return null;
+  }
+
+  switch (inputType) {
+    case 'select':
+    case 'textarea':
+    case 'file':
+      return getChildByClass(content, swalClasses[inputType]);
+
+    case 'checkbox':
+      return content.querySelector(".".concat(swalClasses.checkbox, " input"));
+
+    case 'radio':
+      return content.querySelector(".".concat(swalClasses.radio, " input:checked")) || content.querySelector(".".concat(swalClasses.radio, " input:first-child"));
+
+    case 'range':
+      return content.querySelector(".".concat(swalClasses.range, " input"));
+
+    default:
+      return getChildByClass(content, swalClasses.input);
+  }
+}
+var focusInput = function focusInput(input) {
+  input.focus(); // place cursor at end of text in text input
+
+  if (input.type !== 'file') {
+    // http://stackoverflow.com/a/2345915
+    var val = input.value;
+    input.value = '';
+    input.value = val;
+  }
+};
+var toggleClass = function toggleClass(target, classList, condition) {
+  if (!target || !classList) {
+    return;
+  }
+
+  if (typeof classList === 'string') {
+    classList = classList.split(/\s+/).filter(Boolean);
+  }
+
+  classList.forEach(function (className) {
+    if (target.forEach) {
+      target.forEach(function (elem) {
+        condition ? elem.classList.add(className) : elem.classList.remove(className);
+      });
+    } else {
+      condition ? target.classList.add(className) : target.classList.remove(className);
+    }
+  });
+};
+var addClass = function addClass(target, classList) {
+  toggleClass(target, classList, true);
+};
+var removeClass = function removeClass(target, classList) {
+  toggleClass(target, classList, false);
+};
+var getChildByClass = function getChildByClass(elem, className) {
+  for (var i = 0; i < elem.childNodes.length; i++) {
+    if (hasClass(elem.childNodes[i], className)) {
+      return elem.childNodes[i];
+    }
+  }
+};
+var applyNumericalStyle = function applyNumericalStyle(elem, property, value) {
+  if (value || parseInt(value) === 0) {
+    elem.style[property] = typeof value === 'number' ? value + 'px' : value;
+  } else {
+    elem.style.removeProperty(property);
+  }
+};
+var show = function show(elem) {
+  var display = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'flex';
+  elem.style.opacity = '';
+  elem.style.display = display;
+};
+var hide = function hide(elem) {
+  elem.style.opacity = '';
+  elem.style.display = 'none';
+};
+var toggle = function toggle(elem, condition, display) {
+  condition ? show(elem, display) : hide(elem);
+}; // borrowed from jquery $(elem).is(':visible') implementation
+
+var isVisible = function isVisible(elem) {
+  return !!(elem && (elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length));
+};
+var isScrollable = function isScrollable(elem) {
+  return !!(elem.scrollHeight > elem.clientHeight);
+}; // borrowed from https://stackoverflow.com/a/46352119
+
+var hasCssAnimation = function hasCssAnimation(elem) {
+  var style = window.getComputedStyle(elem);
+  var animDuration = parseFloat(style.getPropertyValue('animation-duration') || '0');
+  var transDuration = parseFloat(style.getPropertyValue('transition-duration') || '0');
+  return animDuration > 0 || transDuration > 0;
+};
+var contains = function contains(haystack, needle) {
+  if (typeof haystack.contains === 'function') {
+    return haystack.contains(needle);
+  }
+};
+
+var getContainer = function getContainer() {
+  return document.body.querySelector('.' + swalClasses.container);
+};
+var elementBySelector = function elementBySelector(selectorString) {
+  var container = getContainer();
+  return container ? container.querySelector(selectorString) : null;
+};
+
+var elementByClass = function elementByClass(className) {
+  return elementBySelector('.' + className);
+};
+
+var getPopup = function getPopup() {
+  return elementByClass(swalClasses.popup);
+};
+var getIcons = function getIcons() {
+  var popup = getPopup();
+  return toArray(popup.querySelectorAll('.' + swalClasses.icon));
+};
+var getIcon = function getIcon() {
+  var visibleIcon = getIcons().filter(function (icon) {
+    return isVisible(icon);
+  });
+  return visibleIcon.length ? visibleIcon[0] : null;
+};
+var getTitle = function getTitle() {
+  return elementByClass(swalClasses.title);
+};
+var getContent = function getContent() {
+  return elementByClass(swalClasses.content);
+};
+var getImage = function getImage() {
+  return elementByClass(swalClasses.image);
+};
+var getProgressSteps = function getProgressSteps() {
+  return elementByClass(swalClasses['progress-steps']);
+};
+var getValidationMessage = function getValidationMessage() {
+  return elementByClass(swalClasses['validation-message']);
+};
+var getConfirmButton = function getConfirmButton() {
+  return elementBySelector('.' + swalClasses.actions + ' .' + swalClasses.confirm);
+};
+var getCancelButton = function getCancelButton() {
+  return elementBySelector('.' + swalClasses.actions + ' .' + swalClasses.cancel);
+};
+var getActions = function getActions() {
+  return elementByClass(swalClasses.actions);
+};
+var getHeader = function getHeader() {
+  return elementByClass(swalClasses.header);
+};
+var getFooter = function getFooter() {
+  return elementByClass(swalClasses.footer);
+};
+var getCloseButton = function getCloseButton() {
+  return elementByClass(swalClasses.close);
+}; // https://github.com/jkup/focusable/blob/master/index.js
+
+var focusable = "\n  a[href],\n  area[href],\n  input:not([disabled]),\n  select:not([disabled]),\n  textarea:not([disabled]),\n  button:not([disabled]),\n  iframe,\n  object,\n  embed,\n  [tabindex=\"0\"],\n  [contenteditable],\n  audio[controls],\n  video[controls],\n  summary\n";
+var getFocusableElements = function getFocusableElements() {
+  var focusableElementsWithTabindex = toArray(getPopup().querySelectorAll('[tabindex]:not([tabindex="-1"]):not([tabindex="0"])')) // sort according to tabindex
+  .sort(function (a, b) {
+    a = parseInt(a.getAttribute('tabindex'));
+    b = parseInt(b.getAttribute('tabindex'));
+
+    if (a > b) {
+      return 1;
+    } else if (a < b) {
+      return -1;
+    }
+
+    return 0;
+  });
+  var otherFocusableElements = toArray(getPopup().querySelectorAll(focusable)).filter(function (el) {
+    return el.getAttribute('tabindex') !== '-1';
+  });
+  return uniqueArray(focusableElementsWithTabindex.concat(otherFocusableElements)).filter(function (el) {
+    return isVisible(el);
+  });
+};
+var isModal = function isModal() {
+  return !isToast() && !document.body.classList.contains(swalClasses['no-backdrop']);
+};
+var isToast = function isToast() {
+  return document.body.classList.contains(swalClasses['toast-shown']);
+};
+var isLoading = function isLoading() {
+  return getPopup().hasAttribute('data-loading');
+};
+
+// Detect Node env
+var isNodeEnv = function isNodeEnv() {
+  return typeof window === 'undefined' || typeof document === 'undefined';
+};
+
+var sweetHTML = "\n <div aria-labelledby=\"".concat(swalClasses.title, "\" aria-describedby=\"").concat(swalClasses.content, "\" class=\"").concat(swalClasses.popup, "\" tabindex=\"-1\">\n   <div class=\"").concat(swalClasses.header, "\">\n     <ul class=\"").concat(swalClasses['progress-steps'], "\"></ul>\n     <div class=\"").concat(swalClasses.icon, " ").concat(iconTypes.error, "\">\n       <span class=\"swal2-x-mark\"><span class=\"swal2-x-mark-line-left\"></span><span class=\"swal2-x-mark-line-right\"></span></span>\n     </div>\n     <div class=\"").concat(swalClasses.icon, " ").concat(iconTypes.question, "\"></div>\n     <div class=\"").concat(swalClasses.icon, " ").concat(iconTypes.warning, "\"></div>\n     <div class=\"").concat(swalClasses.icon, " ").concat(iconTypes.info, "\"></div>\n     <div class=\"").concat(swalClasses.icon, " ").concat(iconTypes.success, "\">\n       <div class=\"swal2-success-circular-line-left\"></div>\n       <span class=\"swal2-success-line-tip\"></span> <span class=\"swal2-success-line-long\"></span>\n       <div class=\"swal2-success-ring\"></div> <div class=\"swal2-success-fix\"></div>\n       <div class=\"swal2-success-circular-line-right\"></div>\n     </div>\n     <img class=\"").concat(swalClasses.image, "\" />\n     <h2 class=\"").concat(swalClasses.title, "\" id=\"").concat(swalClasses.title, "\"></h2>\n     <button type=\"button\" class=\"").concat(swalClasses.close, "\"></button>\n   </div>\n   <div class=\"").concat(swalClasses.content, "\">\n     <div id=\"").concat(swalClasses.content, "\"></div>\n     <input class=\"").concat(swalClasses.input, "\" />\n     <input type=\"file\" class=\"").concat(swalClasses.file, "\" />\n     <div class=\"").concat(swalClasses.range, "\">\n       <input type=\"range\" />\n       <output></output>\n     </div>\n     <select class=\"").concat(swalClasses.select, "\"></select>\n     <div class=\"").concat(swalClasses.radio, "\"></div>\n     <label for=\"").concat(swalClasses.checkbox, "\" class=\"").concat(swalClasses.checkbox, "\">\n       <input type=\"checkbox\" />\n       <span class=\"").concat(swalClasses.label, "\"></span>\n     </label>\n     <textarea class=\"").concat(swalClasses.textarea, "\"></textarea>\n     <div class=\"").concat(swalClasses['validation-message'], "\" id=\"").concat(swalClasses['validation-message'], "\"></div>\n   </div>\n   <div class=\"").concat(swalClasses.actions, "\">\n     <button type=\"button\" class=\"").concat(swalClasses.confirm, "\">OK</button>\n     <button type=\"button\" class=\"").concat(swalClasses.cancel, "\">Cancel</button>\n   </div>\n   <div class=\"").concat(swalClasses.footer, "\">\n   </div>\n </div>\n").replace(/(^|\n)\s*/g, '');
+
+var resetOldContainer = function resetOldContainer() {
+  var oldContainer = getContainer();
+
+  if (!oldContainer) {
+    return;
+  }
+
+  oldContainer.parentNode.removeChild(oldContainer);
+  removeClass([document.documentElement, document.body], [swalClasses['no-backdrop'], swalClasses['toast-shown'], swalClasses['has-column']]);
+};
+
+var oldInputVal; // IE11 workaround, see #1109 for details
+
+var resetValidationMessage = function resetValidationMessage(e) {
+  if (Swal.isVisible() && oldInputVal !== e.target.value) {
+    Swal.resetValidationMessage();
+  }
+
+  oldInputVal = e.target.value;
+};
+
+var addInputChangeListeners = function addInputChangeListeners() {
+  var content = getContent();
+  var input = getChildByClass(content, swalClasses.input);
+  var file = getChildByClass(content, swalClasses.file);
+  var range = content.querySelector(".".concat(swalClasses.range, " input"));
+  var rangeOutput = content.querySelector(".".concat(swalClasses.range, " output"));
+  var select = getChildByClass(content, swalClasses.select);
+  var checkbox = content.querySelector(".".concat(swalClasses.checkbox, " input"));
+  var textarea = getChildByClass(content, swalClasses.textarea);
+  input.oninput = resetValidationMessage;
+  file.onchange = resetValidationMessage;
+  select.onchange = resetValidationMessage;
+  checkbox.onchange = resetValidationMessage;
+  textarea.oninput = resetValidationMessage;
+
+  range.oninput = function (e) {
+    resetValidationMessage(e);
+    rangeOutput.value = range.value;
+  };
+
+  range.onchange = function (e) {
+    resetValidationMessage(e);
+    range.nextSibling.value = range.value;
+  };
+};
+
+var getTarget = function getTarget(target) {
+  return typeof target === 'string' ? document.querySelector(target) : target;
+};
+
+var setupAccessibility = function setupAccessibility(params) {
+  var popup = getPopup();
+  popup.setAttribute('role', params.toast ? 'alert' : 'dialog');
+  popup.setAttribute('aria-live', params.toast ? 'polite' : 'assertive');
+
+  if (!params.toast) {
+    popup.setAttribute('aria-modal', 'true');
+  }
+};
+
+var setupRTL = function setupRTL(targetElement) {
+  if (window.getComputedStyle(targetElement).direction === 'rtl') {
+    addClass(getContainer(), swalClasses.rtl);
+  }
+};
+/*
+ * Add modal + backdrop to DOM
+ */
+
+
+var init = function init(params) {
+  // Clean up the old popup container if it exists
+  resetOldContainer();
+  /* istanbul ignore if */
+
+  if (isNodeEnv()) {
+    error('SweetAlert2 requires document to initialize');
+    return;
+  }
+
+  var container = document.createElement('div');
+  container.className = swalClasses.container;
+  container.innerHTML = sweetHTML;
+  var targetElement = getTarget(params.target);
+  targetElement.appendChild(container);
+  setupAccessibility(params);
+  setupRTL(targetElement);
+  addInputChangeListeners();
+};
+
+var parseHtmlToContainer = function parseHtmlToContainer(param, target) {
+  // DOM element
+  if (param instanceof HTMLElement) {
+    target.appendChild(param); // JQuery element(s)
+  } else if (_typeof(param) === 'object') {
+    handleJqueryElem(target, param); // Plain string
+  } else if (param) {
+    target.innerHTML = param;
+  }
+};
+
+var handleJqueryElem = function handleJqueryElem(target, elem) {
+  target.innerHTML = '';
+
+  if (0 in elem) {
+    for (var i = 0; i in elem; i++) {
+      target.appendChild(elem[i].cloneNode(true));
+    }
+  } else {
+    target.appendChild(elem.cloneNode(true));
+  }
+};
+
+var animationEndEvent = function () {
+  // Prevent run in Node env
+
+  /* istanbul ignore if */
+  if (isNodeEnv()) {
+    return false;
+  }
+
+  var testEl = document.createElement('div');
+  var transEndEventNames = {
+    WebkitAnimation: 'webkitAnimationEnd',
+    OAnimation: 'oAnimationEnd oanimationend',
+    animation: 'animationend'
+  };
+
+  for (var i in transEndEventNames) {
+    if (Object.prototype.hasOwnProperty.call(transEndEventNames, i) && typeof testEl.style[i] !== 'undefined') {
+      return transEndEventNames[i];
+    }
+  }
+
+  return false;
+}();
+
+// Measure width of scrollbar
+// https://github.com/twbs/bootstrap/blob/master/js/modal.js#L279-L286
+var measureScrollbar = function measureScrollbar() {
+  var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+
+  if (supportsTouch) {
+    return 0;
+  }
+
+  var scrollDiv = document.createElement('div');
+  scrollDiv.style.width = '50px';
+  scrollDiv.style.height = '50px';
+  scrollDiv.style.overflow = 'scroll';
+  document.body.appendChild(scrollDiv);
+  var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+  document.body.removeChild(scrollDiv);
+  return scrollbarWidth;
+};
+
+var renderActions = function renderActions(instance, params) {
+  var actions = getActions();
+  var confirmButton = getConfirmButton();
+  var cancelButton = getCancelButton(); // Actions (buttons) wrapper
+
+  if (!params.showConfirmButton && !params.showCancelButton) {
+    hide(actions);
+  } // Custom class
+
+
+  applyCustomClass(actions, params.customClass, 'actions'); // Render confirm button
+
+  renderButton(confirmButton, 'confirm', params); // render Cancel Button
+
+  renderButton(cancelButton, 'cancel', params);
+
+  if (params.buttonsStyling) {
+    handleButtonsStyling(confirmButton, cancelButton, params);
+  } else {
+    removeClass([confirmButton, cancelButton], swalClasses.styled);
+    confirmButton.style.backgroundColor = confirmButton.style.borderLeftColor = confirmButton.style.borderRightColor = '';
+    cancelButton.style.backgroundColor = cancelButton.style.borderLeftColor = cancelButton.style.borderRightColor = '';
+  }
+
+  if (params.reverseButtons) {
+    confirmButton.parentNode.insertBefore(cancelButton, confirmButton);
+  }
+};
+
+function handleButtonsStyling(confirmButton, cancelButton, params) {
+  addClass([confirmButton, cancelButton], swalClasses.styled); // Buttons background colors
+
+  if (params.confirmButtonColor) {
+    confirmButton.style.backgroundColor = params.confirmButtonColor;
+  }
+
+  if (params.cancelButtonColor) {
+    cancelButton.style.backgroundColor = params.cancelButtonColor;
+  } // Loading state
+
+
+  var confirmButtonBackgroundColor = window.getComputedStyle(confirmButton).getPropertyValue('background-color');
+  confirmButton.style.borderLeftColor = confirmButtonBackgroundColor;
+  confirmButton.style.borderRightColor = confirmButtonBackgroundColor;
+}
+
+function renderButton(button, buttonType, params) {
+  toggle(button, params['showC' + buttonType.substring(1) + 'Button'], 'inline-block');
+  button.innerHTML = params[buttonType + 'ButtonText']; // Set caption text
+
+  button.setAttribute('aria-label', params[buttonType + 'ButtonAriaLabel']); // ARIA label
+  // Add buttons custom classes
+
+  button.className = swalClasses[buttonType];
+  applyCustomClass(button, params.customClass, buttonType + 'Button');
+  addClass(button, params[buttonType + 'ButtonClass']);
+}
+
+function handleBackdropParam(container, backdrop) {
+  if (typeof backdrop === 'string') {
+    container.style.background = backdrop;
+  } else if (!backdrop) {
+    addClass([document.documentElement, document.body], swalClasses['no-backdrop']);
+  }
+}
+
+function handlePositionParam(container, position) {
+  if (position in swalClasses) {
+    addClass(container, swalClasses[position]);
+  } else {
+    warn('The "position" parameter is not valid, defaulting to "center"');
+    addClass(container, swalClasses.center);
+  }
+}
+
+function handleGrowParam(container, grow) {
+  if (grow && typeof grow === 'string') {
+    var growClass = 'grow-' + grow;
+
+    if (growClass in swalClasses) {
+      addClass(container, swalClasses[growClass]);
+    }
+  }
+}
+
+var renderContainer = function renderContainer(instance, params) {
+  var container = getContainer();
+
+  if (!container) {
+    return;
+  }
+
+  handleBackdropParam(container, params.backdrop);
+
+  if (!params.backdrop && params.allowOutsideClick) {
+    warn('"allowOutsideClick" parameter requires `backdrop` parameter to be set to `true`');
+  }
+
+  handlePositionParam(container, params.position);
+  handleGrowParam(container, params.grow); // Custom class
+
+  applyCustomClass(container, params.customClass, 'container');
+
+  if (params.customContainerClass) {
+    // @deprecated
+    addClass(container, params.customContainerClass);
+  }
+};
+
+/**
+ * This module containts `WeakMap`s for each effectively-"private  property" that a `Swal` has.
+ * For example, to set the private property "foo" of `this` to "bar", you can `privateProps.foo.set(this, 'bar')`
+ * This is the approach that Babel will probably take to implement private methods/fields
+ *   https://github.com/tc39/proposal-private-methods
+ *   https://github.com/babel/babel/pull/7555
+ * Once we have the changes from that PR in Babel, and our core class fits reasonable in *one module*
+ *   then we can use that language feature.
+ */
+var privateProps = {
+  promise: new WeakMap(),
+  innerParams: new WeakMap(),
+  domCache: new WeakMap()
+};
+
+var inputTypes = ['input', 'file', 'range', 'select', 'radio', 'checkbox', 'textarea'];
+var renderInput = function renderInput(instance, params) {
+  var content = getContent();
+  var innerParams = privateProps.innerParams.get(instance);
+  var rerender = !innerParams || params.input !== innerParams.input;
+  inputTypes.forEach(function (inputType) {
+    var inputClass = swalClasses[inputType];
+    var inputContainer = getChildByClass(content, inputClass); // set attributes
+
+    setAttributes(inputType, params.inputAttributes); // set class
+
+    setClass(inputContainer, inputClass, params);
+
+    if (rerender) {
+      hide(inputContainer);
+    }
+  });
+
+  if (params.input && rerender) {
+    showInput(params);
+  }
+};
+
+var showInput = function showInput(params) {
+  if (!renderInputType[params.input]) {
+    return error("Unexpected type of input! Expected \"text\", \"email\", \"password\", \"number\", \"tel\", \"select\", \"radio\", \"checkbox\", \"textarea\", \"file\" or \"url\", got \"".concat(params.input, "\""));
+  }
+
+  var input = renderInputType[params.input](params);
+  show(input); // input autofocus
+
+  setTimeout(function () {
+    focusInput(input);
+  });
+};
+
+var removeAttributes = function removeAttributes(input) {
+  for (var i = 0; i < input.attributes.length; i++) {
+    var attrName = input.attributes[i].name;
+
+    if (!(['type', 'value', 'style'].indexOf(attrName) !== -1)) {
+      input.removeAttribute(attrName);
+    }
+  }
+};
+
+var setAttributes = function setAttributes(inputType, inputAttributes) {
+  var input = getInput(getContent(), inputType);
+
+  if (!input) {
+    return;
+  }
+
+  removeAttributes(input);
+
+  for (var attr in inputAttributes) {
+    // Do not set a placeholder for <input type="range">
+    // it'll crash Edge, #1298
+    if (inputType === 'range' && attr === 'placeholder') {
+      continue;
+    }
+
+    input.setAttribute(attr, inputAttributes[attr]);
+  }
+};
+
+var setClass = function setClass(inputContainer, inputClass, params) {
+  inputContainer.className = inputClass;
+
+  if (params.inputClass) {
+    addClass(inputContainer, params.inputClass);
+  }
+
+  if (params.customClass) {
+    addClass(inputContainer, params.customClass.input);
+  }
+};
+
+var setInputPlaceholder = function setInputPlaceholder(input, params) {
+  if (!input.placeholder || params.inputPlaceholder) {
+    input.placeholder = params.inputPlaceholder;
+  }
+};
+
+var renderInputType = {};
+
+renderInputType.text = renderInputType.email = renderInputType.password = renderInputType.number = renderInputType.tel = renderInputType.url = function (params) {
+  var input = getChildByClass(getContent(), swalClasses.input);
+
+  if (typeof params.inputValue === 'string' || typeof params.inputValue === 'number') {
+    input.value = params.inputValue;
+  } else if (!isPromise(params.inputValue)) {
+    warn("Unexpected type of inputValue! Expected \"string\", \"number\" or \"Promise\", got \"".concat(_typeof(params.inputValue), "\""));
+  }
+
+  setInputPlaceholder(input, params);
+  input.type = params.input;
+  return input;
+};
+
+renderInputType.file = function (params) {
+  var input = getChildByClass(getContent(), swalClasses.file);
+  setInputPlaceholder(input, params);
+  input.type = params.input;
+  return input;
+};
+
+renderInputType.range = function (params) {
+  var range = getChildByClass(getContent(), swalClasses.range);
+  var rangeInput = range.querySelector('input');
+  var rangeOutput = range.querySelector('output');
+  rangeInput.value = params.inputValue;
+  rangeInput.type = params.input;
+  rangeOutput.value = params.inputValue;
+  return range;
+};
+
+renderInputType.select = function (params) {
+  var select = getChildByClass(getContent(), swalClasses.select);
+  select.innerHTML = '';
+
+  if (params.inputPlaceholder) {
+    var placeholder = document.createElement('option');
+    placeholder.innerHTML = params.inputPlaceholder;
+    placeholder.value = '';
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    select.appendChild(placeholder);
+  }
+
+  return select;
+};
+
+renderInputType.radio = function () {
+  var radio = getChildByClass(getContent(), swalClasses.radio);
+  radio.innerHTML = '';
+  return radio;
+};
+
+renderInputType.checkbox = function (params) {
+  var checkbox = getChildByClass(getContent(), swalClasses.checkbox);
+  var checkboxInput = getInput(getContent(), 'checkbox');
+  checkboxInput.type = 'checkbox';
+  checkboxInput.value = 1;
+  checkboxInput.id = swalClasses.checkbox;
+  checkboxInput.checked = Boolean(params.inputValue);
+  var label = checkbox.querySelector('span');
+  label.innerHTML = params.inputPlaceholder;
+  return checkbox;
+};
+
+renderInputType.textarea = function (params) {
+  var textarea = getChildByClass(getContent(), swalClasses.textarea);
+  textarea.value = params.inputValue;
+  setInputPlaceholder(textarea, params);
+
+  if ('MutationObserver' in window) {
+    // #1699
+    var initialPopupWidth = parseInt(window.getComputedStyle(getPopup()).width);
+    var popupPadding = parseInt(window.getComputedStyle(getPopup()).paddingLeft) + parseInt(window.getComputedStyle(getPopup()).paddingRight);
+
+    var outputsize = function outputsize() {
+      var contentWidth = textarea.offsetWidth + popupPadding;
+
+      if (contentWidth > initialPopupWidth) {
+        getPopup().style.width = contentWidth + 'px';
+      } else {
+        getPopup().style.width = null;
+      }
+    };
+
+    new MutationObserver(outputsize).observe(textarea, {
+      attributes: true,
+      attributeFilter: ['style']
+    });
+  }
+
+  return textarea;
+};
+
+var renderContent = function renderContent(instance, params) {
+  var content = getContent().querySelector('#' + swalClasses.content); // Content as HTML
+
+  if (params.html) {
+    parseHtmlToContainer(params.html, content);
+    show(content, 'block'); // Content as plain text
+  } else if (params.text) {
+    content.textContent = params.text;
+    show(content, 'block'); // No content
+  } else {
+    hide(content);
+  }
+
+  renderInput(instance, params); // Custom class
+
+  applyCustomClass(getContent(), params.customClass, 'content');
+};
+
+var renderFooter = function renderFooter(instance, params) {
+  var footer = getFooter();
+  toggle(footer, params.footer);
+
+  if (params.footer) {
+    parseHtmlToContainer(params.footer, footer);
+  } // Custom class
+
+
+  applyCustomClass(footer, params.customClass, 'footer');
+};
+
+var renderCloseButton = function renderCloseButton(instance, params) {
+  var closeButton = getCloseButton();
+  closeButton.innerHTML = params.closeButtonHtml; // Custom class
+
+  applyCustomClass(closeButton, params.customClass, 'closeButton');
+  toggle(closeButton, params.showCloseButton);
+  closeButton.setAttribute('aria-label', params.closeButtonAriaLabel);
+};
+
+var renderIcon = function renderIcon(instance, params) {
+  var innerParams = privateProps.innerParams.get(instance); // if the icon with the given type already rendered,
+  // apply the custom class without re-rendering the icon
+
+  if (innerParams && params.type === innerParams.type && getIcon()) {
+    applyCustomClass(getIcon(), params.customClass, 'icon');
+    return;
+  }
+
+  hideAllIcons();
+
+  if (!params.type) {
+    return;
+  }
+
+  adjustSuccessIconBackgoundColor();
+
+  if (Object.keys(iconTypes).indexOf(params.type) !== -1) {
+    var icon = elementBySelector(".".concat(swalClasses.icon, ".").concat(iconTypes[params.type]));
+    show(icon); // Custom class
+
+    applyCustomClass(icon, params.customClass, 'icon'); // Animate icon
+
+    toggleClass(icon, "swal2-animate-".concat(params.type, "-icon"), params.animation);
+  } else {
+    error("Unknown type! Expected \"success\", \"error\", \"warning\", \"info\" or \"question\", got \"".concat(params.type, "\""));
+  }
+};
+
+var hideAllIcons = function hideAllIcons() {
+  var icons = getIcons();
+
+  for (var i = 0; i < icons.length; i++) {
+    hide(icons[i]);
+  }
+}; // Adjust success icon background color to match the popup background color
+
+
+var adjustSuccessIconBackgoundColor = function adjustSuccessIconBackgoundColor() {
+  var popup = getPopup();
+  var popupBackgroundColor = window.getComputedStyle(popup).getPropertyValue('background-color');
+  var successIconParts = popup.querySelectorAll('[class^=swal2-success-circular-line], .swal2-success-fix');
+
+  for (var i = 0; i < successIconParts.length; i++) {
+    successIconParts[i].style.backgroundColor = popupBackgroundColor;
+  }
+};
+
+var renderImage = function renderImage(instance, params) {
+  var image = getImage();
+
+  if (!params.imageUrl) {
+    return hide(image);
+  }
+
+  show(image); // Src, alt
+
+  image.setAttribute('src', params.imageUrl);
+  image.setAttribute('alt', params.imageAlt); // Width, height
+
+  applyNumericalStyle(image, 'width', params.imageWidth);
+  applyNumericalStyle(image, 'height', params.imageHeight); // Class
+
+  image.className = swalClasses.image;
+  applyCustomClass(image, params.customClass, 'image');
+
+  if (params.imageClass) {
+    addClass(image, params.imageClass);
+  }
+};
+
+var createStepElement = function createStepElement(step) {
+  var stepEl = document.createElement('li');
+  addClass(stepEl, swalClasses['progress-step']);
+  stepEl.innerHTML = step;
+  return stepEl;
+};
+
+var createLineElement = function createLineElement(params) {
+  var lineEl = document.createElement('li');
+  addClass(lineEl, swalClasses['progress-step-line']);
+
+  if (params.progressStepsDistance) {
+    lineEl.style.width = params.progressStepsDistance;
+  }
+
+  return lineEl;
+};
+
+var renderProgressSteps = function renderProgressSteps(instance, params) {
+  var progressStepsContainer = getProgressSteps();
+
+  if (!params.progressSteps || params.progressSteps.length === 0) {
+    return hide(progressStepsContainer);
+  }
+
+  show(progressStepsContainer);
+  progressStepsContainer.innerHTML = '';
+  var currentProgressStep = parseInt(params.currentProgressStep === null ? Swal.getQueueStep() : params.currentProgressStep);
+
+  if (currentProgressStep >= params.progressSteps.length) {
+    warn('Invalid currentProgressStep parameter, it should be less than progressSteps.length ' + '(currentProgressStep like JS arrays starts from 0)');
+  }
+
+  params.progressSteps.forEach(function (step, index) {
+    var stepEl = createStepElement(step);
+    progressStepsContainer.appendChild(stepEl);
+
+    if (index === currentProgressStep) {
+      addClass(stepEl, swalClasses['active-progress-step']);
+    }
+
+    if (index !== params.progressSteps.length - 1) {
+      var lineEl = createLineElement(step);
+      progressStepsContainer.appendChild(lineEl);
+    }
+  });
+};
+
+var renderTitle = function renderTitle(instance, params) {
+  var title = getTitle();
+  toggle(title, params.title || params.titleText);
+
+  if (params.title) {
+    parseHtmlToContainer(params.title, title);
+  }
+
+  if (params.titleText) {
+    title.innerText = params.titleText;
+  } // Custom class
+
+
+  applyCustomClass(title, params.customClass, 'title');
+};
+
+var renderHeader = function renderHeader(instance, params) {
+  var header = getHeader(); // Custom class
+
+  applyCustomClass(header, params.customClass, 'header'); // Progress steps
+
+  renderProgressSteps(instance, params); // Icon
+
+  renderIcon(instance, params); // Image
+
+  renderImage(instance, params); // Title
+
+  renderTitle(instance, params); // Close button
+
+  renderCloseButton(instance, params);
+};
+
+var renderPopup = function renderPopup(instance, params) {
+  var popup = getPopup(); // Width
+
+  applyNumericalStyle(popup, 'width', params.width); // Padding
+
+  applyNumericalStyle(popup, 'padding', params.padding); // Background
+
+  if (params.background) {
+    popup.style.background = params.background;
+  } // Default Class
+
+
+  popup.className = swalClasses.popup;
+
+  if (params.toast) {
+    addClass([document.documentElement, document.body], swalClasses['toast-shown']);
+    addClass(popup, swalClasses.toast);
+  } else {
+    addClass(popup, swalClasses.modal);
+  } // Custom class
+
+
+  applyCustomClass(popup, params.customClass, 'popup');
+
+  if (typeof params.customClass === 'string') {
+    addClass(popup, params.customClass);
+  } // CSS animation
+
+
+  toggleClass(popup, swalClasses.noanimation, !params.animation);
+};
+
+var render = function render(instance, params) {
+  renderPopup(instance, params);
+  renderContainer(instance, params);
+  renderHeader(instance, params);
+  renderContent(instance, params);
+  renderActions(instance, params);
+  renderFooter(instance, params);
+};
+
+/*
+ * Global function to determine if SweetAlert2 popup is shown
+ */
+
+var isVisible$1 = function isVisible$$1() {
+  return isVisible(getPopup());
+};
+/*
+ * Global function to click 'Confirm' button
+ */
+
+var clickConfirm = function clickConfirm() {
+  return getConfirmButton() && getConfirmButton().click();
+};
+/*
+ * Global function to click 'Cancel' button
+ */
+
+var clickCancel = function clickCancel() {
+  return getCancelButton() && getCancelButton().click();
+};
+
+function fire() {
+  var Swal = this;
+
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  return _construct(Swal, args);
+}
+
+/**
+ * Returns an extended version of `Swal` containing `params` as defaults.
+ * Useful for reusing Swal configuration.
+ *
+ * For example:
+ *
+ * Before:
+ * const textPromptOptions = { input: 'text', showCancelButton: true }
+ * const {value: firstName} = await Swal.fire({ ...textPromptOptions, title: 'What is your first name?' })
+ * const {value: lastName} = await Swal.fire({ ...textPromptOptions, title: 'What is your last name?' })
+ *
+ * After:
+ * const TextPrompt = Swal.mixin({ input: 'text', showCancelButton: true })
+ * const {value: firstName} = await TextPrompt('What is your first name?')
+ * const {value: lastName} = await TextPrompt('What is your last name?')
+ *
+ * @param mixinParams
+ */
+function mixin(mixinParams) {
+  var MixinSwal =
+  /*#__PURE__*/
+  function (_this) {
+    _inherits(MixinSwal, _this);
+
+    function MixinSwal() {
+      _classCallCheck(this, MixinSwal);
+
+      return _possibleConstructorReturn(this, _getPrototypeOf(MixinSwal).apply(this, arguments));
+    }
+
+    _createClass(MixinSwal, [{
+      key: "_main",
+      value: function _main(params) {
+        return _get(_getPrototypeOf(MixinSwal.prototype), "_main", this).call(this, _extends({}, mixinParams, params));
+      }
+    }]);
+
+    return MixinSwal;
+  }(this);
+
+  return MixinSwal;
+}
+
+// private global state for the queue feature
+var currentSteps = [];
+/*
+ * Global function for chaining sweetAlert popups
+ */
+
+var queue = function queue(steps) {
+  var Swal = this;
+  currentSteps = steps;
+
+  var resetAndResolve = function resetAndResolve(resolve, value) {
+    currentSteps = [];
+    document.body.removeAttribute('data-swal2-queue-step');
+    resolve(value);
+  };
+
+  var queueResult = [];
+  return new Promise(function (resolve) {
+    (function step(i, callback) {
+      if (i < currentSteps.length) {
+        document.body.setAttribute('data-swal2-queue-step', i);
+        Swal.fire(currentSteps[i]).then(function (result) {
+          if (typeof result.value !== 'undefined') {
+            queueResult.push(result.value);
+            step(i + 1, callback);
+          } else {
+            resetAndResolve(resolve, {
+              dismiss: result.dismiss
+            });
+          }
+        });
+      } else {
+        resetAndResolve(resolve, {
+          value: queueResult
+        });
+      }
+    })(0);
+  });
+};
+/*
+ * Global function for getting the index of current popup in queue
+ */
+
+var getQueueStep = function getQueueStep() {
+  return document.body.getAttribute('data-swal2-queue-step');
+};
+/*
+ * Global function for inserting a popup to the queue
+ */
+
+var insertQueueStep = function insertQueueStep(step, index) {
+  if (index && index < currentSteps.length) {
+    return currentSteps.splice(index, 0, step);
+  }
+
+  return currentSteps.push(step);
+};
+/*
+ * Global function for deleting a popup from the queue
+ */
+
+var deleteQueueStep = function deleteQueueStep(index) {
+  if (typeof currentSteps[index] !== 'undefined') {
+    currentSteps.splice(index, 1);
+  }
+};
+
+/**
+ * Show spinner instead of Confirm button and disable Cancel button
+ */
+
+var showLoading = function showLoading() {
+  var popup = getPopup();
+
+  if (!popup) {
+    Swal.fire('');
+  }
+
+  popup = getPopup();
+  var actions = getActions();
+  var confirmButton = getConfirmButton();
+  var cancelButton = getCancelButton();
+  show(actions);
+  show(confirmButton);
+  addClass([popup, actions], swalClasses.loading);
+  confirmButton.disabled = true;
+  cancelButton.disabled = true;
+  popup.setAttribute('data-loading', true);
+  popup.setAttribute('aria-busy', true);
+  popup.focus();
+};
+
+var RESTORE_FOCUS_TIMEOUT = 100;
+
+var globalState = {};
+var focusPreviousActiveElement = function focusPreviousActiveElement() {
+  if (globalState.previousActiveElement && globalState.previousActiveElement.focus) {
+    globalState.previousActiveElement.focus();
+    globalState.previousActiveElement = null;
+  } else if (document.body) {
+    document.body.focus();
+  }
+}; // Restore previous active (focused) element
+
+
+var restoreActiveElement = function restoreActiveElement() {
+  return new Promise(function (resolve) {
+    var x = window.scrollX;
+    var y = window.scrollY;
+    globalState.restoreFocusTimeout = setTimeout(function () {
+      focusPreviousActiveElement();
+      resolve();
+    }, RESTORE_FOCUS_TIMEOUT); // issues/900
+
+    if (typeof x !== 'undefined' && typeof y !== 'undefined') {
+      // IE doesn't have scrollX/scrollY support
+      window.scrollTo(x, y);
+    }
+  });
+};
+
+/**
+ * If `timer` parameter is set, returns number of milliseconds of timer remained.
+ * Otherwise, returns undefined.
+ */
+
+var getTimerLeft = function getTimerLeft() {
+  return globalState.timeout && globalState.timeout.getTimerLeft();
+};
+/**
+ * Stop timer. Returns number of milliseconds of timer remained.
+ * If `timer` parameter isn't set, returns undefined.
+ */
+
+var stopTimer = function stopTimer() {
+  return globalState.timeout && globalState.timeout.stop();
+};
+/**
+ * Resume timer. Returns number of milliseconds of timer remained.
+ * If `timer` parameter isn't set, returns undefined.
+ */
+
+var resumeTimer = function resumeTimer() {
+  return globalState.timeout && globalState.timeout.start();
+};
+/**
+ * Resume timer. Returns number of milliseconds of timer remained.
+ * If `timer` parameter isn't set, returns undefined.
+ */
+
+var toggleTimer = function toggleTimer() {
+  var timer = globalState.timeout;
+  return timer && (timer.running ? timer.stop() : timer.start());
+};
+/**
+ * Increase timer. Returns number of milliseconds of an updated timer.
+ * If `timer` parameter isn't set, returns undefined.
+ */
+
+var increaseTimer = function increaseTimer(n) {
+  return globalState.timeout && globalState.timeout.increase(n);
+};
+/**
+ * Check if timer is running. Returns true if timer is running
+ * or false if timer is paused or stopped.
+ * If `timer` parameter isn't set, returns undefined
+ */
+
+var isTimerRunning = function isTimerRunning() {
+  return globalState.timeout && globalState.timeout.isRunning();
+};
+
+var defaultParams = {
+  title: '',
+  titleText: '',
+  text: '',
+  html: '',
+  footer: '',
+  type: null,
+  toast: false,
+  customClass: '',
+  customContainerClass: '',
+  target: 'body',
+  backdrop: true,
+  animation: true,
+  heightAuto: true,
+  allowOutsideClick: true,
+  allowEscapeKey: true,
+  allowEnterKey: true,
+  stopKeydownPropagation: true,
+  keydownListenerCapture: false,
+  showConfirmButton: true,
+  showCancelButton: false,
+  preConfirm: null,
+  confirmButtonText: 'OK',
+  confirmButtonAriaLabel: '',
+  confirmButtonColor: null,
+  confirmButtonClass: '',
+  cancelButtonText: 'Cancel',
+  cancelButtonAriaLabel: '',
+  cancelButtonColor: null,
+  cancelButtonClass: '',
+  buttonsStyling: true,
+  reverseButtons: false,
+  focusConfirm: true,
+  focusCancel: false,
+  showCloseButton: false,
+  closeButtonHtml: '&times;',
+  closeButtonAriaLabel: 'Close this dialog',
+  showLoaderOnConfirm: false,
+  imageUrl: null,
+  imageWidth: null,
+  imageHeight: null,
+  imageAlt: '',
+  imageClass: '',
+  timer: null,
+  width: null,
+  padding: null,
+  background: null,
+  input: null,
+  inputPlaceholder: '',
+  inputValue: '',
+  inputOptions: {},
+  inputAutoTrim: true,
+  inputClass: '',
+  inputAttributes: {},
+  inputValidator: null,
+  validationMessage: null,
+  grow: false,
+  position: 'center',
+  progressSteps: [],
+  currentProgressStep: null,
+  progressStepsDistance: null,
+  onBeforeOpen: null,
+  onAfterClose: null,
+  onOpen: null,
+  onClose: null,
+  scrollbarPadding: true
+};
+var updatableParams = ['title', 'titleText', 'text', 'html', 'type', 'customClass', 'showConfirmButton', 'showCancelButton', 'confirmButtonText', 'confirmButtonAriaLabel', 'confirmButtonColor', 'confirmButtonClass', 'cancelButtonText', 'cancelButtonAriaLabel', 'cancelButtonColor', 'cancelButtonClass', 'buttonsStyling', 'reverseButtons', 'imageUrl', 'imageWidth', 'imageHeigth', 'imageAlt', 'imageClass', 'progressSteps', 'currentProgressStep'];
+var deprecatedParams = {
+  customContainerClass: 'customClass',
+  confirmButtonClass: 'customClass',
+  cancelButtonClass: 'customClass',
+  imageClass: 'customClass',
+  inputClass: 'customClass'
+};
+var toastIncompatibleParams = ['allowOutsideClick', 'allowEnterKey', 'backdrop', 'focusConfirm', 'focusCancel', 'heightAuto', 'keydownListenerCapture'];
+/**
+ * Is valid parameter
+ * @param {String} paramName
+ */
+
+var isValidParameter = function isValidParameter(paramName) {
+  return Object.prototype.hasOwnProperty.call(defaultParams, paramName);
+};
+/**
+ * Is valid parameter for Swal.update() method
+ * @param {String} paramName
+ */
+
+var isUpdatableParameter = function isUpdatableParameter(paramName) {
+  return updatableParams.indexOf(paramName) !== -1;
+};
+/**
+ * Is deprecated parameter
+ * @param {String} paramName
+ */
+
+var isDeprecatedParameter = function isDeprecatedParameter(paramName) {
+  return deprecatedParams[paramName];
+};
+
+var checkIfParamIsValid = function checkIfParamIsValid(param) {
+  if (!isValidParameter(param)) {
+    warn("Unknown parameter \"".concat(param, "\""));
+  }
+};
+
+var checkIfToastParamIsValid = function checkIfToastParamIsValid(param) {
+  if (toastIncompatibleParams.indexOf(param) !== -1) {
+    warn("The parameter \"".concat(param, "\" is incompatible with toasts"));
+  }
+};
+
+var checkIfParamIsDeprecated = function checkIfParamIsDeprecated(param) {
+  if (isDeprecatedParameter(param)) {
+    warnAboutDepreation(param, isDeprecatedParameter(param));
+  }
+};
+/**
+ * Show relevant warnings for given params
+ *
+ * @param params
+ */
+
+
+var showWarningsForParams = function showWarningsForParams(params) {
+  for (var param in params) {
+    checkIfParamIsValid(param);
+
+    if (params.toast) {
+      checkIfToastParamIsValid(param);
+    }
+
+    checkIfParamIsDeprecated();
+  }
+};
+
+
+
+var staticMethods = Object.freeze({
+	isValidParameter: isValidParameter,
+	isUpdatableParameter: isUpdatableParameter,
+	isDeprecatedParameter: isDeprecatedParameter,
+	argsToParams: argsToParams,
+	isVisible: isVisible$1,
+	clickConfirm: clickConfirm,
+	clickCancel: clickCancel,
+	getContainer: getContainer,
+	getPopup: getPopup,
+	getTitle: getTitle,
+	getContent: getContent,
+	getImage: getImage,
+	getIcon: getIcon,
+	getIcons: getIcons,
+	getCloseButton: getCloseButton,
+	getActions: getActions,
+	getConfirmButton: getConfirmButton,
+	getCancelButton: getCancelButton,
+	getHeader: getHeader,
+	getFooter: getFooter,
+	getFocusableElements: getFocusableElements,
+	getValidationMessage: getValidationMessage,
+	isLoading: isLoading,
+	fire: fire,
+	mixin: mixin,
+	queue: queue,
+	getQueueStep: getQueueStep,
+	insertQueueStep: insertQueueStep,
+	deleteQueueStep: deleteQueueStep,
+	showLoading: showLoading,
+	enableLoading: showLoading,
+	getTimerLeft: getTimerLeft,
+	stopTimer: stopTimer,
+	resumeTimer: resumeTimer,
+	toggleTimer: toggleTimer,
+	increaseTimer: increaseTimer,
+	isTimerRunning: isTimerRunning
+});
+
+/**
+ * Enables buttons and hide loader.
+ */
+
+function hideLoading() {
+  var innerParams = privateProps.innerParams.get(this);
+  var domCache = privateProps.domCache.get(this);
+
+  if (!innerParams.showConfirmButton) {
+    hide(domCache.confirmButton);
+
+    if (!innerParams.showCancelButton) {
+      hide(domCache.actions);
+    }
+  }
+
+  removeClass([domCache.popup, domCache.actions], swalClasses.loading);
+  domCache.popup.removeAttribute('aria-busy');
+  domCache.popup.removeAttribute('data-loading');
+  domCache.confirmButton.disabled = false;
+  domCache.cancelButton.disabled = false;
+}
+
+function getInput$1(instance) {
+  var innerParams = privateProps.innerParams.get(instance || this);
+  var domCache = privateProps.domCache.get(instance || this);
+
+  if (!domCache) {
+    return null;
+  }
+
+  return getInput(domCache.content, innerParams.input);
+}
+
+var fixScrollbar = function fixScrollbar() {
+  // for queues, do not do this more than once
+  if (states.previousBodyPadding !== null) {
+    return;
+  } // if the body has overflow
+
+
+  if (document.body.scrollHeight > window.innerHeight) {
+    // add padding so the content doesn't shift after removal of scrollbar
+    states.previousBodyPadding = parseInt(window.getComputedStyle(document.body).getPropertyValue('padding-right'));
+    document.body.style.paddingRight = states.previousBodyPadding + measureScrollbar() + 'px';
+  }
+};
+var undoScrollbar = function undoScrollbar() {
+  if (states.previousBodyPadding !== null) {
+    document.body.style.paddingRight = states.previousBodyPadding + 'px';
+    states.previousBodyPadding = null;
+  }
+};
+
+/* istanbul ignore next */
+
+var iOSfix = function iOSfix() {
+  var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+  if (iOS && !hasClass(document.body, swalClasses.iosfix)) {
+    var offset = document.body.scrollTop;
+    document.body.style.top = offset * -1 + 'px';
+    addClass(document.body, swalClasses.iosfix);
+    lockBodyScroll();
+  }
+};
+
+var lockBodyScroll = function lockBodyScroll() {
+  // #1246
+  var container = getContainer();
+  var preventTouchMove;
+
+  container.ontouchstart = function (e) {
+    preventTouchMove = e.target === container || !isScrollable(container) && e.target.tagName !== 'INPUT' // #1603
+    ;
+  };
+
+  container.ontouchmove = function (e) {
+    if (preventTouchMove) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
+};
+/* istanbul ignore next */
+
+
+var undoIOSfix = function undoIOSfix() {
+  if (hasClass(document.body, swalClasses.iosfix)) {
+    var offset = parseInt(document.body.style.top, 10);
+    removeClass(document.body, swalClasses.iosfix);
+    document.body.style.top = '';
+    document.body.scrollTop = offset * -1;
+  }
+};
+
+var isIE11 = function isIE11() {
+  return !!window.MSInputMethodContext && !!document.documentMode;
+}; // Fix IE11 centering sweetalert2/issues/933
+
+/* istanbul ignore next */
+
+
+var fixVerticalPositionIE = function fixVerticalPositionIE() {
+  var container = getContainer();
+  var popup = getPopup();
+  container.style.removeProperty('align-items');
+
+  if (popup.offsetTop < 0) {
+    container.style.alignItems = 'flex-start';
+  }
+};
+/* istanbul ignore next */
+
+
+var IEfix = function IEfix() {
+  if (typeof window !== 'undefined' && isIE11()) {
+    fixVerticalPositionIE();
+    window.addEventListener('resize', fixVerticalPositionIE);
+  }
+};
+/* istanbul ignore next */
+
+var undoIEfix = function undoIEfix() {
+  if (typeof window !== 'undefined' && isIE11()) {
+    window.removeEventListener('resize', fixVerticalPositionIE);
+  }
+};
+
+// Adding aria-hidden="true" to elements outside of the active modal dialog ensures that
+// elements not within the active modal dialog will not be surfaced if a user opens a screen
+// reader’s list of elements (headings, form controls, landmarks, etc.) in the document.
+
+var setAriaHidden = function setAriaHidden() {
+  var bodyChildren = toArray(document.body.children);
+  bodyChildren.forEach(function (el) {
+    if (el === getContainer() || contains(el, getContainer())) {
+      return;
+    }
+
+    if (el.hasAttribute('aria-hidden')) {
+      el.setAttribute('data-previous-aria-hidden', el.getAttribute('aria-hidden'));
+    }
+
+    el.setAttribute('aria-hidden', 'true');
+  });
+};
+var unsetAriaHidden = function unsetAriaHidden() {
+  var bodyChildren = toArray(document.body.children);
+  bodyChildren.forEach(function (el) {
+    if (el.hasAttribute('data-previous-aria-hidden')) {
+      el.setAttribute('aria-hidden', el.getAttribute('data-previous-aria-hidden'));
+      el.removeAttribute('data-previous-aria-hidden');
+    } else {
+      el.removeAttribute('aria-hidden');
+    }
+  });
+};
+
+/**
+ * This module containts `WeakMap`s for each effectively-"private  property" that a `Swal` has.
+ * For example, to set the private property "foo" of `this` to "bar", you can `privateProps.foo.set(this, 'bar')`
+ * This is the approach that Babel will probably take to implement private methods/fields
+ *   https://github.com/tc39/proposal-private-methods
+ *   https://github.com/babel/babel/pull/7555
+ * Once we have the changes from that PR in Babel, and our core class fits reasonable in *one module*
+ *   then we can use that language feature.
+ */
+var privateMethods = {
+  swalPromiseResolve: new WeakMap()
+};
+
+/*
+ * Instance method to close sweetAlert
+ */
+
+function removePopupAndResetState(instance, container, isToast, onAfterClose) {
+  if (isToast) {
+    triggerOnAfterCloseAndDispose(instance, onAfterClose);
+  } else {
+    restoreActiveElement().then(function () {
+      return triggerOnAfterCloseAndDispose(instance, onAfterClose);
+    });
+    globalState.keydownTarget.removeEventListener('keydown', globalState.keydownHandler, {
+      capture: globalState.keydownListenerCapture
+    });
+    globalState.keydownHandlerAdded = false;
+  }
+
+  if (container.parentNode) {
+    container.parentNode.removeChild(container);
+  }
+
+  if (isModal()) {
+    undoScrollbar();
+    undoIOSfix();
+    undoIEfix();
+    unsetAriaHidden();
+  }
+
+  removeBodyClasses();
+}
+
+function removeBodyClasses() {
+  removeClass([document.documentElement, document.body], [swalClasses.shown, swalClasses['height-auto'], swalClasses['no-backdrop'], swalClasses['toast-shown'], swalClasses['toast-column']]);
+}
+
+function disposeSwal(instance) {
+  // Unset this.params so GC will dispose it (#1569)
+  delete instance.params; // Unset globalState props so GC will dispose globalState (#1569)
+
+  delete globalState.keydownHandler;
+  delete globalState.keydownTarget; // Unset WeakMaps so GC will be able to dispose them (#1569)
+
+  unsetWeakMaps(privateProps);
+  unsetWeakMaps(privateMethods);
+}
+
+function close(resolveValue) {
+  var popup = getPopup();
+
+  if (!popup || hasClass(popup, swalClasses.hide)) {
+    return;
+  }
+
+  var innerParams = privateProps.innerParams.get(this);
+
+  if (!innerParams) {
+    return;
+  }
+
+  var swalPromiseResolve = privateMethods.swalPromiseResolve.get(this);
+  removeClass(popup, swalClasses.show);
+  addClass(popup, swalClasses.hide);
+  handlePopupAnimation(this, popup, innerParams); // Resolve Swal promise
+
+  swalPromiseResolve(resolveValue || {});
+}
+
+var handlePopupAnimation = function handlePopupAnimation(instance, popup, innerParams) {
+  var container = getContainer(); // If animation is supported, animate
+
+  var animationIsSupported = animationEndEvent && hasCssAnimation(popup);
+  var onClose = innerParams.onClose,
+      onAfterClose = innerParams.onAfterClose;
+
+  if (onClose !== null && typeof onClose === 'function') {
+    onClose(popup);
+  }
+
+  if (animationIsSupported) {
+    animatePopup(instance, popup, container, onAfterClose);
+  } else {
+    // Otherwise, remove immediately
+    removePopupAndResetState(instance, container, isToast(), onAfterClose);
+  }
+};
+
+var animatePopup = function animatePopup(instance, popup, container, onAfterClose) {
+  globalState.swalCloseEventFinishedCallback = removePopupAndResetState.bind(null, instance, container, isToast(), onAfterClose);
+  popup.addEventListener(animationEndEvent, function (e) {
+    if (e.target === popup) {
+      globalState.swalCloseEventFinishedCallback();
+      delete globalState.swalCloseEventFinishedCallback;
+    }
+  });
+};
+
+var unsetWeakMaps = function unsetWeakMaps(obj) {
+  for (var i in obj) {
+    obj[i] = new WeakMap();
+  }
+};
+
+var triggerOnAfterCloseAndDispose = function triggerOnAfterCloseAndDispose(instance, onAfterClose) {
+  setTimeout(function () {
+    if (onAfterClose !== null && typeof onAfterClose === 'function') {
+      onAfterClose();
+    }
+
+    if (!getPopup()) {
+      disposeSwal(instance);
+    }
+  });
+};
+
+function setButtonsDisabled(instance, buttons, disabled) {
+  var domCache = privateProps.domCache.get(instance);
+  buttons.forEach(function (button) {
+    domCache[button].disabled = disabled;
+  });
+}
+
+function setInputDisabled(input, disabled) {
+  if (!input) {
+    return false;
+  }
+
+  if (input.type === 'radio') {
+    var radiosContainer = input.parentNode.parentNode;
+    var radios = radiosContainer.querySelectorAll('input');
+
+    for (var i = 0; i < radios.length; i++) {
+      radios[i].disabled = disabled;
+    }
+  } else {
+    input.disabled = disabled;
+  }
+}
+
+function enableButtons() {
+  setButtonsDisabled(this, ['confirmButton', 'cancelButton'], false);
+}
+function disableButtons() {
+  setButtonsDisabled(this, ['confirmButton', 'cancelButton'], true);
+} // @deprecated
+
+function enableConfirmButton() {
+  warnAboutDepreation('Swal.disableConfirmButton()', "Swal.getConfirmButton().removeAttribute('disabled')");
+  setButtonsDisabled(this, ['confirmButton'], false);
+} // @deprecated
+
+function disableConfirmButton() {
+  warnAboutDepreation('Swal.enableConfirmButton()', "Swal.getConfirmButton().setAttribute('disabled', '')");
+  setButtonsDisabled(this, ['confirmButton'], true);
+}
+function enableInput() {
+  return setInputDisabled(this.getInput(), false);
+}
+function disableInput() {
+  return setInputDisabled(this.getInput(), true);
+}
+
+function showValidationMessage(error) {
+  var domCache = privateProps.domCache.get(this);
+  domCache.validationMessage.innerHTML = error;
+  var popupComputedStyle = window.getComputedStyle(domCache.popup);
+  domCache.validationMessage.style.marginLeft = "-".concat(popupComputedStyle.getPropertyValue('padding-left'));
+  domCache.validationMessage.style.marginRight = "-".concat(popupComputedStyle.getPropertyValue('padding-right'));
+  show(domCache.validationMessage);
+  var input = this.getInput();
+
+  if (input) {
+    input.setAttribute('aria-invalid', true);
+    input.setAttribute('aria-describedBy', swalClasses['validation-message']);
+    focusInput(input);
+    addClass(input, swalClasses.inputerror);
+  }
+} // Hide block with validation message
+
+function resetValidationMessage$1() {
+  var domCache = privateProps.domCache.get(this);
+
+  if (domCache.validationMessage) {
+    hide(domCache.validationMessage);
+  }
+
+  var input = this.getInput();
+
+  if (input) {
+    input.removeAttribute('aria-invalid');
+    input.removeAttribute('aria-describedBy');
+    removeClass(input, swalClasses.inputerror);
+  }
+}
+
+function getProgressSteps$1() {
+  warnAboutDepreation('Swal.getProgressSteps()', "const swalInstance = Swal.fire({progressSteps: ['1', '2', '3']}); const progressSteps = swalInstance.params.progressSteps");
+  var innerParams = privateProps.innerParams.get(this);
+  return innerParams.progressSteps;
+}
+function setProgressSteps(progressSteps) {
+  warnAboutDepreation('Swal.setProgressSteps()', 'Swal.update()');
+  var innerParams = privateProps.innerParams.get(this);
+
+  var updatedParams = _extends({}, innerParams, {
+    progressSteps: progressSteps
+  });
+
+  renderProgressSteps(this, updatedParams);
+  privateProps.innerParams.set(this, updatedParams);
+}
+function showProgressSteps() {
+  var domCache = privateProps.domCache.get(this);
+  show(domCache.progressSteps);
+}
+function hideProgressSteps() {
+  var domCache = privateProps.domCache.get(this);
+  hide(domCache.progressSteps);
+}
+
+var Timer =
+/*#__PURE__*/
+function () {
+  function Timer(callback, delay) {
+    _classCallCheck(this, Timer);
+
+    this.callback = callback;
+    this.remaining = delay;
+    this.running = false;
+    this.start();
+  }
+
+  _createClass(Timer, [{
+    key: "start",
+    value: function start() {
+      if (!this.running) {
+        this.running = true;
+        this.started = new Date();
+        this.id = setTimeout(this.callback, this.remaining);
+      }
+
+      return this.remaining;
+    }
+  }, {
+    key: "stop",
+    value: function stop() {
+      if (this.running) {
+        this.running = false;
+        clearTimeout(this.id);
+        this.remaining -= new Date() - this.started;
+      }
+
+      return this.remaining;
+    }
+  }, {
+    key: "increase",
+    value: function increase(n) {
+      var running = this.running;
+
+      if (running) {
+        this.stop();
+      }
+
+      this.remaining += n;
+
+      if (running) {
+        this.start();
+      }
+
+      return this.remaining;
+    }
+  }, {
+    key: "getTimerLeft",
+    value: function getTimerLeft() {
+      if (this.running) {
+        this.stop();
+        this.start();
+      }
+
+      return this.remaining;
+    }
+  }, {
+    key: "isRunning",
+    value: function isRunning() {
+      return this.running;
+    }
+  }]);
+
+  return Timer;
+}();
+
+var defaultInputValidators = {
+  email: function email(string, validationMessage) {
+    return /^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9-]{2,24}$/.test(string) ? Promise.resolve() : Promise.resolve(validationMessage || 'Invalid email address');
+  },
+  url: function url(string, validationMessage) {
+    // taken from https://stackoverflow.com/a/3809435 with a small change from #1306
+    return /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,63}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)$/.test(string) ? Promise.resolve() : Promise.resolve(validationMessage || 'Invalid URL');
+  }
+};
+
+function setDefaultInputValidators(params) {
+  // Use default `inputValidator` for supported input types if not provided
+  if (!params.inputValidator) {
+    Object.keys(defaultInputValidators).forEach(function (key) {
+      if (params.input === key) {
+        params.inputValidator = defaultInputValidators[key];
+      }
+    });
+  }
+}
+
+function validateCustomTargetElement(params) {
+  // Determine if the custom target element is valid
+  if (!params.target || typeof params.target === 'string' && !document.querySelector(params.target) || typeof params.target !== 'string' && !params.target.appendChild) {
+    warn('Target parameter is not valid, defaulting to "body"');
+    params.target = 'body';
+  }
+}
+/**
+ * Set type, text and actions on popup
+ *
+ * @param params
+ * @returns {boolean}
+ */
+
+
+function setParameters(params) {
+  setDefaultInputValidators(params); // showLoaderOnConfirm && preConfirm
+
+  if (params.showLoaderOnConfirm && !params.preConfirm) {
+    warn('showLoaderOnConfirm is set to true, but preConfirm is not defined.\n' + 'showLoaderOnConfirm should be used together with preConfirm, see usage example:\n' + 'https://sweetalert2.github.io/#ajax-request');
+  } // params.animation will be actually used in renderPopup.js
+  // but in case when params.animation is a function, we need to call that function
+  // before popup (re)initialization, so it'll be possible to check Swal.isVisible()
+  // inside the params.animation function
+
+
+  params.animation = callIfFunction(params.animation);
+  validateCustomTargetElement(params); // Replace newlines with <br> in title
+
+  if (typeof params.title === 'string') {
+    params.title = params.title.split('\n').join('<br />');
+  }
+
+  init(params);
+}
+
+function swalOpenAnimationFinished(popup, container) {
+  popup.removeEventListener(animationEndEvent, swalOpenAnimationFinished);
+  container.style.overflowY = 'auto';
+}
+/**
+ * Open popup, add necessary classes and styles, fix scrollbar
+ *
+ * @param {Array} params
+ */
+
+
+var openPopup = function openPopup(params) {
+  var container = getContainer();
+  var popup = getPopup();
+
+  if (typeof params.onBeforeOpen === 'function') {
+    params.onBeforeOpen(popup);
+  }
+
+  addClasses(container, popup, params); // scrolling is 'hidden' until animation is done, after that 'auto'
+
+  setScrollingVisibility(container, popup);
+
+  if (isModal()) {
+    fixScrollContainer(container, params.scrollbarPadding);
+  }
+
+  if (!isToast() && !globalState.previousActiveElement) {
+    globalState.previousActiveElement = document.activeElement;
+  }
+
+  if (typeof params.onOpen === 'function') {
+    setTimeout(function () {
+      return params.onOpen(popup);
+    });
+  }
+};
+
+var setScrollingVisibility = function setScrollingVisibility(container, popup) {
+  if (animationEndEvent && hasCssAnimation(popup)) {
+    container.style.overflowY = 'hidden';
+    popup.addEventListener(animationEndEvent, swalOpenAnimationFinished.bind(null, popup, container));
+  } else {
+    container.style.overflowY = 'auto';
+  }
+};
+
+var fixScrollContainer = function fixScrollContainer(container, scrollbarPadding) {
+  iOSfix();
+  IEfix();
+  setAriaHidden();
+
+  if (scrollbarPadding) {
+    fixScrollbar();
+  } // sweetalert2/issues/1247
+
+
+  setTimeout(function () {
+    container.scrollTop = 0;
+  });
+};
+
+var addClasses = function addClasses(container, popup, params) {
+  if (params.animation) {
+    addClass(popup, swalClasses.show);
+    addClass(container, swalClasses.fade);
+  }
+
+  show(popup);
+  addClass([document.documentElement, document.body, container], swalClasses.shown);
+
+  if (params.heightAuto && params.backdrop && !params.toast) {
+    addClass([document.documentElement, document.body], swalClasses['height-auto']);
+  }
+};
+
+var handleInputOptionsAndValue = function handleInputOptionsAndValue(instance, params) {
+  if (params.input === 'select' || params.input === 'radio') {
+    handleInputOptions(instance, params);
+  } else if (['text', 'email', 'number', 'tel', 'textarea'].indexOf(params.input) !== -1 && isPromise(params.inputValue)) {
+    handleInputValue(instance, params);
+  }
+};
+
+var handleInputOptions = function handleInputOptions(instance, params) {
+  var content = getContent();
+
+  var processInputOptions = function processInputOptions(inputOptions) {
+    return populateInputOptions[params.input](content, formatInputOptions(inputOptions), params);
+  };
+
+  if (isPromise(params.inputOptions)) {
+    showLoading();
+    params.inputOptions.then(function (inputOptions) {
+      instance.hideLoading();
+      processInputOptions(inputOptions);
+    });
+  } else if (_typeof(params.inputOptions) === 'object') {
+    processInputOptions(params.inputOptions);
+  } else {
+    error("Unexpected type of inputOptions! Expected object, Map or Promise, got ".concat(_typeof(params.inputOptions)));
+  }
+};
+
+var handleInputValue = function handleInputValue(instance, params) {
+  var input = instance.getInput();
+  hide(input);
+  params.inputValue.then(function (inputValue) {
+    input.value = params.input === 'number' ? parseFloat(inputValue) || 0 : inputValue + '';
+    show(input);
+    input.focus();
+    instance.hideLoading();
+  })["catch"](function (err) {
+    error('Error in inputValue promise: ' + err);
+    input.value = '';
+    show(input);
+    input.focus();
+    instance.hideLoading();
+  });
+};
+
+var populateInputOptions = {
+  select: function select(content, inputOptions, params) {
+    var select = getChildByClass(content, swalClasses.select);
+    inputOptions.forEach(function (inputOption) {
+      var optionValue = inputOption[0];
+      var optionLabel = inputOption[1];
+      var option = document.createElement('option');
+      option.value = optionValue;
+      option.innerHTML = optionLabel;
+
+      if (params.inputValue.toString() === optionValue.toString()) {
+        option.selected = true;
+      }
+
+      select.appendChild(option);
+    });
+    select.focus();
+  },
+  radio: function radio(content, inputOptions, params) {
+    var radio = getChildByClass(content, swalClasses.radio);
+    inputOptions.forEach(function (inputOption) {
+      var radioValue = inputOption[0];
+      var radioLabel = inputOption[1];
+      var radioInput = document.createElement('input');
+      var radioLabelElement = document.createElement('label');
+      radioInput.type = 'radio';
+      radioInput.name = swalClasses.radio;
+      radioInput.value = radioValue;
+
+      if (params.inputValue.toString() === radioValue.toString()) {
+        radioInput.checked = true;
+      }
+
+      var label = document.createElement('span');
+      label.innerHTML = radioLabel;
+      label.className = swalClasses.label;
+      radioLabelElement.appendChild(radioInput);
+      radioLabelElement.appendChild(label);
+      radio.appendChild(radioLabelElement);
+    });
+    var radios = radio.querySelectorAll('input');
+
+    if (radios.length) {
+      radios[0].focus();
+    }
+  }
+  /**
+   * Converts `inputOptions` into an array of `[value, label]`s
+   * @param inputOptions
+   */
+
+};
+
+var formatInputOptions = function formatInputOptions(inputOptions) {
+  var result = [];
+
+  if (typeof Map !== 'undefined' && inputOptions instanceof Map) {
+    inputOptions.forEach(function (value, key) {
+      result.push([key, value]);
+    });
+  } else {
+    Object.keys(inputOptions).forEach(function (key) {
+      result.push([key, inputOptions[key]]);
+    });
+  }
+
+  return result;
+};
+
+var handleConfirmButtonClick = function handleConfirmButtonClick(instance, innerParams) {
+  instance.disableButtons();
+
+  if (innerParams.input) {
+    handleConfirmWithInput(instance, innerParams);
+  } else {
+    confirm(instance, innerParams, true);
+  }
+};
+var handleCancelButtonClick = function handleCancelButtonClick(instance, dismissWith) {
+  instance.disableButtons();
+  dismissWith(DismissReason.cancel);
+};
+
+var handleConfirmWithInput = function handleConfirmWithInput(instance, innerParams) {
+  var inputValue = getInputValue(instance, innerParams);
+
+  if (innerParams.inputValidator) {
+    instance.disableInput();
+    var validationPromise = Promise.resolve().then(function () {
+      return innerParams.inputValidator(inputValue, innerParams.validationMessage);
+    });
+    validationPromise.then(function (validationMessage) {
+      instance.enableButtons();
+      instance.enableInput();
+
+      if (validationMessage) {
+        instance.showValidationMessage(validationMessage);
+      } else {
+        confirm(instance, innerParams, inputValue);
+      }
+    });
+  } else if (!instance.getInput().checkValidity()) {
+    instance.enableButtons();
+    instance.showValidationMessage(innerParams.validationMessage);
+  } else {
+    confirm(instance, innerParams, inputValue);
+  }
+};
+
+var succeedWith = function succeedWith(instance, value) {
+  instance.closePopup({
+    value: value
+  });
+};
+
+var confirm = function confirm(instance, innerParams, value) {
+  if (innerParams.showLoaderOnConfirm) {
+    showLoading(); // TODO: make showLoading an *instance* method
+  }
+
+  if (innerParams.preConfirm) {
+    instance.resetValidationMessage();
+    var preConfirmPromise = Promise.resolve().then(function () {
+      return innerParams.preConfirm(value, innerParams.validationMessage);
+    });
+    preConfirmPromise.then(function (preConfirmValue) {
+      if (isVisible(getValidationMessage()) || preConfirmValue === false) {
+        instance.hideLoading();
+      } else {
+        succeedWith(instance, typeof preConfirmValue === 'undefined' ? value : preConfirmValue);
+      }
+    });
+  } else {
+    succeedWith(instance, value);
+  }
+};
+
+var getInputValue = function getInputValue(instance, innerParams) {
+  var input = instance.getInput();
+
+  if (!input) {
+    return null;
+  }
+
+  switch (innerParams.input) {
+    case 'checkbox':
+      return getCheckboxValue(input);
+
+    case 'radio':
+      return getRadioValue(input);
+
+    case 'file':
+      return getFileValue(input);
+
+    default:
+      return innerParams.inputAutoTrim ? input.value.trim() : input.value;
+  }
+};
+
+var getCheckboxValue = function getCheckboxValue(input) {
+  return input.checked ? 1 : 0;
+};
+
+var getRadioValue = function getRadioValue(input) {
+  return input.checked ? input.value : null;
+};
+
+var getFileValue = function getFileValue(input) {
+  return input.files.length ? input.files[0] : null;
+};
+
+var addKeydownHandler = function addKeydownHandler(instance, globalState, innerParams, dismissWith) {
+  if (globalState.keydownTarget && globalState.keydownHandlerAdded) {
+    globalState.keydownTarget.removeEventListener('keydown', globalState.keydownHandler, {
+      capture: globalState.keydownListenerCapture
+    });
+    globalState.keydownHandlerAdded = false;
+  }
+
+  if (!innerParams.toast) {
+    globalState.keydownHandler = function (e) {
+      return keydownHandler(instance, e, innerParams, dismissWith);
+    };
+
+    globalState.keydownTarget = innerParams.keydownListenerCapture ? window : getPopup();
+    globalState.keydownListenerCapture = innerParams.keydownListenerCapture;
+    globalState.keydownTarget.addEventListener('keydown', globalState.keydownHandler, {
+      capture: globalState.keydownListenerCapture
+    });
+    globalState.keydownHandlerAdded = true;
+  }
+}; // Focus handling
+
+var setFocus = function setFocus(innerParams, index, increment) {
+  var focusableElements = getFocusableElements(innerParams.focusCancel); // search for visible elements and select the next possible match
+
+  for (var i = 0; i < focusableElements.length; i++) {
+    index = index + increment; // rollover to first item
+
+    if (index === focusableElements.length) {
+      index = 0; // go to last item
+    } else if (index === -1) {
+      index = focusableElements.length - 1;
+    }
+
+    return focusableElements[index].focus();
+  } // no visible focusable elements, focus the popup
+
+
+  getPopup().focus();
+};
+var arrowKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Left', 'Right', 'Up', 'Down' // IE11
+];
+var escKeys = ['Escape', 'Esc' // IE11
+];
+
+var keydownHandler = function keydownHandler(instance, e, innerParams, dismissWith) {
+  if (innerParams.stopKeydownPropagation) {
+    e.stopPropagation();
+  } // ENTER
+
+
+  if (e.key === 'Enter') {
+    handleEnter(instance, e, innerParams); // TAB
+  } else if (e.key === 'Tab') {
+    handleTab(e, innerParams); // ARROWS - switch focus between buttons
+  } else if (arrowKeys.indexOf(e.key) !== -1) {
+    handleArrows(); // ESC
+  } else if (escKeys.indexOf(e.key) !== -1) {
+    handleEsc(e, innerParams, dismissWith);
+  }
+};
+
+var handleEnter = function handleEnter(instance, e, innerParams) {
+  // #720 #721
+  if (e.isComposing) {
+    return;
+  }
+
+  if (e.target && instance.getInput() && e.target.outerHTML === instance.getInput().outerHTML) {
+    if (['textarea', 'file'].indexOf(innerParams.input) !== -1) {
+      return; // do not submit
+    }
+
+    clickConfirm();
+    e.preventDefault();
+  }
+};
+
+var handleTab = function handleTab(e, innerParams) {
+  var targetElement = e.target;
+  var focusableElements = getFocusableElements(innerParams.focusCancel);
+  var btnIndex = -1;
+
+  for (var i = 0; i < focusableElements.length; i++) {
+    if (targetElement === focusableElements[i]) {
+      btnIndex = i;
+      break;
+    }
+  }
+
+  if (!e.shiftKey) {
+    // Cycle to the next button
+    setFocus(innerParams, btnIndex, 1);
+  } else {
+    // Cycle to the prev button
+    setFocus(innerParams, btnIndex, -1);
+  }
+
+  e.stopPropagation();
+  e.preventDefault();
+};
+
+var handleArrows = function handleArrows() {
+  var confirmButton = getConfirmButton();
+  var cancelButton = getCancelButton(); // focus Cancel button if Confirm button is currently focused
+
+  if (document.activeElement === confirmButton && isVisible(cancelButton)) {
+    cancelButton.focus(); // and vice versa
+  } else if (document.activeElement === cancelButton && isVisible(confirmButton)) {
+    confirmButton.focus();
+  }
+};
+
+var handleEsc = function handleEsc(e, innerParams, dismissWith) {
+  if (callIfFunction(innerParams.allowEscapeKey)) {
+    e.preventDefault();
+    dismissWith(DismissReason.esc);
+  }
+};
+
+var handlePopupClick = function handlePopupClick(domCache, innerParams, dismissWith) {
+  if (innerParams.toast) {
+    handleToastClick(domCache, innerParams, dismissWith);
+  } else {
+    // Ignore click events that had mousedown on the popup but mouseup on the container
+    // This can happen when the user drags a slider
+    handleModalMousedown(domCache); // Ignore click events that had mousedown on the container but mouseup on the popup
+
+    handleContainerMousedown(domCache);
+    handleModalClick(domCache, innerParams, dismissWith);
+  }
+};
+
+var handleToastClick = function handleToastClick(domCache, innerParams, dismissWith) {
+  // Closing toast by internal click
+  domCache.popup.onclick = function () {
+    if (innerParams.showConfirmButton || innerParams.showCancelButton || innerParams.showCloseButton || innerParams.input) {
+      return;
+    }
+
+    dismissWith(DismissReason.close);
+  };
+};
+
+var ignoreOutsideClick = false;
+
+var handleModalMousedown = function handleModalMousedown(domCache) {
+  domCache.popup.onmousedown = function () {
+    domCache.container.onmouseup = function (e) {
+      domCache.container.onmouseup = undefined; // We only check if the mouseup target is the container because usually it doesn't
+      // have any other direct children aside of the popup
+
+      if (e.target === domCache.container) {
+        ignoreOutsideClick = true;
+      }
+    };
+  };
+};
+
+var handleContainerMousedown = function handleContainerMousedown(domCache) {
+  domCache.container.onmousedown = function () {
+    domCache.popup.onmouseup = function (e) {
+      domCache.popup.onmouseup = undefined; // We also need to check if the mouseup target is a child of the popup
+
+      if (e.target === domCache.popup || domCache.popup.contains(e.target)) {
+        ignoreOutsideClick = true;
+      }
+    };
+  };
+};
+
+var handleModalClick = function handleModalClick(domCache, innerParams, dismissWith) {
+  domCache.container.onclick = function (e) {
+    if (ignoreOutsideClick) {
+      ignoreOutsideClick = false;
+      return;
+    }
+
+    if (e.target === domCache.container && callIfFunction(innerParams.allowOutsideClick)) {
+      dismissWith(DismissReason.backdrop);
+    }
+  };
+};
+
+function _main(userParams) {
+  showWarningsForParams(userParams); // Check if there is another Swal closing
+
+  if (getPopup() && globalState.swalCloseEventFinishedCallback) {
+    globalState.swalCloseEventFinishedCallback();
+    delete globalState.swalCloseEventFinishedCallback;
+  } // Check if there is a swal disposal defer timer
+
+
+  if (globalState.deferDisposalTimer) {
+    clearTimeout(globalState.deferDisposalTimer);
+    delete globalState.deferDisposalTimer;
+  }
+
+  var innerParams = _extends({}, defaultParams, userParams);
+
+  setParameters(innerParams);
+  Object.freeze(innerParams); // clear the previous timer
+
+  if (globalState.timeout) {
+    globalState.timeout.stop();
+    delete globalState.timeout;
+  } // clear the restore focus timeout
+
+
+  clearTimeout(globalState.restoreFocusTimeout);
+  var domCache = populateDomCache(this);
+  render(this, innerParams);
+  privateProps.innerParams.set(this, innerParams);
+  return swalPromise(this, domCache, innerParams);
+}
+
+var swalPromise = function swalPromise(instance, domCache, innerParams) {
+  return new Promise(function (resolve) {
+    // functions to handle all closings/dismissals
+    var dismissWith = function dismissWith(dismiss) {
+      instance.closePopup({
+        dismiss: dismiss
+      });
+    };
+
+    privateMethods.swalPromiseResolve.set(instance, resolve);
+    setupTimer(globalState, innerParams, dismissWith);
+
+    domCache.confirmButton.onclick = function () {
+      return handleConfirmButtonClick(instance, innerParams);
+    };
+
+    domCache.cancelButton.onclick = function () {
+      return handleCancelButtonClick(instance, dismissWith);
+    };
+
+    domCache.closeButton.onclick = function () {
+      return dismissWith(DismissReason.close);
+    };
+
+    handlePopupClick(domCache, innerParams, dismissWith);
+    addKeydownHandler(instance, globalState, innerParams, dismissWith);
+
+    if (innerParams.toast && (innerParams.input || innerParams.footer || innerParams.showCloseButton)) {
+      addClass(document.body, swalClasses['toast-column']);
+    } else {
+      removeClass(document.body, swalClasses['toast-column']);
+    }
+
+    handleInputOptionsAndValue(instance, innerParams);
+    openPopup(innerParams);
+    initFocus(domCache, innerParams); // Scroll container to top on open (#1247)
+
+    domCache.container.scrollTop = 0;
+  });
+};
+
+var populateDomCache = function populateDomCache(instance) {
+  var domCache = {
+    popup: getPopup(),
+    container: getContainer(),
+    content: getContent(),
+    actions: getActions(),
+    confirmButton: getConfirmButton(),
+    cancelButton: getCancelButton(),
+    closeButton: getCloseButton(),
+    validationMessage: getValidationMessage(),
+    progressSteps: getProgressSteps()
+  };
+  privateProps.domCache.set(instance, domCache);
+  return domCache;
+};
+
+var setupTimer = function setupTimer(globalState$$1, innerParams, dismissWith) {
+  if (innerParams.timer) {
+    globalState$$1.timeout = new Timer(function () {
+      dismissWith('timer');
+      delete globalState$$1.timeout;
+    }, innerParams.timer);
+  }
+};
+
+var initFocus = function initFocus(domCache, innerParams) {
+  if (innerParams.toast) {
+    return;
+  }
+
+  if (!callIfFunction(innerParams.allowEnterKey)) {
+    return blurActiveElement();
+  }
+
+  if (innerParams.focusCancel && isVisible(domCache.cancelButton)) {
+    return domCache.cancelButton.focus();
+  }
+
+  if (innerParams.focusConfirm && isVisible(domCache.confirmButton)) {
+    return domCache.confirmButton.focus();
+  }
+
+  setFocus(innerParams, -1, 1);
+};
+
+var blurActiveElement = function blurActiveElement() {
+  if (document.activeElement && typeof document.activeElement.blur === 'function') {
+    document.activeElement.blur();
+  }
+};
+
+/**
+ * Updates popup parameters.
+ */
+
+function update(params) {
+  var validUpdatableParams = {}; // assign valid params from `params` to `defaults`
+
+  Object.keys(params).forEach(function (param) {
+    if (Swal.isUpdatableParameter(param)) {
+      validUpdatableParams[param] = params[param];
+    } else {
+      warn("Invalid parameter to update: \"".concat(param, "\". Updatable params are listed here: https://github.com/sweetalert2/sweetalert2/blob/master/src/utils/params.js"));
+    }
+  });
+  var innerParams = privateProps.innerParams.get(this);
+
+  var updatedParams = _extends({}, innerParams, validUpdatableParams);
+
+  render(this, updatedParams);
+  privateProps.innerParams.set(this, updatedParams);
+  Object.defineProperties(this, {
+    params: {
+      value: _extends({}, this.params, params),
+      writable: false,
+      enumerable: true
+    }
+  });
+}
+
+
+
+var instanceMethods = Object.freeze({
+	hideLoading: hideLoading,
+	disableLoading: hideLoading,
+	getInput: getInput$1,
+	close: close,
+	closePopup: close,
+	closeModal: close,
+	closeToast: close,
+	enableButtons: enableButtons,
+	disableButtons: disableButtons,
+	enableConfirmButton: enableConfirmButton,
+	disableConfirmButton: disableConfirmButton,
+	enableInput: enableInput,
+	disableInput: disableInput,
+	showValidationMessage: showValidationMessage,
+	resetValidationMessage: resetValidationMessage$1,
+	getProgressSteps: getProgressSteps$1,
+	setProgressSteps: setProgressSteps,
+	showProgressSteps: showProgressSteps,
+	hideProgressSteps: hideProgressSteps,
+	_main: _main,
+	update: update
+});
+
+var currentInstance; // SweetAlert constructor
+
+function SweetAlert() {
+  // Prevent run in Node env
+
+  /* istanbul ignore if */
+  if (typeof window === 'undefined') {
+    return;
+  } // Check for the existence of Promise
+
+  /* istanbul ignore if */
+
+
+  if (typeof Promise === 'undefined') {
+    error('This package requires a Promise library, please include a shim to enable it in this browser (See: https://github.com/sweetalert2/sweetalert2/wiki/Migration-from-SweetAlert-to-SweetAlert2#1-ie-support)');
+  }
+
+  currentInstance = this;
+
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  var outerParams = Object.freeze(this.constructor.argsToParams(args));
+  Object.defineProperties(this, {
+    params: {
+      value: outerParams,
+      writable: false,
+      enumerable: true,
+      configurable: true
+    }
+  });
+
+  var promise = this._main(this.params);
+
+  privateProps.promise.set(this, promise);
+} // `catch` cannot be the name of a module export, so we define our thenable methods here instead
+
+
+SweetAlert.prototype.then = function (onFulfilled) {
+  var promise = privateProps.promise.get(this);
+  return promise.then(onFulfilled);
+};
+
+SweetAlert.prototype["finally"] = function (onFinally) {
+  var promise = privateProps.promise.get(this);
+  return promise["finally"](onFinally);
+}; // Assign instance methods from src/instanceMethods/*.js to prototype
+
+
+_extends(SweetAlert.prototype, instanceMethods); // Assign static methods from src/staticMethods/*.js to constructor
+
+
+_extends(SweetAlert, staticMethods); // Proxy to instance methods to constructor, for now, for backwards compatibility
+
+
+Object.keys(instanceMethods).forEach(function (key) {
+  SweetAlert[key] = function () {
+    if (currentInstance) {
+      var _currentInstance;
+
+      return (_currentInstance = currentInstance)[key].apply(_currentInstance, arguments);
+    }
+  };
+});
+SweetAlert.DismissReason = DismissReason;
+SweetAlert.version = '8.16.2';
+
+var Swal = SweetAlert;
+Swal["default"] = Swal;
+
+return Swal;
+
+})));
+if (typeof this !== 'undefined' && this.Sweetalert2){  this.swal = this.sweetAlert = this.Swal = this.SweetAlert = this.Sweetalert2}
+
+"undefined"!=typeof document&&function(e,t){var n=e.createElement("style");if(e.getElementsByTagName("head")[0].appendChild(n),n.styleSheet)n.styleSheet.disabled||(n.styleSheet.cssText=t);else try{n.innerHTML=t}catch(e){n.innerText=t}}(document,"@charset \"UTF-8\";@-webkit-keyframes swal2-show{0%{transform:scale(.7)}45%{transform:scale(1.05)}80%{transform:scale(.95)}100%{transform:scale(1)}}@keyframes swal2-show{0%{transform:scale(.7)}45%{transform:scale(1.05)}80%{transform:scale(.95)}100%{transform:scale(1)}}@-webkit-keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(.5);opacity:0}}@keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(.5);opacity:0}}@-webkit-keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.875em;width:1.5625em}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.875em;width:1.5625em}}@-webkit-keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@-webkit-keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@-webkit-keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(.4);opacity:0}50%{margin-top:1.625em;transform:scale(.4);opacity:0}80%{margin-top:-.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(.4);opacity:0}50%{margin-top:1.625em;transform:scale(.4);opacity:0}80%{margin-top:-.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@-webkit-keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0);opacity:1}}body.swal2-toast-shown .swal2-container{background-color:transparent}body.swal2-toast-shown .swal2-container.swal2-shown{background-color:transparent}body.swal2-toast-shown .swal2-container.swal2-top{top:0;right:auto;bottom:auto;left:50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{top:0;right:0;bottom:auto;left:auto}body.swal2-toast-shown .swal2-container.swal2-top-left,body.swal2-toast-shown .swal2-container.swal2-top-start{top:0;right:auto;bottom:auto;left:0}body.swal2-toast-shown .swal2-container.swal2-center-left,body.swal2-toast-shown .swal2-container.swal2-center-start{top:50%;right:auto;bottom:auto;left:0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{top:50%;right:auto;bottom:auto;left:50%;transform:translate(-50%,-50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{top:50%;right:0;bottom:auto;left:auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-left,body.swal2-toast-shown .swal2-container.swal2-bottom-start{top:auto;right:auto;bottom:0;left:0}body.swal2-toast-shown .swal2-container.swal2-bottom{top:auto;right:auto;bottom:0;left:50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{top:auto;right:0;bottom:0;left:auto}body.swal2-toast-column .swal2-toast{flex-direction:column;align-items:stretch}body.swal2-toast-column .swal2-toast .swal2-actions{flex:1;align-self:stretch;height:2.2em;margin-top:.3125em}body.swal2-toast-column .swal2-toast .swal2-loading{justify-content:center}body.swal2-toast-column .swal2-toast .swal2-input{height:2em;margin:.3125em auto;font-size:1em}body.swal2-toast-column .swal2-toast .swal2-validation-message{font-size:1em}.swal2-popup.swal2-toast{flex-direction:row;align-items:center;width:auto;padding:.625em;overflow-y:hidden;box-shadow:0 0 .625em #d9d9d9}.swal2-popup.swal2-toast .swal2-header{flex-direction:row}.swal2-popup.swal2-toast .swal2-title{flex-grow:1;justify-content:flex-start;margin:0 .6em;font-size:1em}.swal2-popup.swal2-toast .swal2-footer{margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-popup.swal2-toast .swal2-close{position:static;width:.8em;height:.8em;line-height:.8}.swal2-popup.swal2-toast .swal2-content{justify-content:flex-start;font-size:1em}.swal2-popup.swal2-toast .swal2-icon{width:2em;min-width:2em;height:2em;margin:0}.swal2-popup.swal2-toast .swal2-icon::before{display:flex;align-items:center;font-size:2em;font-weight:700}@media all and (-ms-high-contrast:none),(-ms-high-contrast:active){.swal2-popup.swal2-toast .swal2-icon::before{font-size:.25em}}.swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-popup.swal2-toast .swal2-actions{flex-basis:auto!important;width:auto;height:auto;margin:0 .3125em}.swal2-popup.swal2-toast .swal2-styled{margin:0 .3125em;padding:.3125em .625em;font-size:1em}.swal2-popup.swal2-toast .swal2-styled:focus{box-shadow:0 0 0 .0625em #fff,0 0 0 .125em rgba(50,100,150,.4)}.swal2-popup.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:1.6em;height:3em;transform:rotate(45deg);border-radius:50%}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-.8em;left:-.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-.25em;left:.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-popup.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}.swal2-popup.swal2-toast.swal2-show{-webkit-animation:swal2-toast-show .5s;animation:swal2-toast-show .5s}.swal2-popup.swal2-toast.swal2-hide{-webkit-animation:swal2-toast-hide .1s forwards;animation:swal2-toast-hide .1s forwards}.swal2-popup.swal2-toast .swal2-animate-success-icon .swal2-success-line-tip{-webkit-animation:swal2-toast-animate-success-line-tip .75s;animation:swal2-toast-animate-success-line-tip .75s}.swal2-popup.swal2-toast .swal2-animate-success-icon .swal2-success-line-long{-webkit-animation:swal2-toast-animate-success-line-long .75s;animation:swal2-toast-animate-success-line-long .75s}@-webkit-keyframes swal2-toast-show{0%{transform:translateY(-.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0)}}@keyframes swal2-toast-show{0%{transform:translateY(-.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0)}}@-webkit-keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@-webkit-keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@-webkit-keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto!important}body.swal2-no-backdrop .swal2-shown{top:auto;right:auto;bottom:auto;left:auto;max-width:calc(100% - .625em * 2);background-color:transparent}body.swal2-no-backdrop .swal2-shown>.swal2-modal{box-shadow:0 0 10px rgba(0,0,0,.4)}body.swal2-no-backdrop .swal2-shown.swal2-top{top:0;left:50%;transform:translateX(-50%)}body.swal2-no-backdrop .swal2-shown.swal2-top-left,body.swal2-no-backdrop .swal2-shown.swal2-top-start{top:0;left:0}body.swal2-no-backdrop .swal2-shown.swal2-top-end,body.swal2-no-backdrop .swal2-shown.swal2-top-right{top:0;right:0}body.swal2-no-backdrop .swal2-shown.swal2-center{top:50%;left:50%;transform:translate(-50%,-50%)}body.swal2-no-backdrop .swal2-shown.swal2-center-left,body.swal2-no-backdrop .swal2-shown.swal2-center-start{top:50%;left:0;transform:translateY(-50%)}body.swal2-no-backdrop .swal2-shown.swal2-center-end,body.swal2-no-backdrop .swal2-shown.swal2-center-right{top:50%;right:0;transform:translateY(-50%)}body.swal2-no-backdrop .swal2-shown.swal2-bottom{bottom:0;left:50%;transform:translateX(-50%)}body.swal2-no-backdrop .swal2-shown.swal2-bottom-left,body.swal2-no-backdrop .swal2-shown.swal2-bottom-start{bottom:0;left:0}body.swal2-no-backdrop .swal2-shown.swal2-bottom-end,body.swal2-no-backdrop .swal2-shown.swal2-bottom-right{right:0;bottom:0}.swal2-container{display:flex;position:fixed;z-index:1060;top:0;right:0;bottom:0;left:0;flex-direction:row;align-items:center;justify-content:center;padding:.625em;overflow-x:hidden;background-color:transparent;-webkit-overflow-scrolling:touch}.swal2-container.swal2-top{align-items:flex-start}.swal2-container.swal2-top-left,.swal2-container.swal2-top-start{align-items:flex-start;justify-content:flex-start}.swal2-container.swal2-top-end,.swal2-container.swal2-top-right{align-items:flex-start;justify-content:flex-end}.swal2-container.swal2-center{align-items:center}.swal2-container.swal2-center-left,.swal2-container.swal2-center-start{align-items:center;justify-content:flex-start}.swal2-container.swal2-center-end,.swal2-container.swal2-center-right{align-items:center;justify-content:flex-end}.swal2-container.swal2-bottom{align-items:flex-end}.swal2-container.swal2-bottom-left,.swal2-container.swal2-bottom-start{align-items:flex-end;justify-content:flex-start}.swal2-container.swal2-bottom-end,.swal2-container.swal2-bottom-right{align-items:flex-end;justify-content:flex-end}.swal2-container.swal2-bottom-end>:first-child,.swal2-container.swal2-bottom-left>:first-child,.swal2-container.swal2-bottom-right>:first-child,.swal2-container.swal2-bottom-start>:first-child,.swal2-container.swal2-bottom>:first-child{margin-top:auto}.swal2-container.swal2-grow-fullscreen>.swal2-modal{display:flex!important;flex:1;align-self:stretch;justify-content:center}.swal2-container.swal2-grow-row>.swal2-modal{display:flex!important;flex:1;align-content:center;justify-content:center}.swal2-container.swal2-grow-column{flex:1;flex-direction:column}.swal2-container.swal2-grow-column.swal2-bottom,.swal2-container.swal2-grow-column.swal2-center,.swal2-container.swal2-grow-column.swal2-top{align-items:center}.swal2-container.swal2-grow-column.swal2-bottom-left,.swal2-container.swal2-grow-column.swal2-bottom-start,.swal2-container.swal2-grow-column.swal2-center-left,.swal2-container.swal2-grow-column.swal2-center-start,.swal2-container.swal2-grow-column.swal2-top-left,.swal2-container.swal2-grow-column.swal2-top-start{align-items:flex-start}.swal2-container.swal2-grow-column.swal2-bottom-end,.swal2-container.swal2-grow-column.swal2-bottom-right,.swal2-container.swal2-grow-column.swal2-center-end,.swal2-container.swal2-grow-column.swal2-center-right,.swal2-container.swal2-grow-column.swal2-top-end,.swal2-container.swal2-grow-column.swal2-top-right{align-items:flex-end}.swal2-container.swal2-grow-column>.swal2-modal{display:flex!important;flex:1;align-content:center;justify-content:center}.swal2-container:not(.swal2-top):not(.swal2-top-start):not(.swal2-top-end):not(.swal2-top-left):not(.swal2-top-right):not(.swal2-center-start):not(.swal2-center-end):not(.swal2-center-left):not(.swal2-center-right):not(.swal2-bottom):not(.swal2-bottom-start):not(.swal2-bottom-end):not(.swal2-bottom-left):not(.swal2-bottom-right):not(.swal2-grow-fullscreen)>.swal2-modal{margin:auto}@media all and (-ms-high-contrast:none),(-ms-high-contrast:active){.swal2-container .swal2-modal{margin:0!important}}.swal2-container.swal2-fade{transition:background-color .1s}.swal2-container.swal2-shown{background-color:rgba(0,0,0,.4)}.swal2-popup{display:none;position:relative;box-sizing:border-box;flex-direction:column;justify-content:center;width:32em;max-width:100%;padding:1.25em;border:none;border-radius:.3125em;background:#fff;font-family:inherit;font-size:1rem}.swal2-popup:focus{outline:0}.swal2-popup.swal2-loading{overflow-y:hidden}.swal2-header{display:flex;flex-direction:column;align-items:center}.swal2-title{position:relative;max-width:100%;margin:0 0 .4em;padding:0;color:#595959;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;word-wrap:break-word}.swal2-actions{display:flex;z-index:1;flex-wrap:wrap;align-items:center;justify-content:center;width:100%;margin:1.25em auto 0}.swal2-actions:not(.swal2-loading) .swal2-styled[disabled]{opacity:.4}.swal2-actions:not(.swal2-loading) .swal2-styled:hover{background-image:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1))}.swal2-actions:not(.swal2-loading) .swal2-styled:active{background-image:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2))}.swal2-actions.swal2-loading .swal2-styled.swal2-confirm{box-sizing:border-box;width:2.5em;height:2.5em;margin:.46875em;padding:0;-webkit-animation:swal2-rotate-loading 1.5s linear 0s infinite normal;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border:.25em solid transparent;border-radius:100%;border-color:transparent;background-color:transparent!important;color:transparent;cursor:default;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.swal2-actions.swal2-loading .swal2-styled.swal2-cancel{margin-right:30px;margin-left:30px}.swal2-actions.swal2-loading :not(.swal2-styled).swal2-confirm::after{content:\"\";display:inline-block;width:15px;height:15px;margin-left:5px;-webkit-animation:swal2-rotate-loading 1.5s linear 0s infinite normal;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border:3px solid #999;border-radius:50%;border-right-color:transparent;box-shadow:1px 1px 1px #fff}.swal2-styled{margin:.3125em;padding:.625em 2em;box-shadow:none;font-weight:500}.swal2-styled:not([disabled]){cursor:pointer}.swal2-styled.swal2-confirm{border:0;border-radius:.25em;background:initial;background-color:#3085d6;color:#fff;font-size:1.0625em}.swal2-styled.swal2-cancel{border:0;border-radius:.25em;background:initial;background-color:#aaa;color:#fff;font-size:1.0625em}.swal2-styled:focus{outline:0;box-shadow:0 0 0 2px #fff,0 0 0 4px rgba(50,100,150,.4)}.swal2-styled::-moz-focus-inner{border:0}.swal2-footer{justify-content:center;margin:1.25em 0 0;padding:1em 0 0;border-top:1px solid #eee;color:#545454;font-size:1em}.swal2-image{max-width:100%;margin:1.25em auto}.swal2-close{position:absolute;z-index:2;top:0;right:0;justify-content:center;width:1.2em;height:1.2em;padding:0;overflow:hidden;transition:color .1s ease-out;border:none;border-radius:0;outline:initial;background:0 0;color:#ccc;font-family:serif;font-size:2.5em;line-height:1.2;cursor:pointer}.swal2-close:hover{transform:none;background:0 0;color:#f27474}.swal2-content{z-index:1;justify-content:center;margin:0;padding:0;color:#545454;font-size:1.125em;font-weight:400;line-height:normal;text-align:center;word-wrap:break-word}.swal2-checkbox,.swal2-file,.swal2-input,.swal2-radio,.swal2-select,.swal2-textarea{margin:1em auto}.swal2-file,.swal2-input,.swal2-textarea{box-sizing:border-box;width:100%;transition:border-color .3s,box-shadow .3s;border:1px solid #d9d9d9;border-radius:.1875em;background:inherit;box-shadow:inset 0 1px 1px rgba(0,0,0,.06);color:inherit;font-size:1.125em}.swal2-file.swal2-inputerror,.swal2-input.swal2-inputerror,.swal2-textarea.swal2-inputerror{border-color:#f27474!important;box-shadow:0 0 2px #f27474!important}.swal2-file:focus,.swal2-input:focus,.swal2-textarea:focus{border:1px solid #b4dbed;outline:0;box-shadow:0 0 3px #c4e6f5}.swal2-file::-webkit-input-placeholder,.swal2-input::-webkit-input-placeholder,.swal2-textarea::-webkit-input-placeholder{color:#ccc}.swal2-file::-moz-placeholder,.swal2-input::-moz-placeholder,.swal2-textarea::-moz-placeholder{color:#ccc}.swal2-file:-ms-input-placeholder,.swal2-input:-ms-input-placeholder,.swal2-textarea:-ms-input-placeholder{color:#ccc}.swal2-file::-ms-input-placeholder,.swal2-input::-ms-input-placeholder,.swal2-textarea::-ms-input-placeholder{color:#ccc}.swal2-file::placeholder,.swal2-input::placeholder,.swal2-textarea::placeholder{color:#ccc}.swal2-range{margin:1em auto;background:inherit}.swal2-range input{width:80%}.swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}.swal2-range input,.swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}.swal2-input{height:2.625em;padding:0 .75em}.swal2-input[type=number]{max-width:10em}.swal2-file{background:inherit;font-size:1.125em}.swal2-textarea{height:6.75em;padding:.75em}.swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;background:inherit;color:inherit;font-size:1.125em}.swal2-checkbox,.swal2-radio{align-items:center;justify-content:center;background:inherit;color:inherit}.swal2-checkbox label,.swal2-radio label{margin:0 .6em;font-size:1.125em}.swal2-checkbox input,.swal2-radio input{margin:0 .4em}.swal2-validation-message{display:none;align-items:center;justify-content:center;padding:.625em;overflow:hidden;background:#f0f0f0;color:#666;font-size:1em;font-weight:300}.swal2-validation-message::before{content:\"!\";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;zoom:normal;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}@supports (-ms-accelerator:true){.swal2-range input{width:100%!important}.swal2-range output{display:none}}@media all and (-ms-high-contrast:none),(-ms-high-contrast:active){.swal2-range input{width:100%!important}.swal2-range output{display:none}}@-moz-document url-prefix(){.swal2-close:focus{outline:2px solid rgba(50,100,150,.4)}}.swal2-icon{position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:1.25em auto 1.875em;zoom:normal;border:.25em solid transparent;border-radius:50%;font-family:inherit;line-height:5em;cursor:default;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.swal2-icon::before{display:flex;align-items:center;height:92%;font-size:3.75em}.swal2-icon.swal2-error{border-color:#f27474}.swal2-icon.swal2-error .swal2-x-mark{position:relative;flex-grow:1}.swal2-icon.swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}.swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;transform:rotate(45deg)}.swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;transform:rotate(-45deg)}.swal2-icon.swal2-warning{border-color:#facea8;color:#f8bb86}.swal2-icon.swal2-warning::before{content:\"!\"}.swal2-icon.swal2-info{border-color:#9de0f6;color:#3fc3ee}.swal2-icon.swal2-info::before{content:\"i\"}.swal2-icon.swal2-question{border-color:#c9dae1;color:#87adbd}.swal2-icon.swal2-question::before{content:\"?\"}.swal2-icon.swal2-question.swal2-arabic-question-mark::before{content:\"؟\"}.swal2-icon.swal2-success{border-color:#a5dc86}.swal2-icon.swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;transform:rotate(45deg);border-radius:50%}.swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=left]{top:-.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}.swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=right]{top:-.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}.swal2-icon.swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-.25em;left:-.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}.swal2-icon.swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}.swal2-icon.swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}.swal2-icon.swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.875em;width:1.5625em;transform:rotate(45deg)}.swal2-icon.swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}.swal2-progress-steps{align-items:center;margin:0 0 1.25em;padding:0;background:inherit;font-weight:600}.swal2-progress-steps li{display:inline-block;position:relative}.swal2-progress-steps .swal2-progress-step{z-index:20;width:2em;height:2em;border-radius:2em;background:#3085d6;color:#fff;line-height:2em;text-align:center}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#3085d6}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step{background:#add8e6;color:#fff}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line{background:#add8e6}.swal2-progress-steps .swal2-progress-step-line{z-index:10;width:2.5em;height:.4em;margin:0 -1px;background:#3085d6}[class^=swal2]{-webkit-tap-highlight-color:transparent}.swal2-show{-webkit-animation:swal2-show .3s;animation:swal2-show .3s}.swal2-show.swal2-noanimation{-webkit-animation:none;animation:none}.swal2-hide{-webkit-animation:swal2-hide .15s forwards;animation:swal2-hide .15s forwards}.swal2-hide.swal2-noanimation{-webkit-animation:none;animation:none}.swal2-rtl .swal2-close{right:auto;left:0}.swal2-animate-success-icon .swal2-success-line-tip{-webkit-animation:swal2-animate-success-line-tip .75s;animation:swal2-animate-success-line-tip .75s}.swal2-animate-success-icon .swal2-success-line-long{-webkit-animation:swal2-animate-success-line-long .75s;animation:swal2-animate-success-line-long .75s}.swal2-animate-success-icon .swal2-success-circular-line-right{-webkit-animation:swal2-rotate-success-circular-line 4.25s ease-in;animation:swal2-rotate-success-circular-line 4.25s ease-in}.swal2-animate-error-icon{-webkit-animation:swal2-animate-error-icon .5s;animation:swal2-animate-error-icon .5s}.swal2-animate-error-icon .swal2-x-mark{-webkit-animation:swal2-animate-error-x-mark .5s;animation:swal2-animate-error-x-mark .5s}@-webkit-keyframes swal2-rotate-loading{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes swal2-rotate-loading{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@media print{body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow-y:scroll!important}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) .swal2-container{position:static!important}}");
+
+/***/ }),
+
 /***/ "./node_modules/timers-browserify/main.js":
 /*!************************************************!*\
   !*** ./node_modules/timers-browserify/main.js ***!
@@ -42388,6 +46786,301 @@ AlertSuccess_component.options.__file = "AlertSuccess.vue"
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Categories.vue?vue&type=template&id=8ceef672&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Categories.vue?vue&type=template&id=8ceef672& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row mt-5" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("h3", { staticClass: "card-title" }, [_vm._v("Comments")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-tools" }, [
+              _c(
+                "p",
+                {
+                  staticClass: "text-success",
+                  attrs: { "data-toggle": "modal" },
+                  on: { click: _vm.newModal }
+                },
+                [_vm._v("Add Category")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body table-responsive p-0" }, [
+            _c("table", { staticClass: "table table-hover" }, [
+              _c(
+                "tbody",
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _vm._l(_vm.categorise.data, function(category) {
+                    return _c("tr", { key: category.id }, [
+                      _c("td", [_vm._v(_vm._s(category.id))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("img", {
+                          attrs: { src: "/img/XS/" + category.image }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(category.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(category.recipe))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "a",
+                          {
+                            on: {
+                              click: function($event) {
+                                return _vm.editModal(category)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-edit text-primary" })]
+                        ),
+                        _vm._v("\n                    /\n                    "),
+                        _c(
+                          "a",
+                          {
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteCategory(category.id)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-trash text-danger" })]
+                        )
+                      ])
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-footer" })
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "addNew",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog ", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.edit ? _vm.updateCaregory() : _vm.createCaregory()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.name,
+                              expression: "form.name"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: { "is-invalid": _vm.form.errors.has("name") },
+                          attrs: {
+                            type: "text",
+                            name: "name",
+                            id: "name",
+                            placeholder: "name"
+                          },
+                          domProps: { value: _vm.form.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "name", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "name" }
+                        }),
+                        _vm._v(" "),
+                        _vm.item["image"]
+                          ? _c("img", {
+                              staticClass: "w-100",
+                              attrs: { src: _vm.item["image"] }
+                            })
+                          : _c("img", {
+                              attrs: {
+                                src: "/img/S/" + _vm.form.image,
+                                alt: ""
+                              }
+                            }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass: "custom-file-upload d-flex mt-2 mb-4"
+                          },
+                          [
+                            _c("input", {
+                              staticStyle: { display: "none" },
+                              attrs: { type: "file" },
+                              on: {
+                                change: function($event) {
+                                  return _vm.onFileChange(_vm.item, $event)
+                                }
+                              }
+                            }),
+                            _vm.edit
+                              ? _c("span", [_vm._v("Change Image ")])
+                              : _c("span", [_vm._v("Add Image")])
+                          ]
+                        )
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("Close")]
+                    ),
+                    _vm._v(" "),
+                    !_vm.edit
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "submit" }
+                          },
+                          [_vm._v("Create")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.edit
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "submit" }
+                          },
+                          [_vm._v("Update")]
+                        )
+                      : _vm._e()
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Image")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Name")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Recipe Count")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Modify")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Add New")]
+      ),
+      _vm._v(" "),
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Update")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Comments.vue?vue&type=template&id=4aa6d95f&":
 /*!***********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Comments.vue?vue&type=template&id=4aa6d95f& ***!
@@ -42763,6 +47456,284 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Footer.vue?vue&type=template&id=61a7c374&":
+/*!*********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Footer.vue?vue&type=template&id=61a7c374& ***!
+  \*********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "container py-3" }, [
+      _c("div", { staticClass: "row" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-lg-4 col-md-12 d-flex justify-content-center" },
+          [
+            _c("div", { staticClass: "row justify-content-center w-75 " }, [
+              _c("h3", { staticClass: "my-3 text-center font-weight-bold" }, [
+                _vm._v("Sing up for Newsletter")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-center" }, [
+                _vm._v(
+                  "For latest updates on great new BusyB products competitions & offers, sign up for our newsletter."
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  staticClass: "d-flex justify-content-center newsletter",
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.newsletterSend($event)
+                    }
+                  }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formNewsletter.newsletter,
+                        expression: "formNewsletter.newsletter"
+                      }
+                    ],
+                    attrs: {
+                      type: "email",
+                      name: "user_email",
+                      placeholder: "email"
+                    },
+                    domProps: { value: _vm.formNewsletter.newsletter },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formNewsletter,
+                          "newsletter",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "news-button", attrs: { type: "submit" } },
+                    [_vm._v("Submit")]
+                  )
+                ]
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-lg-4 col-md-12 d-flex justify-content-center" },
+          [
+            _c(
+              "div",
+              { staticClass: "row justify-content-center w-75 flex-column" },
+              [
+                _c("h3", { staticClass: "my-3 text-center font-weight-bold" }, [
+                  _vm._v("Contact US")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    staticClass:
+                      "d-flex justify-content-center flex-column contact",
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.contactFormSend($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.formContact.email,
+                          expression: "formContact.email"
+                        }
+                      ],
+                      class: {
+                        "is-invalid": _vm.formContact.errors.has("email")
+                      },
+                      attrs: {
+                        type: "email",
+                        name: "email",
+                        placeholder: "email"
+                      },
+                      domProps: { value: _vm.formContact.email },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.formContact,
+                            "email",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("has-error", {
+                      attrs: { form: _vm.formContact, field: "email" }
+                    }),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.formContact.massege,
+                          expression: "formContact.massege"
+                        }
+                      ],
+                      class: {
+                        "is-invalid": _vm.formContact.errors.has("massege")
+                      },
+                      attrs: {
+                        cols: "30",
+                        rows: "5",
+                        type: "text",
+                        name: "massege",
+                        placeholder: "massege"
+                      },
+                      domProps: { value: _vm.formContact.massege },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.formContact,
+                            "massege",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("has-error", {
+                      attrs: { form: _vm.formContact, field: "massege" }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      { staticClass: "news-button", attrs: { type: "submit" } },
+                      [_vm._v("Submit")]
+                    )
+                  ],
+                  1
+                )
+              ]
+            )
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(1)
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-lg-4 col-md-12 d-flex justify-content-center" },
+      [
+        _c("div", { staticClass: "row justify-content-center w-75" }, [
+          _c("h3", { staticClass: "my-3 text-center font-weight-bold" }, [
+            _vm._v("Folow us")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-center" }, [
+            _vm._v(
+              "Keep up to date on the latest news and share with us how you use your BusyB products."
+            )
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "d-flex" }, [
+            _c("a", { staticClass: "social", attrs: { href: "" } }, [
+              _c("i", { staticClass: "fab fa-facebook-f" })
+            ]),
+            _vm._v(" "),
+            _c("a", { staticClass: "social", attrs: { href: "" } }, [
+              _c("i", { staticClass: "fab fa-twitter" })
+            ]),
+            _vm._v(" "),
+            _c("a", { staticClass: "social", attrs: { href: "" } }, [
+              _c("i", { staticClass: "fab fa-instagram" })
+            ]),
+            _vm._v(" "),
+            _c("a", { staticClass: "social", attrs: { href: "" } }, [
+              _c("i", { staticClass: "fab fa-pinterest-p" })
+            ])
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container-fluid px-4 py-2 " }, [
+      _c(
+        "div",
+        { staticClass: "col-lg-8 offset-lg-2 d-flex justify-content-center" },
+        [
+          _c(
+            "p",
+            {
+              staticClass: "text-center p-0 m-0 ",
+              staticStyle: { color: "#355D60" }
+            },
+            [
+              _vm._v("site created by "),
+              _c("a", { staticClass: "groovy", attrs: { href: "" } }, [
+                _vm._v("groovy")
+              ])
+            ]
+          )
+        ]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Fridge.vue?vue&type=template&id=5dfdaca0&":
 /*!*********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Fridge.vue?vue&type=template&id=5dfdaca0& ***!
@@ -42783,38 +47754,49 @@ var render = function() {
       "div",
       { staticClass: "row justify-content-center" },
       _vm._l(_vm.recipes, function(recipe) {
-        return _c("div", { key: recipe.id, staticClass: "col-md-4" }, [
-          _c("div", { staticClass: "card my-card" }, [
-            _c("img", {
-              attrs: {
-                src: "/img/MD/" + recipe.image,
-                width: "480px",
-                height: "300"
-              }
+        return _c(
+          "div",
+          { key: recipe.id, staticClass: "col-md-4" },
+          [
+            _vm._l(recipe.tags, function(tag) {
+              return _c("p", [
+                _vm._v("\n             " + _vm._s(tag.name) + "\n           ")
+              ])
             }),
             _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c(
-                "div",
-                { staticClass: "card-title d-flex justify-content-center" },
-                [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "text-capitalize btn card-link  ",
-                      attrs: { href: "<?php the_permalink(); ?>" }
-                    },
-                    [_vm._v(_vm._s(recipe.title))]
-                  )
-                ]
-              ),
+            _c("div", { staticClass: "card my-card" }, [
+              _c("img", {
+                attrs: {
+                  src: "/img/MD/" + recipe.image,
+                  width: "480px",
+                  height: "300"
+                }
+              }),
               _vm._v(" "),
-              _vm._m(0, true)
-            ]),
-            _vm._v(" "),
-            _vm._m(1, true)
-          ])
-        ])
+              _c("div", { staticClass: "card-body" }, [
+                _c(
+                  "div",
+                  { staticClass: "card-title d-flex justify-content-center" },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "text-capitalize btn card-link  ",
+                        attrs: { href: "<?php the_permalink(); ?>" }
+                      },
+                      [_vm._v(_vm._s(recipe.title))]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(0, true)
+              ]),
+              _vm._v(" "),
+              _vm._m(1, true)
+            ])
+          ],
+          2
+        )
       }),
       0
     ),
@@ -43359,29 +48341,77 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-10 my-5" }, [
+  return _c("div", { staticClass: "col-12 my-5 col-" }, [
     _c("div", { staticClass: "row" }, [
-      _c(
-        "div",
-        { staticClass: "col-3 my-5" },
-        _vm._l(_vm.categories, function(category) {
-          return _c(
-            "p",
-            {
-              staticClass: "filter_search",
-              on: {
-                click: function($event) {
-                  return _vm.selectCategory(category.id)
+      _c("div", { staticClass: "col-12 my-5" }, [
+        _c(
+          "div",
+          { staticClass: "row d-flex justify-content-center" },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "filter_category ",
+                class: { "active-border-top": _vm.active == 0 },
+                on: {
+                  click: function($event) {
+                    return _vm.selectCategory(0)
+                  }
                 }
-              }
-            },
-            [_vm._v(_vm._s(category.name))]
-          )
-        }),
-        0
-      ),
+              },
+              [
+                _c("img", {
+                  staticClass: "mt-3 img-responsive img-circle",
+                  attrs: { src: "/img/S/cake3.jpg", alt: "" }
+                }),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-center" }, [_vm._v("All")])
+              ]
+            ),
+            _vm._v(" "),
+            _vm._l(_vm.categories, function(category, index) {
+              return _c(
+                "div",
+                {
+                  key: category.id,
+                  staticClass: "filter_category ",
+                  class: { "active-border-top": _vm.active == category.id },
+                  on: {
+                    click: function($event) {
+                      return _vm.selectCategory(category.id)
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      on: {
+                        click: function($event) {
+                          return _vm.selectCategory(category.id)
+                        }
+                      }
+                    },
+                    [
+                      _c("img", {
+                        staticClass: "mt-3 img-responsive img-circle",
+                        attrs: { src: "/img/S/" + category.image, alt: "" }
+                      }),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-center" }, [
+                        _vm._v(_vm._s(category.name))
+                      ])
+                    ]
+                  )
+                ]
+              )
+            })
+          ],
+          2
+        )
+      ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-9" }, [
+      _c("div", { staticClass: "col-10 offset-1" }, [
         _c("div", { staticClass: "row justify-content-between" }, [
           _c("div", { staticClass: "col-9  d-flex flex-row" }, [
             _c(
@@ -43473,73 +48503,85 @@ var render = function() {
         _c(
           "div",
           { staticClass: "row justify-content-center" },
-          _vm._l(_vm.recipes.data, function(recipe) {
-            return _c("div", { key: recipe.id, staticClass: "col-md-4" }, [
-              _c("div", { staticClass: "card my-card" }, [
-                _c("div", { staticClass: "image" }, [
-                  _c("a", { attrs: { href: "/recipes/" + recipe.slug } }, [
-                    _c("img", {
-                      attrs: {
-                        src: "/img/MD/" + recipe.image,
-                        width: "100%",
-                        height: "300"
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "card-body archive align-items-center" },
-                  [
+          [
+            _c(
+              "transition-group",
+              {
+                staticClass: "row justify-content-center",
+                attrs: { name: "fade", tag: "div", mode: "out-in" }
+              },
+              _vm._l(_vm.recipes.data, function(recipe) {
+                return _c("div", { key: recipe.id, staticClass: "col-4" }, [
+                  _c("div", { staticClass: "card my-card" }, [
+                    _c("div", { staticClass: "image" }, [
+                      _c("a", { attrs: { href: "/recipes/" + recipe.slug } }, [
+                        _c("img", {
+                          attrs: {
+                            src: "/img/MD/" + recipe.image,
+                            width: "100%",
+                            height: "300"
+                          }
+                        }),
+                        _vm._v("\n   `                        ")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "card-body archive align-items-center" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "card-title  d-flex justify-content-center"
+                          },
+                          [
+                            _c(
+                              "a",
+                              { attrs: { href: "/recipes/" + recipe.slug } },
+                              [_c("h2", [_vm._v(_vm._s(recipe.title) + " ")])]
+                            )
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
                     _c(
                       "div",
                       {
-                        staticClass: "card-title  d-flex justify-content-center"
+                        staticClass:
+                          "card-footer  team-icons d-flex  justify-content-around"
                       },
                       [
-                        _c(
-                          "a",
-                          { attrs: { href: "/recipes/" + recipe.slug } },
-                          [_c("h2", [_vm._v(_vm._s(recipe.title) + " ")])]
-                        )
+                        _c("span", [
+                          _c("i", { staticClass: "fas fa-utensils mr-2" }),
+                          _vm._v(_vm._s(recipe.servings))
+                        ]),
+                        _vm._v(" "),
+                        _c("span", [
+                          _c("i", { staticClass: "far fa-clock mr-2" }),
+                          _vm._v(_vm._s(recipe.time))
+                        ]),
+                        _vm._v(" "),
+                        _c("span", [
+                          _c("i", { staticClass: "far fa-chart-bar mr-2" }),
+                          _vm._v(_vm._s(recipe.dificulty))
+                        ]),
+                        _vm._v(" "),
+                        _c("span", [
+                          _c("i", { staticClass: "fas fa-star mr-2" }),
+                          _vm._v(_vm._s(_vm._f("numberFormat")(recipe.avg)))
+                        ])
                       ]
                     )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "card-footer  team-icons d-flex  justify-content-around"
-                  },
-                  [
-                    _c("span", [
-                      _c("i", { staticClass: "fas fa-utensils mr-2" }),
-                      _vm._v(_vm._s(recipe.servings))
-                    ]),
-                    _vm._v(" "),
-                    _c("span", [
-                      _c("i", { staticClass: "far fa-clock mr-2" }),
-                      _vm._v(_vm._s(recipe.time))
-                    ]),
-                    _vm._v(" "),
-                    _c("span", [
-                      _c("i", { staticClass: "far fa-chart-bar mr-2" }),
-                      _vm._v(_vm._s(recipe.dificulty))
-                    ]),
-                    _vm._v(" "),
-                    _c("span", [
-                      _c("i", { staticClass: "fas fa-star mr-2" }),
-                      _vm._v(_vm._s(_vm._f("numberFormat")(recipe.avg)))
-                    ])
-                  ]
-                )
-              ])
-            ])
-          }),
-          0
+                  ])
+                ])
+              }),
+              0
+            )
+          ],
+          1
         ),
         _vm._v(" "),
         _c(
@@ -43581,6 +48623,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "rate-recipe" },
     [
       _vm.rate
         ? _c(
@@ -43594,201 +48637,278 @@ var render = function() {
               }
             },
             [
-              _c("div", { staticClass: "form-group" }, [
-                _c("input", {
+              _c(
+                "div",
+                { staticClass: "form-group d-flex align-items-center" },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.score,
+                        expression: "score"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "range",
+                      step: "0.01",
+                      name: "score",
+                      min: "1",
+                      max: "10",
+                      value: "5",
+                      id: "score"
+                    },
+                    domProps: { value: _vm.score },
+                    on: {
+                      __r: function($event) {
+                        _vm.score = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "counter" }, [
+                    _vm._v(_vm._s(_vm._f("round")(_vm.score)))
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-gropup mb-4" }, [
+                _c("textarea", {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.score,
-                      expression: "score"
+                      value: _vm.comment,
+                      expression: "comment"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: {
-                    type: "range",
-                    step: "0.01",
-                    name: "score",
-                    min: "1",
-                    max: "10",
-                    value: "5",
-                    id: "score"
+                    id: "exampleFormControlTextarea1",
+                    rows: "10",
+                    cols: "30"
                   },
-                  domProps: { value: _vm.score },
+                  domProps: { value: _vm.comment },
                   on: {
-                    __r: function($event) {
-                      _vm.score = $event.target.value
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.comment = $event.target.value
                     }
                   }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v(_vm._s(_vm._f("round")(_vm.score)))])
+                })
               ]),
               _vm._v(" "),
               _c(
-                "div",
-                { staticClass: "form-gropup mb-4" },
-                [
-                  _c("ckeditor", {
-                    attrs: { editor: _vm.editor, config: _vm.editorConfig },
-                    model: {
-                      value: _vm.comment,
-                      callback: function($$v) {
-                        _vm.comment = $$v
-                      },
-                      expression: "comment"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("button", { staticClass: "btn btn-success" }, [_vm._v("Rate")])
+                "a",
+                { staticClass: "filter_search", on: { click: _vm.rateRecipe } },
+                [_vm._v("ADD COMMENT")]
+              )
             ]
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm._l(_vm.comments, function(comment, index) {
-        return !comment.comment_parent
-          ? _c(
-              "div",
-              { key: comment.id, staticClass: "col-12 comment " },
-              [
-                _vm._m(0, true),
-                _vm._v(" "),
-                _c("div", { staticClass: "comment-content" }, [
-                  _c("div", { staticClass: "comment-name" }, [
-                    _c("p", [_vm._v(_vm._s(comment.user.name))])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "comment-score" }, [
-                    _c("p", {
-                      domProps: {
-                        innerHTML: _vm._s(_vm.starRating(comment.score))
+      _c(
+        "transition-group",
+        { attrs: { name: "list", tag: "div", mode: "out-in" } },
+        _vm._l(_vm.comments, function(comment, index) {
+          return !comment.comment_parent
+            ? _c(
+                "div",
+                { key: comment.id, staticClass: "col-12 comment " },
+                [
+                  _c("div", { staticClass: "avatar" }, [
+                    _c("img", {
+                      attrs: {
+                        src: "/img/XS/300px-No_image_available.svg.png",
+                        alt: ""
                       }
                     })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", {
-                  staticClass: "comment-text",
-                  domProps: { innerHTML: _vm._s(comment.comment) }
-                }),
-                _vm._v(" "),
-                _vm._l(comment.replies, function(reply, index) {
-                  return _c(
-                    "div",
-                    { key: reply.id, staticClass: "col-12 comment ml-4" },
-                    [
-                      _vm._m(1, true),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "comment-content" }, [
-                        _c("div", { staticClass: "comment-name" }, [
-                          _c("p", [_vm._v(_vm._s(reply.user.name))])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "comment-score" }, [
-                          _c("p", {
-                            domProps: {
-                              innerHTML: _vm._s(_vm.starRating(reply.score))
-                            }
-                          })
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", {
-                        staticClass: "comment-text",
-                        domProps: { innerHTML: _vm._s(reply.comment) }
-                      })
-                    ]
-                  )
-                }),
-                _vm._v(" "),
-                _vm.showReply == comment.id
-                  ? _c(
-                      "form",
-                      {
-                        on: {
-                          submit: function($event) {
-                            $event.preventDefault()
-                            return _vm.replyCreate(comment.id)
-                          }
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "comment-content" }, [
+                    _c("div", { staticClass: "comment-name" }, [
+                      _c("p", [_vm._v(_vm._s(comment.user.name))])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "comment-score" }, [
+                      _c("p", {
+                        domProps: {
+                          innerHTML: _vm._s(_vm.starRating(comment.score))
                         }
-                      },
-                      [
-                        _c(
-                          "div",
-                          { staticClass: "form-gropup mb-4" },
-                          [
-                            _c("ckeditor", {
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", {
+                    staticClass: "comment-text",
+                    domProps: { innerHTML: _vm._s(comment.comment) }
+                  }),
+                  _vm._v(" "),
+                  _vm.showReply != comment.id
+                    ? _c(
+                        "a",
+                        {
+                          staticClass: "reply ml-3",
+                          on: {
+                            click: function($event) {
+                              _vm.showReply = comment.id
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "fas  fa-reply mr-2" }),
+                          _vm._v("Reply")
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "transition-group",
+                    { attrs: { name: "list", tag: "div", mode: "out-in" } },
+                    _vm._l(comment.replies, function(reply, index) {
+                      return index < _vm.show(comment.id)
+                        ? _c(
+                            "div",
+                            { key: reply, staticClass: "col-12 comment ml-4" },
+                            [
+                              _c("div", { staticClass: "avatar" }, [
+                                _c("img", {
+                                  attrs: {
+                                    src:
+                                      "/img/XS/300px-No_image_available.svg.png",
+                                    alt: ""
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "comment-content" }, [
+                                _c("div", { staticClass: "comment-name" }, [
+                                  _c("p", [_vm._v(_vm._s(reply.user.name))])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", {
+                                staticClass: "comment-text",
+                                domProps: { innerHTML: _vm._s(reply.comment) }
+                              })
+                            ]
+                          )
+                        : _vm._e()
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  comment.replies.length > _vm.show(comment.id)
+                    ? _c(
+                        "button",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.loadMoreReples(comment.id)
+                            }
+                          }
+                        },
+                        [_vm._v(" Load More Repy")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.showReply == comment.id
+                    ? _c(
+                        "form",
+                        {
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.replyCreate(comment.id)
+                            }
+                          }
+                        },
+                        [
+                          _c("div", { staticClass: "form-gropup mb-4" }, [
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.reply,
+                                  expression: "reply"
+                                }
+                              ],
+                              staticClass: "form-control",
                               attrs: {
-                                editor: _vm.editor,
-                                config: _vm.editorConfig
+                                id: "exampleFormControlTextarea1",
+                                rows: "10",
+                                cols: "30"
                               },
-                              model: {
-                                value: _vm.reply,
-                                callback: function($$v) {
-                                  _vm.reply = $$v
-                                },
-                                expression: "reply"
+                              domProps: { value: _vm.reply },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.reply = $event.target.value
+                                }
                               }
                             })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("button", { staticClass: "btn btn-success" }, [
-                          _vm._v("Reply")
-                        ])
-                      ]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.showReply != comment.id
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-success",
-                        on: {
-                          click: function($event) {
-                            _vm.showReply = comment.id
-                          }
-                        }
-                      },
-                      [_vm._v("Reply")]
-                    )
-                  : _vm._e()
-              ],
-              2
-            )
-          : _vm._e()
-      })
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "mr-3 reply",
+                              on: {
+                                click: function($event) {
+                                  return _vm.replyCreate(comment.id, index)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fas  fa-reply mr-2" }),
+                              _vm._v("Reply")
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "cancel",
+                              on: { click: _vm.cancel }
+                            },
+                            [_vm._v("Cancel")]
+                          )
+                        ]
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
+            : _vm._e()
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _vm.pagination.next_page_url
+        ? _c(
+            "button",
+            {
+              on: {
+                click: function($event) {
+                  return _vm.loadMoreComments(_vm.pagination.next_page_url)
+                }
+              }
+            },
+            [_vm._v(" Load More")]
+          )
+        : _vm._e()
     ],
-    2
+    1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "avatar" }, [
-      _c("img", {
-        attrs: { src: "/img/XS/300px-No_image_available.svg.png", alt: "" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "avatar" }, [
-      _c("img", {
-        attrs: { src: "/img/XS/300px-No_image_available.svg.png", alt: "" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -43899,7 +49019,7 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm.location == "http://recipes.test/home"
+    _vm.location == "AdminLTE 3 | Dashboard"
       ? _c("ul", { staticClass: "navbar-nav ml-auto" }, [
           _c("li", { staticClass: "nav-item dropdown" }, [
             _c(
@@ -44446,10 +49566,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/Dashboard.vue?vue&type=template&id=376ddb84&":
-/*!**********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/Dashboard.vue?vue&type=template&id=376ddb84& ***!
-  \**********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recipes/AllRecipe.vue?vue&type=template&id=85ea2f6c&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/recipes/AllRecipe.vue?vue&type=template&id=85ea2f6c& ***!
+  \********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -44461,16 +49581,1085 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [
+        _c("h3", { staticClass: "card-title" }, [_vm._v("Users Table")]),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            staticClass: "form-inline ml-3",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.searchRecipe($event)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "input-group input-group-sm" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search,
+                    expression: "search"
+                  }
+                ],
+                staticClass: "form-control form-control-navbar",
+                attrs: {
+                  type: "search",
+                  placeholder: "Search",
+                  "aria-label": "Search"
+                },
+                domProps: { value: _vm.search },
+                on: {
+                  keyup: _vm.searchRecipe,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm._m(0)
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "card-tools" },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/add-recipe" } },
+              [_c("p", { staticClass: "text-success" }, [_vm._v("ADD RECIPE")])]
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body table-responsive p-0" }, [
+        _c("table", { staticClass: "table table-hover" }, [
+          _c(
+            "tbody",
+            [
+              _c("tr", [
+                _c("th", [_vm._v("ID")]),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.Sort("category_id")
+                      }
+                    }
+                  },
+                  [
+                    _vm._v("Category "),
+                    _c("i", {
+                      staticClass: "fas ",
+                      class: {
+                        "fa-chevron-down":
+                          _vm.recipeDirection == "DESC" &&
+                          _vm.recipeSort == "category_id",
+                        "fa-chevron-up":
+                          _vm.recipeDirection == "ASC" &&
+                          _vm.recipeSort == "category_id"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.Sort("title")
+                      }
+                    }
+                  },
+                  [
+                    _vm._v("Title "),
+                    _c("i", {
+                      staticClass: "fas",
+                      class: {
+                        "fa-chevron-down":
+                          _vm.recipeDirection == "DESC" &&
+                          _vm.recipeSort == "title",
+                        "fa-chevron-up":
+                          _vm.recipeDirection == "ASC" &&
+                          _vm.recipeSort == "title"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.Sort("score")
+                      }
+                    }
+                  },
+                  [
+                    _vm._v("Avg "),
+                    _c("i", {
+                      staticClass: "fas",
+                      class: {
+                        "fa-chevron-down":
+                          _vm.recipeDirection == "DESC" &&
+                          _vm.recipeSort == "score",
+                        "fa-chevron-up":
+                          _vm.recipeDirection == "ASC" &&
+                          _vm.recipeSort == "score"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.Sort("likes")
+                      }
+                    }
+                  },
+                  [
+                    _vm._v("Likes "),
+                    _c("i", {
+                      staticClass: "fas",
+                      class: {
+                        "fa-chevron-down":
+                          _vm.recipeDirection == "DESC" &&
+                          _vm.recipeSort == "likes",
+                        "fa-chevron-up":
+                          _vm.recipeDirection == "ASC" &&
+                          _vm.recipeSort == "likes"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.Sort("created_at")
+                      }
+                    }
+                  },
+                  [
+                    _vm._v("Created_at "),
+                    _c("i", {
+                      staticClass: "fas",
+                      class: {
+                        "fa-chevron-down":
+                          _vm.recipeDirection == "DESC" &&
+                          _vm.recipeSort == "created_at",
+                        "fa-chevron-up":
+                          _vm.recipeDirection == "ASC" &&
+                          _vm.recipeSort == "created_at"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c("th", [_vm._v("Modify")])
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.recipes.data, function(recipe) {
+                return _c("tr", { key: recipe.id }, [
+                  _c("td", [_vm._v(_vm._s(recipe.id))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(recipe.category))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(recipe.title))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(recipe.score))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(recipe.likes || 0))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(recipe.created_at))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "a",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.newModal(recipe)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fa fa-edit text-primary" })]
+                    ),
+                    _vm._v(
+                      "\n                        /\n                        "
+                    ),
+                    _c(
+                      "a",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteRecipe(recipe.id)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fa fa-trash text-danger" })]
+                    )
+                  ])
+                ])
+              })
+            ],
+            2
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "card-footer" },
+        [
+          _c("pagination", {
+            attrs: { data: _vm.recipes },
+            on: { "pagination-change-page": _vm.paginate }
+          })
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "addNew",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog ", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v("Add New")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v("Update")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: { type: "button" },
+                    on: { click: _vm.closeModel }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _vm.recipeForm
+                ? _c("div", { staticClass: "container py-5" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("label", { attrs: { for: "title" } }, [
+                          _vm._v("Title")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.recipeForm.title,
+                              expression: "recipeForm.title"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.recipeForm.errors.has("title")
+                          },
+                          attrs: { name: "title", id: "title", type: "text" },
+                          domProps: { value: _vm.recipeForm.title },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.recipeForm,
+                                "title",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.recipeForm, field: "title" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("label", { attrs: { for: "title" } }, [
+                          _vm._v("Description")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.recipeForm.description,
+                              expression: "recipeForm.description"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.recipeForm.errors.has(
+                              "description"
+                            )
+                          },
+                          attrs: { name: "description", type: "text" },
+                          domProps: { value: _vm.recipeForm.description },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.recipeForm,
+                                "description",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.recipeForm, field: "description" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group mb-4" },
+                      [
+                        _c("label", { attrs: { for: "title" } }, [
+                          _vm._v("Category")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.recipeForm.category,
+                                expression: "recipeForm.category"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.recipeForm.errors.has(
+                                "category_id"
+                              )
+                            },
+                            attrs: { name: "category_id" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.recipeForm,
+                                  "category",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          _vm._l(_vm.recipeForm.categories, function(category) {
+                            return _c("option", [_vm._v(_vm._s(category.name))])
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.recipeForm, field: "category_id" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "row" },
+                      [
+                        _c("div", { staticClass: "col-12" }, [
+                          _c(
+                            "p",
+                            { staticClass: "w-100 mb-0 font-weight-bold" },
+                            [_vm._v("Main Image")]
+                          ),
+                          _vm._v(" "),
+                          _vm.items[0].image
+                            ? _c("img", {
+                                staticClass: "w-100",
+                                attrs: { src: _vm.items[0].image }
+                              })
+                            : _c("img", {
+                                attrs: {
+                                  src: "/img/XS/" + _vm.recipeForm.image,
+                                  alt: ""
+                                }
+                              }),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "custom-file-upload d-flex mt-2 mb-4"
+                            },
+                            [
+                              _c("input", {
+                                staticStyle: { display: "none" },
+                                attrs: { type: "file" },
+                                on: {
+                                  change: function($event) {
+                                    return _vm.onFileChange(
+                                      _vm.items[0],
+                                      0,
+                                      $event
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v("Change Image \n                         ")
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "p",
+                          { staticClass: "w-100 mb-0 font-weight-bold" },
+                          [_vm._v("Gallery")]
+                        ),
+                        _vm._v(" "),
+                        _vm._l(_vm.items, function(item, index) {
+                          return index != 0
+                            ? _c("div", { staticClass: "col-4 " }, [
+                                item.name
+                                  ? _c("img", {
+                                      staticClass: "w-100",
+                                      attrs: { src: item.image }
+                                    })
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                typeof _vm.recipeForm.gallery[index - 1] ==
+                                "object"
+                                  ? _c("img", {
+                                      staticClass: "w-100",
+                                      attrs: {
+                                        src:
+                                          "/img/XS/" +
+                                          _vm.recipeForm.gallery[index - 1]
+                                            .image
+                                      }
+                                    })
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass:
+                                      "custom-file-upload d-flex mt-2 mb-4"
+                                  },
+                                  [
+                                    _c("input", {
+                                      staticStyle: { display: "none" },
+                                      attrs: { type: "file" },
+                                      on: {
+                                        change: function($event) {
+                                          return _vm.onFileChange(
+                                            item,
+                                            index,
+                                            $event
+                                          )
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "Change Image \n                         "
+                                    )
+                                  ]
+                                )
+                              ])
+                            : _vm._e()
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "range-wrap mb-4" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "form-group range-box d-flex flex-wrap align-items-center"
+                  },
+                  [
+                    _c(
+                      "label",
+                      { staticClass: "d-block w-100", attrs: { for: "title" } },
+                      [_vm._v("Dificulty")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.recipeForm.dificulty,
+                          expression: "recipeForm.dificulty"
+                        }
+                      ],
+                      attrs: {
+                        type: "range",
+                        step: "0.01",
+                        name: "dificulty",
+                        min: "1",
+                        max: "10",
+                        id: "dificulty"
+                      },
+                      domProps: { value: _vm.recipeForm.dificulty },
+                      on: {
+                        __r: function($event) {
+                          return _vm.$set(
+                            _vm.recipeForm,
+                            "dificulty",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "score d-block" }, [
+                      _vm._v(_vm._s(_vm._f("round")(_vm.recipeForm.dificulty)))
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "form-group range-box d-flex flex-wrap align-items-center"
+                  },
+                  [
+                    _c(
+                      "label",
+                      { staticClass: "d-block w-100", attrs: { for: "title" } },
+                      [_vm._v("Servings")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.recipeForm.servings,
+                          expression: "recipeForm.servings"
+                        }
+                      ],
+                      attrs: {
+                        type: "range",
+                        step: "0.01",
+                        name: "servings",
+                        min: "1",
+                        max: "100",
+                        id: "servings"
+                      },
+                      domProps: { value: _vm.recipeForm.servings },
+                      on: {
+                        __r: function($event) {
+                          return _vm.$set(
+                            _vm.recipeForm,
+                            "servings",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "score d-block" }, [
+                      _vm._v(_vm._s(_vm._f("round")(_vm.recipeForm.servings)))
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "form-group range-box d-flex flex-wrap align-items-center"
+                  },
+                  [
+                    _c(
+                      "label",
+                      { staticClass: "d-block w-100", attrs: { for: "title" } },
+                      [_vm._v("Time (m)")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.recipeForm.time,
+                          expression: "recipeForm.time"
+                        }
+                      ],
+                      attrs: {
+                        type: "range",
+                        step: "0.01",
+                        name: "time",
+                        min: "1",
+                        max: "240",
+                        id: "time"
+                      },
+                      domProps: { value: _vm.recipeForm.time },
+                      on: {
+                        __r: function($event) {
+                          return _vm.$set(
+                            _vm.recipeForm,
+                            "time",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "score d-block" }, [
+                      _vm._v(_vm._s(_vm._f("round")(_vm.recipeForm.time)))
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group mb-4" }, [
+                _c("label", [_vm._v("Ingredients")]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "tags-input" },
+                  [
+                    _vm._l(_vm.recipeForm.tags, function(tag, index) {
+                      return tag.name
+                        ? _c("p", [
+                            _c("span", [_vm._v(_vm._s(tag.name))]),
+                            _vm._v(" "),
+                            tag.id != _vm.tagAmount
+                              ? _c("span", { staticClass: "ml-3" }, [
+                                  _vm._v(_vm._s(tag.pivot.amount))
+                                ])
+                              : _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.currentAmount,
+                                      expression: "currentAmount"
+                                    }
+                                  ],
+                                  attrs: { type: "text" },
+                                  domProps: { value: _vm.currentAmount },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.currentAmount = $event.target.value
+                                    }
+                                  }
+                                }),
+                            _vm._v(" "),
+                            tag.id != _vm.tagAmount
+                              ? _c("i", {
+                                  staticClass: "fa fa-edit text-primary",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editAmount(tag.id)
+                                    }
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(
+                              "\n\n                        /                       \n                 "
+                            ),
+                            tag.id != _vm.tagAmount
+                              ? _c("i", {
+                                  staticClass: "fa fa-trash text-danger",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deleteTag(index)
+                                    }
+                                  }
+                                })
+                              : _c("span", [
+                                  _c("i", {
+                                    staticClass: "fas fa-check",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.doneEditTag(index)
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    { on: { click: _vm.cancelEditTag } },
+                                    [_vm._v("Cancel")]
+                                  )
+                                ])
+                          ])
+                        : _vm._e()
+                    }),
+                    _vm._v(" "),
+                    _vm.tagsArray.tags.length > 0
+                      ? _c(
+                          "div",
+                          { staticClass: "tags-wrap mb-3" },
+                          _vm._l(_vm.tagsArray.tags, function(
+                            selectedTag,
+                            key
+                          ) {
+                            return _c("div", { staticClass: "selected-tag" }, [
+                              _c("span", { staticClass: "font-weight-bold" }, [
+                                _vm._v("Ingredient: ")
+                              ]),
+                              _vm._v(
+                                _vm._s(selectedTag) + "\n                 / "
+                              ),
+                              _c("span", { staticClass: "font-weight-bold" }, [
+                                _vm._v("Amount:")
+                              ]),
+                              _vm._v(
+                                " " +
+                                  _vm._s(_vm.tagsArray.amount[key]) +
+                                  " \n                 "
+                              ),
+                              _c(
+                                "span",
+                                {
+                                  staticClass: "remove-tag",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.removeTag(key)
+                                    }
+                                  }
+                                },
+                                [_vm._v("×")]
+                              )
+                            ])
+                          }),
+                          0
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-row" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "form-group col-md-6 mb-0 d-flex flex-wrap"
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.currentTag,
+                                expression: "currentTag"
+                              }
+                            ],
+                            ref: "tag",
+                            staticClass: "new-tag-input form-control",
+                            class: {
+                              "is-invalid": _vm.recipeForm.errors.has("tag")
+                            },
+                            attrs: {
+                              type: "text",
+                              name: "tag",
+                              class: { "duplicate-warning": _vm.duplicateFlag },
+                              placeholder: "Add ingredient"
+                            },
+                            domProps: { value: _vm.currentTag },
+                            on: {
+                              keyup: [
+                                _vm.searchTags,
+                                function($event) {
+                                  if (
+                                    !$event.type.indexOf("key") &&
+                                    _vm._k(
+                                      $event.keyCode,
+                                      "enter",
+                                      13,
+                                      $event.key,
+                                      "Enter"
+                                    )
+                                  ) {
+                                    return null
+                                  }
+                                  return _vm.addNewTag($event)
+                                }
+                              ],
+                              keydown: [
+                                function($event) {
+                                  if (
+                                    !$event.type.indexOf("key") &&
+                                    _vm._k(
+                                      $event.keyCode,
+                                      "up",
+                                      38,
+                                      $event.key,
+                                      ["Up", "ArrowUp"]
+                                    )
+                                  ) {
+                                    return null
+                                  }
+                                  return _vm.changeIndex("up")
+                                },
+                                function($event) {
+                                  if (
+                                    !$event.type.indexOf("key") &&
+                                    _vm._k(
+                                      $event.keyCode,
+                                      "delete",
+                                      [8, 46],
+                                      $event.key,
+                                      ["Backspace", "Delete", "Del"]
+                                    )
+                                  ) {
+                                    return null
+                                  }
+                                  return _vm.handleDelete($event)
+                                },
+                                function($event) {
+                                  if (
+                                    !$event.type.indexOf("key") &&
+                                    _vm._k(
+                                      $event.keyCode,
+                                      "down",
+                                      40,
+                                      $event.key,
+                                      ["Down", "ArrowDown"]
+                                    )
+                                  ) {
+                                    return null
+                                  }
+                                  return _vm.changeIndex("down")
+                                }
+                              ],
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.currentTag = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: { form: _vm.recipeForm, field: "tag" }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.currentAmount,
+                                expression: "currentAmount"
+                              }
+                            ],
+                            staticClass: "form-control amount-input",
+                            attrs: {
+                              type: "text",
+                              placeholder: "Enter amount"
+                            },
+                            domProps: { value: _vm.currentAmount },
+                            on: {
+                              keyup: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.addAmount($event)
+                              },
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.currentAmount = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.showAutocomplete,
+                                  expression: "showAutocomplete"
+                                }
+                              ],
+                              staticClass: "tag-autocomplete"
+                            },
+                            _vm._l(_vm.tagSearchResults, function(tag, key) {
+                              return _c(
+                                "div",
+                                {
+                                  staticClass: "tag-search-result",
+                                  class: {
+                                    "selected-search-index":
+                                      _vm.searchSelectedIndex == key
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.selectTag(tag.name)
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(tag.name))]
+                              )
+                            }),
+                            0
+                          )
+                        ],
+                        1
+                      )
+                    ])
+                  ],
+                  2
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "form-gropup mb-4" },
+                [
+                  _c("ckeditor", {
+                    class: {
+                      "is-invalid": _vm.recipeForm.errors.has("content")
+                    },
+                    attrs: { editor: _vm.editor, config: _vm.editorConfig },
+                    model: {
+                      value: _vm.recipeForm.content,
+                      callback: function($$v) {
+                        _vm.$set(_vm.recipeForm, "content", $$v)
+                      },
+                      expression: "recipeForm.content"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("has-error", {
+                    attrs: { form: _vm.recipeForm, field: "content" }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "large_button mb-4",
+                  on: { click: _vm.updateRecipe }
+                },
+                [_vm._v("Update Recipe")]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _vm._v("\n        Dashboard\n    ")
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c("button", { staticClass: "btn btn-navbar" }, [
+        _c("i", { staticClass: "fas fa-search" })
       ])
     ])
   }
@@ -45070,6 +51259,51 @@ var render = function() {
         _c("h3", { staticClass: "card-title" }, [_vm._v("Users Table")]),
         _vm._v(" "),
         _c(
+          "form",
+          {
+            staticClass: "form-inline ml-3",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.searchRecipe($event)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "input-group input-group-sm" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search,
+                    expression: "search"
+                  }
+                ],
+                staticClass: "form-control form-control-navbar",
+                attrs: {
+                  type: "search",
+                  placeholder: "Search",
+                  "aria-label": "Search"
+                },
+                domProps: { value: _vm.search },
+                on: {
+                  keyup: _vm.searchRecipe,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm._m(0)
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
           "div",
           { staticClass: "card-tools" },
           [
@@ -45245,7 +51479,17 @@ var render = function() {
                     _vm._v(
                       "\n                        /\n                        "
                     ),
-                    _vm._m(0, true)
+                    _c(
+                      "a",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteRecipe(recipe.id)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fa fa-trash text-danger" })]
+                    )
                   ])
                 ])
               })
@@ -45286,7 +51530,39 @@ var render = function() {
           { staticClass: "modal-dialog ", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(1),
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v("Add New")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v("Update")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: { type: "button" },
+                    on: { click: _vm.closeModel }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
               _vm._v(" "),
               _vm.recipeForm
                 ? _c("div", { staticClass: "container py-5" }, [
@@ -45495,8 +51771,17 @@ var render = function() {
                         _vm._l(_vm.items, function(item, index) {
                           return index != 0
                             ? _c("div", { staticClass: "col-4 " }, [
-                                _vm.recipeForm.gallery[index - 1]
+                                item.name
                                   ? _c("img", {
+                                      staticClass: "w-100",
+                                      attrs: { src: item.image }
+                                    })
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                typeof _vm.recipeForm.gallery[index - 1] ==
+                                "object"
+                                  ? _c("img", {
+                                      staticClass: "w-100",
                                       attrs: {
                                         src:
                                           "/img/XS/" +
@@ -45504,10 +51789,7 @@ var render = function() {
                                             .image
                                       }
                                     })
-                                  : _c("img", {
-                                      staticClass: "w-100",
-                                      attrs: { src: item.image }
-                                    }),
+                                  : _vm._e(),
                                 _vm._v(" "),
                                 _c(
                                   "label",
@@ -45696,11 +51978,76 @@ var render = function() {
                   "div",
                   { staticClass: "tags-input" },
                   [
-                    _vm._l(_vm.recipeForm.tags, function(tag) {
-                      return _c("p", [
-                        _vm._v("\n                " + _vm._s(tag.name) + " "),
-                        _c("span", [_vm._v(" " + _vm._s(tag.pivot.amount))])
-                      ])
+                    _vm._l(_vm.recipeForm.tags, function(tag, index) {
+                      return tag.name
+                        ? _c("p", [
+                            _c("span", [_vm._v(_vm._s(tag.name))]),
+                            _vm._v(" "),
+                            tag.id != _vm.tagAmount
+                              ? _c("span", { staticClass: "ml-3" }, [
+                                  _vm._v(_vm._s(tag.pivot.amount))
+                                ])
+                              : _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.currentAmount,
+                                      expression: "currentAmount"
+                                    }
+                                  ],
+                                  attrs: { type: "text" },
+                                  domProps: { value: _vm.currentAmount },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.currentAmount = $event.target.value
+                                    }
+                                  }
+                                }),
+                            _vm._v(" "),
+                            tag.id != _vm.tagAmount
+                              ? _c("i", {
+                                  staticClass: "fa fa-edit text-primary",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editAmount(tag.id)
+                                    }
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(
+                              "\n\n                        /                       \n                 "
+                            ),
+                            tag.id != _vm.tagAmount
+                              ? _c("i", {
+                                  staticClass: "fa fa-trash text-danger",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deleteTag(index)
+                                    }
+                                  }
+                                })
+                              : _c("span", [
+                                  _c("i", {
+                                    staticClass: "fas fa-check",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.doneEditTag(index)
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    { on: { click: _vm.cancelEditTag } },
+                                    [_vm._v("Cancel")]
+                                  )
+                                ])
+                          ])
+                        : _vm._e()
                     }),
                     _vm._v(" "),
                     _vm.tagsArray.tags.length > 0
@@ -45959,9 +52306,14 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("button", { staticClass: "large_button mb-4" }, [
-                _vm._v("Add Recipe")
-              ])
+              _c(
+                "button",
+                {
+                  staticClass: "large_button mb-4",
+                  on: { click: _vm.updateRecipe }
+                },
+                [_vm._v("Update Recipe")]
+              )
             ])
           ]
         )
@@ -45974,37 +52326,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", [_c("i", { staticClass: "fa fa-trash text-danger" })])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Add New")]
-      ),
-      _vm._v(" "),
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Update")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c("button", { staticClass: "btn btn-navbar" }, [
+        _c("i", { staticClass: "fas fa-search" })
+      ])
     ])
   }
 ]
@@ -46029,43 +52354,345 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "col-6" },
-    [
-      _c("h2", { staticClass: "mb-4" }, [_vm._v("Ingredients")]),
+  return _c("div", { staticClass: "col-6" }, [
+    _c("h2", { staticClass: "mb-4" }, [_vm._v("Ingredients")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row align-items-center" }, [
+      _c(
+        "p",
+        {
+          staticClass: "servings m-0",
+          class: { "servings-click": _vm.togleDec },
+          on: { click: _vm.decrement }
+        },
+        [_c("i", { staticClass: "fas fa-minus " })]
+      ),
+      _c("span", { staticClass: "mx-3 counter" }, [
+        _vm._v(_vm._s(_vm.ingredients.servings))
+      ]),
       _vm._v(" "),
       _c(
-        "button",
-        { staticClass: "btn-sm btn-primary", on: { click: _vm.decrement } },
-        [_vm._v("-")]
-      ),
-      _c("span", [_vm._v(_vm._s(_vm.ingredients.servings))]),
-      _c(
-        "button",
-        { staticClass: "btn-sm btn-primary", on: { click: _vm.increment } },
-        [_vm._v("+")]
-      ),
-      _vm._v(" "),
+        "p",
+        {
+          staticClass: "servings m-0",
+          class: { "servings-click": _vm.togleInc },
+          on: { click: _vm.increment }
+        },
+        [_c("i", { staticClass: "fas fa-plus" })]
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "ul",
+      { staticClass: "ingredients_list mt-4" },
       _vm._l(_vm.ingredients.ingredients, function(ingridient) {
-        return _c(
-          "ul",
-          { key: ingridient.id, staticClass: "ingredients_list" },
-          [
-            _c("li", [
-              _vm._v(_vm._s(_vm.calculate(ingridient.pivot.amount)) + " "),
-              _c("span", { staticClass: "list_bold" }, [
-                _vm._v(_vm._s(ingridient.name))
-              ])
-            ])
-          ]
-        )
-      })
-    ],
-    2
-  )
+        return _c("li", { key: ingridient.id }, [
+          _c("span", [_vm._v(_vm._s(_vm.calculate(ingridient.pivot.amount)))]),
+          _vm._v(" "),
+          _c("span", { staticClass: "list_bold" }, [
+            _vm._v(_vm._s(ingridient.name))
+          ])
+        ])
+      }),
+      0
+    )
+  ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recipes/Trash.vue?vue&type=template&id=309fe9f3&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/recipes/Trash.vue?vue&type=template&id=309fe9f3& ***!
+  \****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [
+        _c("h3", { staticClass: "card-title" }, [_vm._v("Users Table")]),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            staticClass: "form-inline ml-3",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.searchRecipe($event)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "input-group input-group-sm" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search,
+                    expression: "search"
+                  }
+                ],
+                staticClass: "form-control form-control-navbar",
+                attrs: {
+                  type: "search",
+                  placeholder: "Search",
+                  "aria-label": "Search"
+                },
+                domProps: { value: _vm.search },
+                on: {
+                  keyup: _vm.searchRecipe,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm._m(0)
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "card-tools" },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/add-recipe" } },
+              [_c("p", { staticClass: "text-success" }, [_vm._v("ADD RECIPE")])]
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body table-responsive p-0" }, [
+        _c("table", { staticClass: "table table-hover" }, [
+          _c(
+            "tbody",
+            [
+              _c("tr", [
+                _c("th", [_vm._v("ID")]),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.Sort("category_id")
+                      }
+                    }
+                  },
+                  [
+                    _vm._v("Category "),
+                    _c("i", {
+                      staticClass: "fas ",
+                      class: {
+                        "fa-chevron-down":
+                          _vm.recipeDirection == "DESC" &&
+                          _vm.recipeSort == "category_id",
+                        "fa-chevron-up":
+                          _vm.recipeDirection == "ASC" &&
+                          _vm.recipeSort == "category_id"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.Sort("title")
+                      }
+                    }
+                  },
+                  [
+                    _vm._v("Title "),
+                    _c("i", {
+                      staticClass: "fas",
+                      class: {
+                        "fa-chevron-down":
+                          _vm.recipeDirection == "DESC" &&
+                          _vm.recipeSort == "title",
+                        "fa-chevron-up":
+                          _vm.recipeDirection == "ASC" &&
+                          _vm.recipeSort == "title"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.Sort("score")
+                      }
+                    }
+                  },
+                  [
+                    _vm._v("Avg "),
+                    _c("i", {
+                      staticClass: "fas",
+                      class: {
+                        "fa-chevron-down":
+                          _vm.recipeDirection == "DESC" &&
+                          _vm.recipeSort == "score",
+                        "fa-chevron-up":
+                          _vm.recipeDirection == "ASC" &&
+                          _vm.recipeSort == "score"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.Sort("likes")
+                      }
+                    }
+                  },
+                  [
+                    _vm._v("Likes "),
+                    _c("i", {
+                      staticClass: "fas",
+                      class: {
+                        "fa-chevron-down":
+                          _vm.recipeDirection == "DESC" &&
+                          _vm.recipeSort == "likes",
+                        "fa-chevron-up":
+                          _vm.recipeDirection == "ASC" &&
+                          _vm.recipeSort == "likes"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.Sort("created_at")
+                      }
+                    }
+                  },
+                  [
+                    _vm._v("Created_at "),
+                    _c("i", {
+                      staticClass: "fas",
+                      class: {
+                        "fa-chevron-down":
+                          _vm.recipeDirection == "DESC" &&
+                          _vm.recipeSort == "created_at",
+                        "fa-chevron-up":
+                          _vm.recipeDirection == "ASC" &&
+                          _vm.recipeSort == "created_at"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c("th", [_vm._v("Modify")])
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.recipes.data, function(recipe) {
+                return _c("tr", { key: recipe.id }, [
+                  _c("td", [_vm._v(_vm._s(recipe.id))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(recipe.category))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(recipe.title))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(recipe.score))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(recipe.likes || 0))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(recipe.created_at))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "a",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.restoreRecipe(recipe.id)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fas fa-redo text-success" })]
+                    ),
+                    _vm._v(" / \n                     "),
+                    _c(
+                      "a",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteRecipe(recipe.id)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fa fa-trash text-danger" })]
+                    )
+                  ])
+                ])
+              })
+            ],
+            2
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "card-footer" },
+        [
+          _c("pagination", {
+            attrs: { data: _vm.recipes },
+            on: { "pagination-change-page": _vm.paginate }
+          })
+        ],
+        1
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c("button", { staticClass: "btn btn-navbar" }, [
+        _c("i", { staticClass: "fas fa-search" })
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -46883,30 +53510,52 @@ var render = function() {
                             "div",
                             { staticClass: "col-sm-offset-2 col-sm-10" },
                             [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "edit",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.updateProfile()
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "fas fa-edit" }),
-                                  _vm._v(" Edit")
-                                ]
-                              ),
+                              !_vm.editProfile
+                                ? _c(
+                                    "a",
+                                    {
+                                      staticClass: "edit",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.editProfile = true
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", { staticClass: "fas fa-edit" }),
+                                      _vm._v(" Edit")
+                                    ]
+                                  )
+                                : _vm._e(),
                               _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "cancel",
-                                  on: { click: _vm.settings }
-                                },
-                                [_vm._v("Cancel")]
-                              )
+                              _vm.editProfile
+                                ? _c(
+                                    "a",
+                                    {
+                                      staticClass: "edit",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.updateProfile()
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", { staticClass: "fas fa-edit" }),
+                                      _vm._v(" Edit")
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.editProfile
+                                ? _c(
+                                    "a",
+                                    {
+                                      staticClass: "cancel",
+                                      on: { click: _vm.settings }
+                                    },
+                                    [_vm._v("Cancel")]
+                                  )
+                                : _vm._e()
                             ]
                           )
                         ])
@@ -63245,6 +69894,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.common.js");
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vform__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _gate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./gate */ "./resources/js/gate.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_5__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -63264,13 +69915,16 @@ Vue.component(vform__WEBPACK_IMPORTED_MODULE_3__["HasError"].name, vform__WEBPAC
 Vue.component(vform__WEBPACK_IMPORTED_MODULE_3__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_3__["AlertError"]);
 Vue.use(_ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_2___default.a);
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
+var categories = Vue.component('categories-component', __webpack_require__(/*! ./components/Categories.vue */ "./resources/js/components/Categories.vue")["default"]);
+var allRecipe = Vue.component('create-recipe-component', __webpack_require__(/*! ./components/recipes/AllRecipe.vue */ "./resources/js/components/recipes/AllRecipe.vue")["default"]);
 var comments = Vue.component('comment-component', __webpack_require__(/*! ./components/Comments.vue */ "./resources/js/components/Comments.vue")["default"]);
 var addRecipe = Vue.component('create-recipe-component', __webpack_require__(/*! ./components/recipes/CreateRecipe.vue */ "./resources/js/components/recipes/CreateRecipe.vue")["default"]);
 var users = Vue.component('user-component', __webpack_require__(/*! ./components/user/Users.vue */ "./resources/js/components/user/Users.vue")["default"]);
-var dashboard = Vue.component('dashboard-component', __webpack_require__(/*! ./components/dashboard/Dashboard.vue */ "./resources/js/components/dashboard/Dashboard.vue")["default"]);
 var profile = Vue.component('profile-component', __webpack_require__(/*! ./components/user/Profile.vue */ "./resources/js/components/user/Profile.vue")["default"]);
 var login = Vue.component('login-component', __webpack_require__(/*! ./components/Login.vue */ "./resources/js/components/Login.vue")["default"]);
+var trash = Vue.component('create-recipe-component', __webpack_require__(/*! ./components/recipes/Trash.vue */ "./resources/js/components/recipes/Trash.vue")["default"]);
 Vue.component('VuexRecipe', __webpack_require__(/*! ./components/VuexRecipe.vue */ "./resources/js/components/VuexRecipe.vue")["default"]);
+Vue.component('footer-component', __webpack_require__(/*! ./components/Footer.vue */ "./resources/js/components/Footer.vue")["default"]);
 Vue.component('recipes-component', __webpack_require__(/*! ./components/Recipes.vue */ "./resources/js/components/Recipes.vue")["default"]);
 Vue.component('fridge-component', __webpack_require__(/*! ./components/Fridge.vue */ "./resources/js/components/Fridge.vue")["default"]);
 Vue.component('score-component', __webpack_require__(/*! ./components/Score.vue */ "./resources/js/components/Score.vue")["default"]);
@@ -63281,11 +69935,20 @@ Vue.component('pagination', __webpack_require__(/*! laravel-vue-pagination */ ".
 Vue.component('search-component', __webpack_require__(/*! ./components/Search.vue */ "./resources/js/components/Search.vue")["default"]);
 Vue.component('edit-recipe-component', __webpack_require__(/*! ./components/recipes/EditRecipe.vue */ "./resources/js/components/recipes/EditRecipe.vue")["default"]);
 var routes = [{
+  path: '/home',
+  redirect: '/profile'
+}, {
+  path: '/categories',
+  component: categories
+}, {
+  path: '/trash',
+  component: trash
+}, {
+  path: '/all-recipe',
+  component: allRecipe
+}, {
   path: '/get-comments',
   component: comments
-}, {
-  path: '/dashboard',
-  component: dashboard
 }, {
   path: '/add-recipe',
   component: addRecipe
@@ -63306,7 +69969,21 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   mode: 'history',
   routes: routes // short for `routes: routes`
 
+}); ////////Alert////////////
+
+
+window.swal = sweetalert2__WEBPACK_IMPORTED_MODULE_5___default.a;
+var toast = sweetalert2__WEBPACK_IMPORTED_MODULE_5___default.a.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
 });
+axios.get('/api/user').then(function (response) {
+  console.log(response.data);
+  console.log(134);
+});
+window.toast = toast;
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -63398,6 +70075,75 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/Categories.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/Categories.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Categories_vue_vue_type_template_id_8ceef672___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Categories.vue?vue&type=template&id=8ceef672& */ "./resources/js/components/Categories.vue?vue&type=template&id=8ceef672&");
+/* harmony import */ var _Categories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Categories.vue?vue&type=script&lang=js& */ "./resources/js/components/Categories.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Categories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Categories_vue_vue_type_template_id_8ceef672___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Categories_vue_vue_type_template_id_8ceef672___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Categories.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Categories.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/Categories.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Categories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Categories.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Categories.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Categories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Categories.vue?vue&type=template&id=8ceef672&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/Categories.vue?vue&type=template&id=8ceef672& ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Categories_vue_vue_type_template_id_8ceef672___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Categories.vue?vue&type=template&id=8ceef672& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Categories.vue?vue&type=template&id=8ceef672&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Categories_vue_vue_type_template_id_8ceef672___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Categories_vue_vue_type_template_id_8ceef672___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -63534,6 +70280,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Footer.vue":
+/*!********************************************!*\
+  !*** ./resources/js/components/Footer.vue ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Footer_vue_vue_type_template_id_61a7c374___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Footer.vue?vue&type=template&id=61a7c374& */ "./resources/js/components/Footer.vue?vue&type=template&id=61a7c374&");
+/* harmony import */ var _Footer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Footer.vue?vue&type=script&lang=js& */ "./resources/js/components/Footer.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Footer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Footer_vue_vue_type_template_id_61a7c374___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Footer_vue_vue_type_template_id_61a7c374___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Footer.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Footer.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/Footer.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Footer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Footer.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Footer.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Footer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Footer.vue?vue&type=template&id=61a7c374&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/Footer.vue?vue&type=template&id=61a7c374& ***!
+  \***************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Footer_vue_vue_type_template_id_61a7c374___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Footer.vue?vue&type=template&id=61a7c374& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Footer.vue?vue&type=template&id=61a7c374&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Footer_vue_vue_type_template_id_61a7c374___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Footer_vue_vue_type_template_id_61a7c374___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -64091,17 +70906,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/dashboard/Dashboard.vue":
-/*!*********************************************************!*\
-  !*** ./resources/js/components/dashboard/Dashboard.vue ***!
-  \*********************************************************/
+/***/ "./resources/js/components/recipes/AllRecipe.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/recipes/AllRecipe.vue ***!
+  \*******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Dashboard_vue_vue_type_template_id_376ddb84___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=template&id=376ddb84& */ "./resources/js/components/dashboard/Dashboard.vue?vue&type=template&id=376ddb84&");
-/* harmony import */ var _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=script&lang=js& */ "./resources/js/components/dashboard/Dashboard.vue?vue&type=script&lang=js&");
+/* harmony import */ var _AllRecipe_vue_vue_type_template_id_85ea2f6c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AllRecipe.vue?vue&type=template&id=85ea2f6c& */ "./resources/js/components/recipes/AllRecipe.vue?vue&type=template&id=85ea2f6c&");
+/* harmony import */ var _AllRecipe_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AllRecipe.vue?vue&type=script&lang=js& */ "./resources/js/components/recipes/AllRecipe.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -64111,9 +70926,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Dashboard_vue_vue_type_template_id_376ddb84___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Dashboard_vue_vue_type_template_id_376ddb84___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _AllRecipe_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AllRecipe_vue_vue_type_template_id_85ea2f6c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AllRecipe_vue_vue_type_template_id_85ea2f6c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -64123,38 +70938,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/dashboard/Dashboard.vue"
+component.options.__file = "resources/js/components/recipes/AllRecipe.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/dashboard/Dashboard.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************!*\
-  !*** ./resources/js/components/dashboard/Dashboard.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************/
+/***/ "./resources/js/components/recipes/AllRecipe.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/recipes/AllRecipe.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Dashboard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/Dashboard.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AllRecipe_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./AllRecipe.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recipes/AllRecipe.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AllRecipe_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/dashboard/Dashboard.vue?vue&type=template&id=376ddb84&":
-/*!****************************************************************************************!*\
-  !*** ./resources/js/components/dashboard/Dashboard.vue?vue&type=template&id=376ddb84& ***!
-  \****************************************************************************************/
+/***/ "./resources/js/components/recipes/AllRecipe.vue?vue&type=template&id=85ea2f6c&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/recipes/AllRecipe.vue?vue&type=template&id=85ea2f6c& ***!
+  \**************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_376ddb84___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Dashboard.vue?vue&type=template&id=376ddb84& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/Dashboard.vue?vue&type=template&id=376ddb84&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_376ddb84___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllRecipe_vue_vue_type_template_id_85ea2f6c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./AllRecipe.vue?vue&type=template&id=85ea2f6c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recipes/AllRecipe.vue?vue&type=template&id=85ea2f6c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllRecipe_vue_vue_type_template_id_85ea2f6c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_376ddb84___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllRecipe_vue_vue_type_template_id_85ea2f6c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -64367,6 +71182,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/recipes/Trash.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/recipes/Trash.vue ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Trash_vue_vue_type_template_id_309fe9f3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Trash.vue?vue&type=template&id=309fe9f3& */ "./resources/js/components/recipes/Trash.vue?vue&type=template&id=309fe9f3&");
+/* harmony import */ var _Trash_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Trash.vue?vue&type=script&lang=js& */ "./resources/js/components/recipes/Trash.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Trash_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Trash_vue_vue_type_template_id_309fe9f3___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Trash_vue_vue_type_template_id_309fe9f3___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/recipes/Trash.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/recipes/Trash.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/recipes/Trash.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Trash_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Trash.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recipes/Trash.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Trash_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/recipes/Trash.vue?vue&type=template&id=309fe9f3&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/recipes/Trash.vue?vue&type=template&id=309fe9f3& ***!
+  \**********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Trash_vue_vue_type_template_id_309fe9f3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Trash.vue?vue&type=template&id=309fe9f3& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recipes/Trash.vue?vue&type=template&id=309fe9f3&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Trash_vue_vue_type_template_id_309fe9f3___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Trash_vue_vue_type_template_id_309fe9f3___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/user/Profile.vue":
 /*!**************************************************!*\
   !*** ./resources/js/components/user/Profile.vue ***!
@@ -64536,6 +71420,11 @@ function () {
       return this.user;
     }
   }, {
+    key: "getName",
+    value: function getName() {
+      return this.user.name;
+    }
+  }, {
     key: "isAdmin",
     value: function isAdmin() {
       return this.user.role === 'admin';
@@ -64586,6 +71475,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     usersRecipes: {},
     userSort: 'created_at',
     userDirection: 'DESC',
+    userSearch: 0,
     order: '',
     direction: '',
     notifications: {},
@@ -64615,6 +71505,12 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     usersRecipesSort: function usersRecipesSort(state, data) {
       state.userSort = data.userSort;
       state.userDirection = data.userDirection;
+
+      if (data.userSearch) {
+        state.userSearch = data.userSearch;
+      } else {
+        state.userSearch = 0;
+      }
     }
   },
   actions: {
@@ -64672,6 +71568,10 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       axios.post('/approved', {
         id: payLoad
       }).then(function () {
+        toast.fire({
+          type: 'success',
+          title: 'Comment readed successfully'
+        });
         dispatch('loadNotifications');
         dispatch('loadComments');
       });
@@ -64679,9 +71579,22 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     commentDelete: function commentDelete(_ref12, payLoad) {
       var commit = _ref12.commit,
           dispatch = _ref12.dispatch;
-      axios["delete"]("/api/comment/".concat(payLoad)).then(function () {
-        dispatch('loadNotifications');
-        dispatch('loadComments');
+      swal.fire({
+        title: 'Are you sure?',
+        text: "Comment will be deleted",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          axios["delete"]("/api/comment/".concat(payLoad)).then(function () {
+            toast.fire('Deleted!', 'Comment has been deleted.', 'success');
+            dispatch('loadNotifications');
+            dispatch('loadComments');
+          });
+        }
       });
     },
     reply: function reply(_ref13, payLoad) {
@@ -64693,40 +71606,42 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
         perent_comment_id: payLoad.id
       }).then(function (_ref14) {
         var data = _ref14.data;
+        toast.fire({
+          type: 'success',
+          title: 'Replyed successfully'
+        });
         dispatch('loadNotifications');
         dispatch('loadComments');
+      })["catch"](function (error) {
+        if (error.response) {
+          toast.fire({
+            type: 'error',
+            title: error.response.data.message
+          });
+        }
       });
     },
-    loadRecipe: function loadRecipe(_ref15, payLoad) {
-      var commit = _ref15.commit;
-      axios.get("/api/recipe/".concat(payLoad)).then(function (_ref16) {
+    loadUsersRecipes: function loadUsersRecipes(_ref15) {
+      var commit = _ref15.commit,
+          state = _ref15.state;
+      axios.get("/users_recipe/".concat(state.userSort, "/").concat(state.userDirection, "/").concat(state.userSearch)).then(function (_ref16) {
         var data = _ref16.data;
-        commit('loadRecipe', {
-          data: data
-        });
-      });
-    },
-    loadUsersRecipes: function loadUsersRecipes(_ref17) {
-      var commit = _ref17.commit,
-          state = _ref17.state;
-      axios.get("/users_recipe/".concat(state.userSort, "/").concat(state.userDirection)).then(function (_ref18) {
-        var data = _ref18.data;
         commit('loadUsersRecipes', {
           data: data
         });
       });
     },
-    usersRecipesSort: function usersRecipesSort(_ref19, payLoad) {
-      var commit = _ref19.commit,
-          dispatch = _ref19.dispatch;
+    usersRecipesSort: function usersRecipesSort(_ref17, payLoad) {
+      var commit = _ref17.commit,
+          dispatch = _ref17.dispatch;
       commit('usersRecipesSort', payLoad);
       dispatch('loadUsersRecipes');
     },
-    paginateRecipes: function paginateRecipes(_ref20, payLoad) {
-      var commit = _ref20.commit,
-          state = _ref20.state;
-      axios.get("/users_recipe/".concat(state.userSort, "/").concat(state.userDirection, "?page=").concat(payLoad)).then(function (_ref21) {
-        var data = _ref21.data;
+    paginateRecipes: function paginateRecipes(_ref18, payLoad) {
+      var commit = _ref18.commit,
+          state = _ref18.state;
+      axios.get("/users_recipe/".concat(state.userSort, "/").concat(state.userDirection, "/").concat(state.userSearch, "?page=").concat(payLoad)).then(function (_ref19) {
+        var data = _ref19.data;
         commit('loadUsersRecipes', {
           data: data
         });

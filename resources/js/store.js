@@ -13,6 +13,7 @@ export const store = new Vuex.Store({
      usersRecipes: {},
      userSort: 'created_at',
      userDirection: 'DESC',
+     userSearch: 0,
      order: '',
      direction: '',   
      notifications: {},
@@ -45,8 +46,15 @@ export const store = new Vuex.Store({
         state.usersRecipes = data.data;
      },
      usersRecipesSort: (state, data)=>{
+
         state.userSort = data.userSort;
         state.userDirection = data.userDirection;
+        if(data.userSearch){
+          state.userSearch = data.userSearch;
+        }else{
+          state.userSearch = 0;
+        }
+       
      }
     
   },
@@ -90,16 +98,40 @@ export const store = new Vuex.Store({
                 
                 axios.post('/approved',{id: payLoad})
                     .then(()=>{
+                       toast.fire({
+                            type: 'success',
+                            title: 'Comment readed successfully'
+                           })
                      dispatch('loadNotifications');
                      dispatch('loadComments');  
                     })
             },
       commentDelete: ({commit, dispatch}, payLoad)=>{
-             axios.delete(`/api/comment/${payLoad}`)
-                  .then(()=>{
+              swal.fire({
+                      title: 'Are you sure?',
+                      text: "Comment will be deleted",
+                      type: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                     if (result.value) {
+
+                     axios.delete(`/api/comment/${payLoad}`)
+                       .then(()=>{
+                         toast.fire(
+                              'Deleted!',
+                              'Comment has been deleted.',
+                              'success'
+                              );
                          dispatch('loadNotifications');
                          dispatch('loadComments');                                
                        }) 
+                          
+                    }
+                 })        
+            
 
            },
       reply: ({commit, dispatch}, payLoad)=>{
@@ -110,21 +142,26 @@ export const store = new Vuex.Store({
                 perent_comment_id: payLoad.id}
                 )
                 .then(({data}) => {
-                    
+                  toast.fire({
+                            type: 'success',
+                            title: 'Replyed successfully'
+                           })
                     dispatch('loadNotifications');
                     dispatch('loadComments');         
                    
-            })
-          },
-        loadRecipe: ({commit}, payLoad)=>{
-              axios.get(`/api/recipe/${payLoad}`)
-                  .then(({data})=>{
-                     commit('loadRecipe', {data:data})
-                  })
-        },
+              })
+              .catch((error) => {
+                     if (error.response) {
+                              toast.fire({
+                              type: 'error',
+                              title: error.response.data.message
+                            })               
+                           } 
+                        } );
+          },        
        loadUsersRecipes: ({commit, state})=>{
 
-               axios.get(`/users_recipe/${state.userSort}/${state.userDirection}`)
+               axios.get(`/users_recipe/${state.userSort}/${state.userDirection}/${state.userSearch}`)
                       .then(({data}) =>{
                         commit('loadUsersRecipes', {data:data})
                       })
@@ -136,7 +173,7 @@ export const store = new Vuex.Store({
                 dispatch('loadUsersRecipes');
        },      
        paginateRecipes: ({commit, state}, payLoad)=>{
-              axios.get(`/users_recipe/${state.userSort}/${state.userDirection}?page=${payLoad}`)
+              axios.get(`/users_recipe/${state.userSort}/${state.userDirection}/${state.userSearch}?page=${payLoad}`)
                     .then(({data}) => {
                         commit('loadUsersRecipes', {data:data})
                       });

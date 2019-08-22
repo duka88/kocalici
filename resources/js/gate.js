@@ -9,6 +9,10 @@
     	 return this.user;
     }
 
+    getName(){
+         return this.user.name;
+    }
+
     isAdmin(){
         return this.user.role === 'admin';
     }

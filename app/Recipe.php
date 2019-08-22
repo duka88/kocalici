@@ -14,14 +14,27 @@ class Recipe extends Model
 
 	use SoftDeletes;
     
-    protected $dates = [
-      
-      'published_at'
-    ];
-
+   
     protected $fillable = [
         'title', 'content', 'image',  'description', 'category_id', 'user_id', 'slug', 'time', 'servings', 'dificulty'
     ];
+
+    protected static function boot(){
+        
+        parent::boot();
+      
+        
+        static::deleted(function($recipe){
+          
+          if($recipe->isForceDeleting()){
+             $recipe->scores()->delete();
+             $recipe->tags()->detach();
+             $recipe->galleries()->delete();
+         }
+          
+        });
+    }
+
     
     public function getRouteKeyName()
     {
@@ -124,23 +137,23 @@ class Recipe extends Model
     }
 
     public static function searchCategory($category, $order, $direction){
-            if($category != 0){
+          if($category != 0){
           if($order == 'score'){
            $recipes = Recipe::where('category_id', $category)
                        ->withCount(['scores as average' => function ($q){
                         $q->select(DB::raw('coalesce(avg(score), 0)'));
                       }])->orderBy('average' ,$direction)->paginate(9); 
-         }elseif($order == 'likes'){
-             $recipes = Recipe::where('category_id', $category)
+           }elseif($order == 'likes'){
+               $recipes = Recipe::where('category_id', $category)
                        ->withCount('likes')
                        ->orderBy('likes_count', $direction)->paginate(9);  
-          }else{
-            $recipes = Recipe::where('category_id', $category)
+           }else{
+              $recipes = Recipe::where('category_id', $category)
                        ->orderBy($order, $direction)->paginate(9);
-          }
+           }
 
 
-       }else{
+           }else{
           
            if($order == 'score'){
                $recipes = Recipe::withCount(['scores as average' => function ($q){
@@ -149,7 +162,7 @@ class Recipe extends Model
              }elseif($order == 'likes'){
                  $recipes = Recipe::withCount('likes')
                            ->orderBy('likes_count', $direction)->paginate(9);  
-              }else{
+             }else{
                 $recipes = Recipe::orderBy($order, $direction)->paginate(9);
               }
 
@@ -161,21 +174,73 @@ class Recipe extends Model
               return $recipes;
     }
 
-    public static function user_recipes_order($order, $direction){
-          $id = auth()->user()->id; 
+    public static function user_recipes_order($order, $direction, $search){
+         $id = auth()->user()->id; 
+         
+         if($search){
+            $searched =  $search;
+         }else{
+            $searched= '';
+         }
 
         if($order == 'score'){
-               $recipes = Recipe::where('user_id', $id)->withCount(['scores as average' => function ($q){
+               $recipes = Recipe::where('title', 'LIKE', "%$searched%")->where('user_id', $id)->withCount(['scores as average' => function ($q){
                             $q->select(DB::raw('coalesce(avg(score), 0)'));
                           }])->orderBy('average' ,$direction)->paginate(15); 
              }elseif($order == 'likes'){
-                 $recipes = Recipe::where('user_id', $id)->withCount('likes')
+                 $recipes = Recipe::where('title', 'LIKE', "%$searched%")->where('user_id', $id)->withCount('likes')
                            ->orderBy('likes_count', $direction)->paginate(15);
             }else{
-            $recipes = Recipe::where('user_id', $id)->orderBy($order, $direction)->paginate(15);
+            $recipes = Recipe::where('title', 'LIKE', "%$searched%")->where('user_id', $id)->orderBy($order, $direction)->paginate(15);
 
             }             
 
-        return $recipes;
+        return  $recipes;
+    }
+
+    public static function all_recipes($order, $direction, $search){
+        
+         
+         if($search){
+            $searched =  $search;
+         }else{
+            $searched= '';
+         }
+
+        if($order == 'score'){
+               $recipes = Recipe::where('title', 'LIKE', "%$searched%")->withCount(['scores as average' => function ($q){
+                            $q->select(DB::raw('coalesce(avg(score), 0)'));
+                          }])->orderBy('average' ,$direction)->paginate(15); 
+             }elseif($order == 'likes'){
+                 $recipes = Recipe::where('title', 'LIKE', "%$searched%")->withCount('likes')
+                           ->orderBy('likes_count', $direction)->paginate(15);
+            }else{
+            $recipes = Recipe::where('title', 'LIKE', "%$searched%")->orderBy($order, $direction)->paginate(15);
+
+            }             
+
+        return  $recipes;
+    }
+
+    public static function trash( $order, $direction, $search){
+      if($search){
+            $searched =  $search;
+         }else{
+            $searched= '';
+         }
+
+        if($order == 'score'){
+               $recipes = Recipe::onlyTrashed()->where('title', 'LIKE', "%$searched%")->withCount(['scores as average' => function ($q){
+                            $q->select(DB::raw('coalesce(avg(score), 0)'));
+                          }])->orderBy('average' ,$direction)->paginate(15); 
+             }elseif($order == 'likes'){
+                 $recipes = Recipe::onlyTrashed()->where('title', 'LIKE', "%$searched%")->withCount('likes')
+                           ->orderBy('likes_count', $direction)->paginate(15);
+            }else{
+            $recipes = Recipe::onlyTrashed()->where('title', 'LIKE', "%$searched%")->orderBy($order, $direction)->paginate(15);
+
+            }             
+
+        return  $recipes;
     }
 }

@@ -17,7 +17,8 @@ class CategoryResources extends JsonResource
         return [
           'name' => $this->name,
           'id' => $this->id,
-         
+          'recipe' => $this->recipes->count(),
+          'image' => $this->image
         ];
     }
 }

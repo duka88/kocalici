@@ -131,27 +131,76 @@
                 let vm = this;
                 this.form.post('/api/users')
                      .then(()=>{
+                       toast.fire({
+                            type: 'success',
+                            title: 'User created successfully'
+                           })
                        $('#addNew').modal('hide');
                         vm.loadUsers();
-                       });
+                       })
+                      .catch((error) => {
+                       if (error.response) {
+                              toast.fire({
+                              type: 'error',
+                              title: error.response.data.message
+                            })               
+                           } 
+                        } );
             },
             updateUser(){
                 let vm = this;
                 this.form.put(`/api/users/${this.form.id}`)
                          .then(() =>{
+                          toast.fire({
+                            type: 'success',
+                            title: 'User updated successfully'
+                           })
                            $('#addNew').modal('hide'); 
                             vm.loadUsers();
                          })
-                         .catch((errors)=>{
-                            console.log(errors);
-                         })
+                        .catch((error) => {
+                         if (error.response) {
+                              toast.fire({
+                              type: 'error',
+                              title: error.response.data.message
+                            })               
+                           } 
+                        } );
             },
             deleteUser(id){
-              let vm = this;
-                axios.delete(`/api/users/${id}`)
-                      .then(()=>{
-                         vm.loadUsers();
-                      })
+              let vm = this;               
+                     
+                swal.fire({
+                      title: 'Are you sure?',
+                      text: "User will be deleted",
+                      type: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                     if (result.value) {
+
+                     axios.delete(`/api/users/${id}`)
+                       .then(()=>{
+                         toast.fire(
+                              'Deleted!',
+                              'User has been deleted.',
+                              'success'
+                              );
+                         vm.loadUsers();                               
+                       }) 
+                          
+                    }
+                 }) 
+                .catch((error) => {
+                     if (error.response) {
+                              toast.fire({
+                              type: 'error',
+                              title: error.response.data.message
+                            })               
+                           } 
+                        } );        
 
             },
             editModal(user){

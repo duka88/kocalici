@@ -220,8 +220,9 @@
                    
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                      <a @click="updateProfile()" class="edit"><i class="fas fa-edit"></i> Edit</a>
-                     <a @click="settings" class="cancel">Cancel</a>
+                      <a @click="editProfile = true" v-if='!editProfile'  class="edit"><i class="fas fa-edit"></i> Edit</a> 
+                      <a v-if='editProfile' @click="updateProfile()" class="edit"><i class="fas fa-edit"></i> Edit</a>
+                      <a v-if='editProfile' @click="settings" class="cancel">Cancel</a>
 
                     </div>
                   </div>
@@ -267,6 +268,7 @@
                 },
                
                 user:{},
+                editProfile: false,
                 userForm: new Form({
                    id: '',
                    name: '',                           
@@ -310,6 +312,7 @@
                this.userForm.image = this.user.profile.image;
                this.userForm.full_name = this.user.profile.full_name;
                this.userForm.about = this.user.profile.about;
+               this.editProfile = false;
             },
             loadRecipes(){
                this.$store.dispatch('loadUsersRecipes');               
@@ -318,9 +321,21 @@
                let vm = this;
                 this.userForm.put(`/profile`)
                              .then(()=>{
+                                toast.fire({
+                                  type: 'success',
+                                  title: 'Profile updated successfully'
+                                 })
+                               vm.editProfile = false; 
                                vm.loadProfile();
                               })
-                             
+                            .catch((error) => {
+                               if (error.response) {
+                              toast.fire({
+                              type: 'error',
+                              title: error.response.data.message
+                            })               
+                           } 
+                        } );
             },
             onFileChange(item, e) {
               let files = e.target.files || e.dataTransfer.files;
@@ -371,16 +386,49 @@
               let vm = this;
               this.commentForm.put(`/api/update_comment/${this.commentForm.id}`)
                               .then(()=>{
+                                toast.fire({
+                                  type: 'success',
+                                  title: 'Comment edited successfully'
+                                 })
                                 vm.loadComments();
                                 this.commentEdit = false;
                               })
+                              .catch((error) => {
+                                if (error.response) {
+                                  toast.fire({
+                                  type: 'error',
+                                  title: error.response.data.message
+                                })               
+                               } 
+                        } );
             },
             deleteComment(id){
-                let vm = this;
-                axios.delete(`/api/comment/${id}`)
-                      .then(()=>{
-                                vm.loadComments();                               
-                              })
+                let vm = this;        
+                                                             
+                            
+                 swal.fire({
+                      title: 'Are you sure?',
+                      text: "Comment will be deleted",
+                      type: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                     if (result.value) {
+
+                     axios.delete(`/api/comment/${id}`)
+                       .then(()=>{
+                         toast.fire(
+                              'Deleted!',
+                              'Comment has been deleted.',
+                              'success'
+                              );
+                          vm.loadComments();                              
+                       }) 
+                          
+                    }
+                 })        
             },
             loadRecipeBook(){
                 axios.get(`/api/my-likes/${this.$gate.idUser()}`)

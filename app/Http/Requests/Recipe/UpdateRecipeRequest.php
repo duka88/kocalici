@@ -24,10 +24,11 @@ class UpdateRecipeRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|unique:recipes',
+            'title' =>  "unique:recipes,title,$this->id,id|required|max:255",
             'description' => 'required',            
             'content' => 'required',
-            'category_id' => 'required'
+            'category' => 'required',
+            'image' => 'required',
         ];
     }
 }
