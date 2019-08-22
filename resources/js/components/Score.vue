@@ -1,21 +1,20 @@
 <template>
-        <div>
+        <div class="rate-recipe">
               <form @submit.prevent="rateRecipe" v-if="rate" >
-                <div class="form-group"> 
+                <div class="form-group d-flex align-items-center"> 
                                   
                     <input 
                      v-model="score"  type="range" step="0.01" name ="score" min="1" max="10" value="5" class="form-control" id="score">
-                   <span >{{score | round}}</span>
+                   <span class="counter">{{score | round}}</span>
                </div>    
                  <div class="form-gropup mb-4">    
-               <ckeditor :editor="editor" v-model="comment" :config="editorConfig"></ckeditor>
-               </div>
-  
-                                            
-                 <button class="btn btn-success" >Rate</button>
+              
+                  <textarea v-model="comment" class="form-control" id="exampleFormControlTextarea1" rows="10" cols="30"></textarea> 
+                  </div>                          
+                 <a @click="rateRecipe" class="filter_search" >ADD COMMENT</a>
             
               </form>
-        
+         <transition-group name="list" tag="div" mode="out-in" > 
              <div class="col-12 comment "  v-for="(comment,index) in comments" :key="comment.id"  v-if="!comment.comment_parent">
                   <div class="avatar">
                     <img src="/img/XS/300px-No_image_available.svg.png" alt="">
@@ -24,66 +23,74 @@
                     <div class="comment-name">
                       <p>{{comment.user.name}}</p>
                     </div>
+
                     <div class="comment-score">
                       <p v-html="starRating(comment.score)"></p>
                     </div>
                   </div>
                   <div class="comment-text" v-html="comment.comment">
                   </div>
-
+                       <a @click="showReply = comment.id" v-if="showReply != comment.id" class="reply ml-3"><i class="fas  fa-reply mr-2"></i>Reply</a>
+                   
                    <!-----------Reply------------->
-                    <div class="col-12 comment ml-4"  v-for="(reply,index) in comment.replies" :key="reply.id" >
+
+                  <transition-group name="list" tag="div" mode="out-in" >  
+                    <div class="col-12 comment ml-4" 
+                         v-for="(reply,index) in comment.replies"
+                         v-if=" index < show(comment.id)"
+                          :key="reply" >
                         <div class="avatar">
                           <img src="/img/XS/300px-No_image_available.svg.png" alt="">
+                       
                         </div>
-                        <div class="comment-content">
+                        <div class="comment-content"> 
                           <div class="comment-name">
                             <p>{{reply.user.name}}</p>
                           </div>
-                          <div class="comment-score">
-                            <p v-html="starRating(reply.score)"></p>
-                          </div>
+                           
                         </div>
                         <div class="comment-text" v-html="reply.comment">
                         </div>                       
                     </div>
-
-
-
+                   
+                  </transition-group>
+                   <button v-if="comment.replies.length > show(comment.id)" 
+                    @click="loadMoreReples(comment.id)" > Load More Repy</button> 
+                     
+                 
                     <!-----------Reply------------->
                      <form @submit.prevent="replyCreate(comment.id)" v-if="showReply == comment.id" >
-                                                  <div class="form-gropup mb-4">    
-                       <ckeditor :editor="editor" v-model="reply" :config="editorConfig"></ckeditor>
+                     <div class="form-gropup mb-4">    
+                       <textarea v-model="reply" class="form-control" id="exampleFormControlTextarea1" rows="10" cols="30"></textarea>
                        </div> 
-                       <button  class="btn btn-success">Reply</button>           
+                      <a @click="replyCreate(comment.id, index)" class="mr-3 reply" ><i class="fas  fa-reply mr-2"></i>Reply</a> <a @click="cancel" class="cancel">Cancel</a>          
                  </form>
-                   <button @click="showReply = comment.id" v-if="showReply != comment.id" class="btn btn-success">Reply</button>
+                 
                    
               </div>
-             
+       </transition-group>    
+       <button @click="loadMoreComments(pagination.next_page_url)" v-if="pagination.next_page_url"> Load More</button>
      </div>        
 </template>
-
+  
 <script>
-  import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 
     export default {
 
-        props: ['recipe_id', 'user_id'],
+        props: ['recipe_id'],
         data(){
             return {
-              editor: ClassicEditor,                
-                editorConfig: {
-                    toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
-
-                },
+                 replyCount: 1,
+                 commentId: '',
                  avg: '',
                  score: '5',
                  comment: '',
                  reply: '',
                  comments: {},
                  rate: '',
-                 showReply: 'no'  
+                 showReply: 'no',
+                 pagination: {}
 
                 }
                
@@ -99,13 +106,74 @@
                 comment: this.comment}
                 )
                 .then(({data}) => {
+                  toast.fire(
+                        'success',
+                        'Comentet is successful',
+                        'success'
+                              );
                     vm.loadScores();
-                    vm.loadComments();         
+                    this.comments.unshift(data.data);       
                    
-            })
+                })
+                .catch((error) => {
+                       if (error.response) {
+                              toast.fire({
+                              type: 'error',
+                              title: error.response.data.message
+                            })               
+                           } 
+                        } );
 
           },
-          replyCreate(id){
+          loadMoreReples(id){
+            this.replyCount += 2;
+            this.commentId = id; 
+          },
+          show(id){
+             if(id == this.commentId){
+              return this.replyCount;
+             }else{
+              return 1;
+             }
+
+          },
+           loadComments(){
+            let vm = this;
+             axios.get(`/comments/${this.recipe_id}`)
+                  .then(({data}) =>{
+                    
+                      this.comments = data.data;
+                   
+                    vm.loadMore(data.meta, data.links);
+                 
+                  })
+          },
+          loadMoreComments(page_url){
+             let vm = this;
+             
+              axios.get(page_url)
+                  .then(({data}) =>{
+                    data.data.forEach((item)=>{
+                        console.log(item)
+                         this.comments.push(item); 
+                    })                    
+                   
+                    vm.loadMore(data.meta, data.links);
+                 
+                  })
+
+          },
+          loadMore(meta, links){
+             let pagination = {
+                current_page: meta.current_page,
+                last_page: meta.last_page,
+                next_page_url: links.next,
+                prev_page_url: links.prev
+              };
+
+            this.pagination = pagination;
+          },
+          replyCreate(id, index){
               let vm = this;
 
                 axios.post('/raply',{ 
@@ -115,19 +183,37 @@
                 comment: this.reply}
                 )
                 .then(({data}) => {
-                    
-                    vm.loadComments();         
+                     toast.fire(
+                        'success',
+                        'Raply is successful',
+                        'success'
+                              )
+                    this.comments[index].replies.push({
+                        comment: this.reply,
+                        user:{
+                          name: this.$gate.getName()
+                        }
+                      }); 
+                    this.showReply = false; 
+                    this.reply = "";       
                    
-            })
+              })
+              .catch((error) => {
+                       if (error.response) {
+                              toast.fire({
+                              type: 'error',
+                              title: error.response.data.message
+                            })               
+                           } 
+                        } );  
           },
-          loadComments(){
-             axios.get(`/api/comments/${this.recipe_id}`)
-                  .then(({data}) =>{
-                    this.comments = data.data
-                  })
+          cancel(){
+             this.showReply = false; 
+            this.reply = "";  
           },
+         
           loadScores(){
-              axios.get(`/api/rating/${this.recipe_id}/${this.user_id}`)
+              axios.get(`/rating/${this.recipe_id}/`)
                    .then(({data}) =>{
 
                         this.avg = data[1];

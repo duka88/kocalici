@@ -55,14 +55,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item ">
-             <router-link to="/dashboard" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard              
-              </p>
-                      
-          </li>     
+            
           <li class="nav-header">RECIPES</li>
 
           <li class="nav-item ">
@@ -74,50 +67,48 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link">
+           <router-link to="/all-recipe" class="nav-link">
               <i class="fas fa-cookie"></i>
               <p>
                 ALL RECIPE                
               </p>
-            </a>
+            </router-link>
+            <router-link to="/trash" class="nav-link">
+               <i class="fa fa-trash"></i>
+              <p>
+                TRASHED RECIPE                
+              </p>
+            </router-link>
           </li>
 
 
           <li class="nav-header">CATEGORIES</li>
 
-          <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="fas fa-plus"></i>
-              <p>
-                ADD CATEGORY               
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="fas fa-list-ul"></i>
+           <router-link to="/categories" class="nav-link">
+            
+               <i class="fas fa-list-ul"></i>
               <p>
                 ALL CATEGORIES              
               </p>
-            </a>
-          </li>
+           
+          </router-link>
+          
 
-            <li class="nav-header">COMMENTS</li>
+          <li class="nav-header">COMMENTS</li>
 
           <li class="nav-item">
             <router-link to="/get-comments" class="nav-link">
               <i class="fas fa-comments"></i>
               <p>
                 COMMENTS               
-              </p>
-            </a>
+              </p>           
           </li>
          
 
           <li class="nav-header">USERS</li>
 
           <li class="nav-item">
-            <router-link to="/profile" class="nav-link">
+            <router-link  to="/profile" class="nav-link">
               <i class="fas fa-user"></i>
               <p>
                 PROFILE               
@@ -137,10 +128,19 @@
           </li>          
           
           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+            <a href="{{route('welcome')}}" class="nav-link">
               <i class="nav-icon fas fa-book"></i>
               <p>
-                Pages
+                Welcome
+                
+              </p>
+            </a>            
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="{{route('fridge')}}" class="nav-link">
+              <i class="nav-icon fas fa-book"></i>
+              <p>
+                Fridge
                 
               </p>
             </a>            
@@ -165,12 +165,13 @@
     </div>
     <!-- /.sidebar -->
   </aside>
+
    <router-view></router-view>
 
     <!-- /.content-header -->
 
     <!-- Main content -->
-   
+   <div class="d-flex justify-content-end"></div>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->

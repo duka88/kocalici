@@ -25,7 +25,7 @@ class CreateCategoryRequest extends FormRequest
     {
         return [
 
-           'name' => 'required|unique:categories'
+           'name' => "unique:categories,name,$this->id,id|required|max:255"
            
         ];
     }

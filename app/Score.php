@@ -11,6 +11,18 @@ class Score extends Model{
          'admin_notification', 'user_notification'
     ];
 
+
+    protected static function boot(){
+        
+        parent::boot();        
+        
+        static::deleted(function($score){
+           $score->replies()->delete();
+
+          
+        });
+    }
+
      public function recipe(){
         return $this->belongsTo(Recipe::class);
     }
@@ -23,3 +35,4 @@ class Score extends Model{
         return $this->hasMany(Score::class, 'perent_comment_id');
     }
 }
+  

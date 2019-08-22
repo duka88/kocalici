@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container"> 
           <div class="tab-pane active" id="timeline">
                 <!-- The timeline -->
              <ul v-for="(comment, index) in comments.data"

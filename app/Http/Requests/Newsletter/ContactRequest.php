@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Categories;
+namespace App\Http\Requests\Newsletter;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCategoriesRequest extends FormRequest
+class ContactRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,10 @@ class UpdateCategoriesRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:categories'
+          
+           'massege' => 'required|max:1000',
+           'email' => 'email|required|max:255',
+        
         ];
     }
 }

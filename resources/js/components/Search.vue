@@ -23,7 +23,7 @@
     </div>
    </div> 
    
-    <ul  v-if="location == 'http://recipes.test/home'" class="navbar-nav ml-auto">
+    <ul  v-if="location == 'AdminLTE 3 | Dashboard'" class="navbar-nav ml-auto">
     
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown" >
@@ -133,12 +133,12 @@
                   }) 
 
            },
-            /*loadComments(){
+           loadComments(){
                axios.get('/new_comments')
                     .then(({data})=>{
                        this.comments = data;
                     }) 
-            },*/
+            },
           
           
             ...mapActions([               
@@ -156,7 +156,7 @@
            }
         },
          created(){  
-           this.location = window.location.href;          
+           this.location = document.title;          
             this.$store.dispatch('loadNotifications'); 
         },
      

@@ -20,7 +20,7 @@ class ScoreResources extends JsonResource
           'replies' => ScoreResources::collection($this->replies),
           'admin_notification' => $this->admin_notification,
           'score' => $this->score,
-          'recipe' => $this->recipe->only('title', 'slug', 'id'),         
+          'recipe' => $this->recipe->only('title', 'slug', 'id'),      
           'user' => new UserResources($this->user),
           'comment' => $this->comment, 
           'time' => date("d-m-Y", strtotime($this->created_at)),

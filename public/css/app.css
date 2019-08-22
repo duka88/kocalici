@@ -24014,6 +24014,61 @@ a.text-dark:focus {
   cursor: pointer;
 }
 
+.rate-recipe textarea {
+  border-radius: 40px;
+  padding: 15px 25px;
+  border: 1px solid #F7E7DF;
+  outline: none;
+}
+
+.rate-recipe textarea:focus {
+  border-color: #F7E7DF;
+  outline: none;
+  box-shadow: none;
+}
+
+.servings {
+  display: block;
+  border: 1px solid #FF9FAA;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 24px;
+  border-radius: 16px;
+  background: #FF9FAA;
+  color: #fff;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.servings-click {
+  background: #EA725B !important;
+}
+
+.servings:focus {
+  background: #fa142f !important;
+}
+
+.number-fade-enter-active {
+  transition: all 0.3s ease;
+}
+
+.number-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.number-fade-enter {
+  -webkit-transform: translateY(-10px);
+          transform: translateY(-10px);
+  opacity: 0;
+}
+
+.number-fade-leave-to {
+  -webkit-transform: translateY(10px);
+          transform: translateY(10px);
+  opacity: 0;
+}
+
 /**********************************************************************************************
 **************************** DASHBOARD ******************************
 **********************************************************************************************/
@@ -24127,6 +24182,104 @@ a.text-dark:focus {
   margin-right: 15px;
   cursor: pointer;
 }
+
+/**********************************************************************************************
+**************************** FOOTER ******************************
+**********************************************************************************************/
+
+.footer {
+  background: #E2E2E1;
+}
+
+.footer .social {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-content: center;
+  border-radius: 23px;
+  justify-content: center;
+  color: #fff;
+  background: #fc99c5;
+  text-decoration: none;
+  transition: ease-in-out 0.5s;
+  margin: 10px;
+}
+
+.footer .social i {
+  line-height: unset;
+  font-size: 24px;
+}
+
+.footer .social:hover {
+  background: #B92454;
+}
+
+.footer .newsletter input[type=email] {
+  border-radius: 15px 0px 0px 15px;
+  padding: 10px;
+  outline: none;
+  max-height: 45px;
+  border: 1px solid #fc99c5;
+}
+
+.footer .newsletter .news-button {
+  border-radius: 0px 15px 15px 0px;
+  background: #fc99c5;
+  color: #fff;
+  border: 1px solid #fc99c5;
+  padding: 10px;
+  max-height: 45px;
+  outline: none;
+  transition: ease-in-out 0.5s;
+}
+
+.footer .newsletter .news-button:hover,
+.footer .contact .news-button:hover {
+  background: #B92454;
+}
+
+.footer .contact .news-button {
+  border-radius: 15px;
+  background: #fc99c5;
+  color: #fff;
+  border: 1px solid #fc99c5;
+  padding: 10px;
+  outline: none;
+  margin: 10px 0px;
+  transition: ease-in-out 0.5s;
+}
+
+.footer .contact input[type=email],
+.footer .contact textarea {
+  border-radius: 15px;
+  padding: 10px;
+  outline: none;
+  margin: 10px 0px;
+  border: 1px solid #fc99c5;
+}
+
+.footer .container-fluid {
+  background: #6F6C67;
+}
+
+.footer .groovy {
+  color: #8b0000;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.invalid-feedback {
+  display: block !important;
+}
+
+.at-share-btn {
+  outline: none;
+}
+
+/**********************************************************************************************
+****************************END FOOTER ******************************
+**********************************************************************************************/
 
 /**********************************************************************************************
 **************************** BROWSER SCROLLBAR STYLE ******************************
@@ -24294,12 +24447,16 @@ a.text-dark:focus {
 input[type=range] {
   -webkit-appearance: none;
   width: calc(100% - 60px);
+  outline: none;
+  border: none;
+  background: transparent;
 }
 
 input[type=range]:focus,
 .range-box .form-control:focus {
   outline: none;
-  border-color: #ced4da;
+  border: none;
+  background: transparent;
   box-shadow: none;
 }
 
@@ -24439,6 +24596,35 @@ input[type=range]:focus::-ms-fill-upper {
   cursor: pointer;
 }
 
+.filter_category {
+  font-size: 18px;
+  font-weight: bold;
+  color: #FC8DAF !important;
+  margin-right: 20px;
+  margin-left: 20px;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.active-border-top::before {
+  content: "";
+  display: block;
+  margin: 0 auto;
+  background: #fc8daf;
+  color: #FC8DAF !important;
+  width: 50px !important;
+  height: 3px !important;
+}
+
+.filter_category img {
+  transition: all 0.5s ease-in-out;
+}
+
+.filter_category:hover img {
+  -webkit-transform: rotate(-30deg);
+          transform: rotate(-30deg);
+}
+
 .flip-enter-active {
   -webkit-animation: in 0.5s ease-in-out forwards;
           animation: in 0.5s ease-in-out forwards;
@@ -24495,6 +24681,42 @@ input[type=range]:focus::-ms-fill-upper {
     -webkit-transform: rotateY(0deg);
             transform: rotateY(0deg);
   }
+}
+
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s;
+}
+
+.list-enter,
+.list-leave-to {
+  opacity: 0;
+  -webkit-transform: translateY(30px);
+          transform: translateY(30px);
+}
+
+.fade-enter-active {
+  transition: all 1s;
+}
+
+.fade-leave-active {
+  transition: all 0.2s;
+}
+
+.fade-leave-to {
+  -webkit-transform: translate(-100%);
+          transform: translate(-100%);
+  opacity: 0;
+}
+
+.fade-enter {
+  -webkit-transform: translate(100%);
+          transform: translate(100%);
 }
 
 /*!

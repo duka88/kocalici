@@ -35,59 +35,107 @@ class RecipesController extends Controller
         return view('recipes.index')->with('recipes', Recipe::all())->with('tags', Tag::all());
     }
 
- 
-   
-    public function destroy($id)
-    {
-
-      $recipe = Recipe::withTrashed()->where('id', $id)->firstOrFail();
+    public function delete($id){
+      
+       $recipe = Recipe::withTrashed()->where('id', $id)->firstOrFail();
 
       if($recipe->trashed()){
         $recipe->deleteImage();
         $recipe->forceDelete();
-        session()->flash('success', 'Recipe is trashed');
+       
       } else{ 
         $recipe->delete();
-        session()->flash('success', 'Recipe is trashed');
+        
        }
 
-        
+    }
+   
+    public function restore($id){
+          
 
-        return redirect(route('recipe.index'));
+        $recipe = Recipe::onlyTrashed()->findOrFail($id)->restore();
+
+         return Response('restored');
 
     }
 
     public function single($id){
          $recipe = Recipe::findOrFail($id);
 
-        return new SingleRecipeResources($recipe);
+        return Rsponse($recipe);
     }
 
-    public function edit_recipe($id){
+    public function edit_recipe(UpdateRecipeRequest $request){    
 
-        $recipe = Recipe::findOrFail($id);
+   
+      $recipe = Recipe::findOrFail($request->id);
+    
+      if($request->image['image']){
+       $imageName = Helper::uploadImageSize($request->image['image'], $request->image['name']);
+      }else{
+        $imageName = $recipe->image;
+      }
+     
+      $category = Category::where('name', $request->category)->first();
 
-        return Response($recipe);
+        $recipe->update([
+           'title' =>$request->title,
+           'slug' => str_slug($request->title),
+           'description' => $request->description,
+           'content' => $request->content,
+           'time' => $request->time,
+           'servings' => $request->servings,
+           'dificulty' => $request->dificulty, 
+           'image' => $imageName,                                 
+           'category_id' => $category->id,
+        ]);
+       
+      foreach($request->tags['tags'] as $tag){
+            $tag = Tag::firstOrCreate([
+                    'name' => $tag
+                ]);
+             }
+
+
+      $tadsId = Tag::whereIn('name',$request->tags['tags'])
+                  ->pluck('id');
+            
+            $sync_data = [];
+
+        for($i = 0; $i < count($tadsId); $i++){
+            
+            $sync_data[$tadsId[$i]] = ['amount' => $request->tags['amount'][$i]];
+            }
+      
+       $n = 0;
+      foreach($request->gallery as $img){
+        $n++;
+        echo $n;
+        if($n != 1){
+          if($img['id'] == ''  && $img['image'] != ''){
+
+             $galleryImage = Helper::uploadImageSize($img['image'], $img['name']); 
+
+             $recipe->galleries()->create(['image' => $galleryImage]);
+          }elseif($img['id'] != '' && $img['image'] != ''){
+             $gallery = Gallery::findOrFail($img['id']);
+
+             $galleryImage = Helper::uploadImageSize($img['image'], $img['name']);
+              $gallery->update(['image' => $galleryImage]);   
+          }
+        }
+
+      }       
+
+      $recipe->tags()->sync($sync_data);  
+
+        return Response($recipe);   
+      
     }
 
-    public function trashed(){
+    
 
-        $trashed = Recipe::onlyTrashed()->get();
-
-        return view('recipes.index')->withRecipes($trashed); ///ja isto kao >with('recipes',$trashed)
-    }
-
-    public function restore($id){
-
-        $recipe = Recipe::withTrashed()->where('id' , $id)->firstOrFail();  
-
-        $recipe->restore();
-
-        session()->flash('success', 'Post restored');
-
-        return redirect()->back();
-    }
-
+  
     public function category($category, $order, $direction){
          
       $recipes = Recipe::searchCategory($category, $order, $direction);
@@ -95,10 +143,11 @@ class RecipesController extends Controller
         return RecipeResources::collection($recipes);
     }
    
-   public function user_recipe($order, $direction){
+   public function user_recipe($order, $direction, $search){
+     
 
-         $recipes = Recipe::user_recipes_order($order, $direction);
-
+         $recipes = Recipe::user_recipes_order($order, $direction, $search);
+          
           return UsersRecipeResources::collection($recipes);
 
    }
@@ -164,7 +213,7 @@ class RecipesController extends Controller
               $recipe->tags()->sync($sync_data);
 
 
-             return Response($request);
+             return Response($recipe);
     }
 
     public function ingredients($id){
@@ -181,5 +230,20 @@ class RecipesController extends Controller
        return RecipeResources::collection($recipes);
    
     }
+
+    public function all_recipe( $order, $direction, $search){
+
+       $recipes = Recipe::all_recipes( $order, $direction, $search);
+
+       return UsersRecipeResources::collection($recipes);    
+
+      }
+   public function trash( $order, $direction, $search){
+
+       $recipes = Recipe::trash( $order, $direction, $search);
+
+       return UsersRecipeResources::collection($recipes);    
+
+      }
        
 }

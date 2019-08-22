@@ -1,7 +1,14 @@
 <template>
     <div class="container">
         <div class="row justify-content-center">
-            <div v-for="recipe in recipes" :key="recipe.id" class="col-md-4" >             
+            <div v-for="recipe in recipes" :key="recipe.id" class="col-md-4" > 
+
+
+               <p v-for='tag in recipe.tags'>
+                 {{tag.name}}
+               </p>
+
+
               <div class="card my-card">
                  <img :src="`/img/MD/${recipe.image}`" width="480px" height="300">
                 <div class="card-body">
@@ -56,7 +63,7 @@
         },
         methods: {
             loadTags(){
-                axios.get('api/fridge')
+                axios.get('/api/fridge')
                       .then(({data}) =>{
                         this.tags = data.data
                       })
@@ -66,8 +73,8 @@
             },
             searchedRecipes(page_url){
              
-               let result = JSON.stringify(this.searchRecipes);
-                 axios.get(`api/fridged/?tag=${result}`)
+             
+                 axios.get(`/api/fridged?tag=${this.searchRecipes}`)
                
                  .then(({data}) => {
                     this.recipes = data.data;                                   

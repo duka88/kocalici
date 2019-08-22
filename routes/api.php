@@ -42,8 +42,7 @@ Route::get('fridged', 'FridgeController@search');
 
 
 
-Route::get('comments/{recipe}', 'ScoreController@load');
-Route::get('rating/{recipe}/{user}', 'ScoreController@show');
+
 Route::get('users_comments/{id}','ScoreController@users_comments' );
 
 

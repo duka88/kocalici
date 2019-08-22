@@ -8,7 +8,7 @@
 @section('content')
     
 
-   <div class="container mt-5" id="app">
+   <div class="container mt-5" >
     <div class="row">
       <div class="col-6 single_recipe_info_text px-5 d-flex justify-content-center flex-column"> 
           <div class="row  flex-column">
@@ -42,8 +42,9 @@
               
             </div>
             <div class="row align-items-center mt-4">
-               <div class="col-12"> 
+               <div class="col-12 d-flex justify-content-between"> 
                 <a href="#recipe" class="large_button" >Read Recipe</a>
+                <div class="addthis_inline_share_toolbox_ky0w"></div>
                </div>
             </div>
       </div>
@@ -67,7 +68,7 @@
         
       <div class="row" id="comments">
         <div class="col-12">
-          <score-component @Auth  :user_id={{auth()->user()->id}}  @endauth :recipe_id={{$recipe->id}}></score-component>
+          <score-component :recipe_id={{$recipe->id}}></score-component>
         </div>
       </div>
    
@@ -82,7 +83,7 @@
       @foreach($related as $recipe)    
         <div class="col-2">
           <div class="single_recipe_img_container" >
-            <a href="{{route('recipes.show', $recipe->id)}}"><img class="single_recipe_img related" src="{{asset('/img/S/' . $recipe->image)}}" width="150px" height="150px">
+            <a href="{{route('recipes.show', $recipe->slug)}}"><img class="single_recipe_img related" src="{{asset('/img/S/' . $recipe->image)}}" width="150px" height="150px">
           </div></a>
         </div>  
      @endforeach
@@ -90,13 +91,8 @@
 
       
     </div>
-   </div>
-
-      </div>
-    </div>    
-   
+  
 
 
-
-    </main>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5cab6d9dd7c20eb6"></script>
 @endsection

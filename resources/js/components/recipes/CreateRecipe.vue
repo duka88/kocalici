@@ -212,9 +212,23 @@
                 )
                 .then(({data}) => {                     
                      let recipe_id = data.id;
+                     toast.fire({
+                          type: 'success',
+                          title: 'Recipe created successfully'
+                        })
 
                 })
-                 .catch(errors => console.log(errors));
+                 .catch((error) => {
+                   if (error.response) {
+                        toast.fire({
+                          type: 'error',
+                          title: error.response.data.message
+                        })
+                      
+                
+                 
+                  } 
+                } );
             },
             addAmount(){
                this.tagsArray.amount.push(this.currentAmount);

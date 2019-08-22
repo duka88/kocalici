@@ -62,6 +62,8 @@
        
        </div>  
       </div>
+  {{session('status')}}
+
     </main>
 
 @endsection
