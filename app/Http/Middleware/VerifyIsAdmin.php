@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
 class VerifyIsAdmin 
 {
@@ -17,7 +18,7 @@ class VerifyIsAdmin
     {   
        if(!auth()->user()->isAdmin()){
 
-         return redirect(route('home'));
+         return redirect()->back();
        }
 
         return $next($request);

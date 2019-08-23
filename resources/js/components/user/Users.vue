@@ -115,27 +115,27 @@
         },
         methods: {
             loadUsers(){
-                axios.get('/api/users')
+                axios.get('/users')
                      .then(({data})=>{
 
                         this.users = data;
                      })
             },
               getResults(page = 1) {
-                     axios.get('/api/users?page=' + page)
+                     axios.get('/users?page=' + page)
                            .then(data => {
                              this.users = data.data;
                       });
               },
             createUser(){
                 let vm = this;
-                this.form.post('/api/users')
+                this.form.post('/users')
                      .then(()=>{
                        toast.fire({
                             type: 'success',
                             title: 'User created successfully'
                            })
-                       $('#addNew').modal('hide');
+                       $('#addNew').modal('hide')
                         vm.loadUsers();
                        })
                       .catch((error) => {
@@ -149,7 +149,7 @@
             },
             updateUser(){
                 let vm = this;
-                this.form.put(`/api/users/${this.form.id}`)
+                this.form.put(`/users/${this.form.id}`)
                          .then(() =>{
                           toast.fire({
                             type: 'success',
@@ -181,14 +181,15 @@
                     }).then((result) => {
                      if (result.value) {
 
-                     axios.delete(`/api/users/${id}`)
+                     axios.delete(`/users/${id}`)
                        .then(()=>{
+
                          toast.fire(
                               'Deleted!',
                               'User has been deleted.',
                               'success'
-                              );
-                         vm.loadUsers();                               
+                              )
+                           this.loadUsers();                             
                        }) 
                           
                     }

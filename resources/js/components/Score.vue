@@ -1,6 +1,6 @@
 <template>
         <div class="rate-recipe">
-              <form @submit.prevent="rateRecipe" v-if="rate" >
+              <form @submit.prevent="rateRecipe" v-if="rate && $gate.getAuth()" >
                 <div class="form-group d-flex align-items-center"> 
                                   
                     <input 
@@ -30,7 +30,7 @@
                   </div>
                   <div class="comment-text" v-html="comment.comment">
                   </div>
-                       <a @click="showReply = comment.id" v-if="showReply != comment.id" class="reply ml-3"><i class="fas  fa-reply mr-2"></i>Reply</a>
+                       <a @click="showReply = comment.id" v-if="showReply != comment.id && $gate.getAuth()" class="reply ml-3"><i class="fas  fa-reply mr-2"></i>Reply</a>
                    
                    <!-----------Reply------------->
 
@@ -59,7 +59,7 @@
                      
                  
                     <!-----------Reply------------->
-                     <form @submit.prevent="replyCreate(comment.id)" v-if="showReply == comment.id" >
+                     <form  @submit.prevent="replyCreate(comment.id)" v-if="showReply == comment.id && $gate.getAuth()" >
                      <div class="form-gropup mb-4">    
                        <textarea v-model="reply" class="form-control" id="exampleFormControlTextarea1" rows="10" cols="30"></textarea>
                        </div> 

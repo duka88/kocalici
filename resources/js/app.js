@@ -13,7 +13,7 @@ import {store} from './store';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import {Form , HasError, AlertError} from 'vform';
 import Gate from "./gate";
-
+import VueRecaptcha from 'vue-recaptcha';
 
 
 
@@ -37,6 +37,8 @@ const profile = Vue.component('profile-component', require('./components/user/Pr
 const login = Vue.component('login-component', require('./components/Login.vue').default);
 const trash = Vue.component('create-recipe-component', require('./components/recipes/Trash.vue').default);
 
+
+Vue.component('VueRecaptcha', VueRecaptcha);
 Vue.component('VuexRecipe', require('./components/VuexRecipe.vue').default);
 Vue.component('footer-component', require('./components/Footer.vue').default)
 Vue.component('recipes-component', require('./components/Recipes.vue').default);
@@ -51,24 +53,43 @@ Vue.component('edit-recipe-component', require('./components/recipes/EditRecipe.
 
 const routes = [
   { path: '/home', redirect: '/profile'},
-  { path: '/categories', component: categories},
-  { path: '/trash', component: trash},
-  { path: '/all-recipe', component: allRecipe},
-  { path: '/get-comments', component: comments},
+  { path: '/categories', component: categories , meta: { isAdmnin: true} },
+  { path: '/trash', component: trash, meta: { isAdmnin: true} },
+  { path: '/all-recipe', component: allRecipe, meta: { isAdmnin: true} },
+  { path: '/get-comments', component: comments, meta: { isAdmnin: true} },
  
-  { path: '/add-recipe', component: addRecipe},
-  { path: '/users', component: users},
-  { path: '/profile', component: profile},
+  { path: '/add-recipe', component: addRecipe, meta: { isAdmnin: true} },
+  { path: '/users', component: users, meta: { isAdmnin: true} },
+  { path: '/profile', component: profile, meta: { isAdmnin: true} },
   { path: '/login', component: login},
   { path: '/score', component:  require('./components/Score.vue').default}
 ]
 
 const router = new VueRouter({
+   base: '/home',
    mode: 'history',
    
    routes // short for `routes: routes`
 });
+router.beforeEach((to, from, next) => {
+  // you could define your own authentication logic with token
+ 
 
+  // check route meta if it requires auth or not
+  if(to.matched.some(record => record.meta.isAdmnin)) {
+    if (window.user.role !== 'admin') {
+     
+          window.location = '/';
+      
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
+export default router
 
 ////////Alert////////////
 import swal from 'sweetalert2';
@@ -109,17 +130,16 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
     store,
-
+  
     router,
     data:{
-      overlay: false  
+        
     },
-    methods:{
-      overlayFn(value){
-         console.log(value);
-          this.overlay = value;   
-      }
-    }
+    computed: {           
+           overlay(){
+              return this.$store.state.overlay;
+           } 
   
+    }
    
 });

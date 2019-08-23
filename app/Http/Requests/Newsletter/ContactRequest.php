@@ -27,6 +27,7 @@ class ContactRequest extends FormRequest
           
            'massege' => 'required|max:1000',
            'email' => 'email|required|max:255',
+           'recaptcha' => 'required'
         
         ];
     }

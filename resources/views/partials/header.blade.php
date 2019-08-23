@@ -6,7 +6,9 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+  
+    <script src='//google.com/recaptcha/api.js'></script>
+    
 
     <title>@yield('title')</title>
 
@@ -18,31 +20,67 @@
   </head>
 
   <body>
-   <div id="app">
+   <div id="app" :class="{'overlay-active': overlay}">
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light navbar-stick-dark" data-navbar="sticky">
+    <nav class="navbar navbar-expand-lg pt-0 navbar-light navbar-stick-dark" data-navbar="sticky"  >
       <div class="container">
+        <div class="row justify-content-between align-items-center w-100">
 
-        <div class="navbar-left">
-          <button class="navbar-toggler" type="button">&#9776;</button>
-           <a class="navbar-brand" href="{{route('welcome')}}">
-             <img src="{{asset('img/logo.jpg')}}" alt="Logo" class="brand-image img-circle elevation-3"
-             style="opacity: .8">
-             <span class="brand-text font-weight-light  logo-text">Cookie</span>
-           </a>
-        </div>
+            <div class="col-2">         
+               <a class="navbar-brand d-flex align-items-center" href="{{route('welcome')}}">
+                 <img src="{{asset('img/logo.jpg')}}" alt="Logo" class="logo-img img-circle elevation-3"
+                 style="opacity: .8">
+                 <span class="brand-text font-weight-light ml-1 logo-text">Cookie</span>
+               </a>
+            </div>
 
-        <section class="navbar-mobile">
-          <span class="navbar-divider d-mobile-none"></span>
+            <div class="col-10 d-flex  justify-content-end">
+               <div class="col-4 d-flex align-items-center  justify-content-end">
+                 <div class="row">
+                   <div class="col-12 d-flex py-2  justify-content-between login-container">
+                          <p class="login m-0 p-0">Contact Us</p>
+                          <p class="m-0"><a href="{{route('home')}}" class="login m-0 p-0" style="text-decoration: none;">Home</a></p>
+                         @auth 
+                           <a class="nav-link login p-0" href="{{ route('logout') }}"
 
-          <ul class="nav nav-navbar">
-          
+                                          onclick="event.preventDefault();
+                                           document.getElementById('logout-form').submit();">
+                                       
+                                          Logout
+                                       </a>
 
-          </ul>
-        </section>
-        <login-component></login-component>  
-        <search-component></search-component>  
+                          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                    @csrf
+                            </form>
+                         @else
+                           <login-component></login-component>
+                           
+                         @endauth 
+                         
+                   </div>
+
+
+                    <div class="col-12 d-flex mt-2 px-0 justify-content-between">
+                        <div class="addthis_inline_share_toolbox"></div>
+                        <search-component></search-component> 
+                   </div>
+                 </div>   
+             
+              </div>  
+              
+            </div>
+
+
+
+          </div> 
 
       </div>
     </nav>
+
+
+
+ 
+
+
+    

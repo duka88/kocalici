@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
 
   state:{
+     overlay: '',
      category: '',
   	 search: '',
   	 recipes: {},
@@ -24,6 +25,9 @@ export const store = new Vuex.Store({
   },
 
   mutations:{
+     toggleOverlay: (state, payload)=>{
+         state.overlay = payload;
+     },
      searchIt: (state, data)=>{
        	state.recipes = data.data;
         state.search = data.payLoad.search;

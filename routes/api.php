@@ -18,13 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post('login', 'AuthController@login');
-Route::get('users', 'UsersController@index');
-Route::post('users','UsersController@create');
-Route::put('users/{id}','UsersController@update');
-Route::delete('users/{id}','UsersController@delete');
-Route::get('profile/{id}', 'ProfileController@index');
-Route::put('profile','ProfileController@update');
+
 	
 
 
@@ -57,7 +51,7 @@ Route::get('category', 'CategoriesController@show');
 Route::get('searchTag', 'TagsController@search');
 
 
-Route::post('like', 'LikeController@create');
+
 Route::get('like/{recipe}', 'LikeController@index');
 Route::get('myLike/{recipe}/{user}', 'LikeController@single');
 Route::get('my-likes/{user}','LikeController@user_likes');
@@ -65,8 +59,7 @@ Route::get('my-likes/{user}','LikeController@user_likes');
 
 
  
-Route::post('/login', 'AuthController@login');
-Route::post('/logout', 'AuthController@logout');
+
 
 
 
