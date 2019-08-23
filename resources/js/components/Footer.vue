@@ -39,7 +39,12 @@
 
                       <textarea cols="30" rows="5" v-model='formContact.massege' type="text" name="massege" placeholder="massege" :class="{'is-invalid': formContact.errors.has('massege')}"></textarea>
                        <has-error :form="formContact" field="massege"></has-error>
-                    
+                       <vue-recaptcha 
+                                        ref="recaptcha"
+                                        @verify="onVerify"
+                                        sitekey="6LchUrQUAAAAAF-l9d4vHtX2-hf-9JBBtII8m1Rg">
+                                          
+                        </vue-recaptcha>
                    
                     <button type="submit" class="news-button">Submit</button>
                 </form>
@@ -57,7 +62,9 @@
 </template>
 
 <script>
+
     export default {
+     
         data(){
            return{
              formNewsletter: new Form({
@@ -65,11 +72,15 @@
                }),
              formContact: new Form({
                massege: '',
-               email: ''
+               email: '',
+               recaptcha: ''
                })
            }     
         },
         methods:{
+           onVerify(response) {
+               this.formContact.recaptcha = response;
+            },
            newsletterSend(){
               this.formNewsletter.post('/newslleter')
                    .then(({data})=>{
@@ -96,6 +107,7 @@
                             title: 'Message sent successfully'
                         })
                         this.formContact.reset();
+                        this.$refs.recaptcha.reset();
                      })
                      .catch((error) => {
                                if (error.response) {

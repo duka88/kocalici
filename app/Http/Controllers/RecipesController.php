@@ -155,6 +155,8 @@ class RecipesController extends Controller
 
 
     public function stored(RecipeApiRequest $request){
+
+       if(auth()->user()->role == 'admin'){
            
           $user_id = auth()->user()->id;
 
@@ -212,8 +214,10 @@ class RecipesController extends Controller
 
               $recipe->tags()->sync($sync_data);
 
+              return Response($recipe); 
+         }
 
-             return Response($recipe);
+            return Response('anuturise');
     }
 
     public function ingredients($id){

@@ -17,9 +17,10 @@ class NewsletterController extends Controller
      */
     public function contact(ContactRequest $request)
     {
-
+      
         
-      Mail::to('test@mail.com')->send(new ContactFormMail($request));
+         Mail::to('test@mail.com')->send(new ContactFormMail($request));
+      
     }
 
     /**

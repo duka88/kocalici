@@ -23811,6 +23811,56 @@ a.text-dark:focus {
 }
 
 /**********************************************************************************************
+****************************HEADER ******************************
+**********************************************************************************************/
+
+.login-container .login {
+  font-family: "Dancing Script", cursive;
+  font-size: 18px;
+  color: #000;
+  cursor: pointer;
+}
+
+.login-container {
+  background: #E2E2E1;
+}
+
+.navbar input[type=text] {
+  border-radius: 15px 0px 0px 15px;
+  padding: 5px 10px;
+  outline: none;
+  max-height: 30px;
+  border: 1px solid #fc99c5;
+  max-width: 120px;
+}
+
+.navbar .news-button {
+  border-radius: 0px 15px 15px 0px;
+  background: #fc99c5;
+  color: #fff;
+  border: 1px solid #fc99c5;
+  padding: 5px 10px;
+  max-height: 30px;
+  outline: none;
+  transition: ease-in-out 0.5s;
+}
+
+#app .navbar .logo-img {
+  height: 50px;
+  width: 50px;
+}
+
+.logo-text {
+  font-family: "Dancing Script", cursive;
+  font-size: 24px;
+  color: #FC99C5;
+}
+
+/**********************************************************************************************
+**************************** HEADER ******************************
+**********************************************************************************************/
+
+/**********************************************************************************************
 **************************** SINGLE RECIPE ******************************
 **********************************************************************************************/
 
@@ -24073,24 +24123,21 @@ a.text-dark:focus {
 **************************** DASHBOARD ******************************
 **********************************************************************************************/
 
-.logo-text {
-  font-family: "Dancing Script", cursive;
-  font-size: 22px;
-  color: #FC99C5;
-}
-
 .router-link-exact-active {
   background-color: #566069;
 }
 
 .overlay {
+  z-index: 999;
   position: fixed;
-  width: 75%;
+  width: 70%;
   height: 75vh;
+  left: 15%;
   top: 10vh;
   margin: 0 auto;
   background: #fff;
   overflow-y: auto;
+  opacity: 1 !important;
 }
 
 .z-index {
@@ -24234,7 +24281,8 @@ a.text-dark:focus {
 }
 
 .footer .newsletter .news-button:hover,
-.footer .contact .news-button:hover {
+.footer .contact .news-button:hover,
+.js-cookie-consent-agree:hover {
   background: #B92454;
 }
 
@@ -24275,6 +24323,29 @@ a.text-dark:focus {
 
 .at-share-btn {
   outline: none;
+}
+
+.js-cookie-consent {
+  position: fixed;
+  background: #FB98C4;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  align-items: center;
+}
+
+.js-cookie-consent-agree {
+  border-radius: 15px;
+  background: #fc99c5;
+  color: #fff;
+  border: 2px solid #B92454;
+  padding: 5px 10px;
+  outline: none;
+  margin: 0px 10px;
+  transition: ease-in-out 0.5s;
 }
 
 /**********************************************************************************************
@@ -24717,6 +24788,16 @@ input[type=range]:focus::-ms-fill-upper {
 .fade-enter {
   -webkit-transform: translate(100%);
           transform: translate(100%);
+}
+
+.search-enter-active,
+.search-leave-active {
+  transition: opacity 0.5s;
+}
+
+.search-enter,
+.search-leave-to {
+  opacity: 0;
 }
 
 /*!

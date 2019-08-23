@@ -1,28 +1,31 @@
 <template>
-  <div class="d-flex justify-content-between w-100">
+  <div class="d-flex justify-content-between">
    <div @keyup.esc="overlayClose">
     <form @submit.prevent="searchIt" class="form-inline ml-3">
       <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" @click="overlayOpen" @keyup="searchRecipe"  v-model="search" type="search" placeholder="Search" aria-label="Search">
+        <input class="" @click="overlayOpen" @keyup="searchRecipe"  v-model="search" type="text" placeholder="Search" aria-label="Search">
         <div class="input-group-append">
-          <button class="btn btn-navbar" >
+          <button class="news-button" >
             <i class="fas fa-search"></i>
           </button>
         </div>
       </div>
     </form>
+   <transition name="search" tag="div" class="row justify-content-center" mode="out-in">  
     <div class="contaier " v-if="overlay">
-       <div class="row overlay">
+      
+       <div class="row overlay"> 
          <div class="col ">
              <p @click="overlayClose" class="close-search text-danger">X</p>
              <VuexRecipe></VuexRecipe>
          </div>
             
        </div> 
-       
+     
     </div>
+   </transition>   
    </div> 
-   
+  
     <ul  v-if="location == 'AdminLTE 3 | Dashboard'" class="navbar-nav ml-auto">
     
       <!-- Messages Dropdown Menu -->
@@ -34,8 +37,8 @@
         <div class="dropdown-menu notification-meny dropdown-menu-lg dropdown-menu-right">
           <a v-for="comment in comments" @click="checked(comment.id)" class="dropdown-item ">
             <!-- Message Start -->
-            <div class="media">
-              <img :src="`/img/XS/${comment.user.profile}`" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+            <div class="media">              
+             <!--<img v-if="comment.user.profile" :src="`/img/XS/${comment.user.profile}`" alt="User Avatar" class="img-size-50 mr-3 img-circle">-->
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   {{comment.recipe.title}}
@@ -113,12 +116,14 @@
            
             overlayOpen(event){
                 this.overlay = true;
-                this.$emit('overlay', true);
+                this.$store.commit( 'toggleOverlay',true);
+               
                 document.documentElement.classList.add('overlay-active');
             },
             overlayClose(){
                 this.overlay = false;
-                this.$emit('overlay', false);
+                this.$store.commit( 'toggleOverlay',false);
+                
                 this.search= '';
                 document.documentElement.classList.remove('overlay-active');
             },
@@ -133,12 +138,7 @@
                   }) 
 
            },
-           loadComments(){
-               axios.get('/new_comments')
-                    .then(({data})=>{
-                       this.comments = data;
-                    }) 
-            },
+           
           
           
             ...mapActions([               

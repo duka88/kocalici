@@ -1,9 +1,9 @@
 <template>
-    <div class="container">
+    <div >
         
           <div class="card-tools d-flex justify-content-start">
                     <a v-if="!$gate.getAuth()" @click="newModal" 
-                      class="filter_search" data-toggle="modal" >Login / Register</a>
+                      class="login" data-toggle="modal" >Login / Register</a>
                    
                 </div>
 
@@ -39,6 +39,13 @@
                               class="form-control" placeholder="password_confirmation" :class="{'is-invalid': form.errors.has('password_confirmation')}">
                               <has-error :form="form" field="password_confirmation"></has-error>
                         </div>
+                          <vue-recaptcha 
+                                        v-if="register"
+                                        ref="recaptcha"
+                                        @verify="onVerify"
+                                        sitekey="6LchUrQUAAAAAF-l9d4vHtX2-hf-9JBBtII8m1Rg">
+                                          
+                        </vue-recaptcha>
                       </div>
                        </form>
                       <div class="modal-footer">
@@ -64,7 +71,8 @@
                     email: '',                   
                     password: '',
                     password_confirmation: '',
-                    name: ''                   
+                    name: '',
+                    recaptcha:''                   
                 }), 
                token: localStorage.getItem('token') || null,
                register: false
@@ -72,11 +80,14 @@
         },
        
         methods: {
+          onVerify(response) {
+               this.form.recaptcha = response;
+            },
              loginUser(){
 
               this.form.post('/login')
                          .then(()=>{
-                            window.location = "/home";
+                             window.location.reload();
                              $('#addNew').modal('hide');
                          })
 
@@ -95,13 +106,27 @@
                 this.form.post('/register')
                          .then(()=>{
                             window.location = "/home";
-                             $('#addNew').modal('hide');
+                            $('#addNew').modal('hide');
+                            toast.fire({
+                            type: 'success',
+                            title: 'Registration successfully'
+                            })
+                            this.$refs.recaptcha.reset();
                          })
+                         .catch((error) => {
+                               if (error.response) {
+                              toast.fire({
+                              type: 'error',
+                              title: error.response.data.message
+                            })               
+                           } 
+                        } );
              },
              newModal(){
                 this.edit = false;
                 this.form.reset();
                 $('#addNew').modal('show');
+                this.$refs.recaptcha.reset();
             }
         },
        

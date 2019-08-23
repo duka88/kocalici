@@ -23,25 +23,28 @@ class LikeController extends Controller
 
     public function create(Request $request){
       
-      $like = Like::find( $request->like);    
-     
-      if(!empty($like)){
+      $like = Like::find( $request->like);  
+      $id = auth()->user()->id;
 
-      	$like->delete();
+  
+          if(!empty($like)){
 
-      	
-      }else{
-             
-         $like = Like::create([
-            'user_id' => $request->user_id,
-            'recipe_id' => $request->recipe_id,
-            'like' => $request->value
-         ]);
+          	$like->delete();
 
-        
-        }
+          	
+          }else{
+                 
+             $like = Like::create([
+                'user_id' => $id,
+                'recipe_id' => $request->recipe_id,
+                'like' => $request->value
+             ]);
 
-      return Response($like);
+            
+            }
+          return Response($like);    
+       
+      
     }
    
 

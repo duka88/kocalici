@@ -34,7 +34,8 @@ class RecipeApiRequest extends FormRequest
             'amount' => 'required|max:255',
              'time' => 'required|integer|max:240',
             'dificulty' => 'required|integer|max:10',
-            'servings' => 'required|integer|max:100'
+            'servings' => 'required|integer|max:100',
+             
         ];
     }
 }

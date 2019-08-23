@@ -119,3 +119,10 @@
   
 }
 
+.search-enter-active, .search-leave-active {
+  transition: opacity .5s;
+  
+}
+.search-enter, .search-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}

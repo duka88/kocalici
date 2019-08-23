@@ -26,7 +26,7 @@
 
            }     
         },
-        props:['recipe_id', 'user_id'],
+        props:['recipe_id'],
         methods: {
               loadGallery(){
                 axios.get(`/api/gallery/${this.recipe_id}`)
@@ -38,17 +38,32 @@
                 },
                 togleLike(){
                   let vm = this;
-                  axios.post('/api/like',{
-                    recipe_id: this.recipe_id,
-                    user_id: this.user_id,
+                  axios.post('/like',{
+                    recipe_id: this.recipe_id,                    
                     value: 1,
-                    like: this.like,
+                    like: this.like,   
                   })
                      .then(({data}) => {
                         vm.loadlikes();
                         vm.myLike();
                                         
-                     }) 
+                     })
+                      .catch((error) => {
+                          if (error.response) {
+                             if(error.response.data.message == "Unauthenticated." ){
+
+                                var massage = 'Must be log-in to like';
+                             }else{
+                                var massage = error.response.data.message;
+                             }
+                         
+
+                              toast.fire({
+                              type: 'error',
+                              title: massage
+                            })               
+                           } 
+                        } ); 
                 },
                 loadlikes(){
                   axios.get(`/api/like/${this.recipe_id}`)

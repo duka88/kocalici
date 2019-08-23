@@ -299,7 +299,7 @@
 
         methods:{
             loadProfile(){
-               axios.get(`/api/profile/${this.$gate.idUser()}`)
+               axios.get(`/profile/${this.$gate.idUser()}`)
                       .then(({data}) =>{
                         this.user = data.data;
                       })

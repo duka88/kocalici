@@ -44,7 +44,7 @@
             <div class="row align-items-center mt-4">
                <div class="col-12 d-flex justify-content-between"> 
                 <a href="#recipe" class="large_button" >Read Recipe</a>
-                <div class="addthis_inline_share_toolbox_ky0w"></div>
+                
                </div>
             </div>
       </div>
@@ -52,7 +52,7 @@
         @foreach($recipe->tags as $tag)
    
        @endforeach
-        <gallery-component  @Auth  :user_id={{auth()->user()->id}} @endauth :recipe_id={{$recipe->id}}></gallery-component>             
+        <gallery-component  :recipe_id={{$recipe->id}}></gallery-component>             
      
       </div>
     </div>
@@ -94,5 +94,4 @@
   
 
 
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5cab6d9dd7c20eb6"></script>
 @endsection
