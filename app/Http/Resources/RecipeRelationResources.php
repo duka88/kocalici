@@ -17,8 +17,8 @@ class RecipeRelationResources extends JsonResource
     public function toArray($request)
     {
 
-    $avg = Score::where('recipe_id', $this->id)->avg('score');
-    $like = Like::where('recipe_id', $this->id)->where('user_id', $this->user->only('id'))->get();
+
+   
          return [
           'time' => $this->time,
           'dificulty' => $this->dificulty,
@@ -26,8 +26,8 @@ class RecipeRelationResources extends JsonResource
           'title' => $this->title,
           'image' => $this->image,         
           'slug' => $this->slug,          
-          'likes' =>  LikeResources::collection($like),
-          'score' => $avg,
+          'likes' =>  LikeResources::collection($this->likes),
+          'score' => $this->scores->avg('score'),
           'user' => $this->user->only('id')
          
         ];

@@ -48,13 +48,18 @@ class LikeController extends Controller
     }
    
 
-   public function single($recipe, $user){
-   	 $like = Like::where('recipe_id', $recipe )->where('user_id',$user)->pluck('id');
+   public function single($recipe){
+
+     $user = auth()->user()->id;
+
+   	 $like = Like::where('recipe_id', $recipe )->where('user_id', $user)->pluck('id');
 
    	  return Response($like);
    }
 
-   public function user_likes($user){
+   public function user_likes(){
+
+     $user = auth()->user()->id;
       
      $like = Like::where('user_id',$user)->latest()->paginate(6);
 

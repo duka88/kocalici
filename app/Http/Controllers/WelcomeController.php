@@ -10,9 +10,10 @@ use App\Recipe;
 class WelcomeController extends Controller
 {
     public function index(){
-
+     
+     $recipes = Recipe::latest()->take(3)->get();
        return view('welcome')
-         ->with('categories', Category::all());
+         ->with('newest', $recipes);
          
           
     }

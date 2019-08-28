@@ -22,8 +22,8 @@ Route::middleware(['admin'])->group(function(){
    Route::put('profile','ProfileController@update');
    Route::get('/home', 'HomeController@index')->name('home');
    
-   Route::post('approved', 'ScoreController@approved');
-   Route::get('notifications', 'ScoreController@notifications');
+  
+  
 
     Route::get('users', 'UsersController@index');
     Route::post('users','UsersController@create');
@@ -47,26 +47,30 @@ Route::middleware(['admin'])->group(function(){
 });
 Route::middleware(['auth'])->group(function(){
 
-	
+	  Route::post('approved', 'ScoreController@approved');
     Route::get('comments', 'ScoreController@allComments');
-    
+    Route::get('my_profile', 'ProfileController@user_profile')->name('my_profile');
+    Route::get('notifications', 'ScoreController@notifications');
        
     Route::post('rating', 'ScoreController@create');
     
     Route::post('raply', 'ScoreController@reply');
+    Route::get('users_comments','ScoreController@users_comments' );
 
-    Route::get('category', 'CategoriesController@show');  
 
-    
+    Route::get('category', 'CategoriesController@show');      
   
    
-    Route::get('profile/{id}', 'ProfileController@index');
+    Route::get('profile', 'ProfileController@index');
     Route::put('profile','ProfileController@update');
 
     
     Route::get('rating/{recipe}', 'ScoreController@show');
     Route::post('like', 'LikeController@create');
+   
 
+    Route::get('myLike/{recipe}', 'LikeController@single');
+    Route::get('my-likes/','LikeController@user_likes');
 
 });
 

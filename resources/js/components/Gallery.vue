@@ -74,7 +74,7 @@
                        })
                 },
               myLike(){
-                  axios.get(`/api/myLike/${this.recipe_id}/${this.user_id}`)
+                  axios.get(`/myLike/${this.recipe_id}`)
                        .then(({data}) =>{
                        
                          this.like = data[0];

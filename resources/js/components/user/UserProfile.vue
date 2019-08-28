@@ -24,9 +24,7 @@
               <p class="text-muted text-center">{{user.role}}</p>
 
               <ul class="list-group list-group-unbordered">
-                <li class="list-group-item">
-                  <b>Posted Recipes</b> <a class="pull-right">{{user.recipes}}</a>
-                </li>
+                
                 <li class="list-group-item">
                   <b>Recipe Book</b> <a class="pull-right">{{user.likes}}</a>
                 </li>
@@ -71,8 +69,7 @@
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="" ><a href="#RecipeBook" @click="loadRecipeBook"  data-toggle="tab" aria-expanded="true"  class="nav-link active" >Recipe Book</a></li>
-              <li class=""><a @click="loadComments" href="#timeline" data-toggle="tab" aria-expanded="true" class="nav-link">Comments</a></li>
-              <li class=""><a href="#activity" @click="loadRecipes"  data-toggle="tab" aria-expanded="false" class="nav-link">Posted Recipes</a></li>
+              <li class=""><a @click="loadComments" href="#timeline" data-toggle="tab" aria-expanded="true" class="nav-link">Comments</a></li>             
               <li class=""><a @click="settings" href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link">Settings</a></li>
             </ul>
             <div class="tab-content">
@@ -141,9 +138,12 @@
                     <div class="timeline-item">
                      
                       <h3 class="timeline-header d-flex justify-content-between align-middle"><a :href="`/recipes/${comment.recipe.slug}`">{{comment.recipe.title}}
-                        </a><p ><span class="font-weight-bold">score</span><i class="fas fa-star"></i> {{comment.score}}</p>
+                        </a><p ><span class="font-weight-bold">score</span><i class="fas fa-star"></i> {{comment.score}}
+                                <span v-if="comment.user_notification == 0"
+                                class="notification" 
+                                @click="checked(comment.id)">remove notification</span></p>
             
-
+    
                         
                       </h3>
                       <div   class="timeline-body" v-html="comment.comment"></div>
@@ -151,19 +151,36 @@
  
                       
                       <div class="timeline-footer">
-                        <input  v-if="commentEdit == comment.id"
-                          v-model="commentForm.score" type="range" step="0.01" name ="score" min="1" max="10" value="5" class="w-25" id="score">
-                           <span class="counter" v-if="commentEdit == comment.id">{{commentForm.score | round}}</span>
-                                   <div class="form-gropup my-4">    
-                              <ckeditor  v-if="commentEdit == comment.id" :editor="editor" v-model="commentForm.comment" :config="editorConfig"></ckeditor>
-                          </div>
-                        
-                       
-                         <a v-if="commentEdit == comment.id" @click="updateComments" class="reply mr-3"><i class="fas fa-check"></i> Done</a>
-                          <a v-else @click="editComments(comment)" class="edit"><i class="fas fa-edit"></i> Edit</a>
+                          <ul v-for="(reply, index) in comment.replies" class="timeline timeline-inverse">
+                              <!-- timeline time label -->
+                              <li class="time-label">
+                                    <span class="bg-red">
+                                      {{reply.time}}
+                                    </span>
+                              </li>
+                              <!-- /.timeline-label -->
+                              <!-- timeline item -->
+                              <li>
+                                <i class="fa fa-comments bg-yellow"></i>
 
-                         <a v-if="commentEdit == comment.id" @click="commentEdit = false" class="cancel">Cancel</a>
-                          <a v-else @click="deleteComment(comment.id)"class="delete"><i class="fas fa-trash-alt"></i> Delete</a>
+                                <div class="timeline-item">
+                                 
+                                  <h3 class="timeline-header d-flex justify-content-between align-middle"><a :href="`/recipes/${reply.recipe.slug}`">{{reply.recipe.title}}
+                                    </a>
+                        
+
+                                    
+                                  </h3>
+                                  <div   class="timeline-body" v-html="reply.comment"></div>
+                    
+                    </div>
+                  </li>
+                  <!-- END timeline item -->
+                  <!-- timeline item --> 
+                </ul>
+                             
+                       
+                      
                         
                       </div>
                     </div>
@@ -231,10 +248,7 @@
               </div>
               <!-- /.tab-pane -->
             
-            <div class="tab-pane mt-4" id="activity">
-           <!-----------Recipes------------>
-              <edit-recipe-component></edit-recipe-component> 
-            </div>
+       
             <!-- /.tab-content -->
           </div>
           <!-- /.nav-tabs-custom -->
@@ -255,17 +269,12 @@
 
 <script>
  import { mapActions } from 'vuex';
- import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
     export default {
 
 
         data(){
-            return{
-                editor: ClassicEditor,                
-                editorConfig: {
-                    toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
-
-                },
+            return{             
                
                 user:{},
                 editProfile: false,
@@ -285,15 +294,8 @@
                                 
                 recipeBook:{},
                 like: '',
-                comments: {},
-                commentForm: new Form({
-                    id: '',
-                    comment: '',
-                    score: ''
-                   
-                }),
-                commentEdit: false,
-                editRecipe: ''
+                
+              
             }
         },
 
@@ -314,9 +316,7 @@
                this.userForm.about = this.user.profile.about;
                this.editProfile = false;
             },
-            loadRecipes(){
-               this.$store.dispatch('loadUsersRecipes');               
-            },
+           
             updateProfile(){
                let vm = this;
                 this.userForm.put(`/profile`)
@@ -359,77 +359,8 @@
             removeImage: function (item) {
               item.image = false; 
                     }, 
-         
-               
-        
-
-            loadComments(){
-              axios.get(`/users_comments`)
-                   .then(({data}) => {
-                    this.comments = data;
-                   })
-            },
    
-
-            paginateComments(page = 1){
-               axios.get(`/users_comments?page=` + page)
-                    .then(data => {
-                       this.comments = data.data;
-                      });
-             
-            },
-            editComments(comment){
-              this.commentEdit = comment.id;
-              this.commentForm.fill(comment);
-            },
-            updateComments(){
-              let vm = this;
-              this.commentForm.put(`/api/update_comment/${this.commentForm.id}`)
-                              .then(()=>{
-                                toast.fire({
-                                  type: 'success',
-                                  title: 'Comment edited successfully'
-                                 })
-                                vm.loadComments();
-                                this.commentEdit = false;
-                              })
-                              .catch((error) => {
-                                if (error.response) {
-                                  toast.fire({
-                                  type: 'error',
-                                  title: error.response.data.message
-                                })               
-                               } 
-                        } );
-            },
-            deleteComment(id){
-                let vm = this;        
-                                                             
-                            
-                 swal.fire({
-                      title: 'Are you sure?',
-                      text: "Comment will be deleted",
-                      type: 'warning',
-                      showCancelButton: true,
-                      confirmButtonColor: '#3085d6',
-                      cancelButtonColor: '#d33',
-                      confirmButtonText: 'Yes, delete it!'
-                    }).then((result) => {
-                     if (result.value) {
-
-                     axios.delete(`/api/comment/${id}`)
-                       .then(()=>{
-                         toast.fire(
-                              'Deleted!',
-                              'Comment has been deleted.',
-                              'success'
-                              );
-                          vm.loadComments();                              
-                       }) 
-                          
-                    }
-                 })        
-            },
+            
             loadRecipeBook(){
                 axios.get(`/my-likes`)
                       .then(({data}) =>{
@@ -452,8 +383,29 @@
                                         
                      }) 
                 },
+        checked(id){
+
+             this.$store.dispatch('approved', id );
+
+          },         
+        ...mapActions([                  
+                'loadComments',
+                'paginateComments',
+                'approved',
+                'commentDelete',
+                'reply'
+              ]),
                
       },
+       computed: {
+          
+        comments(){
+              return this.$store.state.comments;
+           }
+        },
+        created(){            
+            this.$store.dispatch('loadComments'); 
+        },
       filters: {
          round: function(value){
            return Math.round(value);
@@ -476,3 +428,4 @@
         }
     }
 </script>
+ 

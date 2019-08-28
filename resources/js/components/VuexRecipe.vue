@@ -47,6 +47,11 @@
                      </div> 
 
         </div>
+        <div class="d-flex justify-content-center mt-5" v-if="recipes.data.length == 0">
+          <p class="mt-5 display-4">
+            No search result
+          </p>
+        </div>
          <nav aria-label="Page navigation example">
         
         <pagination :data="recipes"  @pagination-change-page="getResult"></pagination>

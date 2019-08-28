@@ -17,7 +17,8 @@
          <transition-group name="list" tag="div" mode="out-in" > 
              <div class="col-12 comment "  v-for="(comment,index) in comments" :key="comment.id"  v-if="!comment.comment_parent">
                   <div class="avatar">
-                    <img src="/img/XS/300px-No_image_available.svg.png" alt="">
+                    <img v-if="comment.user.profile" :src="`/img/XS/${comment.user.profile}`" alt="">
+                    <img v-else src="/img/XS/300px-No_image_available.svg.png" alt="">
                   </div>
                   <div class="comment-content">
                     <div class="comment-name">
@@ -40,7 +41,9 @@
                          v-if=" index < show(comment.id)"
                           :key="reply" >
                         <div class="avatar">
-                          <img src="/img/XS/300px-No_image_available.svg.png" alt="">
+                          <img v-if="reply.user.profile" :src="`/img/XS/${reply.user.profile}`" alt="">
+                         
+                          <img v-else src="/img/XS/300px-No_image_available.svg.png" alt="">
                        
                         </div>
                         <div class="comment-content"> 
@@ -189,9 +192,10 @@
                         'success'
                               )
                     this.comments[index].replies.push({
-                        comment: this.reply,
+                        comment: data.data.comment,
                         user:{
-                          name: this.$gate.getName()
+                          name: data.data.user.name,
+                          profile: data.data.user.profile,
                         }
                       }); 
                     this.showReply = false; 

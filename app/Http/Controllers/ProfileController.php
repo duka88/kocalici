@@ -12,7 +12,9 @@ use Helper;
 
 class ProfileController extends Controller
 {
-    public function index($id){
+    public function index(){
+
+       $id= auth()->user()->id;
        
        $profile = User::findOrFail($id);
 
@@ -45,5 +47,10 @@ class ProfileController extends Controller
 
          return new ProfileResources($user);
 
+    }
+
+    public function user_profile(){
+
+        return view('profile');
     }
 }
