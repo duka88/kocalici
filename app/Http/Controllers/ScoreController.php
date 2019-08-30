@@ -52,14 +52,14 @@ class ScoreController extends Controller
               'comment' => $request->comment        
             ]);
 
-        return Response('Replayed successfily');
+        return new ScoreResources($score);
   }
 
    public function show($recipe){
       $user = auth()->user()->id;
        
       $score=[];
-        if(isset($user)){
+        if($user){
         	$user = Score::where('user_id', $user)->where('recipe_id', $recipe)->count();
            if(empty($user)){
              array_push($score, true);
@@ -85,11 +85,13 @@ class ScoreController extends Controller
       
    }
 
-   public function users_comments($id){
+   public function users_comments(){
+
+       $id = auth()->user()->id;
 
        $score = Score::where('user_id', $id)->latest()->paginate(10);
-
-      return ScoreResources::collection($score);
+ 
+       return ScoreResources::collection($score);
 
      
    }
@@ -132,7 +134,16 @@ class ScoreController extends Controller
           
         $comment = Score::findOrFail($request->id);
 
-         $comment->update(['admin_notification' => '1']);
+        $user = auth()->user()->role;
+
+        if($user == 'admin'){
+ 
+          $comment->update(['admin_notification' => '1']);
+
+        }else{
+
+           $comment->update(['user_notification' => '1']);
+        }  
 
          return Response($comment);
 
@@ -143,10 +154,11 @@ class ScoreController extends Controller
 
          if(auth()->user()->role == 'admin'){
 
-            $comments = Score::orderBy('admin_notification' , 'asc')->latest()->paginate(10);
+            $comments = Score::orderBy('admin_notification' , 'asc')->paginate(10);
          }else{
+            $id = auth()->user()->id;
               
-            $comments = Score::orderBy('user_notification' , 'asc')->latest()->paginate(10);
+            $comments = Score::where('user_id', $id )->orderBy('user_notification' , 'asc')->paginate(10);
 
          }
          
@@ -161,8 +173,9 @@ class ScoreController extends Controller
 
             $comments = Score::where('admin_notification' , 1)->latest()->paginate(5);
          }else{
-              
-            $comments = Score::where('user_notification' , 1)->latest()->paginate(5);
+            $user = auth()->user()->id; 
+
+            $comments = Score::where('user_id', $user)->where('user_notification' , 1)->latest()->paginate(5);
 
          }
          

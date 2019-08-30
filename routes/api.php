@@ -37,7 +37,7 @@ Route::get('fridged', 'FridgeController@search');
 
 
 
-Route::get('users_comments/{id}','ScoreController@users_comments' );
+
 
 
 
@@ -53,8 +53,7 @@ Route::get('searchTag', 'TagsController@search');
 
 
 Route::get('like/{recipe}', 'LikeController@index');
-Route::get('myLike/{recipe}/{user}', 'LikeController@single');
-Route::get('my-likes/{user}','LikeController@user_likes');
+
 
 
 

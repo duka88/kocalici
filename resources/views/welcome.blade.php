@@ -8,79 +8,90 @@
 
 @section('content')
    <main class="main-content">
-   <div class="container-fluid">
+<div class="container-fluid  mt-5 ">
 
+<div id="carouselExampleIndicators" class="carousel slide py-5 " data-ride="carousel">
 
-     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-              <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-              <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-              <div class="carousel-item active ">
-                <div class="row align-items-center">
-                  <div class="col-6 ">
-                    <h2>Lorem Ipsum is simply </h2>
-                    <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem 
-                  </p></div>
-                  <div class="col-6">
-                    <img class="d-block w-100" src="{{asset('img/MD/cake1.jpg')}}"   height="600px" alt="Second slide">
-                  </div>
-                </div>
-              </div>
-              <div class="carousel-item  ">
+  <ol class="carousel-indicators">
 
-                   <div class="row align-items-center">
-                  <div class="col-6 ">
-                    <h2>Lorem Ipsum is simply </h2>
-                    <p class="">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem 
-                  </p></div>
-                  <div class="col-6">
-                    <img class="d-block w-100" src="{{asset('img/MD/cake2.jpg')}}"   height="600px" alt="Second slide">
-                  </div>
-                </div>
-                
-              </div>
-              <div class="carousel-item">
-                <div class="row align-items-center">
-                  <div class="col-6 ">
-                    <h2>Lorem Ipsum is simply </h2>
-                    <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem 
-                  </p></div>
-                  <div class="col-6">
-                    <img class="d-block w-100" src="{{asset('img/MD/cake3.jpg')}}"   height="600px" alt="Second slide">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
 
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
 
-          </div>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
 
+  </ol>
 
+  <div class=" carousel-inner py-5">
 
+   @foreach($newest as $key=>$recipe)
+   
+    <div class="carousel-item @if($key == 0) {{'active'}} @endif">
 
-   </div>  
-        <div class="container-fluid">
-          <div class="row" >
+      <div class="row col-12 col-md-12 col-lg-10 mx-auto align-items-center flex-wrap">
 
+        <div class="col-12 col-md-12 col-lg-4 text-center px-2 slide-text-height">
+
+          <h1 class="lh-1">{{$recipe->title}}</h1>
+              
+
+          <p class="mb-5 m-4">{{$recipe->description}}</p>
+
+          <a  href="{{route('recipes.show', $recipe->slug)}}" class="large_button carusel-button">Procitaj Recept</a>
+
+        </div>
+
+        <div class="col-12 col-md-12 col-lg-8">
+
+          <img src='{{asset("img/MD/$recipe->image")}}' alt="" class="featured-img" width="920px" height="600px">
+
+        </div>
+
+      </div>
+
+    </div>
+ @endforeach
+    <!-- slide 1 -->
+
+  
+
+   
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+
+           <i class="fas fa-chevron-left"></i>
+
+        </a>
+
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+
+          
+           <i class="fas fa-chevron-right"></i>
+        </a>
+
+          <!-- -->
+
+        </div>
+
+      </div>
+
+        
+
+  </div>
+        <div  class="container-fluid">
+          <div class="row align-items-center" >
+            <div class="col-9">
               <recipes-component ></recipes-component>  
-       
+            </div>
+            <div class="col-3">
+               @include('partials.sidebar') 
+            </div>
        </div>  
       </div>
-  {{session('status')}}
+
 
     </main>
 

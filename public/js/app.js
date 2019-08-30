@@ -2507,7 +2507,7 @@ __webpack_require__.r(__webpack_exports__);
     myLike: function myLike() {
       var _this3 = this;
 
-      axios.get("/api/myLike/".concat(this.recipe_id, "/").concat(this.user_id)).then(function (_ref4) {
+      axios.get("/myLike/".concat(this.recipe_id)).then(function (_ref4) {
         var data = _ref4.data;
         _this3.like = data[0];
       });
@@ -2912,6 +2912,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['recipe_id'],
   data: function data() {
@@ -3011,9 +3014,10 @@ __webpack_require__.r(__webpack_exports__);
         toast.fire('success', 'Raply is successful', 'success');
 
         _this4.comments[index].replies.push({
-          comment: _this4.reply,
+          comment: data.data.comment,
           user: {
-            name: _this4.$gate.getName()
+            name: data.data.user.name,
+            profile: data.data.user.profile
           }
         });
 
@@ -3089,6 +3093,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -3485,6 +3490,11 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5893,7 +5903,7 @@ __webpack_require__.r(__webpack_exports__);
     loadProfile: function loadProfile() {
       var _this = this;
 
-      axios.get("/profile/".concat(this.$gate.idUser())).then(function (_ref) {
+      axios.get("/profile").then(function (_ref) {
         var data = _ref.data;
         _this.user = data.data;
       });
@@ -5951,7 +5961,7 @@ __webpack_require__.r(__webpack_exports__);
     loadComments: function loadComments() {
       var _this2 = this;
 
-      axios.get("/api/users_comments/".concat(this.$gate.idUser())).then(function (_ref2) {
+      axios.get("/users_comments").then(function (_ref2) {
         var data = _ref2.data;
         _this2.comments = data;
       });
@@ -5960,7 +5970,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios.get("/api/users_comments/".concat(this.$gate.idUser(), "?page=") + page).then(function (data) {
+      axios.get("/users_comments?page=" + page).then(function (data) {
         _this3.comments = data.data;
       });
     },
@@ -6010,7 +6020,7 @@ __webpack_require__.r(__webpack_exports__);
     loadRecipeBook: function loadRecipeBook() {
       var _this5 = this;
 
-      axios.get("/api/my-likes/".concat(this.$gate.idUser())).then(function (_ref3) {
+      axios.get("/my-likes").then(function (_ref3) {
         var data = _ref3.data;
         _this5.recipeBook = data;
       });
@@ -6019,13 +6029,13 @@ __webpack_require__.r(__webpack_exports__);
       var _this6 = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios.get("/api/my-likes/".concat(this.$gate.idUser(), "?page=") + page).then(function (data) {
+      axios.get("/my-likes?page=" + page).then(function (data) {
         _this6.recipeBook = data.data;
       });
     },
     togleLike: function togleLike(like) {
       var vm = this;
-      axios.post('/api/like', {
+      axios.post('/like', {
         like: like
       }).then(function (_ref4) {
         var data = _ref4.data;
@@ -48315,7 +48325,12 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-secondary",
-                    attrs: { type: "button", "data-dismiss": "modal" }
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                    on: {
+                      click: function($event) {
+                        _vm.register = false
+                      }
+                    }
                   },
                   [_vm._v("Close")]
                 ),
@@ -48802,12 +48817,19 @@ var render = function() {
                 { key: comment.id, staticClass: "col-12 comment " },
                 [
                   _c("div", { staticClass: "avatar" }, [
-                    _c("img", {
-                      attrs: {
-                        src: "/img/XS/300px-No_image_available.svg.png",
-                        alt: ""
-                      }
-                    })
+                    comment.user.profile
+                      ? _c("img", {
+                          attrs: {
+                            src: "/img/XS/" + comment.user.profile,
+                            alt: ""
+                          }
+                        })
+                      : _c("img", {
+                          attrs: {
+                            src: "/img/XS/300px-No_image_available.svg.png",
+                            alt: ""
+                          }
+                        })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "comment-content" }, [
@@ -48857,13 +48879,20 @@ var render = function() {
                             { key: reply, staticClass: "col-12 comment ml-4" },
                             [
                               _c("div", { staticClass: "avatar" }, [
-                                _c("img", {
-                                  attrs: {
-                                    src:
-                                      "/img/XS/300px-No_image_available.svg.png",
-                                    alt: ""
-                                  }
-                                })
+                                reply.user.profile
+                                  ? _c("img", {
+                                      attrs: {
+                                        src: "/img/XS/" + reply.user.profile,
+                                        alt: ""
+                                      }
+                                    })
+                                  : _c("img", {
+                                      attrs: {
+                                        src:
+                                          "/img/XS/300px-No_image_available.svg.png",
+                                        alt: ""
+                                      }
+                                    })
                               ]),
                               _vm._v(" "),
                               _c("div", { staticClass: "comment-content" }, [
@@ -49109,84 +49138,88 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _vm.location == "AdminLTE 3 | Dashboard"
-      ? _c("ul", { staticClass: "navbar-nav ml-auto" }, [
-          _c("li", { staticClass: "nav-item dropdown" }, [
-            _c(
-              "a",
-              {
-                staticClass: "nav-link notification",
-                attrs: { "data-toggle": "dropdown", href: "#" }
-              },
-              [
-                _c("i", { staticClass: "far fa-comments " }),
-                _vm._v(" "),
-                _vm.comments.length > 0
-                  ? _c(
-                      "span",
-                      { staticClass: "badge badge-danger navbar-badge " },
-                      [_vm._v(_vm._s(_vm.comments[0].admin_count))]
-                    )
-                  : _vm._e()
-              ]
-            ),
+    _c("ul", { staticClass: "navbar-nav ml-auto" }, [
+      _c("li", { staticClass: "nav-item dropdown" }, [
+        _c(
+          "a",
+          {
+            staticClass: "nav-link notification",
+            attrs: { "data-toggle": "dropdown", href: "#" }
+          },
+          [
+            _c("i", { staticClass: "far fa-comments " }),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "dropdown-menu notification-meny dropdown-menu-lg dropdown-menu-right"
-              },
-              [
-                _vm._l(_vm.comments, function(comment) {
-                  return _c(
-                    "a",
-                    {
-                      staticClass: "dropdown-item ",
-                      on: {
-                        click: function($event) {
-                          return _vm.checked(comment.id)
-                        }
-                      }
-                    },
-                    [
-                      _c("div", { staticClass: "media" }, [
-                        _c("div", { staticClass: "media-body" }, [
-                          _c("h3", { staticClass: "dropdown-item-title" }, [
-                            _vm._v(
-                              "\n                 " +
-                                _vm._s(comment.recipe.title) +
-                                "\n                 "
-                            ),
-                            _c(
-                              "span",
-                              {
-                                staticClass: "float-right text-sm text-danger"
-                              },
-                              [
-                                _c("i", { staticClass: "fas fa-star" }),
-                                _vm._v(_vm._s(comment.score))
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-sm" }, [
-                            _vm._v(_vm._s(comment.excerpt))
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-sm text-muted" }, [
-                            _c("i", { staticClass: "far fa-clock mr-1" }),
-                            _vm._v(_vm._s(comment.time))
-                          ])
-                        ])
+            _vm.comments.length > 0 && _vm.$gate.isAdmin()
+              ? _c(
+                  "span",
+                  { staticClass: "badge badge-danger navbar-badge " },
+                  [_vm._v(_vm._s(_vm.comments[0].admin_count))]
+                )
+              : _vm.comments.length
+              ? _c(
+                  "span",
+                  { staticClass: "badge badge-danger navbar-badge " },
+                  [_vm._v(_vm._s(_vm.comments.length))]
+                )
+              : _vm._e()
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "dropdown-menu notification-meny dropdown-menu-lg dropdown-menu-right"
+          },
+          [
+            _vm._l(_vm.comments, function(comment) {
+              return _c(
+                "a",
+                {
+                  staticClass: "dropdown-item ",
+                  on: {
+                    click: function($event) {
+                      return _vm.checked(comment.id)
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "media" }, [
+                    _c("div", { staticClass: "media-body" }, [
+                      _c("h3", { staticClass: "dropdown-item-title" }, [
+                        _vm._v(
+                          "\n                 " +
+                            _vm._s(comment.recipe.title) +
+                            "\n                 "
+                        ),
+                        _c(
+                          "span",
+                          { staticClass: "float-right text-sm text-danger" },
+                          [
+                            _c("i", { staticClass: "fas fa-star" }),
+                            _vm._v(_vm._s(comment.score))
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-sm" }, [
+                        _vm._v(_vm._s(comment.excerpt))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-sm text-muted" }, [
+                        _c("i", { staticClass: "far fa-clock mr-1" }),
+                        _vm._v(_vm._s(comment.time))
                       ])
-                    ]
-                  )
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "dropdown-divider" }),
-                _vm._v(" "),
-                _c(
+                    ])
+                  ])
+                ]
+              )
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "dropdown-divider" }),
+            _vm._v(" "),
+            _vm.$gate.isAdmin()
+              ? _c(
                   "router-link",
                   {
                     staticClass: "dropdown-item dropdown-footer",
@@ -49194,52 +49227,49 @@ var render = function() {
                   },
                   [_vm._v("See All Messages")]
                 )
-              ],
-              2
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "nav-item dropdown" }, [
-            _vm._m(1),
+              : _c("p", [_vm._v("See All Messages")])
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", { staticClass: "nav-item dropdown" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "dropdown-menu dropdown-menu-lg dropdown-menu-right" },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/profile" } },
+              [
+                _c("i", { staticClass: "fas fa-user  mx-2" }),
+                _vm._v("Profile\n           \n         ")
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "dropdown-divider" }),
             _vm._v(" "),
             _c(
-              "div",
+              "a",
               {
-                staticClass:
-                  "dropdown-menu dropdown-menu-lg dropdown-menu-right"
+                staticClass: "dropdown-item ",
+                attrs: { href: "#" },
+                on: { click: _vm.logout }
               },
               [
-                _c(
-                  "router-link",
-                  { staticClass: "nav-link", attrs: { to: "/profile" } },
-                  [
-                    _c("i", { staticClass: "fas fa-user  mx-2" }),
-                    _vm._v("Profile\n           \n         ")
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "dropdown-divider" }),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "dropdown-item ",
-                    attrs: { href: "#" },
-                    on: { click: _vm.logout }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "nav-icon fa fa-power-off text-danger"
-                    }),
-                    _vm._v("                \n              LOGOUT")
-                  ]
-                )
-              ],
-              1
+                _c("i", {
+                  staticClass: "nav-icon fa fa-power-off text-danger"
+                }),
+                _vm._v("                \n              LOGOUT")
+              ]
             )
-          ])
-        ])
-      : _vm._e()
+          ],
+          1
+        )
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -49627,6 +49657,14 @@ var render = function() {
       }),
       0
     ),
+    _vm._v(" "),
+    _vm.recipes.data.length == 0
+      ? _c("div", { staticClass: "d-flex justify-content-center mt-5" }, [
+          _c("p", { staticClass: "mt-5 display-4" }, [
+            _vm._v("\n        No search result\n      ")
+          ])
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c(
       "nav",
@@ -70213,12 +70251,12 @@ var users = Vue.component('user-component', __webpack_require__(/*! ./components
 var profile = Vue.component('profile-component', __webpack_require__(/*! ./components/user/Profile.vue */ "./resources/js/components/user/Profile.vue")["default"]);
 var login = Vue.component('login-component', __webpack_require__(/*! ./components/Login.vue */ "./resources/js/components/Login.vue")["default"]);
 var trash = Vue.component('create-recipe-component', __webpack_require__(/*! ./components/recipes/Trash.vue */ "./resources/js/components/recipes/Trash.vue")["default"]);
+var score = Vue.component('score-component', __webpack_require__(/*! ./components/Score.vue */ "./resources/js/components/Score.vue")["default"]);
 Vue.component('VueRecaptcha', vue_recaptcha__WEBPACK_IMPORTED_MODULE_5__["default"]);
 Vue.component('VuexRecipe', __webpack_require__(/*! ./components/VuexRecipe.vue */ "./resources/js/components/VuexRecipe.vue")["default"]);
 Vue.component('footer-component', __webpack_require__(/*! ./components/Footer.vue */ "./resources/js/components/Footer.vue")["default"]);
 Vue.component('recipes-component', __webpack_require__(/*! ./components/Recipes.vue */ "./resources/js/components/Recipes.vue")["default"]);
 Vue.component('fridge-component', __webpack_require__(/*! ./components/Fridge.vue */ "./resources/js/components/Fridge.vue")["default"]);
-Vue.component('score-component', __webpack_require__(/*! ./components/Score.vue */ "./resources/js/components/Score.vue")["default"]);
 Vue.component('ingredients-component', __webpack_require__(/*! ./components/recipes/Ingredients.vue */ "./resources/js/components/recipes/Ingredients.vue")["default"]);
 Vue.component('tag-component', __webpack_require__(/*! ./components/Tag.vue */ "./resources/js/components/Tag.vue")["default"]);
 Vue.component('gallery-component', __webpack_require__(/*! ./components/Gallery.vue */ "./resources/js/components/Gallery.vue")["default"]);
@@ -70275,10 +70313,9 @@ var routes = [{
   component: login
 }, {
   path: '/score',
-  component: __webpack_require__(/*! ./components/Score.vue */ "./resources/js/components/Score.vue")["default"]
+  component: score
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
-  base: '/home',
   mode: 'history',
   routes: routes // short for `routes: routes`
 
@@ -70307,10 +70344,6 @@ var toast = sweetalert2__WEBPACK_IMPORTED_MODULE_6___default.a.mixin({
   position: 'top-end',
   showConfirmButton: false,
   timer: 3000
-});
-axios.get('/api/user').then(function (response) {
-  console.log(response.data);
-  console.log(134);
 });
 window.toast = toast;
 /**

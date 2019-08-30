@@ -19,6 +19,7 @@ class ScoreResources extends JsonResource
           'id' => $this->id,
           'replies' => ScoreResources::collection($this->replies),
           'admin_notification' => $this->admin_notification,
+          'user_notification' => $this->user_notification,
           'score' => $this->score,
           'recipe' => $this->recipe->only('title', 'slug', 'id'),      
           'user' => new UserResources($this->user),

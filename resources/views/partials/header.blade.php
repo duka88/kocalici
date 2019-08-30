@@ -40,9 +40,14 @@
                  <div class="row">
                    <div class="col-12 d-flex py-2  justify-content-between login-container">
                           <p class="login m-0 p-0">Contact Us</p>
-                          <p class="m-0"><a href="{{route('home')}}" class="login m-0 p-0" style="text-decoration: none;">Home</a></p>
-                         @auth 
-                           <a class="nav-link login p-0" href="{{ route('logout') }}"
+                         
+                          @if(Auth::check())
+                           @if (Auth::user()->isAdmin())
+                            <p class="m-0"><a href="{{route('home')}}" class="login m-0 p-0" style="text-decoration: none;">Home</a></p>
+                           @else
+                              <p class="m-0"><a href="{{route('my_profile')}}" class="login m-0 p-0" style="text-decoration: none;">Profile</a></p>
+                           @endif
+                             <a class="nav-link login p-0" href="{{ route('logout') }}"
 
                                           onclick="event.preventDefault();
                                            document.getElementById('logout-form').submit();">
@@ -56,8 +61,8 @@
                          @else
                            <login-component></login-component>
                            
-                         @endauth 
-                         
+                         @endif
+                        
                    </div>
 
 

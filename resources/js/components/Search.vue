@@ -26,13 +26,14 @@
    </transition>   
    </div> 
   
-    <ul  v-if="location == 'AdminLTE 3 | Dashboard'" class="navbar-nav ml-auto">
+    <ul   class="navbar-nav ml-auto">
     
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown" >
         <a class="nav-link notification" data-toggle="dropdown" href="#">
           <i class="far fa-comments "></i>
-          <span v-if="comments.length > 0" class="badge badge-danger navbar-badge ">{{comments[0].admin_count}}</span>
+          <span v-if="comments.length > 0 && $gate.isAdmin()" class="badge badge-danger navbar-badge ">{{comments[0].admin_count}}</span>
+          <span v-else-if="comments.length " class="badge badge-danger navbar-badge ">{{comments.length}}</span>
         </a>
         <div class="dropdown-menu notification-meny dropdown-menu-lg dropdown-menu-right">
           <a v-for="comment in comments" @click="checked(comment.id)" class="dropdown-item ">
@@ -52,8 +53,8 @@
           </a>
          
           <div class="dropdown-divider"></div>
-           <router-link to="/get-comments" class="dropdown-item dropdown-footer">See All Messages</router-link> 
-
+           <router-link v-if="$gate.isAdmin()" to="/get-comments" class="dropdown-item dropdown-footer">See All Messages</router-link> 
+           <p v-else>See All Messages</p>  
         </div>
          
       </li>

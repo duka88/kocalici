@@ -36,6 +36,7 @@ const users = Vue.component('user-component', require('./components/user/Users.v
 const profile = Vue.component('profile-component', require('./components/user/Profile.vue').default);
 const login = Vue.component('login-component', require('./components/Login.vue').default);
 const trash = Vue.component('create-recipe-component', require('./components/recipes/Trash.vue').default);
+const score = Vue.component('score-component', require('./components/Score.vue').default);
 
 
 Vue.component('VueRecaptcha', VueRecaptcha);
@@ -43,7 +44,7 @@ Vue.component('VuexRecipe', require('./components/VuexRecipe.vue').default);
 Vue.component('footer-component', require('./components/Footer.vue').default)
 Vue.component('recipes-component', require('./components/Recipes.vue').default);
 Vue.component('fridge-component', require('./components/Fridge.vue').default);
-Vue.component('score-component', require('./components/Score.vue').default);
+
 Vue.component('ingredients-component', require('./components/recipes/Ingredients.vue').default);
 Vue.component('tag-component', require('./components/Tag.vue').default);
 Vue.component('gallery-component', require('./components/Gallery.vue').default);
@@ -57,16 +58,16 @@ const routes = [
   { path: '/trash', component: trash, meta: { isAdmnin: true} },
   { path: '/all-recipe', component: allRecipe, meta: { isAdmnin: true} },
   { path: '/get-comments', component: comments, meta: { isAdmnin: true} },
- 
+  
   { path: '/add-recipe', component: addRecipe, meta: { isAdmnin: true} },
   { path: '/users', component: users, meta: { isAdmnin: true} },
   { path: '/profile', component: profile, meta: { isAdmnin: true} },
   { path: '/login', component: login},
-  { path: '/score', component:  require('./components/Score.vue').default}
+  { path: '/score', component: score}
 ]
 
 const router = new VueRouter({
-   base: '/home',
+  
    mode: 'history',
    
    routes // short for `routes: routes`
@@ -101,10 +102,7 @@ const toast = swal.mixin({
   timer: 3000
 });
 
-axios.get('/api/user').then(response => {
-   console.log(response.data);
-   console.log(134);
-});
+
 
 window.toast = toast;
 

@@ -49,7 +49,7 @@
                       </div>
                        </form>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="register = false">Close</button>
                         <button v-if="!register" @click='register = true' class="btn btn-primary">Register</button>
                         <button v-if="!register" @click="loginUser()" class="btn btn-primary">
                         Login</button>
