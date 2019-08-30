@@ -3162,33 +3162,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3199,6 +3172,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: _objectSpread({
+    redirect: function redirect() {
+      window.location.replace('/my_profile');
+    },
     searchRecipe: _.debounce(function () {
       this.$store.dispatch('searchIt', {
         search: this.search,
@@ -6061,6 +6037,424 @@ __webpack_require__.r(__webpack_exports__);
     this.loadProfile();
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/UserProfile.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/UserProfile.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
+  data: function data() {
+    return {
+      user: {},
+      editProfile: false,
+      userForm: new Form({
+        id: '',
+        name: '',
+        email: '',
+        imageUpload: {
+          image: false,
+          name: ''
+        },
+        about: '',
+        image: '',
+        full_name: ''
+      }),
+      recipeBook: {},
+      like: ''
+    };
+  },
+  methods: _objectSpread({
+    loadProfile: function loadProfile() {
+      var _this = this;
+
+      axios.get("/profile").then(function (_ref) {
+        var data = _ref.data;
+        _this.user = data.data;
+      });
+    },
+    settings: function settings() {
+      this.userForm.id = this.$gate.idUser();
+      this.userForm.name = this.user.name;
+      this.userForm.email = this.user.email;
+      this.userForm.image = this.user.profile.image;
+      this.userForm.full_name = this.user.profile.full_name;
+      this.userForm.about = this.user.profile.about;
+      this.editProfile = false;
+    },
+    updateProfile: function updateProfile() {
+      var vm = this;
+      this.userForm.put("/profile").then(function () {
+        toast.fire({
+          type: 'success',
+          title: 'Profile updated successfully'
+        });
+        vm.editProfile = false;
+        vm.loadProfile();
+      })["catch"](function (error) {
+        if (error.response) {
+          toast.fire({
+            type: 'error',
+            title: error.response.data.message
+          });
+        }
+      });
+    },
+    onFileChange: function onFileChange(item, e) {
+      var files = e.target.files || e.dataTransfer.files;
+      var name = e.target.files[0].name;
+      if (!files.length) return;
+      this.createImage(item, files[0], name);
+    },
+    createImage: function createImage(item, file, name) {
+      var image = new Image();
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        item.image = e.target.result;
+        item.name = name;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    removeImage: function removeImage(item) {
+      item.image = false;
+    },
+    loadRecipeBook: function loadRecipeBook() {
+      var _this2 = this;
+
+      axios.get("/my-likes").then(function (_ref2) {
+        var data = _ref2.data;
+        _this2.recipeBook = data;
+      });
+    },
+    paginateRecipeBook: function paginateRecipeBook() {
+      var _this3 = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get("/my-likes?page=" + page).then(function (data) {
+        _this3.recipeBook = data.data;
+      });
+    },
+    togleLike: function togleLike(like) {
+      var vm = this;
+      axios.post('/like', {
+        like: like
+      }).then(function (_ref3) {
+        var data = _ref3.data;
+        vm.loadRecipeBook();
+      });
+    },
+    checked: function checked(id) {
+      this.$store.dispatch('approved', id);
+    }
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['loadComments', 'paginateComments', 'approved', 'commentDelete', 'reply'])),
+  computed: {
+    comments: function comments() {
+      return this.$store.state.comments;
+    }
+  },
+  created: function created() {
+    this.$store.dispatch('loadComments');
+  },
+  filters: {
+    round: function round(value) {
+      return Math.round(value);
+    },
+    numberFormat: function numberFormat(value) {
+      if (value != null) {
+        value = (Math.round(value * 10) / 10).toFixed(1);
+        return value;
+      } else {
+        return value;
+      }
+    }
+  }
+}, "created", function created() {
+  this.loadRecipeBook();
+  this.loadProfile();
+}));
 
 /***/ }),
 
@@ -48598,7 +48992,10 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "row justify-content-center" },
+          {
+            staticClass: "row justify-content-center",
+            attrs: { id: "recipes" }
+          },
           [
             _c(
               "transition-group",
@@ -49138,138 +49535,112 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _c("ul", { staticClass: "navbar-nav ml-auto" }, [
-      _c("li", { staticClass: "nav-item dropdown" }, [
-        _c(
-          "a",
-          {
-            staticClass: "nav-link notification",
-            attrs: { "data-toggle": "dropdown", href: "#" }
-          },
-          [
-            _c("i", { staticClass: "far fa-comments " }),
-            _vm._v(" "),
-            _vm.comments.length > 0 && _vm.$gate.isAdmin()
-              ? _c(
-                  "span",
-                  { staticClass: "badge badge-danger navbar-badge " },
-                  [_vm._v(_vm._s(_vm.comments[0].admin_count))]
-                )
-              : _vm.comments.length
-              ? _c(
-                  "span",
-                  { staticClass: "badge badge-danger navbar-badge " },
-                  [_vm._v(_vm._s(_vm.comments.length))]
-                )
-              : _vm._e()
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "dropdown-menu notification-meny dropdown-menu-lg dropdown-menu-right"
-          },
-          [
-            _vm._l(_vm.comments, function(comment) {
-              return _c(
-                "a",
-                {
-                  staticClass: "dropdown-item ",
-                  on: {
-                    click: function($event) {
-                      return _vm.checked(comment.id)
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "media" }, [
-                    _c("div", { staticClass: "media-body" }, [
-                      _c("h3", { staticClass: "dropdown-item-title" }, [
-                        _vm._v(
-                          "\n                 " +
-                            _vm._s(comment.recipe.title) +
-                            "\n                 "
-                        ),
-                        _c(
-                          "span",
-                          { staticClass: "float-right text-sm text-danger" },
-                          [
-                            _c("i", { staticClass: "fas fa-star" }),
-                            _vm._v(_vm._s(comment.score))
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-sm" }, [
-                        _vm._v(_vm._s(comment.excerpt))
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-sm text-muted" }, [
-                        _c("i", { staticClass: "far fa-clock mr-1" }),
-                        _vm._v(_vm._s(comment.time))
-                      ])
-                    ])
-                  ])
-                ]
-              )
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "dropdown-divider" }),
-            _vm._v(" "),
-            _vm.$gate.isAdmin()
-              ? _c(
-                  "router-link",
-                  {
-                    staticClass: "dropdown-item dropdown-footer",
-                    attrs: { to: "/get-comments" }
-                  },
-                  [_vm._v("See All Messages")]
-                )
-              : _c("p", [_vm._v("See All Messages")])
-          ],
-          2
-        )
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "nav-item dropdown" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "dropdown-menu dropdown-menu-lg dropdown-menu-right" },
-          [
-            _c(
-              "router-link",
-              { staticClass: "nav-link", attrs: { to: "/profile" } },
-              [
-                _c("i", { staticClass: "fas fa-user  mx-2" }),
-                _vm._v("Profile\n           \n         ")
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "dropdown-divider" }),
-            _vm._v(" "),
+    _vm.$gate.getAuth()
+      ? _c("ul", { staticClass: "navbar-nav ml-auto" }, [
+          _c("li", { staticClass: "nav-item dropdown" }, [
             _c(
               "a",
               {
-                staticClass: "dropdown-item ",
-                attrs: { href: "#" },
-                on: { click: _vm.logout }
+                staticClass: "nav-link notification",
+                attrs: { "data-toggle": "dropdown", href: "#" }
               },
               [
-                _c("i", {
-                  staticClass: "nav-icon fa fa-power-off text-danger"
-                }),
-                _vm._v("                \n              LOGOUT")
+                _c("i", { staticClass: "far fa-comments " }),
+                _vm._v(" "),
+                _vm.comments.length > 0 && _vm.$gate.isAdmin()
+                  ? _c(
+                      "span",
+                      { staticClass: "badge badge-danger navbar-badge " },
+                      [_vm._v(_vm._s(_vm.comments[0].admin_count))]
+                    )
+                  : _vm.comments.length
+                  ? _c(
+                      "span",
+                      { staticClass: "badge badge-danger navbar-badge " },
+                      [_vm._v(_vm._s(_vm.comments.length))]
+                    )
+                  : _vm._e()
               ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "dropdown-menu notification-meny dropdown-menu-lg dropdown-menu-right"
+              },
+              [
+                _vm._l(_vm.comments, function(comment) {
+                  return _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item ",
+                      on: {
+                        click: function($event) {
+                          return _vm.checked(comment.id)
+                        }
+                      }
+                    },
+                    [
+                      _c("div", { staticClass: "media" }, [
+                        _c("div", { staticClass: "media-body" }, [
+                          _c("h3", { staticClass: "dropdown-item-title" }, [
+                            _vm._v(
+                              "\n                 " +
+                                _vm._s(comment.recipe.title) +
+                                "\n                 "
+                            ),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "float-right text-sm text-danger"
+                              },
+                              [
+                                _c("i", { staticClass: "fas fa-star" }),
+                                _vm._v(_vm._s(comment.score))
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-sm" }, [
+                            _vm._v(_vm._s(comment.excerpt))
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-sm text-muted" }, [
+                            _c("i", { staticClass: "far fa-clock mr-1" }),
+                            _vm._v(_vm._s(comment.time))
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "dropdown-divider" }),
+                _vm._v(" "),
+                _vm.$gate.isAdmin()
+                  ? _c(
+                      "router-link",
+                      {
+                        staticClass: "dropdown-item dropdown-footer",
+                        attrs: { to: "/get-comments" }
+                      },
+                      [_vm._v("See All Messages")]
+                    )
+                  : _c(
+                      "p",
+                      {
+                        staticClass: "dropdown-item dropdown-footer",
+                        on: { click: _vm.redirect }
+                      },
+                      [_vm._v("See All Messages")]
+                    )
+              ],
+              2
             )
-          ],
-          1
-        )
-      ])
-    ])
+          ])
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
@@ -49282,32 +49653,6 @@ var staticRenderFns = [
         _c("i", { staticClass: "fas fa-search" })
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "nav-link notification",
-        attrs: { "data-toggle": "dropdown", href: "#" }
-      },
-      [
-        _c("div", { staticClass: "user-panel d-flex" }, [
-          _c("div", { staticClass: "image" }, [
-            _c("img", {
-              staticClass: "img-circle elevation-2",
-              attrs: { src: "/img/Watchmen-logo.png", alt: "User Image" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "info" }, [
-            _c("i", { staticClass: "fas fa-chevron-down" })
-          ])
-        ])
-      ]
-    )
   }
 ]
 render._withStripped = true
@@ -53689,6 +54034,826 @@ var render = function() {
                   { staticClass: "tab-pane mt-4", attrs: { id: "activity" } },
                   [_c("edit-recipe-component")],
                   1
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-header with-border" }, [
+      _c("h3", { staticClass: "box-title" }, [_vm._v("About Me")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/UserProfile.vue?vue&type=template&id=cbd55776&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/user/UserProfile.vue?vue&type=template&id=cbd55776& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "content-wrapper", staticStyle: { "min-height": "1126px" } },
+    [
+      _c("section", { staticClass: "content-header" }, [
+        _c("h2", [
+          _vm._v("\n       " + _vm._s(_vm.user.name) + " Profile\n     ")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("section", { staticClass: "content" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-3" }, [
+            _c("div", { staticClass: "box box-primary" }, [
+              _c("div", { staticClass: "box-body box-profile" }, [
+                _c("img", {
+                  staticClass: "profile-user-img img-responsive img-circle",
+                  attrs: {
+                    src: "/img/S/" + _vm.user.profile.image,
+                    alt: "User profile picture"
+                  }
+                }),
+                _vm._v(" "),
+                _c("h3", { staticClass: "profile-username text-center" }, [
+                  _vm._v(_vm._s(_vm.user.profile.full_name))
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-muted text-center" }, [
+                  _vm._v(_vm._s(_vm.user.role))
+                ]),
+                _vm._v(" "),
+                _c("ul", { staticClass: "list-group list-group-unbordered" }, [
+                  _c("li", { staticClass: "list-group-item" }, [
+                    _c("b", [_vm._v("Recipe Book")]),
+                    _vm._v(" "),
+                    _c("a", { staticClass: "pull-right" }, [
+                      _vm._v(_vm._s(_vm.user.likes))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "list-group-item" }, [
+                    _c("b", [_vm._v("Comments")]),
+                    _vm._v(" "),
+                    _c("a", { staticClass: "pull-right" }, [
+                      _vm._v(_vm._s(_vm.user.comments))
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "box box-primary my-5" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "box-body" }, [
+                _c("p", { staticClass: "text-muted" }, [
+                  _vm._v(
+                    "\n               " +
+                      _vm._s(_vm.user.profile.about) +
+                      "\n             "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("hr")
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-9" }, [
+            _c("div", { staticClass: "nav-tabs-custom" }, [
+              _c("ul", { staticClass: "nav nav-tabs" }, [
+                _c("li", {}, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link active",
+                      attrs: {
+                        href: "#RecipeBook",
+                        "data-toggle": "tab",
+                        "aria-expanded": "true"
+                      },
+                      on: { click: _vm.loadRecipeBook }
+                    },
+                    [_vm._v("Recipe Book")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", {}, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link",
+                      attrs: {
+                        href: "#timeline",
+                        "data-toggle": "tab",
+                        "aria-expanded": "true"
+                      },
+                      on: { click: _vm.loadComments }
+                    },
+                    [_vm._v("Comments")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", {}, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link",
+                      attrs: {
+                        href: "#settings",
+                        "data-toggle": "tab",
+                        "aria-expanded": "false"
+                      },
+                      on: { click: _vm.settings }
+                    },
+                    [_vm._v("Settings")]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "tab-content" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane mt-4 active",
+                    attrs: { id: "RecipeBook" }
+                  },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "row justify-content-center" },
+                      _vm._l(_vm.recipeBook.data, function(likedRecipe) {
+                        return _c(
+                          "div",
+                          { key: likedRecipe.id, staticClass: "col-md-4" },
+                          [
+                            _c("div", { staticClass: "card my-card" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "archive-like mb-3 single_recipe_info_text image"
+                                },
+                                [
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass: "heart py-2",
+                                      on: { click: _vm.togleLike }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fa-heart",
+                                        class: {
+                                          fas: likedRecipe.recipe.likes[0].like,
+                                          far: !likedRecipe.recipe.likes[0]
+                                            .count
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.togleLike(
+                                              likedRecipe.recipe.likes[0].like
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _c("span", { staticClass: "text-dark" }, [
+                                        _vm._v(
+                                          "(" +
+                                            _vm._s(
+                                              likedRecipe.recipe.likes[0].count
+                                            ) +
+                                            ")"
+                                        )
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "image" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "/recipes/" +
+                                            likedRecipe.recipe.slug
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src:
+                                              "/img/MD/" +
+                                              likedRecipe.recipe.image,
+                                            width: "100%",
+                                            height: "300"
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "card-body archive align-items-center"
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "card-title  d-flex justify-content-center"
+                                        },
+                                        [
+                                          _c(
+                                            "a",
+                                            {
+                                              attrs: {
+                                                href:
+                                                  "/recipes/" +
+                                                  likedRecipe.recipe.slug
+                                              }
+                                            },
+                                            [
+                                              _c("h2", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    likedRecipe.recipe.title
+                                                  ) + " "
+                                                )
+                                              ])
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "card-footer  team-icons d-flex  justify-content-around"
+                                },
+                                [
+                                  _c("span", [
+                                    _c("i", {
+                                      staticClass: "fas fa-utensils mr-2"
+                                    }),
+                                    _vm._v(_vm._s(likedRecipe.recipe.servings))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _c("i", {
+                                      staticClass: "far fa-clock mr-2"
+                                    }),
+                                    _vm._v(_vm._s(likedRecipe.recipe.time))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _c("i", {
+                                      staticClass: "far fa-chart-bar mr-2"
+                                    }),
+                                    _vm._v(_vm._s(likedRecipe.recipe.dificulty))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _c("i", {
+                                      staticClass: "fas fa-star mr-2"
+                                    }),
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("numberFormat")(
+                                          likedRecipe.recipe.score
+                                        )
+                                      )
+                                    )
+                                  ])
+                                ]
+                              )
+                            ])
+                          ]
+                        )
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _c("pagination", {
+                      attrs: { data: _vm.recipeBook },
+                      on: { "pagination-change-page": _vm.paginateRecipeBook }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "tab-pane mt-4 ", attrs: { id: "timeline" } },
+                  [
+                    _vm._l(_vm.comments.data, function(comment, index) {
+                      return _c(
+                        "ul",
+                        { staticClass: "timeline timeline-inverse" },
+                        [
+                          _c("li", { staticClass: "time-label" }, [
+                            _c("span", { staticClass: "bg-red" }, [
+                              _vm._v(
+                                "\n                         " +
+                                  _vm._s(comment.time) +
+                                  "\n                       "
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c("i", {
+                              staticClass: "fa fa-comments bg-yellow"
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "timeline-item" }, [
+                              _c(
+                                "h3",
+                                {
+                                  staticClass:
+                                    "timeline-header d-flex justify-content-between align-middle"
+                                },
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "/recipes/" + comment.recipe.slug
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._s(comment.recipe.title) +
+                                          "\n                       "
+                                      )
+                                    ]
+                                  ),
+                                  _c("p", [
+                                    _c(
+                                      "span",
+                                      { staticClass: "font-weight-bold" },
+                                      [_vm._v("score")]
+                                    ),
+                                    _c("i", { staticClass: "fas fa-star" }),
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(comment.score) +
+                                        "\n                               "
+                                    ),
+                                    comment.user_notification == 0
+                                      ? _c(
+                                          "span",
+                                          {
+                                            staticClass: "notification",
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.checked(comment.id)
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("remove notification")]
+                                        )
+                                      : _vm._e()
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", {
+                                staticClass: "timeline-body",
+                                domProps: { innerHTML: _vm._s(comment.comment) }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "timeline-footer" },
+                                _vm._l(comment.replies, function(reply, index) {
+                                  return _c(
+                                    "ul",
+                                    {
+                                      staticClass: "timeline timeline-inverse"
+                                    },
+                                    [
+                                      _c("li", { staticClass: "time-label" }, [
+                                        _c("span", { staticClass: "bg-red" }, [
+                                          _vm._v(
+                                            "\n                                     " +
+                                              _vm._s(reply.time) +
+                                              "\n                                   "
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("li", [
+                                        _c("i", {
+                                          staticClass:
+                                            "fa fa-comments bg-yellow"
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          { staticClass: "timeline-item" },
+                                          [
+                                            _c(
+                                              "h3",
+                                              {
+                                                staticClass:
+                                                  "timeline-header d-flex justify-content-between align-middle"
+                                              },
+                                              [
+                                                _c(
+                                                  "a",
+                                                  {
+                                                    attrs: {
+                                                      href:
+                                                        "/recipes/" +
+                                                        reply.recipe.slug
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        reply.recipe.title
+                                                      ) +
+                                                        "\n                                   "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("div", {
+                                              staticClass: "timeline-body",
+                                              domProps: {
+                                                innerHTML: _vm._s(reply.comment)
+                                              }
+                                            })
+                                          ]
+                                        )
+                                      ])
+                                    ]
+                                  )
+                                }),
+                                0
+                              )
+                            ])
+                          ])
+                        ]
+                      )
+                    }),
+                    _vm._v(" "),
+                    _c("pagination", {
+                      attrs: { data: _vm.comments },
+                      on: { "pagination-change-page": _vm.paginateComments }
+                    })
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "tab-pane mt-4", attrs: { id: "settings" } },
+                  [
+                    _c(
+                      "form",
+                      {
+                        staticClass: "form-horizontal",
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.updateProfile()
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.userForm.name,
+                                  expression: "userForm.name"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.userForm.errors.has("name")
+                              },
+                              attrs: {
+                                type: "text",
+                                name: "name",
+                                id: "name",
+                                placeholder: "name"
+                              },
+                              domProps: { value: _vm.userForm.name },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.userForm,
+                                    "name",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("has-error", {
+                              attrs: { form: _vm.userForm, field: "name" }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.userForm.full_name,
+                                  expression: "userForm.full_name"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.userForm.errors.has(
+                                  "full_name"
+                                )
+                              },
+                              attrs: {
+                                type: "text",
+                                name: "full_name",
+                                id: "full_name",
+                                placeholder: "full_name"
+                              },
+                              domProps: { value: _vm.userForm.full_name },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.userForm,
+                                    "full_name",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("has-error", {
+                              attrs: { form: _vm.userForm, field: "full_name" }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          [
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.userForm.about,
+                                  expression: "userForm.about"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.userForm.errors.has("about")
+                              },
+                              attrs: {
+                                name: "about",
+                                id: "about",
+                                placeholder: "about"
+                              },
+                              domProps: { value: _vm.userForm.about },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.userForm,
+                                    "about",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("has-error", {
+                              attrs: { form: _vm.userForm, field: "about" }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.userForm.email,
+                                  expression: "userForm.email"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.userForm.errors.has("email")
+                              },
+                              attrs: {
+                                type: "text",
+                                name: "email",
+                                id: "email",
+                                placeholder: "email"
+                              },
+                              domProps: { value: _vm.userForm.email },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.userForm,
+                                    "email",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("has-error", {
+                              attrs: { form: _vm.userForm, field: "email" }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          !_vm.userForm.imageUpload.image
+                            ? _c("div", [
+                                _c("img", {
+                                  staticClass:
+                                    "profile-user-img img-responsive img-circle",
+                                  attrs: {
+                                    src: "/img/S/" + _vm.user.profile.image,
+                                    alt: "User profile picture"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass:
+                                      "custom-file-upload d-flex mt-2 mb-4"
+                                  },
+                                  [
+                                    _c("input", {
+                                      staticStyle: { display: "none" },
+                                      attrs: { type: "file" },
+                                      on: {
+                                        change: function($event) {
+                                          return _vm.onFileChange(
+                                            _vm.userForm.imageUpload,
+                                            $event
+                                          )
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "Change Image \n                        "
+                                    )
+                                  ]
+                                )
+                              ])
+                            : _c("div", [
+                                _c("img", {
+                                  staticClass:
+                                    "profile-user-img img-responsive img-circle",
+                                  attrs: { src: _vm.userForm.imageUpload.image }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.removeImage(
+                                          _vm.userForm.imageUpload
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Cancel")]
+                                )
+                              ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "div",
+                            { staticClass: "col-sm-offset-2 col-sm-10" },
+                            [
+                              !_vm.editProfile
+                                ? _c(
+                                    "a",
+                                    {
+                                      staticClass: "edit",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.editProfile = true
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", { staticClass: "fas fa-edit" }),
+                                      _vm._v(" Edit")
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.editProfile
+                                ? _c(
+                                    "a",
+                                    {
+                                      staticClass: "edit",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.updateProfile()
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", { staticClass: "fas fa-edit" }),
+                                      _vm._v(" Edit")
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.editProfile
+                                ? _c(
+                                    "a",
+                                    {
+                                      staticClass: "cancel",
+                                      on: { click: _vm.settings }
+                                    },
+                                    [_vm._v("Cancel")]
+                                  )
+                                : _vm._e()
+                            ]
+                          )
+                        ])
+                      ]
+                    )
+                  ]
                 )
               ])
             ])
@@ -70257,6 +71422,7 @@ Vue.component('VuexRecipe', __webpack_require__(/*! ./components/VuexRecipe.vue 
 Vue.component('footer-component', __webpack_require__(/*! ./components/Footer.vue */ "./resources/js/components/Footer.vue")["default"]);
 Vue.component('recipes-component', __webpack_require__(/*! ./components/Recipes.vue */ "./resources/js/components/Recipes.vue")["default"]);
 Vue.component('fridge-component', __webpack_require__(/*! ./components/Fridge.vue */ "./resources/js/components/Fridge.vue")["default"]);
+Vue.component('user-profile-component', __webpack_require__(/*! ./components/user/UserProfile.vue */ "./resources/js/components/user/UserProfile.vue")["default"]);
 Vue.component('ingredients-component', __webpack_require__(/*! ./components/recipes/Ingredients.vue */ "./resources/js/components/recipes/Ingredients.vue")["default"]);
 Vue.component('tag-component', __webpack_require__(/*! ./components/Tag.vue */ "./resources/js/components/Tag.vue")["default"]);
 Vue.component('gallery-component', __webpack_require__(/*! ./components/Gallery.vue */ "./resources/js/components/Gallery.vue")["default"]);
@@ -71679,6 +72845,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/user/UserProfile.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/user/UserProfile.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _UserProfile_vue_vue_type_template_id_cbd55776___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserProfile.vue?vue&type=template&id=cbd55776& */ "./resources/js/components/user/UserProfile.vue?vue&type=template&id=cbd55776&");
+/* harmony import */ var _UserProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserProfile.vue?vue&type=script&lang=js& */ "./resources/js/components/user/UserProfile.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _UserProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UserProfile_vue_vue_type_template_id_cbd55776___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _UserProfile_vue_vue_type_template_id_cbd55776___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/UserProfile.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/UserProfile.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/user/UserProfile.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./UserProfile.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/UserProfile.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/UserProfile.vue?vue&type=template&id=cbd55776&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/user/UserProfile.vue?vue&type=template&id=cbd55776& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserProfile_vue_vue_type_template_id_cbd55776___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./UserProfile.vue?vue&type=template&id=cbd55776& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/user/UserProfile.vue?vue&type=template&id=cbd55776&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserProfile_vue_vue_type_template_id_cbd55776___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserProfile_vue_vue_type_template_id_cbd55776___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/user/Users.vue":
 /*!************************************************!*\
   !*** ./resources/js/components/user/Users.vue ***!
@@ -71786,12 +73021,28 @@ function () {
   }, {
     key: "isAdmin",
     value: function isAdmin() {
-      return this.user.role === 'admin';
+      if (this.user) {
+        if (this.user.role === 'admin') {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
     }
   }, {
     key: "isUser",
     value: function isUser() {
-      return this.user.role === 'writer';
+      if (this.user) {
+        if (this.user.role === 'writer') {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
     }
   }, {
     key: "idUser",

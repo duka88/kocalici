@@ -38,7 +38,7 @@
                 </div>
             </div>
          
-            <div class="row justify-content-center">
+            <div id="recipes" class="row justify-content-center">
              <transition-group name="fade" tag="div" class="row justify-content-center" mode="out-in">
                 <div  v-for="recipe in recipes.data" :key="recipe.id" class="col-4" >   
                           
@@ -121,6 +121,7 @@
       axios.get('/api/category')
            .then(({data})=>{
               this.categories = data.data;
+             
            })
     },
     selectCategory(id){

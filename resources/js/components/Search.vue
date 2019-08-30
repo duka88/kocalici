@@ -26,7 +26,7 @@
    </transition>   
    </div> 
   
-    <ul   class="navbar-nav ml-auto">
+    <ul v-if="$gate.getAuth()"  class="navbar-nav ml-auto">
     
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown" >
@@ -54,41 +54,14 @@
          
           <div class="dropdown-divider"></div>
            <router-link v-if="$gate.isAdmin()" to="/get-comments" class="dropdown-item dropdown-footer">See All Messages</router-link> 
-           <p v-else>See All Messages</p>  
+           <p v-else @click="redirect" class="dropdown-item dropdown-footer">See All Messages</p>  
         </div>
          
       </li>
       <!-- Notifications Dropdown Menu -->
      
-      <li  class="nav-item dropdown">
-        <a class="nav-link notification" data-toggle="dropdown" href="#">
-              <div class="user-panel d-flex">
-                <div class="image">
-                  <img src="/img/Watchmen-logo.png" class="img-circle elevation-2" alt="User Image">
-                </div>
-                <div class="info">
-                  <i class="fas fa-chevron-down"></i>
-               </div>
-        </div>
-       
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-         
-          
-          <router-link to="/profile" class="nav-link">
-            <i class="fas fa-user  mx-2"></i>Profile
-            
-          </router-link>
-         
-         
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item " @click="logout">
-
-               <i class="nav-icon fa fa-power-off text-danger"></i>                
-               LOGOUT</a>
-        </div>
-      </li>
-   
+  
+  
     </ul>
 
  </div>  
@@ -108,6 +81,9 @@
             }
         },
         methods: {
+          redirect(){
+             window.location.replace('/my_profile');
+          },
             searchRecipe: _.debounce(function(){
 
              

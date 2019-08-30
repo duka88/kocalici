@@ -13,12 +13,13 @@
 <div id="carouselExampleIndicators" class="carousel slide py-5 " data-ride="carousel">
 
   <ol class="carousel-indicators">
+   @foreach($newest as $key=>$recipe)
 
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="{{$key}}" 
+        style="background: url('{{asset("img/XS/$recipe->image")}}')" class="@if($key == 0) {{'active'}} @endif"></li>
+  
+    @endforeach
+   
 
   </ol>
 

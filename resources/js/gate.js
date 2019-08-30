@@ -14,11 +14,29 @@
     }
 
     isAdmin(){
-        return this.user.role === 'admin';
+
+      if(this.user){ 
+        if(this.user.role === 'admin'){
+            return true;
+        }
+         else{
+             return false; 
+        }}else{
+             return false; 
+        }
+       
     }
 
     isUser(){
-        return this.user.role === 'writer';
+      if(this.user){ 
+        if(this.user.role === 'writer'){
+            return true;
+        }
+         else{
+             return false; 
+        }}else{
+             return false; 
+        }
     }
 
 	idUser(){

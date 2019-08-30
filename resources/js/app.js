@@ -44,7 +44,7 @@ Vue.component('VuexRecipe', require('./components/VuexRecipe.vue').default);
 Vue.component('footer-component', require('./components/Footer.vue').default)
 Vue.component('recipes-component', require('./components/Recipes.vue').default);
 Vue.component('fridge-component', require('./components/Fridge.vue').default);
-
+Vue.component('user-profile-component', require('./components/user/UserProfile.vue').default);
 Vue.component('ingredients-component', require('./components/recipes/Ingredients.vue').default);
 Vue.component('tag-component', require('./components/Tag.vue').default);
 Vue.component('gallery-component', require('./components/Gallery.vue').default);
