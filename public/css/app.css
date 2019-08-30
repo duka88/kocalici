@@ -23892,11 +23892,12 @@ a.text-dark:focus {
 }
 
 .carousel-indicators li {
-  background-color: #D8725B;
-}
-
-.carousel-indicators .active {
-  background-color: #D8725B;
+  display: block;
+  width: 65px;
+  height: 30px;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
 }
 
 /**********************************************************************************************

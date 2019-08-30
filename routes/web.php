@@ -47,7 +47,7 @@ Route::middleware(['admin'])->group(function(){
 });
 Route::middleware(['auth'])->group(function(){
 
-	  Route::post('approved', 'ScoreController@approved');
+	Route::post('approved', 'ScoreController@approved');
     Route::get('comments', 'ScoreController@allComments');
     Route::get('my_profile', 'ProfileController@user_profile')->name('my_profile');
     Route::get('notifications', 'ScoreController@notifications');
