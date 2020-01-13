@@ -68,7 +68,7 @@
       </div>
 
 
-   <!----------Edit----------->
+   <!----------Edit------------>
        
        <div   class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog " role="document">
@@ -153,7 +153,7 @@
                  </div> 
           </div>
 
-<!----------tags----------->
+<!----------tags------------>
 
          <div class="form-group mb-4">            
           <label>Ingredients</label>
@@ -203,7 +203,7 @@
           </div>
 
 
- <!----------tags----------->
+ <!----------tags------------>
          
 
         </div>       

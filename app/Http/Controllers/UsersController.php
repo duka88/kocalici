@@ -47,7 +47,13 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
 
        $user->role = $request->role;
-       $user->update($request->all());
+       $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request['password']),
+            'role' => $request->role
+
+         ]);
 
          return Response($user);
     }
