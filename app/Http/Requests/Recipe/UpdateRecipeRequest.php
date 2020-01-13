@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace App\Http\Requests\Recipe;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -24,7 +24,7 @@ class UpdateRecipeRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' =>  "unique:recipes,title,$this->id,id|required|max:255",
+            //'title' =>  "unique:recipes,title,$this->id,id|required|max:255",
             'description' => 'required',            
             'content' => 'required',
             'category' => 'required',

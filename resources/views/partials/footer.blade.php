@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="footer mt-4">
     <footer-component></footer-component>
 
   </footer>
