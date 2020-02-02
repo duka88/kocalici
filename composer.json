@@ -17,7 +17,6 @@
         "laravel/framework": "6.0.*",
         "laravel/passport": "^7.3",
         "laravel/tinker": "^1.0",
-        "nuwave/lighthouse": "^4.7",
         "spatie/laravel-cookie-consent": "^2.8",
         "spatie/laravel-newsletter": "^4.5",
         "thomaswelton/laravel-gravatar": "~1.0"

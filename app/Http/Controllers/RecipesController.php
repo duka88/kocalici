@@ -6,6 +6,7 @@ use App\Tag;
 use App\Recipe;
 use App\Category;
 use App\Gallery;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\Recipe\CreateRecipeRequest;
 use App\Http\Requests\Recipe\UpdateRecipeRequest;
@@ -16,6 +17,8 @@ use App\Http\Resources\IngredientsResources;
 use App\Http\Resources\RecipeResources;
 use App\Http\Resources\UsersRecipeResources;
 use App\Http\Resources\SingleRecipeResources;
+use App\Http\Resources\RecipeCollection;
+use App\Http\Resources\StarterResources;
 use Helper;
 
 class RecipesController extends Controller
@@ -80,7 +83,7 @@ class RecipesController extends Controller
 
         $recipe->update([
            'title' =>$request->title,
-           'slug' => str_slug($request->title),
+           'slug' => Str::slug($request->title),
            'description' => $request->description,
            'content' => $request->content,
            'time' => $request->time,
@@ -140,7 +143,7 @@ class RecipesController extends Controller
          
       $recipes = Recipe::searchCategory($category, $order, $direction);
 
-        return RecipeResources::collection($recipes);
+        return new RecipeCollection($recipes);
     }
    
    public function user_recipe($order, $direction, $search){
@@ -249,5 +252,10 @@ class RecipesController extends Controller
        return UsersRecipeResources::collection($recipes);    
 
       }
+
+   public function starter(){
+
+      return new StarterResources('starter');
+   }   
        
 }

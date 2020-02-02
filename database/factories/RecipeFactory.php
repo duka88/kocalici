@@ -1,13 +1,14 @@
 <?php
 
 use App\Recipe;
+use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
 $factory->define(Recipe::class, function (Faker $faker) {
  $images=(['cake1.jpg','cake2.jpg','cake3.jpg','cake4.jpg']);
  $number=([1,2,3,]);
  $title = $faker->text(5);
- $slug = str_slug($title);
+ $slug =  Str::slug($title);
 
     return [
         'title' => $title,

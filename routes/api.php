@@ -13,14 +13,20 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:api')->group(function(){
+
+     Route::get('/user', function (Request $request) {
+        return $request->user();
+     });
+
+     Route::post('/logout', 'AuthController@logout');
+     
 });
 
 
 
-	
-
+Route::post('/register', 'AuthController@register');	
+Route::post('/login', 'AuthController@login');
 
 
 Route::get('recipes/{category_id}/{order}/{direction}', 'RecipesController@category');
@@ -50,11 +56,11 @@ Route::get('category', 'CategoriesController@show');
 
 Route::get('searchTag', 'TagsController@search');
 
-
-
 Route::get('like/{recipe}', 'LikeController@index');
 Route::get('myLike/{recipe}/{user}', 'LikeController@single');
 Route::get('my-likes/{user}','LikeController@user_likes');
+
+Route::get('starter', 'RecipesController@starter');
 
 
 

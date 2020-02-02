@@ -19,7 +19,7 @@ class RecipeResources extends JsonResource
          $score = Score::where('recipe_id', $this->id)->avg('score');
       
         return [
-          'tags' => $this->tags,
+        
           'id' => $this->id,
           'slug'=> $this->slug,
           'title' => $this->title,
@@ -27,15 +27,16 @@ class RecipeResources extends JsonResource
           'dificulty' => $this->dificulty,
           'servings' => $this->servings,
           'likes' => LikeResources::collection($this->likes),
-          'image' => $this->image, 
-           'created_at' => date("d-m-Y", strtotime($this->created_at)),      
+          'image' => $this->image,               
           'description' => $this->description,
-          'category' => $this->category->only('id', 'name'),
+          'category' => $this->category->only('id', 'name', 'slug'),
           'user_id' => $this->user_id,
           'avg' => $score,
           'count' => $this->scores->count(),
        
         ];
     }
+
+  
 }
 
