@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use Helper;
 use Session;
+use Illuminate\Support\Str;
 class CategoriesController extends Controller
 {
 	
@@ -24,6 +25,7 @@ class CategoriesController extends Controller
 
 		$category = Category::create([
 		  'name' => $request->name,
+		  'slug' =>  Str::slug($request->name),
 		  'image' => $imageName
 		]);
 

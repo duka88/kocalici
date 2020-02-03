@@ -20,13 +20,16 @@ class RecipesTableSeeder extends Seeder
         factory(Recipe::class, 30)->create();
 
          $category1 = Category::create([
-          'name' => 'Cake'
+          'name' => 'Cake',
+          'slug' =>  'cake'
         ]);
          $category2 = Category::create([
-          'name' => 'Cookies'
+          'name' => 'Cookies',
+          'slug' =>  'cookies'
         ]);
           $category3 = Category::create([
-          'name' => 'Main dish'
+          'name' => 'Main dish',
+          'slug' =>  'main_dish'
         ]);
 
            $tag1 = Tag::create([

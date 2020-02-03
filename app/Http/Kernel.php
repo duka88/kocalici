@@ -20,6 +20,9 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
+        \Fruitcake\Cors\HandleCors::class,
+
+
     ];
 
     /**
@@ -41,6 +44,8 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
+            'cors',
+
         ],
     ];
 
@@ -62,7 +67,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'verifyCategoryCount' => VerifyCategoryCount::class,
-        'admin' => \App\Http\Middleware\VerifyIsAdmin::class
+        'admin' => \App\Http\Middleware\VerifyIsAdmin::class,
+        'cors' => \App\Http\Middleware\Cors::class,
     ];
 
     /**
