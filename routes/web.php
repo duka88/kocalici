@@ -1,6 +1,6 @@
 <?php
 
-use  App\Http\Controllers\Single\RecipeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,7 +13,7 @@ use  App\Http\Controllers\Single\RecipeController;
 */
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
-Route::get('/recipes/{recipe}','single\RecipeController@show')->name('recipes.show');    
+Route::get('/recipes/{recipe}','RecipesController@show')->name('recipes.show');    
 Route::get('/fridge', 'FridgeController@index')->name('fridge');
 
 
