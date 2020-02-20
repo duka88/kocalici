@@ -6,6 +6,7 @@ use App\Tag;
 use App\Recipe;
 use App\Category;
 use App\Gallery;
+use App\Score;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\Recipe\CreateRecipeRequest;
@@ -256,6 +257,33 @@ class RecipesController extends Controller
    public function starter(){
 
       return new StarterResources('starter');
-   }   
+   }
+
+   public function show(Recipe $recipe){
+        
+        $cat_id = $recipe->category_id;
+        $avg_score = round(Score::where('recipe_id', $recipe->id)->avg('score'),1);
+        $related = Recipe::whereHas('category', function($query) use ($cat_id){
+            $query->where('id', $cat_id);
+        })->take(6)->get();
+       
+         
+         if(auth()->user()){
+            $score_chack = Score::where([['user_id', auth()->user()->id],['recipe_id', $recipe->id]])->get();
+
+            if(count($score_chack) !== 0){
+               $score = false;
+            }else{
+                $score = true;
+            }
+         
+          return view('recipes.show')->with('recipe',$recipe)->with('user', auth()->user())->with('score', $score)->with('min', 1)->with('max', 10)->with('avg_score', $avg_score)->with('related', $related);
+        }else{
+
+            $score = Score::where('recipe_id', $recipe->id)->avg('score');
+
+            return view('recipes.show')->with('recipe',$recipe)->with('avg_score', $avg_score)->with('min', 1)->with('max', 10)->with('related', $related);
+        }
+ }   
        
 }
