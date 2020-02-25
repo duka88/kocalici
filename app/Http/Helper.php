@@ -7,6 +7,7 @@ class Helper{
 
 	public static function uploadImageSize($uploadedImage, $uploadedImageName=null){
 
+        $imagePathXL = public_path('img/XL/');
         $imagePathXS = public_path('img/XS/');
         $imagePathMD = public_path('img/MD/');
         $imagePathS = public_path('img/S/');
@@ -21,7 +22,6 @@ class Helper{
            $savePathXS = $imagePathXS . $imageName;
            $image = Image::make($uploadedImage)
                     ->fit(60, 50)->save($savePathXS);
-
           
 
            $savePathMD = $imagePathMD . $imageName;
@@ -30,7 +30,13 @@ class Helper{
 
            $savePathS = $imagePathS . $imageName;
            $image = Image::make($uploadedImage)
-                    ->fit(100, 100)->save($savePathS);         
+                    ->fit(100, 100)->save($savePathS);    
+
+           $savePathXL = $imagePathXL . $imageName;
+           $image = Image::make($uploadedImage)
+                    ->fit(800, 600, function ($constraint) {
+                        $constraint->upsize();
+                        })->save($savePathXL);                
 
          return $imageName;           
     }

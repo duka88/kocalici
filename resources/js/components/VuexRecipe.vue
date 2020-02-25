@@ -47,7 +47,7 @@
                      </div> 
 
         </div>
-        <div class="d-flex justify-content-center mt-5" v-if="recipes.data.length == 0">
+        <div class="d-flex justify-content-center mt-5" v-if="recipes.data">
           <p class="mt-5 display-4">
             No search result
           </p>
