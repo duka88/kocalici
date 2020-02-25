@@ -29,7 +29,7 @@
 
     <!-- SEARCH FORM -->
     
-        <search-component @overlay="overlayFn"></search-component>
+        <search-component ></search-component>
     <!-- Right navbar links -->
    
   </nav>

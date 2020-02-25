@@ -50008,7 +50008,7 @@ var render = function() {
       0
     ),
     _vm._v(" "),
-    _vm.recipes.data.length == 0
+    _vm.recipes.data
       ? _c("div", { staticClass: "d-flex justify-content-center mt-5" }, [
           _c("p", { staticClass: "mt-5 display-4" }, [
             _vm._v("\n        No search result\n      ")
